@@ -1,0 +1,1 @@
+console.log('Marco admin prototype - Firebase integration pending');

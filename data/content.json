@@ -1,0 +1,47 @@
+{
+  "site": {
+    "name": "Marco Charlas-Hou",
+    "profiles": [
+      "violoniste",
+      "compositeur",
+      "acteur",
+      "modèle"
+    ],
+    "phone": "07 67 83 80 25",
+    "email": "marcocharlashou@gmail.com",
+    "validatedByClient": true
+  },
+  "casting": {
+    "languages": [
+      "Français (maternelle)"
+    ],
+    "height": "1m75",
+    "weight": "55 kg",
+    "age_indicated": "17 ans",
+    "year_indicated": "2008",
+    "eyes": "vert-marron",
+    "shirt": "L",
+    "jacket": "L",
+    "pants": "42",
+    "shoeSize": "42"
+  },
+  "credits": [
+    {
+      "type": "Rôle principal",
+      "title": "Pub vidéo EXCURIO 2026"
+    },
+    {
+      "type": "Silhouette",
+      "title": "Pub Bouygues Telecom 2018"
+    }
+  ],
+  "firestore_collections_future": [
+    "site_settings",
+    "site_content",
+    "music_tracks",
+    "projects",
+    "gallery_items",
+    "press_assets",
+    "contact_requests"
+  ]
+}

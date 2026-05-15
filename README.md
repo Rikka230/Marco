@@ -1,11 +1,28 @@
-# Marco Charlas-Hou - Cover Site Prototype
+# Marco Charlas-Hou — Site clean prototype
 
-Prototype HTML/CSS/JS vanilla pour Marco Charlas-Hou.
+Projet statique propre pour le site artistique PJAX de Marco Charlas-Hou.
+
+## Etat
+
+Cette version est une base propre et complete, structuree pour la suite :
+
+- home cover artistique ;
+- pages internes : Music, Projects, Gallery, Contact ;
+- pages prevues : About, Press Kit ;
+- PJAX vanilla ;
+- transitions en glissement ;
+- visualizer en points ;
+- contact form front-only ;
+- arborescence assets rangee par univers ;
+- schema de donnees JSON preparatoire ;
+- fichiers Firebase placeholder ;
+- dossier admin prototype.
 
 ## Lancer en local
 
 ```bash
-python -m http.server 5173
+cd marco_clean_project
+py -m http.server 5173
 ```
 
 Puis ouvrir :
@@ -14,18 +31,62 @@ Puis ouvrir :
 http://localhost:5173
 ```
 
-## Structure
+## Arborescence
+
+```text
+assets/
+  css/
+  js/
+  img/
+    home/
+    music/
+    projects/
+    gallery/
+    contact/
+    press/
+    placeholders/
+    source/
+  audio/
+  video/
+  docs/
+data/
+admin/
+```
+
+## Pages
 
 - `index.html`
 - `music.html`
 - `projects.html`
 - `gallery.html`
 - `contact.html`
-- `style.css`
-- `script.js`
-- `assets/img/`
-- `assets/audio/`
+- `about.html`
+- `press-kit.html`
 
-## Notes
+## Backend futur
 
-Le rendu attendu correspond a la version cover musicale validee dans le navigateur local : grande composition plein ecran, PNG Marco, textes typographiques, navigation PJAX-like et visualizer en points.
+Collections Firestore envisagees :
+
+- `site_settings`
+- `site_content`
+- `music_tracks`
+- `projects`
+- `gallery_items`
+- `press_assets`
+- `contact_requests`
+
+Storage envisage :
+
+- `/site/home/`
+- `/site/music/`
+- `/site/projects/`
+- `/site/gallery/`
+- `/site/contact/`
+- `/press/`
+- `/audio/`
+- `/video/`
+- `/docs/`
+
+## Note
+
+Les images viennent du portfolio fourni dans la conversation et servent de base visuelle temporaire. Les vrais detourages PNG propres seront a injecter plus tard.
