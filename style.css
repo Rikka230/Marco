@@ -90,7 +90,7 @@ button {
   background-size: cover;
   background-position: center center;
   transform: scale(1.045);
-  filter: saturate(1.05) contrast(0.96) brightness(1.14);
+  filter: saturate(1.05) contrast(0.96) brightness(1.14) blur(0.2px);
 }
 
 .page[data-bg="home"] .photo-bg {
@@ -149,6 +149,31 @@ button {
 .shell:has(.home) .mini-brand,
 .shell:has(.home) .mini-player {
   display: none;
+}
+
+.shell:has(.page[data-theme="music"]) .mini-brand,
+.shell:has(.page[data-theme="music"]) .mini-player {
+  color: #f0c56f;
+}
+
+.shell:has(.page[data-theme="projects"]) .mini-brand,
+.shell:has(.page[data-theme="projects"]) .mini-player {
+  color: #74b8ff;
+}
+
+.shell:has(.page[data-theme="gallery"]) .mini-brand,
+.shell:has(.page[data-theme="gallery"]) .mini-player {
+  color: #f293c9;
+}
+
+.shell:has(.page[data-theme="contact"]) .mini-brand,
+.shell:has(.page[data-theme="contact"]) .mini-player {
+  color: #f0e7ce;
+}
+
+.shell:has(.page.inner) .mini-brand span,
+.shell:has(.page.inner) .mini-player button {
+  background: currentColor;
 }
 
 .mini-brand {
@@ -620,34 +645,42 @@ body.is-transitioning .mini-brand {
 }
 
 .page[data-theme="music"] {
-  --accent: #9effb5;
-  --accent-soft: rgba(158, 255, 181, 0.64);
-  --page-warm: rgba(246, 183, 88, 0.28);
-  --page-shadow: rgba(2, 18, 12, 0.38);
+  --accent: #f0c56f;
+  --accent-soft: rgba(240, 197, 111, 0.58);
+  --accent-alt: var(--accent);
+  --accent-print: var(--accent);
+  --page-warm: rgba(245, 181, 82, 0.32);
+  --page-shadow: rgba(2, 17, 12, 0.34);
   --page-bg: #07120d;
 }
 
 .page[data-theme="projects"] {
-  --accent: #7ff7a3;
-  --accent-soft: rgba(127, 247, 163, 0.52);
-  --page-warm: rgba(241, 162, 72, 0.24);
-  --page-shadow: rgba(0, 14, 31, 0.48);
+  --accent: #74b8ff;
+  --accent-soft: rgba(116, 184, 255, 0.52);
+  --accent-alt: var(--accent);
+  --accent-print: var(--accent);
+  --page-warm: rgba(220, 143, 62, 0.25);
+  --page-shadow: rgba(0, 12, 34, 0.58);
   --page-bg: #03101c;
 }
 
 .page[data-theme="gallery"] {
-  --accent: #a3ffbf;
-  --accent-soft: rgba(163, 255, 191, 0.58);
-  --page-warm: rgba(255, 239, 205, 0.22);
-  --page-shadow: rgba(20, 2, 16, 0.36);
+  --accent: #f293c9;
+  --accent-soft: rgba(242, 147, 201, 0.54);
+  --accent-alt: var(--accent);
+  --accent-print: var(--accent);
+  --page-warm: rgba(255, 239, 205, 0.26);
+  --page-shadow: rgba(22, 3, 18, 0.36);
   --page-bg: #070606;
 }
 
 .page[data-theme="contact"] {
-  --accent: #a8ffc4;
-  --accent-soft: rgba(168, 255, 196, 0.62);
-  --page-warm: rgba(241, 224, 182, 0.2);
-  --page-shadow: rgba(0, 0, 0, 0.5);
+  --accent: #f0e7ce;
+  --accent-soft: rgba(240, 231, 206, 0.6);
+  --accent-alt: var(--accent);
+  --accent-print: var(--accent);
+  --page-warm: rgba(238, 226, 190, 0.18);
+  --page-shadow: rgba(0, 0, 0, 0.58);
   --page-bg: #050504;
 }
 
@@ -822,7 +855,7 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .cover-hit span {
-  color: rgba(246, 255, 246, 0.96);
+  color: currentColor;
   font-size: clamp(7px, 0.58vw, 12px);
 }
 
@@ -955,6 +988,254 @@ body.is-transitioning .mini-brand {
   font-size: clamp(20px, 1.95vw, 40px);
 }
 
+.contact-form {
+  position: absolute;
+  right: 4.8vw;
+  bottom: 10.8vh;
+  z-index: 34;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.68rem 1rem;
+  width: min(36vw, 580px);
+  padding: 0.9rem 0 0;
+  color: var(--accent);
+  font-family: var(--ui);
+  text-transform: uppercase;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.06) 72%, transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 36%);
+  border-top: 1px solid rgba(240, 231, 206, 0.3);
+  border-bottom: 1px solid rgba(167, 255, 194, 0.18);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.66);
+}
+
+.contact-field,
+.request-type {
+  min-width: 0;
+}
+
+.contact-field {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.contact-field-wide,
+.request-type,
+.contact-submit,
+.contact-status {
+  grid-column: 1 / -1;
+}
+
+.contact-form label,
+.request-type legend {
+  color: currentColor;
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.58vw, 12px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.18rem 0 0.42rem;
+  border: 0;
+  border-bottom: 1px solid rgba(240, 231, 206, 0.42);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: currentColor;
+  font: 700 clamp(12px, 0.9vw, 16px) / 1.12 var(--ui);
+  letter-spacing: 0.01em;
+  transition: border-color 0.18s ease, color 0.18s ease, translate 0.18s ease;
+}
+
+.contact-form textarea {
+  height: 4.4rem;
+  resize: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+  color: currentColor;
+  translate: 0 -1px;
+}
+
+.request-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem 0.74rem;
+  margin: 0.1rem 0 0.08rem;
+  padding: 0.54rem 0 0.62rem;
+  border: 0;
+  border-top: 1px solid rgba(167, 255, 194, 0.16);
+  border-bottom: 1px solid rgba(240, 231, 206, 0.18);
+}
+
+.request-type legend {
+  width: 100%;
+  padding: 0 0 0.18rem;
+}
+
+.request-type label {
+  position: relative;
+  display: inline-grid;
+  cursor: pointer;
+}
+
+.request-type input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.request-type span {
+  display: inline-block;
+  padding-bottom: 0.14rem;
+  border-bottom: 1px solid transparent;
+  color: currentColor;
+  font-family: var(--heavy);
+  font-size: clamp(10px, 0.74vw, 14px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  transition: color 0.18s ease, border-color 0.18s ease, translate 0.18s ease;
+}
+
+.request-type input:checked + span,
+.request-type label:hover span {
+  color: var(--accent);
+  border-color: var(--accent);
+  translate: 0 -1px;
+}
+
+.contact-submit {
+  justify-self: start;
+  position: relative;
+  padding: 0.2rem 0 0.08rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: currentColor;
+  font-family: var(--heavy);
+  font-size: clamp(18px, 1.45vw, 32px);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-shadow:
+    0 0 3px rgba(167, 255, 194, 0.22),
+    0 4px 14px rgba(0, 0, 0, 0.72);
+  transition: translate 0.18s ease, color 0.18s ease;
+}
+
+.contact-submit::after {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 0.22rem;
+  content: "";
+  background: currentColor;
+  transform: scaleX(0.46);
+  transform-origin: left;
+  transition: transform 0.18s ease;
+}
+
+.contact-submit:hover,
+.contact-submit:focus-visible {
+  color: currentColor;
+  translate: 0 -1px;
+  outline: 0;
+}
+
+.contact-submit:hover::after,
+.contact-submit:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.contact-status {
+  min-height: 0.9rem;
+  margin: -0.1rem 0 0;
+  color: currentColor;
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.58vw, 12px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.contact-form.is-ready .contact-status {
+  color: var(--accent);
+}
+
+.booking .nav-gallery {
+  right: 6vw;
+  top: 33.4vh;
+}
+
+.booking .cover-tagline {
+  top: 40.5vh;
+}
+
+.music .mega.last,
+.music .cover-tagline,
+.music .editorial-stack {
+  color: var(--accent-print);
+}
+
+.music .cover-hit.nav-projects,
+.music .cover-hit.nav-contact {
+  color: var(--accent-alt);
+}
+
+.scores .mega.last,
+.scores .key-project,
+.scores .cover-hit.nav-contact {
+  color: var(--accent-print);
+}
+
+.scores .cover-tagline,
+.scores .editorial-stack {
+  color: var(--accent-alt);
+}
+
+.gallery .mega.first,
+.gallery .key-project {
+  color: var(--accent);
+}
+
+.gallery .mega.last,
+.gallery .cover-tagline,
+.gallery .cover-hit.nav-contact {
+  color: var(--accent-alt);
+}
+
+.gallery .editorial-stack,
+.gallery .cover-hit.nav-music {
+  color: var(--accent-print);
+}
+
+.booking .mega.first,
+.booking .mega.last,
+.booking .cover-tagline {
+  color: var(--accent);
+}
+
+.booking .key-project,
+.booking .contact-submit,
+.booking .request-type input:checked + span,
+.booking .request-type label:hover span {
+  color: var(--accent-alt);
+}
+
+.booking .editorial-stack,
+.booking .cover-hit.nav-music,
+.booking .cover-hit.nav-projects {
+  color: var(--accent-print);
+}
+
 .string-lines,
 .film-sweep,
 .contact-sheet,
@@ -968,7 +1249,7 @@ body.is-transitioning .mini-brand {
 .string-lines {
   opacity: 0.24;
   background:
-    linear-gradient(104deg, transparent 0 44%, rgba(255, 237, 174, 0.16) 44.2% 44.45%, transparent 44.7%),
+    linear-gradient(104deg, transparent 0 44%, rgba(239, 191, 98, 0.18) 44.2% 44.45%, transparent 44.7%),
     linear-gradient(106deg, transparent 0 48%, rgba(158, 255, 181, 0.18) 48.15% 48.35%, transparent 48.6%),
     linear-gradient(108deg, transparent 0 52%, rgba(255, 255, 255, 0.12) 52.2% 52.35%, transparent 52.65%);
   animation: stringPulse 5.8s ease-in-out infinite alternate;
@@ -977,8 +1258,8 @@ body.is-transitioning .mini-brand {
 .film-sweep {
   opacity: 0.18;
   background:
-    repeating-linear-gradient(90deg, transparent 0 52px, rgba(255, 204, 113, 0.1) 53px 55px, transparent 56px 108px),
-    linear-gradient(90deg, transparent, rgba(255, 223, 149, 0.12), transparent);
+    repeating-linear-gradient(90deg, transparent 0 52px, rgba(217, 154, 72, 0.12) 53px 55px, transparent 56px 108px),
+    linear-gradient(90deg, transparent, rgba(217, 154, 72, 0.16), transparent);
   transform: translateX(-16%);
   animation: filmSweep 8s cubic-bezier(0.62, 0, 0.28, 1) infinite;
 }
@@ -987,7 +1268,7 @@ body.is-transitioning .mini-brand {
   opacity: 0.2;
   background:
     linear-gradient(90deg, transparent 0 18%, rgba(255, 240, 214, 0.14) 18.1% 18.2%, transparent 18.4% 43%, rgba(255, 240, 214, 0.1) 43.1% 43.2%, transparent 43.4%),
-    linear-gradient(0deg, transparent 0 24%, rgba(255, 255, 255, 0.1) 24.1% 24.2%, transparent 24.4% 68%, rgba(255, 117, 205, 0.1) 68.1% 68.2%, transparent 68.5%);
+    linear-gradient(0deg, transparent 0 24%, rgba(255, 255, 255, 0.1) 24.1% 24.2%, transparent 24.4% 68%, rgba(240, 140, 200, 0.12) 68.1% 68.2%, transparent 68.5%);
   mix-blend-mode: screen;
 }
 
@@ -1170,6 +1451,28 @@ body.is-transitioning .mini-brand {
   }
 
   .editorial-stack {
+    display: none;
+  }
+
+  .contact-form {
+    left: 6vw;
+    right: auto;
+    bottom: 10vh;
+    width: 88vw;
+    grid-template-columns: 1fr;
+    gap: 0.56rem;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.12));
+  }
+
+  .request-type {
+    gap: 0.38rem 0.62rem;
+  }
+
+  .contact-form textarea {
+    height: 3.8rem;
+  }
+
+  .booking .cover-tagline {
     display: none;
   }
 }

@@ -51,6 +51,51 @@
           <span>CONTACT PRO</span>
         </div>
 
+        <form class="contact-form" data-contact-form>
+          <div class="contact-field">
+            <label for="contact-name">Nom</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="contact-field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <fieldset class="request-type">
+            <legend>Type de demande</legend>
+            <label>
+              <input type="radio" name="request_type" value="Booking" checked />
+              <span>Booking</span>
+            </label>
+            <label>
+              <input type="radio" name="request_type" value="Collaboration" />
+              <span>Collaboration</span>
+            </label>
+            <label>
+              <input type="radio" name="request_type" value="Score / Composition" />
+              <span>Score / Composition</span>
+            </label>
+            <label>
+              <input type="radio" name="request_type" value="Image / Acting / Model" />
+              <span>Image / Acting / Model</span>
+            </label>
+          </fieldset>
+
+          <div class="contact-field contact-field-wide">
+            <label for="contact-subject">Sujet</label>
+            <input id="contact-subject" name="subject" type="text" required />
+          </div>
+
+          <div class="contact-field contact-field-wide">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="3" required></textarea>
+          </div>
+
+          <button class="contact-submit" type="submit">SEND REQUEST</button>
+          <p class="contact-status" data-form-status aria-live="polite"></p>
+        </form>
+
         <div class="editorial-stack contact-stack" aria-hidden="true">
           <span>VIOLINIST</span>
           <span>COMPOSER</span>

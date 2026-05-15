@@ -250,18 +250,19 @@
     const bg = page.querySelector('.photo-bg');
     const x = parallax.x;
     const y = parallax.y;
+    const isHome = page.dataset.page === 'home';
 
     if (title) {
-      title.style.setProperty('--title-x', `${x * -10}px`);
-      title.style.setProperty('--title-y', `${y * 4}px`);
+      title.style.setProperty('--title-x', `${x * (isHome ? -11 : -10)}px`);
+      title.style.setProperty('--title-y', `${y * (isHome ? 5 : 4)}px`);
     }
     if (person) {
-      person.style.setProperty('--person-x', `${x * 7}px`);
-      person.style.setProperty('--person-y', `${y * 2.5}px`);
+      person.style.setProperty('--person-x', `${x * (isHome ? 8 : 7)}px`);
+      person.style.setProperty('--person-y', `${y * (isHome ? 3 : 2.5)}px`);
     }
     if (bg) {
-      bg.style.setProperty('--bg-x', `${x * -3}px`);
-      bg.style.setProperty('--bg-y', `${y * -1.5}px`);
+      bg.style.setProperty('--bg-x', `${x * (isHome ? -5 : -3)}px`);
+      bg.style.setProperty('--bg-y', `${y * (isHome ? -2 : -1.5)}px`);
     }
   }
 
@@ -279,4 +280,37 @@
   }, { passive: true });
 
   window.addEventListener('pointerleave', () => scheduleParallax(), { passive: true });
+
+  document.addEventListener('submit', (e) => {
+    const form = e.target.closest('[data-contact-form]');
+    if (!form) return;
+    e.preventDefault();
+
+    const status = form.querySelector('[data-form-status]');
+    const submit = form.querySelector('.contact-submit');
+    form.classList.add('is-ready');
+    if (status) status.textContent = 'MESSAGE READY - CONNECT BACKEND';
+    if (submit) {
+      submit.textContent = 'REQUEST READY';
+      window.setTimeout(() => {
+        if (submit.isConnected) submit.textContent = 'SEND REQUEST';
+      }, 1800);
+    }
+  });
+
+  document.addEventListener('input', (e) => {
+    const form = e.target.closest('[data-contact-form]');
+    if (!form || !form.classList.contains('is-ready')) return;
+    form.classList.remove('is-ready');
+    const status = form.querySelector('[data-form-status]');
+    if (status) status.textContent = '';
+  });
+
+  document.addEventListener('change', (e) => {
+    const form = e.target.closest('[data-contact-form]');
+    if (!form || !form.classList.contains('is-ready')) return;
+    form.classList.remove('is-ready');
+    const status = form.querySelector('[data-form-status]');
+    if (status) status.textContent = '';
+  });
 })();
