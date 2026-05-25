@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Marco Charlas-Hou - Composition</title>
   <meta name="description" content="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." />
-  <link rel="stylesheet" href="/style.css?v=0.4.5" />
+  <link rel="stylesheet" href="/style.css?v=0.4.6" />
 </head>
 <body>
   <div class="film-grain" aria-hidden="true"></div>
@@ -78,31 +78,29 @@
           .composition-intro strong { color: #ff304f; font-size: clamp(15px, 1.1vw, 24px); letter-spacing: -0.045em; }
           .composition-intro span { font-size: clamp(8px, .64vw, 12px); line-height: 1.2; letter-spacing: .075em; color: rgba(249,241,220,.86); }
           .composition-diagonal-zone {
-            position: absolute; right: clamp(96px, 5.8vw, 126px); top: clamp(98px, 12.2vh, 126px); z-index: 42;
-            width: min(36vw, 640px); height: auto; max-height: none; overflow: visible;
-            transform: rotate(-7.25deg); transform-origin: 50% 50%; pointer-events: auto;
+            position: absolute; right: -2.2vw; top: 16.8vh; z-index: 38;
+            width: min(44vw, 720px); height: 64vh; transform: rotate(-8deg); transform-origin: 50% 50%; pointer-events: auto;
           }
           .composition-track-scroll {
-            height: auto; max-height: none; overflow: visible;
-            padding: clamp(16px, 2vh, 24px) clamp(82px, 5.1vw, 110px) clamp(26px, 3.2vh, 44px) clamp(6px, .5vw, 12px);
-            scrollbar-width: none; scrollbar-color: #ff304f rgba(255,255,255,.08);
-            mask-image: none; -webkit-mask-image: none;
+            height: 100%; overflow-y: scroll; overflow-x: hidden; padding: 4.2vh 1.2vw 10vh 0.9vw; scrollbar-gutter: stable both-edges;
+            scrollbar-width: thin; scrollbar-color: #ff304f rgba(255,255,255,.08);
+            mask-image: linear-gradient(180deg, transparent 0, #000 4%, #000 96%, transparent 100%);
           }
           .composition-track-scroll::-webkit-scrollbar { width: 7px; }
           .composition-track-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,.08); }
           .composition-track-scroll::-webkit-scrollbar-thumb { background: #ff304f; }
           .composition-track {
             position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
-            min-height: clamp(46px, 5.45vh, 64px); margin: 0 0 clamp(6px, .75vh, 9px); padding: clamp(6px, .72vh, 9px) clamp(10px, .8vw, 14px) clamp(6px, .72vh, 9px) clamp(12px, .9vw, 16px);
+            min-height: clamp(72px, 8vh, 98px); margin: 0 0 .92rem; padding: .66rem .9rem .66rem 1rem;
             color: #f9f1dc; isolation: isolate; transform: skewX(-9deg); border: 1px solid rgba(255,48,79,.34);
             background:
               linear-gradient(90deg, rgba(255,48,79,.92), rgba(255,48,79,.1) 32%, rgba(0,0,0,.58)),
               linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-            box-shadow: -8px 8px 0 rgba(0,0,0,.38), 0 14px 34px rgba(0,0,0,.34);
+            box-shadow: -12px 12px 0 rgba(0,0,0,.42), 0 22px 52px rgba(0,0,0,.42);
             transition: transform .22s ease, filter .22s ease, background .22s ease;
           }
-          .composition-track:nth-child(even) { margin-left: 2.4vw; }
-          .composition-track:nth-child(3n) { margin-left: -1.4vw; }
+          .composition-track:nth-child(even) { margin-left: 1.8vw; }
+          .composition-track:nth-child(3n) { margin-left: -1vw; }
           .composition-track:hover, .composition-track.is-active {
             transform: skewX(-9deg) translateX(-.8vw) scale(1.025); filter: brightness(1.12);
             background:
@@ -111,12 +109,12 @@
           }
           .composition-track > * { transform: skewX(9deg); }
           .track-index {
-            color: #070006; font-family: var(--heavy); font-size: clamp(25px, 2.2vw, 42px);
+            color: #070006; font-family: var(--heavy); font-size: clamp(34px, 3.4vw, 64px);
             line-height: .84; letter-spacing: -0.095em; text-shadow: none;
           }
           .track-main { display: grid; gap: .18rem; min-width: 0; text-transform: uppercase; }
           .track-title {
-            color: #fff; font-family: var(--heavy); font-size: clamp(17px, 1.62vw, 32px);
+            color: #fff; font-family: var(--heavy); font-size: clamp(22px, 2.1vw, 46px);
             line-height: .78; letter-spacing: -0.075em; white-space: nowrap;
           }
           .track-meta {
@@ -124,7 +122,7 @@
             font-family: var(--heavy); font-size: clamp(7px, .58vw, 11px); letter-spacing: .055em;
           }
           .track-play {
-            width: clamp(30px, 2.15vw, 40px); height: clamp(30px, 2.15vw, 40px);
+            width: clamp(34px, 3.2vw, 54px); height: clamp(34px, 3.2vw, 54px);
             border: 0; border-radius: 999px; background: #f9f1dc; color: #070006; cursor: pointer;
             font-family: var(--heavy); font-size: clamp(9px, .72vw, 12px); text-transform: uppercase;
             box-shadow: 0 12px 24px rgba(0,0,0,.35);
@@ -140,8 +138,8 @@
             .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
             .composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
             .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }
-            .composition-diagonal-zone { right: auto; left: 2vw; top: 39vh; width: 96vw; height: 46vh; transform: rotate(-5deg); }
-            .composition-track-scroll { padding: 4vh 5vw 10vh; }
+            .composition-diagonal-zone { right: auto; left: 2vw; top: 41vh; width: 96vw; height: 42vh; transform: rotate(-5deg); }
+            .composition-track-scroll { padding: 3vh 4vw 10vh 3vw; }
             .composition-track:nth-child(even), .composition-track:nth-child(3n) { margin-left: 0; }
             .composition-track { grid-template-columns: auto 1fr auto; min-height: 74px; margin-bottom: .8rem; }
             .track-title { font-size: clamp(20px, 6vw, 36px); }
@@ -159,7 +157,6 @@
         </div>
 
         <img class="hero-person page-person composition-person music-person" src="/assets/img/marco-comp.png" alt="Portrait detoure de Marco pour la page Composition" />
-        <span class="marco-person-shader" aria-hidden="true"></span>
 
         <a class="key-project" href="/composition.html" data-pjax aria-label="Catalogue des compositions"><span>TRACKS CATALOG</span><span>COMPOSED WORKS</span></a>
 

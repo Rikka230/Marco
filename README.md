@@ -1,31 +1,26 @@
-# Marco Charlas-Hou - Cover Site Prototype
+# MARCO patch v0.4.6 — real page fixes
 
-Prototype HTML/CSS/JS vanilla pour Marco Charlas-Hou.
+## Objectif
+Corriger les vrais points encore ouverts sur la base actuelle, sans toucher à la Home.
 
-## Lancer en local
+## Corrections incluses
+- Liste diagonale de `composition.html` descendue plus bas pour ne plus mordre sur le mot `COMPOSITION`.
+- Scrollbar de la liste diagonale forcée à réapparaître.
+- Intégration colorimétrique subtile de Marco sur toutes les pages internes selon la teinte de page.
+- Lissage supplémentaire des PNG internes avec remplacement d'assets nettoyés.
+- Badge de version mis à jour en `MARCO v0.4.6`.
 
-```bash
-python -m http.server 5173
-```
-
-Puis ouvrir :
-
-```text
-http://localhost:5173
-```
-
-## Structure
-
-- `index.html`
+## Fichiers modifiés
+- `style.css`
+- `composition.html`
 - `music.html`
 - `projects.html`
 - `gallery.html`
 - `contact.html`
-- `style.css`
-- `script.js`
-- `assets/img/`
-- `assets/audio/`
-
-## Notes
-
-Le rendu attendu correspond a la version cover musicale validee dans le navigateur local : grande composition plein ecran, PNG Marco, textes typographiques, navigation PJAX-like et visualizer en points.
+- `parcours.html`
+- `filmographie.html`
+- `assets/img/marco-comp.png`
+- `assets/img/marco-music.png`
+- `assets/img/marco-projects.png`
+- `assets/img/marco-gallery.png`
+- `assets/img/marco-contact.png`
