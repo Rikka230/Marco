@@ -2732,7 +2732,6 @@ button.music-drawer-toggle::after,
 }
 /* === MARCO PATCH v0.2.4 MUSIC TEXT TOGGLE ARROW - END === */
 
-
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - START === */
 /*
   MARCO PATCH v0.3.0
@@ -2869,3 +2868,190 @@ body.marco-page-wheel-locked .chapter-nav::after {
   }
 }
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
+
+
+/* === MARCO PATCH v0.4.0 VISUAL POLISH - START === */
+/*
+  MARCO PATCH v0.4.0
+  Type : polish visuel global
+  Cible : PNG Marco + fonds + rail/player
+  Base : TEST après v0.3.0 validé
+*/
+
+body.marco-visual-polish {
+  --marco-page-accent: var(--marco-nav-accent, var(--accent, #86f5a8));
+  --marco-deep-shadow: rgba(0, 0, 0, 0.52);
+  --marco-soft-edge: color-mix(in srgb, var(--marco-page-accent) 18%, transparent);
+}
+
+/* Accent page par page, raccordé au rail validé v0.3.0. */
+body[data-marco-page="home"] { --marco-page-accent: #86f5a8; }
+body[data-marco-page="music"] { --marco-page-accent: #f4bd68; }
+body[data-marco-page="parcours"] { --marco-page-accent: #73aaf6; }
+body[data-marco-page="gallery"] { --marco-page-accent: #f08ac8; }
+body[data-marco-page="filmographie"] { --marco-page-accent: #6fd7ff; }
+body[data-marco-page="composition"] { --marco-page-accent: #ff355d; }
+body[data-marco-page="booking"] { --marco-page-accent: #d8c3ff; }
+
+/* Fonds : micro-raccord colorimétrique, sans changer la structure des pages. */
+body.marco-visual-polish:not([data-marco-page="home"]) .photo-bg {
+  filter: saturate(1.035) contrast(1.035) brightness(0.975);
+  transform: translateZ(0) scale(1.002);
+}
+
+body.marco-visual-polish:not([data-marco-page="home"]) .photo-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.36;
+  background:
+    radial-gradient(circle at 70% 28%, color-mix(in srgb, var(--marco-page-accent) 18%, transparent), transparent 38%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.24), transparent 42%, rgba(0, 0, 0, 0.28));
+  mix-blend-mode: screen;
+}
+
+/* Home reste la base validée : pas de filtre global intrusif dessus. */
+body.marco-visual-polish[data-marco-page="home"] .photo-bg {
+  transform: translateZ(0);
+}
+
+/* PNG Marco : lissage perceptif des bords via ombre douce + halo contrôlé.
+   On exclut la home pour préserver le visuel validé. */
+body.marco-visual-polish:not([data-marco-page="home"]) .page img[src*="marco-"]:not([src*="logo"]),
+body.marco-visual-polish:not([data-marco-page="home"]) .hero-person,
+body.marco-visual-polish:not([data-marco-page="home"]) .page-person,
+body.marco-visual-polish:not([data-marco-page="home"]) .composition-person,
+body.marco-visual-polish:not([data-marco-page="home"]) .music-person {
+  image-rendering: auto;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-font-smoothing: antialiased;
+  will-change: transform, filter;
+  filter:
+    drop-shadow(0 22px 36px var(--marco-deep-shadow))
+    drop-shadow(0 0 18px var(--marco-soft-edge))
+    saturate(1.018)
+    contrast(1.012);
+}
+
+/* Composition : Marco doit se poser dans le décor, pas flotter comme un calque. */
+body.marco-visual-polish[data-marco-page="composition"] .page img[src*="marco-comp"],
+body.marco-visual-polish[data-marco-page="composition"] .composition-person {
+  filter:
+    drop-shadow(0 24px 40px rgba(0, 0, 0, 0.58))
+    drop-shadow(0 0 22px color-mix(in srgb, #ff355d 18%, transparent))
+    saturate(1.025)
+    contrast(1.016);
+}
+
+/* Violon : ombre plus chaude, raccordée au fond bg-violon. */
+body.marco-visual-polish[data-marco-page="music"] .page img[src*="marco-"]:not([src*="logo"]),
+body.marco-visual-polish[data-marco-page="music"] .music-person {
+  filter:
+    drop-shadow(0 22px 38px rgba(0, 0, 0, 0.54))
+    drop-shadow(0 0 20px color-mix(in srgb, #f4bd68 16%, transparent))
+    saturate(1.018)
+    contrast(1.012);
+}
+
+/* Typo : meilleure accroche lumineuse, sans redessiner les pages. */
+body.marco-visual-polish .page h1,
+body.marco-visual-polish .hero-title,
+body.marco-visual-polish .page-title,
+body.marco-visual-polish .cover-title {
+  text-shadow:
+    0 5px 28px rgba(0, 0, 0, 0.54),
+    0 0 24px color-mix(in srgb, var(--marco-page-accent) 12%, transparent);
+}
+
+/* Rail : finition premium, en conservant le comportement validé. */
+body.marco-visual-polish .chapter-nav {
+  filter:
+    drop-shadow(0 20px 34px rgba(0, 0, 0, 0.28))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--marco-page-accent) 10%, transparent));
+}
+
+body.marco-visual-polish .chapter-toggle,
+body.marco-visual-polish .chapter-step {
+  backdrop-filter: blur(12px);
+}
+
+body.marco-visual-polish .chapter-link {
+  backdrop-filter: blur(12px);
+}
+
+body.marco-visual-polish .chapter-link.is-active {
+  text-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.48),
+    0 0 16px color-mix(in srgb, var(--marco-page-accent) 18%, transparent);
+}
+
+/* Player bas : meilleur raccord avec l'accent page. */
+body.marco-visual-polish .mini-player {
+  border-top: 1px solid color-mix(in srgb, var(--marco-page-accent) 18%, rgba(255, 255, 255, 0.08));
+  box-shadow:
+    0 -18px 48px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+body.marco-visual-polish .mini-player #playBtn,
+body.marco-visual-polish .music-drawer-main-action,
+body.marco-visual-polish .music-drawer-action {
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.26),
+    0 0 18px color-mix(in srgb, var(--marco-page-accent) 12%, transparent);
+}
+
+body.marco-visual-polish .track-label b:first-child,
+body.marco-visual-polish .music-drawer-index {
+  color: color-mix(in srgb, var(--marco-page-accent) 86%, var(--cream) 14%) !important;
+}
+
+/* Drawer musique : même texture, accent page mieux intégré. */
+body.marco-visual-polish .music-drawer-sheet {
+  border-color: color-mix(in srgb, var(--marco-page-accent) 18%, rgba(255, 255, 255, 0.12));
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--marco-page-accent) 16%, transparent), transparent 34%),
+    radial-gradient(circle at 86% 18%, color-mix(in srgb, var(--marco-page-accent) 9%, transparent), transparent 30%),
+    linear-gradient(180deg, rgba(8, 12, 17, 0.95), rgba(3, 5, 8, 0.988)) !important;
+}
+
+body.marco-visual-polish .music-drawer-toggle {
+  color: color-mix(in srgb, var(--marco-page-accent) 88%, var(--cream) 12%) !important;
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--marco-page-accent) 34%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.52) !important;
+}
+
+body.marco-visual-polish .music-drawer-toggle i,
+body.marco-visual-polish .music-drawer-toggle .music-drawer-arrow {
+  text-shadow:
+    0 0 14px color-mix(in srgb, var(--marco-page-accent) 74%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.68) !important;
+}
+
+/* Formulaire / blocs texte : légère intégration, utile surtout contact. */
+body.marco-visual-polish .contact-card,
+body.marco-visual-polish .contact-panel,
+body.marco-visual-polish .form-card,
+body.marco-visual-polish .page-card {
+  border-color: color-mix(in srgb, var(--marco-page-accent) 16%, rgba(255, 255, 255, 0.12));
+  box-shadow:
+    0 24px 68px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+@media (max-width: 900px) {
+  body.marco-visual-polish:not([data-marco-page="home"]) .page img[src*="marco-"]:not([src*="logo"]),
+  body.marco-visual-polish:not([data-marco-page="home"]) .hero-person,
+  body.marco-visual-polish:not([data-marco-page="home"]) .page-person,
+  body.marco-visual-polish:not([data-marco-page="home"]) .composition-person,
+  body.marco-visual-polish:not([data-marco-page="home"]) .music-person {
+    filter:
+      drop-shadow(0 16px 28px rgba(0, 0, 0, 0.50))
+      drop-shadow(0 0 14px var(--marco-soft-edge))
+      saturate(1.01);
+  }
+}
+/* === MARCO PATCH v0.4.0 VISUAL POLISH - END === */
