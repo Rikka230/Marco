@@ -601,3 +601,44 @@
   }
 })();
 /* === MARCO COMPOSITION TRACK SCROLL CONTROLS - END === */
+
+
+/* === MARCO COMPOSITION TRACK LOOP OVERRIDE - START === */
+(() => {
+  function loopScrollCompositionTracks(button) {
+    const zone = button.closest('.composition-diagonal-zone');
+    const scroller = zone?.querySelector('.composition-track-scroll');
+    if (!scroller) return;
+
+    const direction = button.dataset.trackScroll === 'up' ? -1 : 1;
+    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    const amount = Math.max(132, Math.round(scroller.clientHeight * 0.62));
+
+    let nextTop = scroller.scrollTop + direction * amount;
+
+    if (direction > 0 && nextTop >= maxScroll - 8) {
+      nextTop = 0;
+    }
+
+    if (direction < 0 && nextTop <= 8) {
+      nextTop = maxScroll;
+    }
+
+    scroller.scrollTo({
+      top: nextTop,
+      behavior: 'smooth'
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('.composition-track-step[data-track-scroll]');
+    if (!button) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    loopScrollCompositionTracks(button);
+  }, true);
+})();
+/* === MARCO COMPOSITION TRACK LOOP OVERRIDE - END === */

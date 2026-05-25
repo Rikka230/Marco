@@ -2002,3 +2002,55 @@ body.is-transitioning .mini-brand {
   }
 }
 /* === MARCO COMPOSITION TRACKS LAYOUT FIX - END === */
+
+
+/* === MARCO COMPOSITION LOOP PARALLEL FIX - START === */
+.composition-page .nav-gallery {
+  display: none;
+}
+
+.composition-page::before {
+  background:
+    linear-gradient(112deg, transparent 0 32%, rgba(255, 48, 79, 0.72) 32.1% 32.55%, transparent 32.9%),
+    linear-gradient(112deg, transparent 0 48%, rgba(249, 241, 220, 0.18) 48.1% 48.36%, transparent 48.7%),
+    linear-gradient(112deg, transparent 0 64%, rgba(255, 48, 79, 0.42) 64.1% 64.45%, transparent 64.8%);
+  mix-blend-mode: screen;
+  opacity: 0.56;
+}
+
+.composition-page .composition-diagonal-zone {
+  right: clamp(72px, 6.9vw, 118px);
+  width: min(43.5vw, 735px);
+}
+
+.composition-page .composition-track-scroll {
+  padding-top: 7.2vh;
+  padding-right: clamp(38px, 3.8vw, 68px);
+  padding-bottom: 13vh;
+}
+
+.composition-track-step {
+  right: 0.5rem;
+}
+
+.composition-track-step.is-disabled {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.composition-track-step-up {
+  top: 1.6vh;
+}
+
+.composition-track-step-down {
+  bottom: 3.8vh;
+}
+
+@media (max-width: 900px) {
+  .composition-page .composition-diagonal-zone {
+    right: auto;
+    left: 2vw;
+    width: 96vw;
+  }
+}
+/* === MARCO COMPOSITION LOOP PARALLEL FIX - END === */
