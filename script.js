@@ -1191,7 +1191,6 @@
 })();
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
 
-
 /* === MARCO PATCH v0.4.0 VISUAL POLISH - START === */
 /*
   MARCO PATCH v0.4.0
@@ -1283,3 +1282,35 @@
   }
 })();
 /* === MARCO PATCH v0.4.0 VISUAL POLISH - END === */
+
+
+/* === MARCO PATCH v0.4.1 VISUAL CLEANUP - START === */
+/*
+  MARCO PATCH v0.4.1
+  Type : correctif polish visuel
+  Cible :
+  - sync visuel plus discret
+  - éviter les micro flashs de fond
+*/
+(() => {
+  let frame = 0;
+
+  function applyVisualCleanupSync() {
+    if (document.body) {
+      document.body.classList.add('marco-visual-polish');
+    }
+  }
+
+  function requestVisualCleanupSync() {
+    if (frame) return;
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      applyVisualCleanupSync();
+    });
+  }
+
+  applyVisualCleanupSync();
+  document.addEventListener('DOMContentLoaded', requestVisualCleanupSync);
+  window.addEventListener('pageshow', requestVisualCleanupSync);
+})();
+ /* === MARCO PATCH v0.4.1 VISUAL CLEANUP - END === */
