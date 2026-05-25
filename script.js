@@ -642,3 +642,167 @@
   }, true);
 })();
 /* === MARCO COMPOSITION TRACK LOOP OVERRIDE - END === */
+
+
+/* === MARCO GLOBAL MUSIC PANEL - START === */
+(() => {
+  const STORAGE_KEY = 'marco.activeTrack.v1';
+
+  const TRACKS = [
+    { id: '01', title: 'Cinematic Strings', meta: 'Score · 2026 · 02:48', audio: '/assets/audio/marco-placeholder-01.wav' },
+    { id: '02', title: 'Night Motif', meta: 'Demo · 2026 · 01:36', audio: '/assets/audio/marco-placeholder-02.wav' },
+    { id: '03', title: 'Excursion Theme', meta: 'Campaign · 2026 · 02:12', audio: '/assets/audio/marco-placeholder-03.wav' },
+    { id: '04', title: 'Bow Texture', meta: 'Violin + Score · 2025 · 03:10', audio: '/assets/audio/marco-placeholder-04.wav' },
+    { id: '05', title: 'Red Cut', meta: 'Original · 2025 · 02:04', audio: '/assets/audio/marco-placeholder-05.wav' },
+    { id: '06', title: 'Stage Lines', meta: 'Stage · 2025 · 02:52', audio: '/assets/audio/marco-placeholder-06.wav' },
+    { id: '07', title: 'Glass Motif', meta: 'Placeholder · 2026 · 01:44', audio: '/assets/audio/marco-placeholder-07.wav' },
+    { id: '08', title: 'Low Room', meta: 'Placeholder · 2026 · 02:26', audio: '/assets/audio/marco-placeholder-08.wav' },
+    { id: '09', title: 'First Cut', meta: 'Placeholder · 2026 · 01:58', audio: '/assets/audio/marco-placeholder-09.wav' },
+    { id: '10', title: 'End Theme', meta: 'Placeholder · 2026 · 03:04', audio: '/assets/audio/marco-placeholder-10.wav' }
+  ];
+
+  window.MARCO_MUSIC_TRACKS = TRACKS;
+
+  function getMiniPlayer() {
+    return document.querySelector('.mini-player');
+  }
+
+  function getAudio() {
+    return document.querySelector('#audioLoop');
+  }
+
+  function getTrackById(id) {
+    return TRACKS.find((track) => track.id === String(id).padStart(2, '0')) || TRACKS[0];
+  }
+
+  function getTrackFromCompositionCard(card) {
+    const index = card?.querySelector('.track-index')?.textContent?.trim();
+    const title = card?.dataset?.trackTitle || card?.querySelector('.track-title')?.textContent?.trim();
+
+    if (index) {
+      const byIndex = getTrackById(index);
+      if (byIndex) return byIndex;
+    }
+
+    return TRACKS.find((track) => track.title.toLowerCase() === String(title || '').toLowerCase()) || TRACKS[0];
+  }
+
+  function updatePanelState(track) {
+    document.querySelectorAll('[data-music-track-id]').forEach((button) => {
+      button.classList.toggle('is-active', button.dataset.musicTrackId === track.id);
+    });
+
+    document.querySelectorAll('.composition-track').forEach((card) => {
+      const current = getTrackFromCompositionCard(card);
+      card.classList.toggle('is-active', current.id === track.id);
+    });
+  }
+
+  function updateMiniLabel(track) {
+    const label = document.querySelector('.track-label');
+    if (!label) return;
+    label.innerHTML = `<b>${track.id}</b><b>${track.title}</b><b>${track.meta}</b>`;
+  }
+
+  async function setGlobalTrack(track, shouldPlay = true) {
+    const audio = getAudio();
+    if (!audio || !track) return;
+
+    const wasPlaying = !audio.paused || shouldPlay;
+    const absolute = new URL(track.audio, window.location.origin).href;
+
+    if (audio.src !== absolute) {
+      audio.src = track.audio;
+      audio.load();
+    }
+
+    audio.dataset.trackId = track.id;
+    localStorage.setItem(STORAGE_KEY, track.id);
+    updateMiniLabel(track);
+    updatePanelState(track);
+
+    if (wasPlaying) {
+      try {
+        await audio.play();
+        const playBtn = document.querySelector('#playBtn');
+        if (playBtn) playBtn.textContent = 'PAUSE';
+      } catch (error) {
+        const playBtn = document.querySelector('#playBtn');
+        if (playBtn) playBtn.textContent = 'PLAY';
+      }
+    }
+  }
+
+  function ensureMusicPanel() {
+    const miniPlayer = getMiniPlayer();
+    if (!miniPlayer || miniPlayer.querySelector('.music-panel')) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'music-panel';
+    panel.setAttribute('aria-label', 'Navigation rapide des musiques');
+
+    panel.innerHTML = `
+      <div class="music-panel-title"><span>Music index</span><span>Hover / switch</span></div>
+      ${TRACKS.map((track) => `
+        <button class="music-panel-track" type="button" data-music-track-id="${track.id}">
+          <span class="music-panel-index">${track.id}</span>
+          <span class="music-panel-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
+          <span class="music-panel-action">Play</span>
+        </button>
+      `).join('')}
+    `;
+
+    miniPlayer.prepend(panel);
+
+    panel.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-music-track-id]');
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      setGlobalTrack(getTrackById(button.dataset.musicTrackId), true);
+    });
+  }
+
+  function restoreTrack() {
+    ensureMusicPanel();
+    const stored = localStorage.getItem(STORAGE_KEY);
+    const current = stored ? getTrackById(stored) : TRACKS[0];
+    const audio = getAudio();
+
+    if (audio && (!audio.dataset.trackId || audio.dataset.trackId !== current.id)) {
+      audio.src = current.audio;
+      audio.dataset.trackId = current.id;
+    }
+
+    updateMiniLabel(current);
+    updatePanelState(current);
+  }
+
+  document.addEventListener('click', (event) => {
+    const play = event.target.closest('.composition-track .track-play');
+    if (!play) return;
+
+    const card = play.closest('.composition-track');
+    const track = getTrackFromCompositionCard(card);
+    setGlobalTrack(track, true);
+  });
+
+  document.addEventListener('DOMContentLoaded', restoreTrack);
+  window.addEventListener('pageshow', restoreTrack);
+
+  const observer = new MutationObserver(() => {
+    window.requestAnimationFrame(restoreTrack);
+  });
+
+  if (document.readyState !== 'loading') {
+    restoreTrack();
+    const app = document.querySelector('#app');
+    if (app) observer.observe(app, { childList: true, subtree: true });
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      const app = document.querySelector('#app');
+      if (app) observer.observe(app, { childList: true, subtree: true });
+    });
+  }
+})();
+/* === MARCO GLOBAL MUSIC PANEL - END === */
