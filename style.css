@@ -2872,136 +2872,112 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
 
-/* === MARCO PATCH v0.4.3 VISIBLE POST-ROLLBACK FIXES - START === */
+/* === MARCO PATCH v0.4.4 VERSION BADGE + VISIBLE FIXES - START === */
 /*
-  Correction plus visible après test v0.4.2 trop discret.
-  Cibles : pages internes seulement. Home non touchée.
-  Pas d'overlay global sur les fonds, pas de recoloration lourde du personnage.
+  But : rendre le patch visible immédiatement et corriger les sélecteurs qui ne mordaient pas assez.
+  Home : non ciblée. Aucun overlay global sur les fonds.
 */
 
 :root {
-  --marco-page-accent: var(--marco-nav-accent, var(--accent, #86f5a8));
-  --marco-person-shadow: rgba(0, 0, 0, 0.58);
-  --marco-person-edge-light: rgba(255, 255, 255, 0.055);
-  --marco-person-brightness: 1;
-  --marco-person-contrast: 1.018;
-  --marco-person-saturation: 1.004;
+  --marco-page-accent: var(--accent, #ff304f);
+  --marco-v044-shadow: rgba(0, 0, 0, 0.68);
+  --marco-v044-edge: rgba(255, 255, 255, 0.08);
+  --marco-v044-version-bg: rgba(5, 0, 6, 0.78);
 }
 
-body[data-marco-page="music"],
 .shell:has(.page[data-page="music"]) {
   --marco-page-accent: #f4bd68;
-  --marco-person-edge-light: rgba(244, 189, 104, 0.16);
-  --marco-person-shadow: rgba(0, 0, 0, 0.56);
-  --marco-person-brightness: 1.018;
-  --marco-person-contrast: 1.014;
+  --marco-v044-edge: rgba(244, 189, 104, 0.20);
 }
 
-body[data-marco-page="composition"],
-.shell:has(.page[data-page="composition"]) {
+.shell:has(.page[data-page="composition"]),
+.shell:has(.page[data-theme="composition"]) {
   --marco-page-accent: #ff304f;
-  --marco-person-edge-light: rgba(255, 48, 79, 0.18);
-  --marco-person-shadow: rgba(0, 0, 0, 0.62);
-  --marco-person-brightness: 0.982;
-  --marco-person-contrast: 1.035;
+  --marco-v044-edge: rgba(255, 48, 79, 0.22);
 }
 
-body[data-marco-page="gallery"],
-.shell:has(.page[data-page="gallery"]) {
-  --marco-page-accent: #f08ac8;
-  --marco-person-edge-light: rgba(240, 138, 200, 0.13);
+.shell:has(.page[data-page="gallery"]) { --marco-page-accent: #f08ac8; --marco-v044-edge: rgba(240, 138, 200, 0.16); }
+.shell:has(.page[data-page="filmographie"]) { --marco-page-accent: #6fd7ff; --marco-v044-edge: rgba(111, 215, 255, 0.16); }
+.shell:has(.page[data-page="parcours"]),
+.shell:has(.page[data-page="scores"]) { --marco-page-accent: #73aaf6; --marco-v044-edge: rgba(115, 170, 246, 0.16); }
+.shell:has(.page[data-page="booking"]) { --marco-page-accent: #d8c3ff; --marco-v044-edge: rgba(216, 195, 255, 0.16); }
+
+/* Badge de suivi : si tu ne le vois pas, la page ne charge pas cette version. */
+.shell:has(.page.inner:not([data-page="home"]))::after {
+  content: "MARCO v0.4.4";
+  position: fixed;
+  top: clamp(14px, 2vh, 24px);
+  right: clamp(86px, 7vw, 142px);
+  z-index: 2147483000;
+  display: inline-grid !important;
+  place-items: center;
+  min-width: 92px;
+  height: 24px;
+  padding: 0 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--marco-page-accent) 72%, rgba(255,255,255,0.26));
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--marco-page-accent) 18%, transparent), transparent 70%),
+    var(--marco-v044-version-bg);
+  color: color-mix(in srgb, var(--marco-page-accent) 82%, #fff 18%);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--marco-page-accent) 28%, transparent), 0 12px 30px rgba(0,0,0,0.42);
+  font-family: var(--heavy, system-ui, sans-serif);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0.92 !important;
+  transform: translateZ(0);
 }
 
-body[data-marco-page="filmographie"],
-.shell:has(.page[data-page="filmographie"]) {
-  --marco-page-accent: #6fd7ff;
-  --marco-person-edge-light: rgba(111, 215, 255, 0.13);
-}
-
-body[data-marco-page="parcours"],
-.shell:has(.page[data-page="parcours"]) {
-  --marco-page-accent: #73aaf6;
-  --marco-person-edge-light: rgba(115, 170, 246, 0.12);
-}
-
-body[data-marco-page="booking"],
-.shell:has(.page[data-page="booking"]) {
-  --marco-page-accent: #d8c3ff;
-  --marco-person-edge-light: rgba(216, 195, 255, 0.12);
-}
-
-/* PNG internes : correction visible mais contrôlée. Aucun sélecteur Home. */
+/* PNG Marco internes : inclut bien .hero-person, le sélecteur qui dominait la page Composition. */
+.page.inner .hero-person,
 .page.inner .page-person,
-.page.inner .composition-person,
-.page.inner .music-person,
-.page.inner .projects-person,
-.page.inner .gallery-person,
-.page.inner .contact-person {
+.composition-page .hero-person,
+.music .hero-person,
+.poster-page.inner .hero-person {
   image-rendering: auto !important;
-  backface-visibility: hidden;
-  transform-style: flat;
+  backface-visibility: hidden !important;
+  transform-style: flat !important;
   outline: 0 !important;
-  clip-path: inset(0.38px 0.38px 0.32px 0.38px);
+  clip-path: inset(0.7px 0.65px 0.48px 0.65px) !important;
   filter:
-    drop-shadow(0 28px 46px var(--marco-person-shadow))
-    drop-shadow(0 0 13px var(--marco-person-edge-light))
-    brightness(var(--marco-person-brightness))
-    contrast(var(--marco-person-contrast))
-    saturate(var(--marco-person-saturation)) !important;
+    brightness(0.985)
+    contrast(1.055)
+    saturate(1.004)
+    drop-shadow(0 34px 48px var(--marco-v044-shadow))
+    drop-shadow(0 0 2px var(--marco-v044-edge))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--marco-page-accent) 14%, transparent)) !important;
 }
 
+.composition-page .hero-person,
 .composition-page .composition-person {
-  clip-path: inset(0.5px 0.45px 0.35px 0.45px);
+  clip-path: inset(0.85px 0.72px 0.55px 0.72px) !important;
   filter:
-    drop-shadow(0 30px 52px rgba(0, 0, 0, 0.66))
-    drop-shadow(0 0 16px rgba(255, 48, 79, 0.20))
-    brightness(0.978)
-    contrast(1.044)
-    saturate(1.006) !important;
+    brightness(0.955)
+    contrast(1.105)
+    saturate(1.002)
+    drop-shadow(0 38px 54px rgba(0,0,0,0.74))
+    drop-shadow(0 0 2px rgba(255,255,255,0.075))
+    drop-shadow(0 0 20px rgba(255,48,79,0.16)) !important;
 }
 
+.music .hero-person,
 .music .music-person {
-  clip-path: inset(0.42px 0.42px 0.32px 0.42px);
+  clip-path: inset(0.72px 0.7px 0.5px 0.7px) !important;
   filter:
-    drop-shadow(0 28px 48px rgba(0, 0, 0, 0.58))
-    drop-shadow(0 0 15px rgba(244, 189, 104, 0.18))
     brightness(1.018)
-    contrast(1.018)
-    saturate(1.004) !important;
+    contrast(1.052)
+    saturate(1.002)
+    drop-shadow(0 34px 50px rgba(0,0,0,0.62))
+    drop-shadow(0 0 2px rgba(255,255,255,0.075))
+    drop-shadow(0 0 18px rgba(244,189,104,0.18)) !important;
 }
 
-/* Drawer musique : correction volontairement visible. Les 4 cartes doivent tenir sans coupe. */
-.music-drawer-sheet {
-  height: clamp(330px, 46vh, 480px) !important;
-  padding:
-    clamp(1rem, 1.25vw, 1.28rem)
-    clamp(1rem, 1.25vw, 1.28rem)
-    clamp(4.35rem, 7.2vh, 5.4rem) !important;
-  overflow: visible !important;
-}
-
-.music-drawer-library {
-  min-height: 0 !important;
-  overflow: visible !important;
-}
-
-.music-drawer-list {
-  grid-auto-rows: minmax(66px, auto) !important;
-  gap: 0.72rem 0.72rem !important;
-  align-content: start !important;
-  overflow: visible !important;
-  padding: 0.16rem 0.28rem 0.9rem 0 !important;
-}
-
-.music-drawer-track {
-  min-height: 66px !important;
-  padding: 0.72rem 0.82rem !important;
-}
-
-/* Mini-player : le cadre disparaît vraiment, il ne reste que la ligne éditoriale. */
-body:not([data-marco-page="home"]) .mini-player,
-.shell:has(.page.inner) .mini-player {
-  bottom: 5.2vh !important;
+/* Mini-player : plus de plaque translucide, uniquement une ligne haute lisible. */
+.shell:has(.page.inner:not([data-page="home"])) .mini-player {
+  bottom: clamp(42px, 5.4vh, 72px) !important;
   padding: 0.72rem 0 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -3011,53 +2987,73 @@ body:not([data-marco-page="home"]) .mini-player,
   -webkit-backdrop-filter: none !important;
 }
 
-body:not([data-marco-page="home"]) .mini-player::before,
-.shell:has(.page.inner) .mini-player::before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: min(72vw, 820px);
-  height: 1px;
-  content: "";
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--marco-page-accent) 44%, rgba(255, 255, 255, 0.12)),
-    rgba(255, 255, 255, 0.13) 40%,
-    transparent 100%
-  );
-  opacity: 0.82;
+.shell:has(.page.inner:not([data-page="home"])) .mini-player::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: min(74vw, 880px) !important;
+  height: 1px !important;
+  display: block !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--marco-page-accent) 70%, rgba(255,255,255,0.16)), rgba(255,255,255,0.16) 38%, transparent 100%) !important;
+  opacity: 0.92 !important;
+  pointer-events: none !important;
 }
 
-body:not([data-marco-page="home"]) .mini-player::after,
-.shell:has(.page.inner) .mini-player::after {
+.shell:has(.page.inner:not([data-page="home"])) .mini-player::after {
   content: none !important;
   display: none !important;
 }
 
+/* Drawer musique global : hauteur augmentée et cartes 01/02/03/04 non coupées. */
+.music-drawer-sheet {
+  height: clamp(360px, 52vh, 560px) !important;
+  padding: clamp(1rem, 1.25vw, 1.35rem) clamp(1rem, 1.25vw, 1.35rem) clamp(4.8rem, 8vh, 6rem) !important;
+  overflow: visible !important;
+}
+
+body.music-drawer-open .music-drawer-sheet {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
+
+.music-drawer-library,
+.music-drawer-list {
+  min-height: 0 !important;
+}
+
+.music-drawer-list {
+  grid-auto-rows: minmax(72px, auto) !important;
+  gap: 0.78rem !important;
+  align-content: start !important;
+  overflow: visible !important;
+  padding: 0.16rem 0.28rem 1.1rem 0 !important;
+}
+
+.music-drawer-track {
+  min-height: 72px !important;
+  padding: 0.78rem 0.9rem !important;
+}
+
 @media (max-width: 900px) {
+  .shell:has(.page.inner:not([data-page="home"]))::after {
+    top: 12px;
+    right: 16px;
+    min-width: 84px;
+    height: 22px;
+    font-size: 9px;
+  }
+
   .music-drawer-sheet {
-    height: min(70vh, 560px) !important;
+    height: min(76vh, 620px) !important;
     grid-template-columns: 1fr !important;
-    padding-bottom: 5rem !important;
+    padding-bottom: 5.4rem !important;
   }
 
   .music-drawer-list {
     grid-template-columns: 1fr !important;
     overflow: auto !important;
   }
-
-  body:not([data-marco-page="home"]) .mini-player,
-  .shell:has(.page.inner) .mini-player {
-    bottom: 4.6vh !important;
-  }
-
-  body:not([data-marco-page="home"]) .mini-player::before,
-  .shell:has(.page.inner) .mini-player::before {
-    width: min(86vw, 560px);
-  }
 }
-/* === MARCO PATCH v0.4.3 VISIBLE POST-ROLLBACK FIXES - END === */
-
-
-
+/* === MARCO PATCH v0.4.4 VERSION BADGE + VISIBLE FIXES - END === */
