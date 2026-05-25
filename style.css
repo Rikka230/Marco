@@ -2418,7 +2418,6 @@ body.music-drawer-open .music-drawer-sheet {
 }
 /* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - END === */
 
-
 /* === MARCO PATCH v0.2.2 MUSIC BUTTON FIX - START === */
 /*
   MARCO PATCH v0.2.2
@@ -2468,3 +2467,128 @@ body.music-drawer-open .music-drawer-sheet {
   transform: translateY(-4px);
 }
 /* === MARCO PATCH v0.2.2 MUSIC BUTTON FIX - END === */
+
+
+/* === MARCO PATCH v0.2.3 MUSIC BUTTON SHAPE ARROW - START === */
+/*
+  MARCO PATCH v0.2.3
+  Type : bugfix UI
+  Cible : bouton "Musiques" du player global
+  Objectif :
+  - retirer définitivement l'effet rond / bouton play parasite
+  - rendre le bouton lisible et intégré au site
+  - ajouter une petite animation discrète sur la flèche
+*/
+
+@keyframes marcoMusicArrowFloat {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+.mini-player .music-drawer-toggle,
+.music-drawer-toggle {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  min-width: auto !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0.2rem 0.55rem !important;
+  margin: 0 !important;
+  border: 1px solid color-mix(in srgb, var(--accent, var(--mint)) 44%, rgba(255,255,255,0.10)) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 24, 0.78) 0%,
+    rgba(6, 10, 18, 0.90) 100%
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px rgba(0,0,0,0.18),
+    0 10px 28px rgba(0,0,0,0.28) !important;
+  color: color-mix(in srgb, var(--accent, var(--mint)) 84%, var(--cream) 16%) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1 !important;
+  overflow: visible !important;
+}
+
+/* supprime tous les restes de pseudo-éléments parasites */
+.mini-player .music-drawer-toggle::before,
+.mini-player .music-drawer-toggle::after,
+.music-drawer-toggle::before,
+.music-drawer-toggle::after,
+.mini-player .music-drawer-toggle span::before,
+.mini-player .music-drawer-toggle span::after,
+.mini-player .music-drawer-toggle i::before,
+.mini-player .music-drawer-toggle i::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* texte du bouton */
+.mini-player .music-drawer-toggle span,
+.music-drawer-toggle span {
+  display: inline-block !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  color: inherit !important;
+}
+
+/* flèche plus visible + petite animation */
+.mini-player .music-drawer-toggle i,
+.music-drawer-toggle i {
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 1.05rem !important;
+  height: 1.05rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-style: normal !important;
+  font-size: 1rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  color: var(--cream) !important;
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--accent, var(--mint)) 58%, transparent),
+    0 1px 8px rgba(0,0,0,0.55) !important;
+  animation: marcoMusicArrowFloat 1.35s ease-in-out infinite !important;
+}
+
+/* états */
+.mini-player .music-drawer-toggle:hover,
+.music-drawer-toggle:hover,
+.mini-player .music-drawer-toggle:focus-visible,
+.music-drawer-toggle:focus-visible,
+.mini-player .music-drawer-toggle.is-open,
+.music-drawer-toggle.is-open {
+  border-color: color-mix(in srgb, var(--accent, var(--mint)) 74%, rgba(255,255,255,0.16)) !important;
+  color: var(--cream) !important;
+  transform: translateY(-1px) !important;
+}
+
+.mini-player .music-drawer-toggle:hover i,
+.music-drawer-toggle:hover i,
+.mini-player .music-drawer-toggle:focus-visible i,
+.music-drawer-toggle:focus-visible i {
+  color: color-mix(in srgb, var(--accent, var(--mint)) 74%, var(--cream) 26%) !important;
+}
+
+.mini-player .music-drawer-toggle.is-open i,
+.music-drawer-toggle.is-open i {
+  animation-play-state: paused !important;
+  transform: rotate(180deg) translateY(-1px) !important;
+}
+/* === MARCO PATCH v0.2.3 MUSIC BUTTON SHAPE ARROW - END === */
