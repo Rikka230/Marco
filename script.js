@@ -531,159 +531,128 @@
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
 
-/* === MARCO CLEAN GLOBAL MUSIC LIBRARY - START === */
-(() => {
-  const STORAGE_KEY = 'marco.activeTrack.v3';
 
+/* === MARCO BOTTOM SHEET PLAYER AND COMPOSITION RAIL FIX - START === */
+(() => {
+  const STORAGE_KEY = 'marco.activeTrack.v4';
+  const SHEET_CLASS = 'music-sheet-open';
   const TRACKS = [
-    { id: '01', title: 'Cinematic Strings', meta: 'Score · 2026 · 02:48', audio: '/assets/audio/marco-placeholder-01.wav' },
-    { id: '02', title: 'Night Motif', meta: 'Demo · 2026 · 01:36', audio: '/assets/audio/marco-placeholder-02.wav' },
-    { id: '03', title: 'Excursion Theme', meta: 'Campaign · 2026 · 02:12', audio: '/assets/audio/marco-placeholder-03.wav' },
-    { id: '04', title: 'Bow Texture', meta: 'Violin + Score · 2025 · 03:10', audio: '/assets/audio/marco-placeholder-04.wav' },
-    { id: '05', title: 'Red Cut', meta: 'Original · 2025 · 02:04', audio: '/assets/audio/marco-placeholder-05.wav' },
-    { id: '06', title: 'Stage Lines', meta: 'Stage · 2025 · 02:52', audio: '/assets/audio/marco-placeholder-06.wav' },
-    { id: '07', title: 'Glass Motif', meta: 'Placeholder · 2026 · 01:44', audio: '/assets/audio/marco-placeholder-07.wav' },
-    { id: '08', title: 'Low Room', meta: 'Placeholder · 2026 · 02:26', audio: '/assets/audio/marco-placeholder-08.wav' },
-    { id: '09', title: 'First Cut', meta: 'Placeholder · 2026 · 01:58', audio: '/assets/audio/marco-placeholder-09.wav' },
-    { id: '10', title: 'End Theme', meta: 'Placeholder · 2026 · 03:04', audio: '/assets/audio/marco-placeholder-10.wav' }
+    { id: '01', title: 'Cinematic Strings', meta: 'Score · Featured', duration: '02:48', audio: '/assets/audio/marco-placeholder-01.wav' },
+    { id: '02', title: 'Night Motif', meta: 'Demo · Piano / Strings', duration: '01:36', audio: '/assets/audio/marco-placeholder-02.wav' },
+    { id: '03', title: 'Excursion Theme', meta: 'Campaign · Visual', duration: '02:12', audio: '/assets/audio/marco-placeholder-03.wav' },
+    { id: '04', title: 'Bow Texture', meta: 'Violin + Score · Atmosphere', duration: '03:10', audio: '/assets/audio/marco-placeholder-04.wav' },
+    { id: '05', title: 'Red Cut', meta: 'Original · Pulse', duration: '02:04', audio: '/assets/audio/marco-placeholder-05.wav' },
+    { id: '06', title: 'Stage Lines', meta: 'Stage · Scene', duration: '02:52', audio: '/assets/audio/marco-placeholder-06.wav' },
+    { id: '07', title: 'Glass Motif', meta: 'Placeholder · Texture', duration: '01:44', audio: '/assets/audio/marco-placeholder-07.wav' },
+    { id: '08', title: 'Low Room', meta: 'Placeholder · Ambient', duration: '02:26', audio: '/assets/audio/marco-placeholder-08.wav' },
+    { id: '09', title: 'First Cut', meta: 'Placeholder · Draft', duration: '01:58', audio: '/assets/audio/marco-placeholder-09.wav' },
+    { id: '10', title: 'End Theme', meta: 'Placeholder · Finale', duration: '03:04', audio: '/assets/audio/marco-placeholder-10.wav' }
   ];
 
-  window.MARCO_MUSIC_TRACKS = TRACKS;
-
-  function getAudio() {
-    return document.querySelector('#audioLoop');
-  }
-
-  function getTrackById(id) {
-    return TRACKS.find((track) => track.id === String(id).padStart(2, '0')) || TRACKS[0];
-  }
-
+  function getAudio() { return document.querySelector('#audioLoop'); }
+  function getTrackById(id) { return TRACKS.find(track => track.id === String(id).padStart(2, '0')) || TRACKS[0]; }
   function getTrackFromCompositionCard(card) {
     const index = card?.querySelector('.track-index')?.textContent?.trim();
     if (index) return getTrackById(index);
-
     const title = card?.dataset?.trackTitle || card?.querySelector('.track-title')?.textContent?.trim();
-    return TRACKS.find((track) => track.title.toLowerCase() === String(title || '').toLowerCase()) || TRACKS[0];
+    return TRACKS.find(track => track.title.toLowerCase() === String(title || '').toLowerCase()) || TRACKS[0];
   }
-
   function updateMiniLabel(track) {
     const label = document.querySelector('.track-label');
     if (!label || !track) return;
     label.innerHTML = `<b>${track.id}</b><b>${track.title}</b><b>${track.meta}</b>`;
   }
-
   function updateActiveStates(track) {
-    document.querySelectorAll('[data-music-track-id]').forEach((button) => {
-      button.classList.toggle('is-active', button.dataset.musicTrackId === track.id);
-    });
-
-    document.querySelectorAll('.composition-track').forEach((card) => {
-      const cardTrack = getTrackFromCompositionCard(card);
-      card.classList.toggle('is-active', cardTrack.id === track.id);
-    });
+    document.querySelectorAll('[data-music-track-id]').forEach(button => button.classList.toggle('is-active', button.dataset.musicTrackId === track.id));
+    document.querySelectorAll('.composition-track').forEach(card => card.classList.toggle('is-active', getTrackFromCompositionCard(card).id === track.id));
   }
-
   async function setGlobalTrack(track, shouldPlay = true) {
     const audio = getAudio();
     if (!audio || !track) return;
-
     const absolute = new URL(track.audio, window.location.origin).href;
     const shouldResume = shouldPlay || !audio.paused;
-
-    if (audio.src !== absolute) {
-      audio.src = track.audio;
-      audio.load();
-    }
-
+    if (audio.src !== absolute) { audio.src = track.audio; audio.load(); }
     audio.dataset.trackId = track.id;
     localStorage.setItem(STORAGE_KEY, track.id);
     updateMiniLabel(track);
     updateActiveStates(track);
-
+    const playBtn = document.querySelector('#playBtn');
     if (shouldResume) {
-      try {
-        await audio.play();
-        const playBtn = document.querySelector('#playBtn');
-        if (playBtn) playBtn.textContent = 'PAUSE';
-      } catch (error) {
-        const playBtn = document.querySelector('#playBtn');
-        if (playBtn) playBtn.textContent = 'PLAY';
-      }
+      try { await audio.play(); if (playBtn) playBtn.textContent = 'PAUSE'; }
+      catch (e) { if (playBtn) playBtn.textContent = 'PLAY'; }
     }
   }
-
-  function ensureMusicLibraryPanel() {
+  function closeSheet() {
+    document.body.classList.remove(SHEET_CLASS);
+    document.querySelector('.track-open-trigger')?.classList.remove('is-open');
+  }
+  function toggleSheet(force) {
+    const shouldOpen = typeof force === 'boolean' ? force : !document.body.classList.contains(SHEET_CLASS);
+    document.body.classList.toggle(SHEET_CLASS, shouldOpen);
+    document.querySelector('.track-open-trigger')?.classList.toggle('is-open', shouldOpen);
+  }
+  function ensureBottomSheet() {
     const miniPlayer = document.querySelector('.mini-player');
     if (!miniPlayer) return;
-
     miniPlayer.querySelector('.music-taskbar-panel')?.remove();
     miniPlayer.querySelector('.music-panel')?.remove();
-
-    if (miniPlayer.querySelector('.music-library-panel')) return;
-
-    const panel = document.createElement('div');
-    panel.className = 'music-library-panel';
-    panel.setAttribute('aria-label', 'Liste des musiques du site');
-
-    panel.innerHTML = `
-      <div class="music-library-head">
-        <span>Music library</span>
-        <span>Disponible partout</span>
-      </div>
-      <div class="music-library-grid">
-        ${TRACKS.map((track) => `
-          <button class="music-library-track" type="button" data-music-track-id="${track.id}">
-            <span class="music-library-index">${track.id}</span>
-            <span class="music-library-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
-            <span class="music-library-action">Play</span>
-          </button>
-        `).join('')}
-      </div>
-    `;
-
-    miniPlayer.appendChild(panel);
-
-    panel.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-music-track-id]');
-      if (!button) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-      setGlobalTrack(getTrackById(button.dataset.musicTrackId), true);
-    });
+    miniPlayer.querySelector('.music-library-panel')?.remove();
+    let trigger = miniPlayer.querySelector('.track-open-trigger');
+    if (!trigger) {
+      trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'track-open-trigger';
+      trigger.innerHTML = `<span>Tracks</span><i>↑</i>`;
+      miniPlayer.appendChild(trigger);
+      trigger.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); toggleSheet(); });
+    }
+    let sheet = document.querySelector('.music-bottom-sheet');
+    if (!sheet) {
+      sheet = document.createElement('div');
+      sheet.className = 'music-bottom-sheet';
+      sheet.innerHTML = `
+        <div class="music-bottom-sheet-header"><strong>Music Library</strong><span>Global audio / all pages</span></div>
+        <div class="music-bottom-sheet-list">
+          ${TRACKS.map(track => `
+            <button class="music-bottom-track" type="button" data-music-track-id="${track.id}">
+              <span class="music-bottom-track-index">${track.id}</span>
+              <span class="music-bottom-track-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
+              <span class="music-bottom-track-duration">${track.duration}</span>
+              <span class="music-bottom-track-action">Play</span>
+            </button>
+          `).join('')}
+        </div>`;
+      document.body.appendChild(sheet);
+      sheet.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-music-track-id]');
+        if (!button) return;
+        event.preventDefault();
+        event.stopPropagation();
+        setGlobalTrack(getTrackById(button.dataset.musicTrackId), true);
+      });
+      sheet.addEventListener('mouseleave', () => { if (!sheet.matches(':hover') && !miniPlayer.matches(':hover')) closeSheet(); });
+    }
+    miniPlayer.addEventListener('mouseenter', () => toggleSheet(true));
+    miniPlayer.addEventListener('mouseleave', () => setTimeout(() => { if (!miniPlayer.matches(':hover') && !sheet.matches(':hover')) closeSheet(); }, 40));
   }
-
   function restoreTrack() {
-    ensureMusicLibraryPanel();
-
+    ensureBottomSheet();
     const stored = localStorage.getItem(STORAGE_KEY);
     const track = stored ? getTrackById(stored) : TRACKS[0];
     const audio = getAudio();
-
-    if (audio && audio.dataset.trackId !== track.id) {
-      audio.src = track.audio;
-      audio.dataset.trackId = track.id;
-    }
-
+    if (audio && audio.dataset.trackId != track.id) { audio.src = track.audio; audio.dataset.trackId = track.id; }
     updateMiniLabel(track);
     updateActiveStates(track);
   }
-
   document.addEventListener('click', (event) => {
-    const button = event.target.closest('.composition-track .track-play');
-    if (!button) return;
-
-    const card = button.closest('.composition-track');
-    setGlobalTrack(getTrackFromCompositionCard(card), true);
+    const trackButton = event.target.closest('.composition-track .track-play');
+    if (trackButton) { setGlobalTrack(getTrackFromCompositionCard(trackButton.closest('.composition-track')), true); return; }
+    if (!event.target.closest('.music-bottom-sheet') && !event.target.closest('.track-open-trigger') && !event.target.closest('.mini-player')) closeSheet();
   });
-
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeSheet(); });
   document.addEventListener('DOMContentLoaded', restoreTrack);
   window.addEventListener('pageshow', restoreTrack);
-
-  const observer = new MutationObserver(() => {
-    window.requestAnimationFrame(restoreTrack);
-  });
-
+  const observer = new MutationObserver(() => window.requestAnimationFrame(restoreTrack));
   if (document.readyState !== 'loading') {
     restoreTrack();
     const app = document.querySelector('#app');
@@ -695,4 +664,4 @@
     });
   }
 })();
-/* === MARCO CLEAN GLOBAL MUSIC LIBRARY - END === */
+/* === MARCO BOTTOM SHEET PLAYER AND COMPOSITION RAIL FIX - END === */
