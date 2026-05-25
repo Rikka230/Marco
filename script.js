@@ -530,3 +530,74 @@
   }
 })();
 /* === MARCO GLOBAL CHAPTER NAV - END === */
+
+
+/* === MARCO COMPOSITION TRACK SCROLL CONTROLS - START === */
+(() => {
+  function getCompositionScroller(button) {
+    const zone = button.closest('.composition-diagonal-zone');
+    return zone?.querySelector('.composition-track-scroll') || null;
+  }
+
+  function updateCompositionTrackButtons(zone) {
+    const scroller = zone?.querySelector('.composition-track-scroll');
+    if (!scroller) return;
+
+    const up = zone.querySelector('[data-track-scroll="up"]');
+    const down = zone.querySelector('[data-track-scroll="down"]');
+    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+
+    up?.classList.toggle('is-disabled', scroller.scrollTop <= 4);
+    down?.classList.toggle('is-disabled', scroller.scrollTop >= maxScroll - 4);
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-track-scroll]');
+    if (!button) return;
+
+    const scroller = getCompositionScroller(button);
+    if (!scroller) return;
+
+    const direction = button.dataset.trackScroll === 'up' ? -1 : 1;
+    const amount = Math.max(120, Math.round(scroller.clientHeight * 0.58));
+
+    scroller.scrollBy({
+      top: direction * amount,
+      behavior: 'smooth'
+    });
+
+    window.setTimeout(() => {
+      updateCompositionTrackButtons(button.closest('.composition-diagonal-zone'));
+    }, 260);
+  });
+
+  document.addEventListener('scroll', (event) => {
+    if (!event.target?.classList?.contains('composition-track-scroll')) return;
+    updateCompositionTrackButtons(event.target.closest('.composition-diagonal-zone'));
+  }, true);
+
+  function initCompositionTrackButtons() {
+    document.querySelectorAll('.composition-diagonal-zone').forEach((zone) => {
+      updateCompositionTrackButtons(zone);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCompositionTrackButtons);
+  window.addEventListener('resize', initCompositionTrackButtons);
+
+  const observer = new MutationObserver(() => {
+    window.requestAnimationFrame(initCompositionTrackButtons);
+  });
+
+  if (document.readyState !== 'loading') {
+    initCompositionTrackButtons();
+    const app = document.querySelector('#app');
+    if (app) observer.observe(app, { childList: true, subtree: true });
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      const app = document.querySelector('#app');
+      if (app) observer.observe(app, { childList: true, subtree: true });
+    });
+  }
+})();
+/* === MARCO COMPOSITION TRACK SCROLL CONTROLS - END === */
