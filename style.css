@@ -2106,7 +2106,6 @@ body.is-transitioning .mini-brand {
 }
 /* === MARCO PATCH V0.1.0 STABILISATION - END === */
 
-
 /* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - START === */
 /*
   MARCO PATCH v0.2.0
@@ -2418,3 +2417,54 @@ body.music-drawer-open .music-drawer-sheet {
   }
 }
 /* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - END === */
+
+
+/* === MARCO PATCH v0.2.2 MUSIC BUTTON FIX - START === */
+/*
+  MARCO PATCH v0.2.2
+  Type : bugfix UI
+  Cible : bouton Musiques du player global
+*/
+
+/* Neutralise les pseudo-icônes héritées du bouton PLAY sur le bouton Musiques. */
+.mini-player .music-drawer-toggle::before,
+.mini-player .music-drawer-toggle::after,
+.mini-player .music-drawer-toggle i::before,
+.mini-player .music-drawer-toggle i::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Le bouton Musiques reste un vrai bouton texte, pas un bouton Play. */
+.mini-player .music-drawer-toggle {
+  color: color-mix(in srgb, var(--accent, var(--mint)) 82%, var(--cream) 18%) !important;
+  min-width: auto;
+}
+
+/* Flèche plus visible et plus lisible. */
+.mini-player .music-drawer-toggle i {
+  display: inline-grid !important;
+  place-items: center;
+  width: 1.35em;
+  height: 1.35em;
+  margin-left: 0.08rem;
+  color: var(--cream);
+  font-style: normal;
+  font-size: 1.55em;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--accent, var(--mint)) 62%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.62);
+}
+
+.mini-player .music-drawer-toggle:hover i,
+.mini-player .music-drawer-toggle.is-open i {
+  color: color-mix(in srgb, var(--accent, var(--mint)) 74%, var(--cream) 26%);
+  transform: translateY(-4px);
+}
+/* === MARCO PATCH v0.2.2 MUSIC BUTTON FIX - END === */

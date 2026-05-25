@@ -919,7 +919,7 @@
       toggle.type = 'button';
       toggle.className = 'music-drawer-toggle';
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.innerHTML = '<span>Musiques</span><i>↑</i>';
+      toggle.innerHTML = '<span>Musiques</span><i aria-hidden="true">↑</i>';
       miniPlayer.appendChild(toggle);
 
       toggle.addEventListener('click', (event) => {
