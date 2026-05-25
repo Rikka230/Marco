@@ -2,7 +2,7 @@
   const app = document.querySelector('#app');
   if (!app) return;
 
-  const order = ['home', 'music', 'scores', 'gallery', 'booking'];
+  const order = ['home', 'music', 'parcours', 'gallery', 'filmographie', 'composition', 'scores', 'booking'];
   let currentPage = app.querySelector('.page')?.dataset.page || 'home';
   let busy = false;
 
@@ -15,6 +15,10 @@
   const pageFromPath = (path) => {
     const file = path.split('/').pop() || 'index.html';
     if (file.includes('music')) return 'music';
+    if (file.includes('composition')) return 'composition';
+    if (file.includes('parcours')) return 'parcours';
+    if (file.includes('filmographie')) return 'filmographie';
+    if (file.includes('composition')) return 'composition';
     if (file.includes('projects')) return 'scores';
     if (file.includes('gallery')) return 'gallery';
     if (file.includes('contact')) return 'booking';
@@ -181,7 +185,7 @@
     lastWave = now;
 
     const energyMode = playing ? 1 : 0.42;
-    const pageLift = pageName === 'music' ? 1.16 : pageName === 'scores' ? 0.88 : pageName === 'gallery' ? 1.02 : 0.96;
+    const pageLift = pageName === 'music' ? 1.16 : pageName === 'parcours' ? 0.96 : pageName === 'filmographie' ? 1.02 : pageName === 'composition' ? 1.08 : pageName === 'scores' ? 0.88 : pageName === 'gallery' ? 1.02 : 0.96;
 
     ctx.clearRect(0, 0, w, h);
     const spacingX = transitioning ? Math.max(12, Math.min(18, w / 118)) : Math.max(8, Math.min(13, w / 168));
@@ -281,6 +285,24 @@
 
   window.addEventListener('pointerleave', () => scheduleParallax(), { passive: true });
 
+  document.addEventListener('click', (e) => {
+    const trackButton = e.target.closest('.composition-track .track-play');
+    if (!trackButton) return;
+
+    const track = trackButton.closest('.composition-track');
+    const page = trackButton.closest('.composition-page');
+    const label = document.querySelector('.track-label');
+    const title = track?.dataset.trackTitle || track?.querySelector('.track-title')?.textContent?.trim() || 'COMPOSITION';
+
+    page?.querySelectorAll('.composition-track.is-active').forEach((item) => item.classList.remove('is-active'));
+    track?.classList.add('is-active');
+
+    if (label) {
+      label.innerHTML = `<b>COMPOSITION</b><b>${title}</b><b>READY</b>`;
+    }
+  });
+
+
   document.addEventListener('submit', (e) => {
     const form = e.target.closest('[data-contact-form]');
     if (!form) return;
@@ -314,3 +336,197 @@
     if (status) status.textContent = '';
   });
 })();
+
+/* === MARCO GLOBAL CHAPTER NAV - START === */
+(() => {
+  const chapters = [
+    { id: 'home', short: 'HOME', label: 'HOME', href: '/index.html' },
+    { id: 'music', short: 'VIOLON', label: 'VIOLON', href: '/music.html' },
+    { id: 'parcours', short: 'PARCOURS', label: 'PARCOURS', href: '/parcours.html' },
+    { id: 'gallery', short: 'MODELE', label: 'MODELE', href: '/gallery.html' },
+    { id: 'filmographie', short: 'FILMO', label: 'FILMOGRAPHIE', href: '/filmographie.html' },
+    { id: 'composition', short: 'COMPO', label: 'COMPOSITION', href: '/composition.html' },
+    { id: 'booking', short: 'CONTACT', label: 'CONTACT', href: '/contact.html' }
+  ];
+
+  function detectChapterId() {
+    const page = document.querySelector('#app .page');
+    const dataPage = page?.dataset?.page;
+    const path = window.location.pathname.toLowerCase();
+
+    if (dataPage === 'home' || path.endsWith('/') || path.includes('index')) return 'home';
+    if (dataPage === 'composition' || path.includes('composition')) return 'composition';
+    if (dataPage === 'parcours' || path.includes('parcours')) return 'parcours';
+    if (dataPage === 'filmographie' || path.includes('filmographie')) return 'filmographie';
+    if (dataPage === 'music' || path.includes('music') || path.includes('violon')) return 'music';
+    if (dataPage === 'gallery' || path.includes('gallery') || path.includes('modele')) return 'gallery';
+    if (dataPage === 'booking' || path.includes('contact')) return 'booking';
+    if (dataPage === 'scores' || path.includes('projects')) return 'composition';
+
+    return 'home';
+  }
+
+  function buildChapterNav() {
+    const nav = document.createElement('nav');
+    nav.className = 'chapter-nav';
+    nav.setAttribute('data-chapter-nav', '');
+    nav.setAttribute('aria-label', 'Navigation globale du site');
+
+    const prev = document.createElement('button');
+    prev.className = 'chapter-step chapter-step-prev';
+    prev.type = 'button';
+    prev.dataset.chapterStep = 'prev';
+    prev.setAttribute('aria-label', 'Page précédente');
+    prev.innerHTML = '<span>▲</span>';
+
+    const toggle = document.createElement('button');
+    toggle.className = 'chapter-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = `
+      <span class="chapter-num">01</span>
+      <span class="chapter-current">HOME</span>
+      <span class="chapter-dots" aria-hidden="true">${chapters.map(() => '<i></i>').join('')}</span>
+      <span class="chapter-index-label">INDEX</span>
+    `;
+
+    const next = document.createElement('button');
+    next.className = 'chapter-step chapter-step-next';
+    next.type = 'button';
+    next.dataset.chapterStep = 'next';
+    next.setAttribute('aria-label', 'Page suivante');
+    next.innerHTML = '<span>▼</span>';
+
+    const panel = document.createElement('div');
+    panel.className = 'chapter-panel';
+
+    chapters.forEach((chapter, index) => {
+      const link = document.createElement('a');
+      link.className = 'chapter-link';
+      link.href = chapter.href;
+      link.setAttribute('data-pjax', '');
+      link.style.setProperty('--step', String(index));
+      link.dataset.chapterId = chapter.id;
+      link.innerHTML = `<span>${String(index + 1).padStart(2, '0')}</span><strong>${chapter.label}</strong>`;
+      panel.appendChild(link);
+    });
+
+    nav.append(prev, toggle, next, panel);
+    return nav;
+  }
+
+  function updateChapterNav() {
+    const nav = document.querySelector('[data-chapter-nav]');
+    if (!nav) return;
+
+    const activeId = detectChapterId();
+    const activeIndex = Math.max(0, chapters.findIndex((chapter) => chapter.id === activeId));
+    const active = chapters[activeIndex] || chapters[0];
+
+    nav.querySelector('.chapter-num').textContent = String(activeIndex + 1).padStart(2, '0');
+    nav.querySelector('.chapter-current').textContent = active.short;
+
+    nav.querySelectorAll('.chapter-dots i').forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === activeIndex);
+    });
+
+    nav.querySelectorAll('.chapter-link').forEach((link) => {
+      link.classList.toggle('is-active', link.dataset.chapterId === active.id);
+      if (link.dataset.chapterId === active.id) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  function closeChapterNav() {
+    const nav = document.querySelector('[data-chapter-nav]');
+    if (!nav) return;
+    nav.classList.remove('is-open');
+    nav.querySelector('.chapter-toggle')?.setAttribute('aria-expanded', 'false');
+  }
+
+  function goRelativeChapter(offset) {
+    const activeId = detectChapterId();
+    const currentIndex = Math.max(0, chapters.findIndex((chapter) => chapter.id === activeId));
+    const nextIndex = (currentIndex + offset + chapters.length) % chapters.length;
+    const target = chapters[nextIndex];
+    const link = document.querySelector(`[data-chapter-nav] .chapter-link[data-chapter-id="${target.id}"]`);
+
+    closeChapterNav();
+
+    if (link) {
+      link.click();
+      return;
+    }
+
+    window.location.href = target.href;
+  }
+
+  function ensureChapterNav() {
+    const shell = document.querySelector('.shell');
+    if (!shell) return;
+
+    let nav = document.querySelector('[data-chapter-nav]');
+    if (!nav) {
+      nav = buildChapterNav();
+      shell.appendChild(nav);
+
+      nav.querySelector('.chapter-toggle').addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = nav.classList.toggle('is-open');
+        nav.querySelector('.chapter-toggle')?.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      nav.querySelector('[data-chapter-step="prev"]')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        goRelativeChapter(-1);
+      });
+
+      nav.querySelector('[data-chapter-step="next"]')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        goRelativeChapter(1);
+      });
+
+      nav.querySelectorAll('.chapter-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          closeChapterNav();
+        });
+      });
+    }
+
+    updateChapterNav();
+  }
+
+  document.addEventListener('click', (event) => {
+    const nav = document.querySelector('[data-chapter-nav]');
+    if (!nav || nav.contains(event.target)) return;
+    closeChapterNav();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeChapterNav();
+  });
+
+  const observer = new MutationObserver(() => {
+    window.requestAnimationFrame(() => {
+      ensureChapterNav();
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    ensureChapterNav();
+    const app = document.querySelector('#app');
+    if (app) observer.observe(app, { childList: true, subtree: true });
+  });
+
+  if (document.readyState !== 'loading') {
+    ensureChapterNav();
+    const app = document.querySelector('#app');
+    if (app) observer.observe(app, { childList: true, subtree: true });
+  }
+})();
+/* === MARCO GLOBAL CHAPTER NAV - END === */
