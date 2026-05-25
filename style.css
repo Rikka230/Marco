@@ -1908,8 +1908,6 @@ body.is-transitioning .mini-brand {
 }
 /* === MARCO COMPOSITION MUSIC IMAGE FIX - END === */
 
-
-
 /* === MARCO PATCH V0.1.0 STABILISATION - START === */
 /* Version: MARCO PATCH v0.1.0 — Stabilisation Composition + player global */
 
@@ -2107,3 +2105,316 @@ body.is-transitioning .mini-brand {
   }
 }
 /* === MARCO PATCH V0.1.0 STABILISATION - END === */
+
+
+/* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - START === */
+/*
+  MARCO PATCH v0.2.0
+  Type : UI propre
+  Cible : Player global + drawer musique
+*/
+.mini-player {
+  overflow: visible;
+  z-index: 80;
+}
+
+.mini-player .music-drawer-toggle {
+  position: relative;
+  z-index: 84;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.36rem;
+  margin-left: auto;
+  margin-right: clamp(110px, 8.5vw, 154px);
+  min-height: 28px;
+  padding: 0 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--accent, var(--mint)) 28%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 11, 0.42), rgba(5, 8, 11, 0.78));
+  color: color-mix(in srgb, var(--accent, var(--mint)) 72%, var(--cream) 28%);
+  cursor: pointer;
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.56vw, 10px);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.26),
+    inset 0 0 18px color-mix(in srgb, var(--accent, var(--mint)) 7%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.mini-player .music-drawer-toggle:hover,
+.mini-player .music-drawer-toggle.is-open {
+  color: var(--cream);
+  border-color: color-mix(in srgb, var(--accent, var(--mint)) 46%, transparent);
+  background:
+    linear-gradient(180deg, rgba(11, 15, 21, 0.86), rgba(3, 5, 8, 0.96));
+}
+
+.mini-player .music-drawer-toggle i {
+  font-style: normal;
+  transform: translateY(-1px);
+}
+
+.mini-player #playBtn {
+  position: relative;
+  z-index: 84;
+}
+
+.music-drawer-sheet {
+  position: fixed;
+  left: clamp(18px, 3.8vw, 74px);
+  right: clamp(112px, 8.8vw, 164px);
+  bottom: 0;
+  z-index: 72;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 2fr);
+  gap: clamp(0.72rem, 1vw, 1.1rem);
+  height: clamp(196px, 30vh, 320px);
+  padding:
+    clamp(0.84rem, 1vw, 1.05rem)
+    clamp(0.84rem, 1vw, 1.05rem)
+    clamp(3.1rem, 6vh, 4.2rem);
+  border: 1px solid rgba(236, 243, 255, 0.12);
+  border-bottom: 0;
+  border-radius: 26px 26px 0 0;
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--accent, var(--mint)) 17%, transparent), transparent 34%),
+    linear-gradient(180deg, rgba(8, 12, 17, 0.94), rgba(3, 5, 8, 0.985));
+  box-shadow:
+    0 -28px 78px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(calc(100% - 10px));
+  transition:
+    opacity 0.22s ease,
+    transform 0.28s cubic-bezier(0.76, 0, 0.16, 1);
+}
+
+body.music-drawer-open .music-drawer-sheet {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.music-drawer-now {
+  position: relative;
+  display: grid;
+  align-content: end;
+  gap: 0.38rem;
+  min-width: 0;
+  padding: clamp(0.84rem, 1vw, 1.08rem);
+  border: 1px solid rgba(255, 255, 255, 0.095);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.016));
+  overflow: hidden;
+}
+
+.music-drawer-now::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent, var(--mint)) 72%, white 12%), rgba(255, 255, 255, 0.13)),
+    rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.44),
+    inset 0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+.music-drawer-eyebrow {
+  color: rgba(236, 243, 255, 0.56);
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.56vw, 10px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.music-drawer-now strong {
+  color: var(--cream);
+  font-family: var(--heavy);
+  font-size: clamp(22px, 1.7vw, 36px);
+  line-height: 0.86;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+}
+
+.music-drawer-now span[data-now-meta] {
+  color: rgba(236, 243, 255, 0.64);
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.62vw, 11px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.music-drawer-main-action {
+  justify-self: start;
+  min-height: 30px;
+  margin-top: 0.32rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--cream);
+  color: #06080d;
+  cursor: pointer;
+  font-family: var(--heavy);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.music-drawer-library {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.62rem;
+  min-width: 0;
+}
+
+.music-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(236, 243, 255, 0.68);
+  font-family: var(--heavy);
+  font-size: clamp(8px, 0.62vw, 11px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.music-drawer-header strong {
+  color: var(--cream);
+  font-size: clamp(12px, 0.92vw, 16px);
+  letter-spacing: -0.02em;
+}
+
+.music-drawer-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.46rem 0.56rem;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent, var(--mint)) 55%, transparent) rgba(255, 255, 255, 0.06);
+}
+
+.music-drawer-track {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.58rem;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.52rem 0.62rem;
+  border: 1px solid rgba(236, 243, 255, 0.1);
+  border-radius: 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.043), rgba(255, 255, 255, 0.014));
+  color: rgba(255, 255, 255, 0.94);
+  cursor: pointer;
+  font-family: var(--heavy);
+  text-align: left;
+  text-transform: uppercase;
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.music-drawer-track:hover,
+.music-drawer-track.is-active {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent, var(--mint)) 42%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent, var(--mint)) 12%, transparent), rgba(255, 255, 255, 0.026));
+}
+
+.music-drawer-track.is-active {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent, var(--mint)) 72%, white 8%);
+}
+
+.music-drawer-index {
+  color: color-mix(in srgb, var(--accent, var(--mint)) 82%, var(--cream) 18%);
+  font-size: clamp(16px, 1.1vw, 22px);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+}
+
+.music-drawer-name {
+  display: grid;
+  min-width: 0;
+  gap: 0.08rem;
+}
+
+.music-drawer-name strong {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: clamp(10px, 0.72vw, 14px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-drawer-name span {
+  overflow: hidden;
+  color: rgba(236, 243, 255, 0.55);
+  font-size: clamp(7px, 0.5vw, 9px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-drawer-duration {
+  color: rgba(236, 243, 255, 0.5);
+  font-family: var(--heavy);
+  font-size: clamp(7px, 0.5vw, 9px);
+  letter-spacing: 0.08em;
+}
+
+.music-drawer-action {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: #06080d;
+  font-size: 7px;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 900px) {
+  .mini-player {
+    padding-right: 0;
+  }
+
+  .mini-player .music-drawer-toggle {
+    margin-right: 4vw;
+  }
+
+  .music-drawer-sheet {
+    left: 4vw;
+    right: 4vw;
+    grid-template-columns: 1fr;
+    height: min(58vh, 460px);
+    padding-bottom: 4.4rem;
+  }
+
+  .music-drawer-now {
+    min-height: 124px;
+  }
+
+  .music-drawer-list {
+    grid-template-columns: 1fr;
+  }
+}
+/* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - END === */
