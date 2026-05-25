@@ -532,121 +532,9 @@
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
 
-/* === MARCO COMPOSITION TRACK SCROLL CONTROLS - START === */
+/* === MARCO SOBER GLOBAL MUSIC TASKBAR - START === */
 (() => {
-  function getCompositionScroller(button) {
-    const zone = button.closest('.composition-diagonal-zone');
-    return zone?.querySelector('.composition-track-scroll') || null;
-  }
-
-  function updateCompositionTrackButtons(zone) {
-    const scroller = zone?.querySelector('.composition-track-scroll');
-    if (!scroller) return;
-
-    const up = zone.querySelector('[data-track-scroll="up"]');
-    const down = zone.querySelector('[data-track-scroll="down"]');
-    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-
-    up?.classList.toggle('is-disabled', scroller.scrollTop <= 4);
-    down?.classList.toggle('is-disabled', scroller.scrollTop >= maxScroll - 4);
-  }
-
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-track-scroll]');
-    if (!button) return;
-
-    const scroller = getCompositionScroller(button);
-    if (!scroller) return;
-
-    const direction = button.dataset.trackScroll === 'up' ? -1 : 1;
-    const amount = Math.max(120, Math.round(scroller.clientHeight * 0.58));
-
-    scroller.scrollBy({
-      top: direction * amount,
-      behavior: 'smooth'
-    });
-
-    window.setTimeout(() => {
-      updateCompositionTrackButtons(button.closest('.composition-diagonal-zone'));
-    }, 260);
-  });
-
-  document.addEventListener('scroll', (event) => {
-    if (!event.target?.classList?.contains('composition-track-scroll')) return;
-    updateCompositionTrackButtons(event.target.closest('.composition-diagonal-zone'));
-  }, true);
-
-  function initCompositionTrackButtons() {
-    document.querySelectorAll('.composition-diagonal-zone').forEach((zone) => {
-      updateCompositionTrackButtons(zone);
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', initCompositionTrackButtons);
-  window.addEventListener('resize', initCompositionTrackButtons);
-
-  const observer = new MutationObserver(() => {
-    window.requestAnimationFrame(initCompositionTrackButtons);
-  });
-
-  if (document.readyState !== 'loading') {
-    initCompositionTrackButtons();
-    const app = document.querySelector('#app');
-    if (app) observer.observe(app, { childList: true, subtree: true });
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      const app = document.querySelector('#app');
-      if (app) observer.observe(app, { childList: true, subtree: true });
-    });
-  }
-})();
-/* === MARCO COMPOSITION TRACK SCROLL CONTROLS - END === */
-
-
-/* === MARCO COMPOSITION TRACK LOOP OVERRIDE - START === */
-(() => {
-  function loopScrollCompositionTracks(button) {
-    const zone = button.closest('.composition-diagonal-zone');
-    const scroller = zone?.querySelector('.composition-track-scroll');
-    if (!scroller) return;
-
-    const direction = button.dataset.trackScroll === 'up' ? -1 : 1;
-    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-    const amount = Math.max(132, Math.round(scroller.clientHeight * 0.62));
-
-    let nextTop = scroller.scrollTop + direction * amount;
-
-    if (direction > 0 && nextTop >= maxScroll - 8) {
-      nextTop = 0;
-    }
-
-    if (direction < 0 && nextTop <= 8) {
-      nextTop = maxScroll;
-    }
-
-    scroller.scrollTo({
-      top: nextTop,
-      behavior: 'smooth'
-    });
-  }
-
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest('.composition-track-step[data-track-scroll]');
-    if (!button) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-
-    loopScrollCompositionTracks(button);
-  }, true);
-})();
-/* === MARCO COMPOSITION TRACK LOOP OVERRIDE - END === */
-
-
-/* === MARCO GLOBAL MUSIC PANEL - START === */
-(() => {
-  const STORAGE_KEY = 'marco.activeTrack.v1';
+  const STORAGE_KEY = 'marco.activeTrack.v2';
 
   const TRACKS = [
     { id: '01', title: 'Cinematic Strings', meta: 'Score · 2026 · 02:48', audio: '/assets/audio/marco-placeholder-01.wav' },
@@ -663,10 +551,6 @@
 
   window.MARCO_MUSIC_TRACKS = TRACKS;
 
-  function getMiniPlayer() {
-    return document.querySelector('.mini-player');
-  }
-
   function getAudio() {
     return document.querySelector('#audioLoop');
   }
@@ -677,39 +561,35 @@
 
   function getTrackFromCompositionCard(card) {
     const index = card?.querySelector('.track-index')?.textContent?.trim();
+    if (index) return getTrackById(index);
+
     const title = card?.dataset?.trackTitle || card?.querySelector('.track-title')?.textContent?.trim();
-
-    if (index) {
-      const byIndex = getTrackById(index);
-      if (byIndex) return byIndex;
-    }
-
     return TRACKS.find((track) => track.title.toLowerCase() === String(title || '').toLowerCase()) || TRACKS[0];
   }
 
-  function updatePanelState(track) {
+  function updateMiniLabel(track) {
+    const label = document.querySelector('.track-label');
+    if (!label || !track) return;
+    label.innerHTML = `<b>${track.id}</b><b>${track.title}</b><b>${track.meta}</b>`;
+  }
+
+  function updateActiveStates(track) {
     document.querySelectorAll('[data-music-track-id]').forEach((button) => {
       button.classList.toggle('is-active', button.dataset.musicTrackId === track.id);
     });
 
     document.querySelectorAll('.composition-track').forEach((card) => {
-      const current = getTrackFromCompositionCard(card);
-      card.classList.toggle('is-active', current.id === track.id);
+      const cardTrack = getTrackFromCompositionCard(card);
+      card.classList.toggle('is-active', cardTrack.id === track.id);
     });
-  }
-
-  function updateMiniLabel(track) {
-    const label = document.querySelector('.track-label');
-    if (!label) return;
-    label.innerHTML = `<b>${track.id}</b><b>${track.title}</b><b>${track.meta}</b>`;
   }
 
   async function setGlobalTrack(track, shouldPlay = true) {
     const audio = getAudio();
     if (!audio || !track) return;
 
-    const wasPlaying = !audio.paused || shouldPlay;
     const absolute = new URL(track.audio, window.location.origin).href;
+    const shouldResume = shouldPlay || !audio.paused;
 
     if (audio.src !== absolute) {
       audio.src = track.audio;
@@ -719,9 +599,9 @@
     audio.dataset.trackId = track.id;
     localStorage.setItem(STORAGE_KEY, track.id);
     updateMiniLabel(track);
-    updatePanelState(track);
+    updateActiveStates(track);
 
-    if (wasPlaying) {
+    if (shouldResume) {
       try {
         await audio.play();
         const playBtn = document.querySelector('#playBtn');
@@ -733,23 +613,28 @@
     }
   }
 
-  function ensureMusicPanel() {
-    const miniPlayer = getMiniPlayer();
-    if (!miniPlayer || miniPlayer.querySelector('.music-panel')) return;
+  function ensureTaskbarPanel() {
+    const miniPlayer = document.querySelector('.mini-player');
+    if (!miniPlayer) return;
+
+    miniPlayer.querySelector('.music-panel')?.remove();
+
+    if (miniPlayer.querySelector('.music-taskbar-panel')) return;
 
     const panel = document.createElement('div');
-    panel.className = 'music-panel';
-    panel.setAttribute('aria-label', 'Navigation rapide des musiques');
+    panel.className = 'music-taskbar-panel';
+    panel.setAttribute('aria-label', 'Musiques du site');
 
     panel.innerHTML = `
-      <div class="music-panel-title"><span>Music index</span><span>Hover / switch</span></div>
-      ${TRACKS.map((track) => `
-        <button class="music-panel-track" type="button" data-music-track-id="${track.id}">
-          <span class="music-panel-index">${track.id}</span>
-          <span class="music-panel-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
-          <span class="music-panel-action">Play</span>
-        </button>
-      `).join('')}
+      <div class="music-taskbar-head"><span>Music library</span><span>Disponible sur toutes les pages</span></div>
+      <div class="music-taskbar-list">
+        ${TRACKS.map((track) => `
+          <button class="music-taskbar-track" type="button" data-music-track-id="${track.id}">
+            <span class="music-taskbar-index">${track.id}</span>
+            <span class="music-taskbar-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
+          </button>
+        `).join('')}
+      </div>
     `;
 
     miniPlayer.prepend(panel);
@@ -764,27 +649,27 @@
   }
 
   function restoreTrack() {
-    ensureMusicPanel();
+    ensureTaskbarPanel();
+
     const stored = localStorage.getItem(STORAGE_KEY);
-    const current = stored ? getTrackById(stored) : TRACKS[0];
+    const track = stored ? getTrackById(stored) : TRACKS[0];
     const audio = getAudio();
 
-    if (audio && (!audio.dataset.trackId || audio.dataset.trackId !== current.id)) {
-      audio.src = current.audio;
-      audio.dataset.trackId = current.id;
+    if (audio && audio.dataset.trackId !== track.id) {
+      audio.src = track.audio;
+      audio.dataset.trackId = track.id;
     }
 
-    updateMiniLabel(current);
-    updatePanelState(current);
+    updateMiniLabel(track);
+    updateActiveStates(track);
   }
 
   document.addEventListener('click', (event) => {
-    const play = event.target.closest('.composition-track .track-play');
-    if (!play) return;
+    const button = event.target.closest('.composition-track .track-play');
+    if (!button) return;
 
-    const card = play.closest('.composition-track');
-    const track = getTrackFromCompositionCard(card);
-    setGlobalTrack(track, true);
+    const card = button.closest('.composition-track');
+    setGlobalTrack(getTrackFromCompositionCard(card), true);
   });
 
   document.addEventListener('DOMContentLoaded', restoreTrack);
@@ -805,4 +690,4 @@
     });
   }
 })();
-/* === MARCO GLOBAL MUSIC PANEL - END === */
+/* === MARCO SOBER GLOBAL MUSIC TASKBAR - END === */
