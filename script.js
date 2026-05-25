@@ -712,7 +712,6 @@
 })();
 /* === MARCO PATCH V0.1.0 STABILISATION - END === */
 
-
 /* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - START === */
 (() => {
   const STORAGE_KEY = 'marco.activeTrack.v6';
@@ -1003,3 +1002,192 @@
   }
 })();
 /* === MARCO PATCH v0.2.0 GLOBAL MUSIC DRAWER - END === */
+
+
+/* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - START === */
+/*
+  MARCO PATCH v0.3.0
+  Type : navigation globale
+  Cible : rail + scroll molette
+*/
+(() => {
+  const WHEEL_LOCK_MS = 880;
+  const WHEEL_THRESHOLD = 72;
+
+  const pages = [
+    { id: 'home', href: '/index.html', accent: '#86f5a8' },
+    { id: 'music', href: '/music.html', accent: '#f4bd68' },
+    { id: 'parcours', href: '/parcours.html', accent: '#73aaf6' },
+    { id: 'gallery', href: '/gallery.html', accent: '#f08ac8' },
+    { id: 'filmographie', href: '/filmographie.html', accent: '#6fd7ff' },
+    { id: 'composition', href: '/composition.html', accent: '#ff355d' },
+    { id: 'booking', href: '/contact.html', accent: '#d8c3ff' }
+  ];
+
+  let wheelLocked = false;
+  let wheelBuffer = 0;
+  let syncFrame = 0;
+
+  function detectMarcoPage() {
+    const page = document.querySelector('#app .page');
+    const dataPage = page?.dataset?.page;
+    const dataTheme = page?.dataset?.theme;
+    const path = window.location.pathname.toLowerCase();
+
+    if (dataPage === 'home' || dataTheme === 'home' || path.endsWith('/') || path.includes('index')) return 'home';
+    if (dataPage === 'composition' || dataTheme === 'composition' || path.includes('composition')) return 'composition';
+    if (dataPage === 'parcours' || dataTheme === 'parcours' || path.includes('parcours')) return 'parcours';
+    if (dataPage === 'filmographie' || dataTheme === 'filmographie' || path.includes('filmographie')) return 'filmographie';
+    if (dataPage === 'music' || dataTheme === 'music' || path.includes('music') || path.includes('violon')) return 'music';
+    if (dataPage === 'gallery' || dataTheme === 'gallery' || path.includes('gallery') || path.includes('modele')) return 'gallery';
+    if (dataPage === 'booking' || dataTheme === 'booking' || path.includes('contact')) return 'booking';
+    if (dataPage === 'scores' || dataTheme === 'scores' || path.includes('projects')) return 'composition';
+
+    return 'home';
+  }
+
+  function getPageInfo(id = detectMarcoPage()) {
+    return pages.find((page) => page.id === id) || pages[0];
+  }
+
+  function syncGlobalNavTheme() {
+    const activeId = detectMarcoPage();
+    const active = getPageInfo(activeId);
+
+    document.body.dataset.marcoPage = active.id;
+    document.documentElement.style.setProperty('--marco-nav-accent', active.accent);
+
+    const nav = document.querySelector('[data-chapter-nav]');
+    if (!nav) return;
+
+    nav.dataset.activePage = active.id;
+    nav.style.setProperty('--marco-nav-accent', active.accent);
+  }
+
+  function requestSyncGlobalNavTheme() {
+    if (syncFrame) return;
+
+    syncFrame = window.requestAnimationFrame(() => {
+      syncFrame = 0;
+      syncGlobalNavTheme();
+    });
+  }
+
+  function isInsideInternalScroller(target) {
+    if (!(target instanceof Element)) return false;
+
+    if (
+      target.closest('input, textarea, select, option, button, [contenteditable="true"]') &&
+      !target.closest('[data-chapter-nav]')
+    ) {
+      return true;
+    }
+
+    if (
+      target.closest(
+        '.composition-track-scroll, .composition-diagonal-zone, .music-drawer-sheet, .music-drawer-list, [data-music-drawer], .contact-form, .contact-card, .contact-panel, [data-no-page-wheel]'
+      )
+    ) {
+      return true;
+    }
+
+    let node = target;
+    while (node && node !== document.body && node !== document.documentElement) {
+      if (node.closest && node.closest('[data-chapter-nav]')) return false;
+
+      const style = window.getComputedStyle(node);
+      const canScrollY = /(auto|scroll)/.test(style.overflowY);
+      const hasRealScroll = node.scrollHeight > node.clientHeight + 6;
+
+      if (canScrollY && hasRealScroll) {
+        return true;
+      }
+
+      node = node.parentElement;
+    }
+
+    return false;
+  }
+
+  function navigateRelativePage(direction) {
+    const activeId = detectMarcoPage();
+    const currentIndex = Math.max(0, pages.findIndex((page) => page.id === activeId));
+    const targetIndex = Math.min(pages.length - 1, Math.max(0, currentIndex + direction));
+
+    if (targetIndex === currentIndex) return;
+
+    const target = pages[targetIndex];
+    const navLink = document.querySelector(`[data-chapter-nav] .chapter-link[data-chapter-id="${target.id}"]`);
+
+    document.body.classList.add('marco-page-wheel-locked');
+    window.setTimeout(() => document.body.classList.remove('marco-page-wheel-locked'), 320);
+
+    if (navLink) {
+      navLink.click();
+    } else {
+      window.location.href = target.href;
+    }
+
+    window.setTimeout(requestSyncGlobalNavTheme, 90);
+    window.setTimeout(requestSyncGlobalNavTheme, 360);
+  }
+
+  function onGlobalWheel(event) {
+    if (event.defaultPrevented) return;
+    if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+
+    const target = event.target;
+    const onRail = target instanceof Element && Boolean(target.closest('[data-chapter-nav]'));
+
+    if (!onRail && isInsideInternalScroller(target)) return;
+
+    if (wheelLocked) {
+      event.preventDefault();
+      return;
+    }
+
+    wheelBuffer += event.deltaY;
+
+    if (Math.abs(wheelBuffer) < WHEEL_THRESHOLD) {
+      event.preventDefault();
+      return;
+    }
+
+    const direction = wheelBuffer > 0 ? 1 : -1;
+    wheelBuffer = 0;
+    wheelLocked = true;
+
+    event.preventDefault();
+    navigateRelativePage(direction);
+
+    window.setTimeout(() => {
+      wheelLocked = false;
+      wheelBuffer = 0;
+    }, WHEEL_LOCK_MS);
+  }
+
+  document.addEventListener('wheel', onGlobalWheel, { passive: false });
+
+  document.addEventListener('DOMContentLoaded', requestSyncGlobalNavTheme);
+  window.addEventListener('pageshow', requestSyncGlobalNavTheme);
+  window.addEventListener('popstate', requestSyncGlobalNavTheme);
+
+  const observer = new MutationObserver(requestSyncGlobalNavTheme);
+
+  function bootObserver() {
+    requestSyncGlobalNavTheme();
+
+    const app = document.querySelector('#app');
+    if (app && !app.dataset.marcoGlobalNavObserved) {
+      app.dataset.marcoGlobalNavObserved = 'true';
+      observer.observe(app, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-page', 'data-theme', 'class'] });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootObserver);
+  } else {
+    bootObserver();
+  }
+})();
+/* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
