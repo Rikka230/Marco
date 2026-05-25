@@ -1794,7 +1794,6 @@ body.is-transitioning .mini-brand {
 }
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
-
 /* === MARCO CHAPTER NAV READABILITY FIX - START === */
 .shell:has(.page[data-theme="home"]) .chapter-nav,
 .shell:has(.home) .chapter-nav {
@@ -1878,7 +1877,6 @@ body.is-transitioning .mini-brand {
 }
 /* === MARCO CHAPTER NAV READABILITY FIX - END === */
 
-
 /* === MARCO COMPOSITION MUSIC IMAGE FIX - START === */
 .composition-page .composition-person,
 .composition-page .music-person {
@@ -1911,269 +1909,191 @@ body.is-transitioning .mini-brand {
 /* === MARCO COMPOSITION MUSIC IMAGE FIX - END === */
 
 
-/* === MARCO SOBER TASKBAR MUSIC AND COMPOSITION AXIS - START === */
+/* === MARCO CLEAN HOVER MUSIC LIST AND NO COMPOSITION DIAGONALS - START === */
 .composition-page .nav-gallery,
 .composition-page .nav-home,
 .composition-page .nav-music,
 .composition-page .nav-contact {
-  display: none;
-}
-
-.composition-track-step {
   display: none !important;
 }
 
-/* Composition only: static parallel slashes, aligned to the diagonal track scrollbar axis. */
-.composition-page::before {
-  background:
-    linear-gradient(172deg, transparent 0 22%, rgba(255, 48, 79, 0.58) 22.08% 22.38%, transparent 22.72%),
-    linear-gradient(172deg, transparent 0 41%, rgba(249, 241, 220, 0.15) 41.08% 41.28%, transparent 41.62%),
-    linear-gradient(172deg, transparent 0 60%, rgba(255, 48, 79, 0.36) 60.08% 60.36%, transparent 60.70%),
-    linear-gradient(172deg, transparent 0 79%, rgba(249, 241, 220, 0.10) 79.08% 79.26%, transparent 79.60%);
-  mix-blend-mode: screen;
-  opacity: 0.62;
+.composition-track-step,
+.music-taskbar-panel,
+.music-panel {
+  display: none !important;
 }
 
-.composition-page .film-sweep {
-  display: none;
+/* Composition: suppression nette des diagonales de fond derrière Marco. */
+.composition-page::before,
+.composition-page::after {
+  background: none !important;
+  opacity: 0 !important;
 }
 
-.composition-page .composition-diagonal-zone {
-  right: clamp(72px, 6.9vw, 118px);
-  width: min(43.5vw, 735px);
+.composition-page .film-sweep,
+.composition-page .slash,
+.composition-page .slash-layer,
+.composition-page .bg-slash,
+.composition-page .bg-slashes {
+  display: none !important;
+  opacity: 0 !important;
 }
 
-.composition-page .composition-track-scroll {
-  padding-right: clamp(38px, 3.8vw, 68px);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 48, 79, 0.94) rgba(255, 255, 255, 0.08);
-}
-
-.composition-page .composition-track-scroll::-webkit-scrollbar {
-  width: 8px;
-}
-
-.composition-page .composition-track-scroll::-webkit-scrollbar-track {
-  background: linear-gradient(180deg, rgba(255, 48, 79, 0.18), rgba(255, 255, 255, 0.06));
-}
-
-.composition-page .composition-track-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 48, 79, 0.95);
-  border-radius: 999px;
-}
-
-/* Global sober taskbar player: applies to home and every PJAX page. */
+/* On garde la barre basse d'origine : spectre + lecteur existant. */
 .mini-player {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 130;
-  display: flex;
-  align-items: center;
-  gap: clamp(0.7rem, 1.4vw, 1.4rem);
-  min-height: clamp(42px, 4.2vh, 54px);
-  padding: 0.42rem clamp(22px, 4.8vw, 88px);
   overflow: visible;
-  color: rgba(226, 241, 255, 0.96);
-  border-top: 1px solid rgba(226, 241, 255, 0.18);
-  background:
-    linear-gradient(180deg, rgba(9, 13, 18, 0.82), rgba(4, 6, 10, 0.96)),
-    linear-gradient(90deg, rgba(124, 201, 255, 0.08), transparent 34%, rgba(255, 255, 255, 0.04));
-  box-shadow:
-    0 -18px 44px rgba(0, 0, 0, 0.36),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
 }
 
-.mini-player::before {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 100%;
-  height: 18px;
-  content: "";
-  pointer-events: auto;
-}
-
-.mini-player #playBtn {
-  position: relative;
-  z-index: 5;
-  min-width: clamp(82px, 6.6vw, 112px);
-  height: clamp(30px, 2.6vw, 38px);
-  padding: 0 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  border-radius: 999px;
-  background: rgba(245, 248, 255, 0.96);
-  color: #05080d;
-  cursor: pointer;
-  font-family: var(--heavy);
-  font-size: clamp(10px, 0.76vw, 13px);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.28),
-    0 0 0 3px rgba(255, 255, 255, 0.05);
-}
-
-.mini-player #playBtn:hover {
-  filter: brightness(1.08);
-}
-
-.mini-player .track-label {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(0.55rem, 1vw, 1rem);
-  align-items: center;
-  min-width: 0;
-  color: rgba(226, 241, 255, 0.82);
-  font-family: var(--heavy);
-  font-size: clamp(8px, 0.62vw, 11px);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.mini-player .track-label b:nth-child(2) {
-  color: rgba(255, 255, 255, 0.98);
-  font-size: clamp(10px, 0.8vw, 14px);
-}
-
-.music-taskbar-panel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(100% - 1px);
-  z-index: 3;
+.music-library-panel {
+  position: fixed;
+  left: clamp(1.1rem, 4.2vw, 4.8rem);
+  right: clamp(1.1rem, 4.2vw, 4.8rem);
+  bottom: clamp(3.2rem, 5.6vh, 4.7rem);
+  z-index: 170;
   display: grid;
-  gap: 0.7rem;
-  padding: clamp(0.8rem, 1.1vw, 1.2rem) clamp(22px, 4.8vw, 88px) clamp(0.85rem, 1.2vw, 1.25rem);
-  color: rgba(226, 241, 255, 0.96);
-  border-top: 1px solid rgba(226, 241, 255, 0.16);
-  border-bottom: 1px solid rgba(226, 241, 255, 0.08);
+  gap: 0.72rem;
+  padding: clamp(0.78rem, 1vw, 1.08rem);
+  border: 1px solid rgba(190, 220, 255, 0.16);
+  border-radius: 18px;
   background:
-    linear-gradient(180deg, rgba(11, 15, 22, 0.93), rgba(6, 8, 12, 0.98)),
-    linear-gradient(90deg, rgba(124, 201, 255, 0.10), transparent 38%, rgba(255, 255, 255, 0.05));
-  box-shadow: 0 -24px 54px rgba(0, 0, 0, 0.42);
+    radial-gradient(circle at 16% 0%, rgba(112, 180, 255, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(7, 10, 15, 0.88), rgba(4, 6, 10, 0.96));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(18px);
   opacity: 0;
   pointer-events: none;
-  transform: translateY(12px);
+  transform: translateY(0.55rem) scale(0.985);
   transition:
     opacity 0.18s ease,
     transform 0.18s ease;
 }
 
-.mini-player:hover .music-taskbar-panel,
-.mini-player:focus-within .music-taskbar-panel,
-.music-taskbar-panel:hover {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+.music-library-panel::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -28px;
+  height: 28px;
+  content: "";
 }
 
-.music-taskbar-head {
+.mini-player:hover .music-library-panel,
+.mini-player:focus-within .music-library-panel,
+.music-library-panel:hover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.music-library-head {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: rgba(226, 241, 255, 0.70);
+  color: rgba(232, 241, 255, 0.72);
   font-family: var(--heavy);
   font-size: clamp(8px, 0.62vw, 11px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.music-taskbar-list {
+.music-library-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.46rem;
+  gap: 0.5rem;
 }
 
-.music-taskbar-track {
+.music-library-track {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.5rem;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  gap: 0.58rem;
   min-width: 0;
-  min-height: 50px;
-  padding: 0.48rem 0.58rem;
-  border: 1px solid rgba(226, 241, 255, 0.13);
-  border-radius: 12px;
+  min-height: 52px;
+  padding: 0.55rem 0.64rem;
+  border: 1px solid rgba(216, 232, 255, 0.13);
+  border-radius: 14px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025)),
-    rgba(255, 255, 255, 0.035);
-  color: rgba(255, 255, 255, 0.92);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.028);
+  color: rgba(255, 255, 255, 0.94);
   cursor: pointer;
   font-family: var(--heavy);
   text-align: left;
   text-transform: uppercase;
   transition:
     transform 0.16s ease,
+    border-color 0.16s ease,
     background 0.16s ease,
-    border-color 0.16s ease;
+    box-shadow 0.16s ease;
 }
 
-.music-taskbar-track:hover,
-.music-taskbar-track.is-active {
+.music-library-track:hover,
+.music-library-track.is-active {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.32);
+  border-color: rgba(154, 210, 255, 0.42);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.045)),
-    rgba(255, 255, 255, 0.07);
+    linear-gradient(180deg, rgba(148, 210, 255, 0.16), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 -2px 0 rgba(128, 206, 255, 0.82);
 }
 
-.music-taskbar-track.is-active {
-  box-shadow: inset 0 -2px 0 rgba(124, 201, 255, 0.95);
+.music-library-index {
+  color: rgba(128, 206, 255, 0.98);
+  font-size: clamp(15px, 1.08vw, 23px);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
 }
 
-.music-taskbar-index {
-  color: rgba(124, 201, 255, 0.98);
-  font-size: clamp(16px, 1.2vw, 24px);
-  line-height: 0.8;
-  letter-spacing: -0.07em;
-}
-
-.music-taskbar-name {
+.music-library-name {
   display: grid;
-  gap: 0.08rem;
+  gap: 0.1rem;
   min-width: 0;
 }
 
-.music-taskbar-name strong {
+.music-library-name strong {
   overflow: hidden;
   color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(11px, 0.88vw, 15px);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+  font-size: clamp(10px, 0.78vw, 14px);
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.music-taskbar-name span {
+.music-library-name span {
   overflow: hidden;
-  color: rgba(226, 241, 255, 0.58);
-  font-size: clamp(7px, 0.52vw, 9px);
+  color: rgba(232, 241, 255, 0.58);
+  font-size: clamp(7px, 0.5vw, 9px);
   letter-spacing: 0.04em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-@media (max-width: 900px) {
-  .composition-page .composition-diagonal-zone {
-    right: auto;
-    left: 2vw;
-    width: 96vw;
-  }
+.music-library-action {
+  display: grid;
+  place-items: center;
+  width: clamp(28px, 2.1vw, 34px);
+  height: clamp(28px, 2.1vw, 34px);
+  border-radius: 999px;
+  background: rgba(244, 248, 255, 0.95);
+  color: #04070c;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
 
-  .music-taskbar-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-height: 50vh;
+@media (max-width: 900px) {
+  .music-library-panel {
+    left: 4vw;
+    right: 4vw;
+    bottom: 4rem;
+    max-height: 58vh;
     overflow-y: auto;
   }
 
-  .mini-player {
-    padding-inline: 4vw;
+  .music-library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-/* === MARCO SOBER TASKBAR MUSIC AND COMPOSITION AXIS - END === */
+/* === MARCO CLEAN HOVER MUSIC LIST AND NO COMPOSITION DIAGONALS - END === */

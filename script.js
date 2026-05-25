@@ -302,7 +302,6 @@
     }
   });
 
-
   document.addEventListener('submit', (e) => {
     const form = e.target.closest('[data-contact-form]');
     if (!form) return;
@@ -532,9 +531,9 @@
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
 
-/* === MARCO SOBER GLOBAL MUSIC TASKBAR - START === */
+/* === MARCO CLEAN GLOBAL MUSIC LIBRARY - START === */
 (() => {
-  const STORAGE_KEY = 'marco.activeTrack.v2';
+  const STORAGE_KEY = 'marco.activeTrack.v3';
 
   const TRACKS = [
     { id: '01', title: 'Cinematic Strings', meta: 'Score · 2026 · 02:48', audio: '/assets/audio/marco-placeholder-01.wav' },
@@ -613,35 +612,41 @@
     }
   }
 
-  function ensureTaskbarPanel() {
+  function ensureMusicLibraryPanel() {
     const miniPlayer = document.querySelector('.mini-player');
     if (!miniPlayer) return;
 
+    miniPlayer.querySelector('.music-taskbar-panel')?.remove();
     miniPlayer.querySelector('.music-panel')?.remove();
 
-    if (miniPlayer.querySelector('.music-taskbar-panel')) return;
+    if (miniPlayer.querySelector('.music-library-panel')) return;
 
     const panel = document.createElement('div');
-    panel.className = 'music-taskbar-panel';
-    panel.setAttribute('aria-label', 'Musiques du site');
+    panel.className = 'music-library-panel';
+    panel.setAttribute('aria-label', 'Liste des musiques du site');
 
     panel.innerHTML = `
-      <div class="music-taskbar-head"><span>Music library</span><span>Disponible sur toutes les pages</span></div>
-      <div class="music-taskbar-list">
+      <div class="music-library-head">
+        <span>Music library</span>
+        <span>Disponible partout</span>
+      </div>
+      <div class="music-library-grid">
         ${TRACKS.map((track) => `
-          <button class="music-taskbar-track" type="button" data-music-track-id="${track.id}">
-            <span class="music-taskbar-index">${track.id}</span>
-            <span class="music-taskbar-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
+          <button class="music-library-track" type="button" data-music-track-id="${track.id}">
+            <span class="music-library-index">${track.id}</span>
+            <span class="music-library-name"><strong>${track.title}</strong><span>${track.meta}</span></span>
+            <span class="music-library-action">Play</span>
           </button>
         `).join('')}
       </div>
     `;
 
-    miniPlayer.prepend(panel);
+    miniPlayer.appendChild(panel);
 
     panel.addEventListener('click', (event) => {
       const button = event.target.closest('[data-music-track-id]');
       if (!button) return;
+
       event.preventDefault();
       event.stopPropagation();
       setGlobalTrack(getTrackById(button.dataset.musicTrackId), true);
@@ -649,7 +654,7 @@
   }
 
   function restoreTrack() {
-    ensureTaskbarPanel();
+    ensureMusicLibraryPanel();
 
     const stored = localStorage.getItem(STORAGE_KEY);
     const track = stored ? getTrackById(stored) : TRACKS[0];
@@ -690,4 +695,4 @@
     });
   }
 })();
-/* === MARCO SOBER GLOBAL MUSIC TASKBAR - END === */
+/* === MARCO CLEAN GLOBAL MUSIC LIBRARY - END === */
