@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Marco Charlas-Hou - Composition</title>
   <meta name="description" content="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." />
-  <link rel="stylesheet" href="/style.css?v=0.4.5" />
+  <link rel="stylesheet" href="/style.css?v=0.4.9" />
 </head>
 <body>
   <div class="film-grain" aria-hidden="true"></div>
@@ -78,31 +78,32 @@
           .composition-intro strong { color: #ff304f; font-size: clamp(15px, 1.1vw, 24px); letter-spacing: -0.045em; }
           .composition-intro span { font-size: clamp(8px, .64vw, 12px); line-height: 1.2; letter-spacing: .075em; color: rgba(249,241,220,.86); }
           .composition-diagonal-zone {
-            position: absolute; right: clamp(96px, 5.8vw, 126px); top: clamp(98px, 12.2vh, 126px); z-index: 42;
-            width: min(36vw, 640px); height: auto; max-height: none; overflow: visible;
+            position: absolute; right: clamp(122px, 7vw, 174px); top: clamp(248px, 26vh, 324px); z-index: 42;
+            width: min(37vw, 680px); height: clamp(360px, 47vh, 610px); max-height: calc(100vh - clamp(360px, 36vh, 430px)); overflow: visible;
             transform: rotate(-7.25deg); transform-origin: 50% 50%; pointer-events: auto;
           }
           .composition-track-scroll {
-            height: auto; max-height: none; overflow: visible;
-            padding: clamp(16px, 2vh, 24px) clamp(82px, 5.1vw, 110px) clamp(26px, 3.2vh, 44px) clamp(6px, .5vw, 12px);
-            scrollbar-width: none; scrollbar-color: #ff304f rgba(255,255,255,.08);
-            mask-image: none; -webkit-mask-image: none;
+            height: 100%; max-height: none; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+            padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, .55vw, 14px);
+            scrollbar-width: thin; scrollbar-color: rgba(255, 48, 79, .82) rgba(255,255,255,.045); scrollbar-gutter: stable;
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
           }
           .composition-track-scroll::-webkit-scrollbar { width: 7px; }
-          .composition-track-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,.08); }
-          .composition-track-scroll::-webkit-scrollbar-thumb { background: #ff304f; }
+          .composition-track-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,.045); border-radius: 999px; }
+          .composition-track-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(255,48,79,.18), rgba(255,48,79,.86), rgba(255,48,79,.18)); border-radius: 999px; }
           .composition-track {
-            position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
-            min-height: clamp(46px, 5.45vh, 64px); margin: 0 0 clamp(6px, .75vh, 9px); padding: clamp(6px, .72vh, 9px) clamp(10px, .8vw, 14px) clamp(6px, .72vh, 9px) clamp(12px, .9vw, 16px);
+            position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1rem;
+            width: calc(100% - clamp(28px, 2vw, 44px)); min-height: clamp(48px, 5.5vh, 68px); margin: 0 0 clamp(6px, .75vh, 9px); padding: clamp(6px, .72vh, 9px) clamp(10px, .8vw, 14px) clamp(6px, .72vh, 9px) clamp(12px, .9vw, 16px);
             color: #f9f1dc; isolation: isolate; transform: skewX(-9deg); border: 1px solid rgba(255,48,79,.34);
             background:
-              linear-gradient(90deg, rgba(255,48,79,.92), rgba(255,48,79,.1) 32%, rgba(0,0,0,.58)),
+              linear-gradient(90deg, rgba(255,48,79,.92) 0%, rgba(255,48,79,.42) 28%, rgba(22,0,8,.68) 68%, rgba(5,0,4,.18) 100%),
               linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
             box-shadow: -8px 8px 0 rgba(0,0,0,.38), 0 14px 34px rgba(0,0,0,.34);
             transition: transform .22s ease, filter .22s ease, background .22s ease;
           }
-          .composition-track:nth-child(even) { margin-left: 2.4vw; }
-          .composition-track:nth-child(3n) { margin-left: -1.4vw; }
+          .composition-track:nth-child(even) { margin-left: clamp(12px, 1vw, 20px); }
+          .composition-track:nth-child(3n) { margin-left: clamp(4px, .45vw, 10px); }
           .composition-track:hover, .composition-track.is-active {
             transform: skewX(-9deg) translateX(-.8vw) scale(1.025); filter: brightness(1.12);
             background:
@@ -140,10 +141,10 @@
             .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
             .composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
             .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }
-            .composition-diagonal-zone { right: auto; left: 2vw; top: 39vh; width: 96vw; height: 46vh; transform: rotate(-5deg); }
-            .composition-track-scroll { padding: 4vh 5vw 10vh; }
+            .composition-diagonal-zone { right: auto; left: 3vw; top: 42vh; width: 94vw; height: 42vh; max-height: none; transform: rotate(-4.5deg); }
+            .composition-track-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 4vh 8vw 10vh 2vw; }
             .composition-track:nth-child(even), .composition-track:nth-child(3n) { margin-left: 0; }
-            .composition-track { grid-template-columns: auto 1fr auto; min-height: 74px; margin-bottom: .8rem; }
+            .composition-track { grid-template-columns: auto minmax(0, 1fr) auto; width: calc(100% - 2vw); min-height: 66px; margin-bottom: .7rem; }
             .track-title { font-size: clamp(20px, 6vw, 36px); }
             .composition-side-note { display: none; }
             .composition-page .cover-tagline, .composition-page .editorial-stack { display: none; }
@@ -180,6 +181,16 @@
             <article class="composition-track" data-track-title="Low Room"><span class="track-index">08</span><div class="track-main"><strong class="track-title">Low Room</strong><span class="track-meta"><b>Placeholder</b><b>2026</b><b>02:26</b><b>Ambient</b></span></div><button class="track-play" type="button">Play</button></article>
             <article class="composition-track" data-track-title="First Cut"><span class="track-index">09</span><div class="track-main"><strong class="track-title">First Cut</strong><span class="track-meta"><b>Placeholder</b><b>2026</b><b>01:58</b><b>Draft</b></span></div><button class="track-play" type="button">Play</button></article>
             <article class="composition-track" data-track-title="End Theme"><span class="track-index">10</span><div class="track-main"><strong class="track-title">End Theme</strong><span class="track-meta"><b>Placeholder</b><b>2026</b><b>03:04</b><b>Finale</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Ash Corridor"><span class="track-index">11</span><div class="track-main"><strong class="track-title">Ash Corridor</strong><span class="track-meta"><b>Template</b><b>2026</b><b>02:11</b><b>Drama</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Glass Pulse"><span class="track-index">12</span><div class="track-main"><strong class="track-title">Glass Pulse</strong><span class="track-meta"><b>Template</b><b>2026</b><b>01:47</b><b>Rhythm</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Velvet Tension"><span class="track-index">13</span><div class="track-main"><strong class="track-title">Velvet Tension</strong><span class="track-meta"><b>Template</b><b>2026</b><b>02:38</b><b>Suspense</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Piano Residue"><span class="track-index">14</span><div class="track-main"><strong class="track-title">Piano Residue</strong><span class="track-meta"><b>Template</b><b>2026</b><b>01:32</b><b>Minimal</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Dark Waltz"><span class="track-index">15</span><div class="track-main"><strong class="track-title">Dark Waltz</strong><span class="track-meta"><b>Template</b><b>2026</b><b>02:54</b><b>Motion</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Mute Signals"><span class="track-index">16</span><div class="track-main"><strong class="track-title">Mute Signals</strong><span class="track-meta"><b>Template</b><b>2026</b><b>01:59</b><b>Texture</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Red Passage"><span class="track-index">17</span><div class="track-main"><strong class="track-title">Red Passage</strong><span class="track-meta"><b>Template</b><b>2026</b><b>02:23</b><b>Score</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Nocturne Frame"><span class="track-index">18</span><div class="track-main"><strong class="track-title">Nocturne Frame</strong><span class="track-meta"><b>Template</b><b>2026</b><b>03:12</b><b>Theme</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Last Cue"><span class="track-index">19</span><div class="track-main"><strong class="track-title">Last Cue</strong><span class="track-meta"><b>Template</b><b>2026</b><b>01:41</b><b>Cue</b></span></div><button class="track-play" type="button">Play</button></article>
+            <article class="composition-track" data-track-title="Final Room"><span class="track-index">20</span><div class="track-main"><strong class="track-title">Final Room</strong><span class="track-meta"><b>Template</b><b>2026</b><b>02:35</b><b>Finale</b></span></div><button class="track-play" type="button">Play</button></article>
           </div>
         </div>
 

@@ -1,31 +1,29 @@
-# Marco Charlas-Hou - Cover Site Prototype
+# Marco — Patch v0.4.9 Tracklist plus basse
 
-Prototype HTML/CSS/JS vanilla pour Marco Charlas-Hou.
+Patch minimal pour descendre encore la tracklist de la page Composition, sans toucher aux PNG, au shader ou à la Home.
 
-## Lancer en local
+## Application locale sans push
 
 ```bash
-python -m http.server 5173
+cd "/d/Users/owner/Documents/AUTO-ENTREPRISE/Perso/Ying/1_Marco_git"
+py "/d/Téléchargement/Marco_PATCH_v0.4.9_tracklist_lower/apply_patch.py"
+```
+
+## Test localhost
+
+```bash
+cd "/d/Users/owner/Documents/AUTO-ENTREPRISE/Perso/Ying/1_Marco_git" && py -m http.server 5173
 ```
 
 Puis ouvrir :
 
-```text
-http://localhost:5173
+```txt
+http://localhost:5173/composition.html?v=test
 ```
 
-## Structure
+## Push après validation visuelle
 
-- `index.html`
-- `music.html`
-- `projects.html`
-- `gallery.html`
-- `contact.html`
-- `style.css`
-- `script.js`
-- `assets/img/`
-- `assets/audio/`
-
-## Notes
-
-Le rendu attendu correspond a la version cover musicale validee dans le navigateur local : grande composition plein ecran, PNG Marco, textes typographiques, navigation PJAX-like et visualizer en points.
+```bash
+cd "/d/Users/owner/Documents/AUTO-ENTREPRISE/Perso/Ying/1_Marco_git"
+bash "/d/Téléchargement/Marco_PATCH_v0.4.9_tracklist_lower/push_local_to_remote.sh"
+```

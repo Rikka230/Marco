@@ -1982,15 +1982,16 @@ body.is-transitioning .mini-brand {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Composition diagonal tracklist: keep it diagonal, but stop clipping on the right. */
+/* Composition diagonal tracklist: keep it diagonal, lowered, scrollable, and without horizontal drift. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(176px, 12vw, 248px);
-  top: 13.5vh;
-  width: min(32vw, 560px);
-  height: 71vh;
+  right: clamp(122px, 7vw, 174px);
+  top: clamp(248px, 26vh, 324px);
+  width: min(37vw, 680px);
+  height: clamp(360px, 47vh, 610px);
+  max-height: calc(100vh - clamp(360px, 36vh, 430px));
   overflow: visible;
-  z-index: 38;
-  transform: rotate(-8deg);
+  z-index: 42;
+  transform: rotate(-7.25deg);
   transform-origin: 50% 50%;
 }
 
@@ -1999,9 +2000,13 @@ body.is-transitioning .mini-brand {
   max-height: none;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 5vh clamp(18px, 1.4vw, 28px) 11vh 0;
+  overscroll-behavior: contain;
+  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px);
   scrollbar-width: thin;
-  scrollbar-color: #ff304f rgba(255, 255, 255, 0.08);
+  scrollbar-color: rgba(255, 48, 79, 0.82) rgba(255, 255, 255, 0.045);
+  scrollbar-gutter: stable;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
 }
 
 .composition-page .composition-track-scroll::-webkit-scrollbar {
@@ -2009,41 +2014,60 @@ body.is-transitioning .mini-brand {
 }
 
 .composition-page .composition-track-scroll::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.045);
+  border-radius: 999px;
 }
 
 .composition-page .composition-track-scroll::-webkit-scrollbar-thumb {
-  background: #ff304f;
+  background: linear-gradient(180deg, rgba(255,48,79,0.18), rgba(255,48,79,0.86), rgba(255,48,79,0.18));
   border-radius: 999px;
 }
 
 .composition-page .composition-track {
   box-sizing: border-box;
-  width: calc(100% - 10px);
-  min-height: clamp(54px, 6.6vh, 82px);
-  margin: 0 0 0.72rem 0;
-  padding: 0.56rem 0.82rem 0.56rem 0.88rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  width: calc(100% - clamp(28px, 2vw, 44px));
+  min-height: clamp(48px, 5.5vh, 68px);
+  margin: 0 0 clamp(6px, 0.75vh, 9px) 0;
+  padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px);
+  background:
+    linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  box-shadow:
+    -8px 8px 0 rgba(0,0,0,0.38),
+    0 14px 34px rgba(0,0,0,0.34);
+  overflow: visible;
 }
 
 .composition-page .composition-track:nth-child(even) {
-  margin-left: min(1.3vw, 24px);
+  margin-left: clamp(12px, 1vw, 20px);
 }
 
 .composition-page .composition-track:nth-child(3n) {
-  margin-left: min(0.55vw, 10px);
+  margin-left: clamp(4px, 0.45vw, 10px);
 }
 
 .composition-page .track-title {
-  font-size: clamp(17px, 1.55vw, 34px);
+  max-width: 100%;
+  overflow: visible;
+  font-size: clamp(17px, 1.55vw, 32px);
 }
 
 .composition-page .track-index {
-  font-size: clamp(27px, 2.35vw, 50px);
+  font-size: clamp(25px, 2.2vw, 42px);
+}
+
+.composition-page .track-meta {
+  gap: clamp(5px, 0.42vw, 9px);
+  font-size: clamp(6px, 0.48vw, 9px);
+  white-space: nowrap;
 }
 
 .composition-page .track-play {
-  width: clamp(32px, 2.35vw, 44px);
-  height: clamp(32px, 2.35vw, 44px);
+  width: clamp(30px, 2.15vw, 40px);
+  height: clamp(30px, 2.15vw, 40px);
+  font-size: clamp(7px, 0.55vw, 10px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.32);
 }
 
 /* Stable bottom player: one player, no drawer in v0.1.0. */
@@ -2087,10 +2111,31 @@ body.is-transitioning .mini-brand {
 
 @media (max-width: 900px) {
   .composition-page .composition-diagonal-zone {
-    right: clamp(84px, 9vw, 118px);
-    top: 39vh;
-    width: min(58vw, 450px);
-    height: 45vh;
+    right: auto;
+    left: 3vw;
+    top: 42vh;
+    width: 94vw;
+    height: 42vh;
+    max-height: none;
+    transform: rotate(-4.5deg);
+  }
+
+  .composition-page .composition-track-scroll {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4vh 8vw 10vh 2vw;
+  }
+
+  .composition-page .composition-track:nth-child(even),
+  .composition-page .composition-track:nth-child(3n) {
+    margin-left: 0;
+  }
+
+  .composition-page .composition-track {
+    width: calc(100% - 2vw);
+    min-height: 66px;
+    margin-bottom: 0.7rem;
   }
 
   .composition-page .composition-person,
@@ -2872,13 +2917,13 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
 
-/* === MARCO PATCH v0.4.5 ACTUAL COMPOSITION FIXES - START === */
+/* === MARCO PATCH v0.4.9 COMPOSITION TRACKLIST LOWERING - START === */
 /*
-  Objectif : corriger les vrais noeuds vus en capture.
-  - Composition : liste diagonale non masquée, ombres visibles, cartes non coupées.
-  - Marco : shader rouge masqué sur la silhouette, sans transformer Marco en personnage rouge.
-  - PNG : support d'un asset marco-comp.png nettoyé/upscalé, sans toucher la Home.
-  - Mini-player / drawer : frame retirée, tiroir assez haut pour lire 01/02/03/04.
+  Objectif v0.4.9 : descendre encore la tracklist Composition sans changer son système de scroll.
+  - Descendre la liste sous le grand titre.
+  - Remettre un scroll vertical testable avec 20 tracks.
+  - Supprimer le scroll horizontal.
+  - Garder les cartes entières et le fondu dans le décor.
 */
 
 :root {
@@ -2906,7 +2951,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .shell:has(.page[data-page="booking"]) { --marco-page-accent: #d8c3ff; --marco-v045-edge: rgba(216, 195, 255, 0.16); }
 
 .shell:has(.page.inner:not([data-page="home"]))::after {
-  content: "MARCO v0.4.5";
+  content: "MARCO v0.4.9";
   position: fixed;
   top: clamp(14px, 2vh, 24px);
   right: clamp(86px, 7vw, 142px);
@@ -2933,13 +2978,13 @@ body.marco-page-wheel-locked .chapter-nav::after {
   transform: translateZ(0);
 }
 
-/* Le vrai bug visible sur Composition : c'était la liste inline de composition.html, pas le drawer global. */
+/* Composition tracklist active rules: lowered viewport, vertical scroll, soft fade, no horizontal scrollbar. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(96px, 5.8vw, 126px) !important;
-  top: clamp(98px, 12.2vh, 126px) !important;
-  width: min(36vw, 640px) !important;
-  height: auto !important;
-  max-height: none !important;
+  right: clamp(122px, 7vw, 174px) !important;
+  top: clamp(248px, 26vh, 324px) !important;
+  width: min(37vw, 680px) !important;
+  height: clamp(360px, 47vh, 610px) !important;
+  max-height: calc(100vh - clamp(360px, 36vh, 430px)) !important;
   overflow: visible !important;
   z-index: 42 !important;
   transform: rotate(-7.25deg) !important;
@@ -2947,27 +2992,46 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 
 .composition-page .composition-track-scroll {
-  height: auto !important;
+  height: 100% !important;
   max-height: none !important;
-  overflow: visible !important;
-  padding: clamp(16px, 2vh, 24px) clamp(82px, 5.1vw, 110px) clamp(26px, 3.2vh, 44px) clamp(6px, 0.5vw, 12px) !important;
-  mask-image: none !important;
-  -webkit-mask-image: none !important;
-  scrollbar-width: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px) !important;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 48, 79, 0.82) rgba(255,255,255,0.045) !important;
+  scrollbar-gutter: stable !important;
 }
 
 .composition-page .composition-track-scroll::-webkit-scrollbar {
-  display: none !important;
+  width: 7px !important;
+}
+
+.composition-page .composition-track-scroll::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.045) !important;
+  border-radius: 999px !important;
+}
+
+.composition-page .composition-track-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(255,48,79,0.18), rgba(255,48,79,0.86), rgba(255,48,79,0.18)) !important;
+  border-radius: 999px !important;
 }
 
 .composition-page .composition-track {
+  box-sizing: border-box !important;
   grid-template-columns: auto minmax(0, 1fr) auto !important;
-  min-height: clamp(46px, 5.45vh, 64px) !important;
-  margin-bottom: clamp(6px, 0.75vh, 9px) !important;
+  width: calc(100% - clamp(28px, 2vw, 44px)) !important;
+  min-height: clamp(48px, 5.5vh, 68px) !important;
+  margin: 0 0 clamp(6px, 0.75vh, 9px) 0 !important;
   padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px) !important;
+  background:
+    linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) !important;
   box-shadow:
-    -8px 8px 0 rgba(0,0,0,.38),
-    0 14px 34px rgba(0,0,0,.34) !important;
+    -8px 8px 0 rgba(0,0,0,0.38),
+    0 14px 34px rgba(0,0,0,0.34) !important;
   overflow: visible !important;
 }
 
@@ -2986,7 +3050,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .composition-page .track-title {
   max-width: 100% !important;
   overflow: visible !important;
-  font-size: clamp(17px, 1.62vw, 32px) !important;
+  font-size: clamp(17px, 1.55vw, 32px) !important;
   line-height: 0.82 !important;
 }
 
@@ -3000,13 +3064,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   width: clamp(30px, 2.15vw, 40px) !important;
   height: clamp(30px, 2.15vw, 40px) !important;
   font-size: clamp(7px, 0.55vw, 10px) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.32) !important;
-}
-
-.composition-page .composition-side-note {
-  right: clamp(20px, 2.4vw, 46px) !important;
-  bottom: clamp(76px, 9vh, 118px) !important;
-  z-index: 41 !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.32) !important;
 }
 
 /* Marco : image un peu assombrie + shader masqué, donc la lumière rouge existe sans le repeindre. */
@@ -3139,18 +3197,28 @@ body.music-drawer-open .music-drawer-sheet {
   .composition-page .composition-diagonal-zone {
     right: auto !important;
     left: 3vw !important;
-    top: 39vh !important;
+    top: 42vh !important;
     width: 94vw !important;
+    height: 42vh !important;
+    max-height: none !important;
     transform: rotate(-4.5deg) !important;
   }
 
   .composition-page .composition-track-scroll {
-    max-height: 48vh !important;
-    overflow: auto !important;
-    padding: 4vh 5vw 10vh !important;
+    height: 100% !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 4vh 8vw 10vh 2vw !important;
+  }
+
+  .composition-page .composition-track:nth-child(even),
+  .composition-page .composition-track:nth-child(3n) {
+    margin-left: 0 !important;
   }
 
   .composition-page .composition-track {
+    width: calc(100% - 2vw) !important;
     min-height: 66px !important;
     margin-bottom: 0.7rem !important;
   }
@@ -3170,4 +3238,4 @@ body.music-drawer-open .music-drawer-sheet {
     grid-template-columns: 1fr !important;
   }
 }
-/* === MARCO PATCH v0.4.5 ACTUAL COMPOSITION FIXES - END === */
+/* === MARCO PATCH v0.4.9 COMPOSITION TRACKLIST LOWERING - END === */
