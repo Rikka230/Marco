@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.0 MODELE FILM STRIPS === */
+/* === MARCO PATCH v0.5.2 MODELE FILM STRIPS === */
 .model-page {
   --model-pink: #f293c9;
   --model-pink-soft: rgba(242, 147, 201, 0.58);
@@ -293,7 +293,7 @@
 
 .model-copy-left {
   left: 5.3vw;
-  top: 35.5vh;
+  top: 39.2vh;
   display: grid;
   gap: 0.34rem;
   max-width: 25vw;
@@ -553,7 +553,7 @@
 
   .model-copy-left {
     left: 6vw;
-    top: 18vh;
+    top: 19.5vh;
     max-width: 70vw;
   }
 

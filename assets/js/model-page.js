@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.1 MODELE FILM STRIPS LOOP ENGINE === */
+/* === MARCO PATCH v0.5.2 MODELE FILM STRIPS 60FPS LOOP ENGINE === */
 (() => {
   const state = {
     raf: null,
@@ -9,8 +9,9 @@
     lastTime: 0
   };
 
-  const DEFAULT_SPEED = 38;
-  const MANUAL_PAUSE_MS = 420;
+  const DEFAULT_SPEED = 56;
+  const LEGACY_SPEED_SCALE = 260;
+  const MANUAL_PAUSE_MS = 240;
 
   function uniqueFrames() {
     return [...document.querySelectorAll('.model-page .model-frame:not([data-clone="true"])')];
@@ -108,10 +109,21 @@
     }, { passive: false });
   }
 
+  function resolveSpeed(track) {
+    const value = Number(track.dataset.speed);
+    if (!Number.isFinite(value) || value === 0) return DEFAULT_SPEED;
+
+    // v0.5.0 used tiny per-frame values like 0.19. Keep compatibility
+    // but convert them to visible pixels/second for a true autonomous loop.
+    if (Math.abs(value) <= 2) return value * LEGACY_SPEED_SCALE;
+    return value;
+  }
+
   function tick(now = performance.now()) {
     state.raf = null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const deltaSeconds = Math.min(0.08, Math.max(0.001, ((now - (state.lastTime || now)) / 1000) || 0.016));
+    const previous = state.lastTime || now - 16.666;
+    const deltaSeconds = Math.min(1 / 30, Math.max(1 / 120, (now - previous) / 1000));
     state.lastTime = now;
 
     state.tracks.forEach((track) => {
@@ -126,7 +138,7 @@
       const isLightboxOpen = document.body.classList.contains('model-lightbox-open');
 
       if (!reduceMotion && isActiveModelPage && !isManual && !isLightboxOpen) {
-        const speed = Number(track.dataset.speed || DEFAULT_SPEED);
+        const speed = resolveSpeed(track);
         track.scrollLeft += speed * deltaSeconds;
         normalizeLoop(track);
         syncProgress(track);
@@ -279,7 +291,7 @@
   function initModelPage() {
     bindGlobalEvents();
     document.querySelectorAll('.model-page .model-strip-track').forEach(bindTrack);
-    state.lastTime = performance.now();
+    if (!state.lastTime) state.lastTime = performance.now();
     startLoop();
   }
 
