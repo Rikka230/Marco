@@ -1,147 +1,137 @@
-/* === MARCO PATCH v0.5.2 MODELE FILM STRIPS 60FPS LOOP ENGINE === */
+/* === MARCO PATCH v0.5.3 MODELE FILM STRIPS TRANSFORM LOOP === */
 (() => {
   const state = {
     raf: null,
-    tracks: new Set(),
+    tracks: new Map(),
     lightbox: null,
     frames: [],
     index: 0,
     lastTime: 0
   };
 
-  const DEFAULT_SPEED = 56;
-  const LEGACY_SPEED_SCALE = 260;
-  const MANUAL_PAUSE_MS = 240;
+  const DEFAULT_SPEED = 64;
+  const MANUAL_PAUSE_MS = 320;
+  const CLONE_SETS = 6;
 
   function uniqueFrames() {
     return [...document.querySelectorAll('.model-page .model-frame:not([data-clone="true"])')];
   }
 
-  function getLoopWidth(track) {
-    const row = track.querySelector('.model-strip-row');
-    if (!row) return 0;
-    return Number(row.dataset.loopWidth || 0);
+  function modulo(value, width) {
+    if (!width) return 0;
+    return ((value % width) + width) % width;
   }
 
   function calculateLoopWidth(row, originals) {
+    if (!row || !originals.length) return 0;
     const styles = window.getComputedStyle(row);
     const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0;
     const width = originals.reduce((total, node) => total + node.getBoundingClientRect().width, 0);
-    return Math.max(1, width + gap * originals.length);
+    return Math.max(1, width + gap * Math.max(0, originals.length - 1));
   }
 
-  function syncProgress(track) {
-    const strip = track.closest('.model-strip');
-    const progress = strip?.querySelector('.model-strip-progress span');
-    const loopWidth = getLoopWidth(track);
-    if (!progress || !loopWidth) return;
+  function applyTrackPosition(track, data) {
+    if (!track || !data?.row || !data.loopWidth) return;
+    data.offset = modulo(data.offset, data.loopWidth);
+    data.row.style.transform = `translate3d(${-data.offset}px, 0, 0)`;
+    syncProgress(track, data);
+  }
 
-    const raw = ((track.scrollLeft % loopWidth) + loopWidth) % loopWidth;
-    const percent = Math.max(8, Math.min(100, (raw / loopWidth) * 100));
+  function syncProgress(track, data = state.tracks.get(track)) {
+    const strip = track?.closest('.model-strip');
+    const progress = strip?.querySelector('.model-strip-progress span');
+    if (!progress || !data?.loopWidth) return;
+
+    const raw = modulo(data.offset, data.loopWidth);
+    const percent = Math.max(8, Math.min(100, (raw / data.loopWidth) * 100));
     progress.style.setProperty('--model-progress', `${percent}%`);
   }
 
-  function cloneTrack(track) {
-    const row = track.querySelector('.model-strip-row');
-    if (!row) return;
+  function rebuildTrack(track) {
+    const row = track?.querySelector('.model-strip-row');
+    if (!row) return null;
 
-    if (row.dataset.cloned !== 'true') {
-      const originals = [...row.children];
+    row.querySelectorAll('[data-clone="true"]').forEach((clone) => clone.remove());
+    const originals = [...row.querySelectorAll('.model-frame:not([data-clone="true"])')];
+    originals.forEach((node) => {
+      node.style.removeProperty('transform');
+    });
 
-      window.requestAnimationFrame(() => {
-        const loopWidth = calculateLoopWidth(row, originals);
-        row.dataset.loopWidth = String(loopWidth);
+    const data = state.tracks.get(track) || {
+      row,
+      offset: 0,
+      loopWidth: 0,
+      speed: DEFAULT_SPEED,
+      manualUntil: 0
+    };
 
-        for (let repeat = 0; repeat < 4; repeat += 1) {
-          originals.forEach((node) => {
-            const clone = node.cloneNode(true);
-            clone.dataset.clone = 'true';
-            clone.setAttribute('aria-hidden', 'true');
-            row.appendChild(clone);
-          });
-        }
+    data.row = row;
+    data.speed = Number(track.dataset.speed || DEFAULT_SPEED);
 
-        track.scrollLeft = loopWidth;
-        syncProgress(track);
-      });
+    window.requestAnimationFrame(() => {
+      data.loopWidth = calculateLoopWidth(row, originals);
+      row.dataset.loopWidth = String(data.loopWidth);
 
-      row.dataset.cloned = 'true';
-      return;
-    }
+      for (let repeat = 0; repeat < CLONE_SETS; repeat += 1) {
+        originals.forEach((node) => {
+          const clone = node.cloneNode(true);
+          clone.dataset.clone = 'true';
+          clone.setAttribute('aria-hidden', 'true');
+          clone.tabIndex = -1;
+          row.appendChild(clone);
+        });
+      }
 
-    if (!getLoopWidth(track)) {
-      const originals = [...row.querySelectorAll('.model-frame:not([data-clone="true"])')];
-      row.dataset.loopWidth = String(calculateLoopWidth(row, originals));
-    }
-  }
+      data.offset = modulo(data.offset || 0, data.loopWidth);
+      state.tracks.set(track, data);
+      applyTrackPosition(track, data);
+    });
 
-  function normalizeLoop(track) {
-    const loopWidth = getLoopWidth(track);
-    if (!loopWidth) return;
-
-    while (track.scrollLeft >= loopWidth * 2) {
-      track.scrollLeft -= loopWidth;
-    }
-
-    while (track.scrollLeft < loopWidth) {
-      track.scrollLeft += loopWidth;
-    }
+    return data;
   }
 
   function bindTrack(track) {
     if (!track || track.dataset.modelBound === 'true') return;
     track.dataset.modelBound = 'true';
-    cloneTrack(track);
-    state.tracks.add(track);
-
-    track.addEventListener('scroll', () => syncProgress(track), { passive: true });
+    track.scrollLeft = 0;
+    track.style.scrollBehavior = 'auto';
+    rebuildTrack(track);
 
     track.addEventListener('wheel', (event) => {
+      const data = state.tracks.get(track);
+      if (!data?.loopWidth) return;
+
       const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
       if (!delta) return;
 
       event.preventDefault();
       event.stopPropagation();
-      track.dataset.manualUntil = String(performance.now() + MANUAL_PAUSE_MS);
-      track.scrollLeft += delta;
-      normalizeLoop(track);
-      syncProgress(track);
+      data.manualUntil = performance.now() + MANUAL_PAUSE_MS;
+      data.offset += delta;
+      applyTrackPosition(track, data);
     }, { passive: false });
-  }
-
-  function resolveSpeed(track) {
-    const value = Number(track.dataset.speed);
-    if (!Number.isFinite(value) || value === 0) return DEFAULT_SPEED;
-
-    // v0.5.0 used tiny per-frame values like 0.19. Keep compatibility
-    // but convert them to visible pixels/second for a true autonomous loop.
-    if (Math.abs(value) <= 2) return value * LEGACY_SPEED_SCALE;
-    return value;
   }
 
   function tick(now = performance.now()) {
     state.raf = null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const previous = state.lastTime || now - 16.666;
-    const deltaSeconds = Math.min(1 / 30, Math.max(1 / 120, (now - previous) / 1000));
+    const deltaSeconds = Math.min(0.05, Math.max(0.001, ((now - (state.lastTime || now)) / 1000) || (1 / 60)));
     state.lastTime = now;
 
-    state.tracks.forEach((track) => {
+    state.tracks.forEach((data, track) => {
       if (!track.isConnected) {
         state.tracks.delete(track);
         return;
       }
 
       const page = track.closest('.model-page');
-      const isActiveModelPage = page && page.isConnected && !page.classList.contains('is-leaving');
-      const isManual = Number(track.dataset.manualUntil || 0) > now;
-      const isLightboxOpen = document.body.classList.contains('model-lightbox-open');
+      const activeModelPage = page && page.isConnected && !page.classList.contains('is-leaving');
+      const manuallyBrowsing = data.manualUntil > now;
+      const lightboxOpen = document.body.classList.contains('model-lightbox-open');
 
-      if (!reduceMotion && isActiveModelPage && !isManual && !isLightboxOpen) {
-        const speed = resolveSpeed(track);
-        track.scrollLeft += speed * deltaSeconds;
-        normalizeLoop(track);
-        syncProgress(track);
+      if (!reduceMotion && activeModelPage && !manuallyBrowsing && !lightboxOpen && data.loopWidth) {
+        data.offset += data.speed * deltaSeconds;
+        applyTrackPosition(track, data);
       }
     });
 
@@ -286,6 +276,10 @@
     document.addEventListener('visibilitychange', () => {
       state.lastTime = performance.now();
     });
+
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.model-page .model-strip-track').forEach(rebuildTrack);
+    }, { passive: true });
   }
 
   function initModelPage() {

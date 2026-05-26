@@ -122,8 +122,7 @@
 
 .model-strip-track {
   min-width: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   overscroll-behavior: contain;
   scrollbar-width: none;
   cursor: grab;
@@ -146,18 +145,23 @@
 
 .model-strip-row {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: clamp(10px, 0.95vw, 18px);
   width: max-content;
+  height: 100%;
   min-height: 100%;
   padding: 0 9vw 0 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .model-frame {
   position: relative;
+  flex: 0 0 clamp(104px, 9vw, 182px);
   display: block;
   width: clamp(104px, 9vw, 182px);
-  height: 100%;
+  height: calc(100% - 18px);
+  max-height: calc(100% - 18px);
   padding: 0;
   overflow: hidden;
   border: 1px solid rgba(242, 147, 201, 0.24);
@@ -171,7 +175,8 @@
 
 .model-frame.is-featured,
 .model-frame.is-wide {
-  width: clamp(140px, 13vw, 258px);
+  flex-basis: clamp(126px, 11vw, 218px);
+  width: clamp(126px, 11vw, 218px);
 }
 
 .model-frame img {
@@ -223,7 +228,7 @@
   z-index: 4;
   border-color: rgba(242, 147, 201, 0.78);
   filter: brightness(1.14);
-  transform: translateY(-4px) scale(1.025);
+  transform: scale(1.012);
   outline: 0;
 }
 
@@ -583,4 +588,18 @@
   .model-lightbox-arrow {
     transition: none;
   }
+}
+
+
+/* === MARCO PATCH v0.5.3 MODEL PAGE FINAL OVERRIDES === */
+.shell:has(.model-page)::after {
+  content: "MARCO v0.5.3" !important;
+}
+
+.model-page .model-strip-progress span {
+  transition: none;
+}
+
+.model-page .model-frame[data-clone="true"] {
+  pointer-events: auto;
 }
