@@ -1,55 +1,90 @@
-/* === MARCO PATCH v0.5.0 MODELE FILM STRIPS === */
+/* === MARCO PATCH v0.5.1 MODELE FILM STRIPS LOOP ENGINE === */
 (() => {
   const state = {
     raf: null,
     tracks: new Set(),
     lightbox: null,
     frames: [],
-    index: 0
+    index: 0,
+    lastTime: 0
   };
+
+  const DEFAULT_SPEED = 38;
+  const MANUAL_PAUSE_MS = 420;
 
   function uniqueFrames() {
     return [...document.querySelectorAll('.model-page .model-frame:not([data-clone="true"])')];
   }
 
-  function getHalfWidth(track) {
+  function getLoopWidth(track) {
     const row = track.querySelector('.model-strip-row');
     if (!row) return 0;
-    return Number(row.dataset.originalWidth || 0) || Math.max(0, row.scrollWidth / 2);
+    return Number(row.dataset.loopWidth || 0);
+  }
+
+  function calculateLoopWidth(row, originals) {
+    const styles = window.getComputedStyle(row);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0;
+    const width = originals.reduce((total, node) => total + node.getBoundingClientRect().width, 0);
+    return Math.max(1, width + gap * originals.length);
   }
 
   function syncProgress(track) {
     const strip = track.closest('.model-strip');
     const progress = strip?.querySelector('.model-strip-progress span');
-    const half = getHalfWidth(track);
-    if (!progress || !half) return;
+    const loopWidth = getLoopWidth(track);
+    if (!progress || !loopWidth) return;
 
-    const raw = ((track.scrollLeft % half) + half) % half;
-    const percent = Math.max(8, Math.min(100, (raw / half) * 100));
+    const raw = ((track.scrollLeft % loopWidth) + loopWidth) % loopWidth;
+    const percent = Math.max(8, Math.min(100, (raw / loopWidth) * 100));
     progress.style.setProperty('--model-progress', `${percent}%`);
   }
 
   function cloneTrack(track) {
     const row = track.querySelector('.model-strip-row');
-    if (!row || row.dataset.cloned === 'true') return;
+    if (!row) return;
 
-    const originals = [...row.children];
-    originals.forEach((node) => {
-      const clone = node.cloneNode(true);
-      clone.dataset.clone = 'true';
-      clone.setAttribute('aria-hidden', 'true');
-      row.appendChild(clone);
-    });
+    if (row.dataset.cloned !== 'true') {
+      const originals = [...row.children];
 
-    window.requestAnimationFrame(() => {
-      row.dataset.originalWidth = String(Math.max(0, row.scrollWidth / 2));
-      if (Number(track.dataset.speed || 0) < 0) {
-        track.scrollLeft = getHalfWidth(track);
-      }
-      syncProgress(track);
-    });
+      window.requestAnimationFrame(() => {
+        const loopWidth = calculateLoopWidth(row, originals);
+        row.dataset.loopWidth = String(loopWidth);
 
-    row.dataset.cloned = 'true';
+        for (let repeat = 0; repeat < 4; repeat += 1) {
+          originals.forEach((node) => {
+            const clone = node.cloneNode(true);
+            clone.dataset.clone = 'true';
+            clone.setAttribute('aria-hidden', 'true');
+            row.appendChild(clone);
+          });
+        }
+
+        track.scrollLeft = loopWidth;
+        syncProgress(track);
+      });
+
+      row.dataset.cloned = 'true';
+      return;
+    }
+
+    if (!getLoopWidth(track)) {
+      const originals = [...row.querySelectorAll('.model-frame:not([data-clone="true"])')];
+      row.dataset.loopWidth = String(calculateLoopWidth(row, originals));
+    }
+  }
+
+  function normalizeLoop(track) {
+    const loopWidth = getLoopWidth(track);
+    if (!loopWidth) return;
+
+    while (track.scrollLeft >= loopWidth * 2) {
+      track.scrollLeft -= loopWidth;
+    }
+
+    while (track.scrollLeft < loopWidth) {
+      track.scrollLeft += loopWidth;
+    }
   }
 
   function bindTrack(track) {
@@ -57,14 +92,6 @@
     track.dataset.modelBound = 'true';
     cloneTrack(track);
     state.tracks.add(track);
-
-    track.addEventListener('pointerenter', () => {
-      track.dataset.hover = 'true';
-    });
-
-    track.addEventListener('pointerleave', () => {
-      track.dataset.hover = 'false';
-    });
 
     track.addEventListener('scroll', () => syncProgress(track), { passive: true });
 
@@ -74,26 +101,18 @@
 
       event.preventDefault();
       event.stopPropagation();
+      track.dataset.manualUntil = String(performance.now() + MANUAL_PAUSE_MS);
       track.scrollLeft += delta;
       normalizeLoop(track);
       syncProgress(track);
     }, { passive: false });
   }
 
-  function normalizeLoop(track) {
-    const half = getHalfWidth(track);
-    if (!half) return;
-
-    if (track.scrollLeft >= half * 1.92) {
-      track.scrollLeft -= half;
-    } else if (track.scrollLeft <= 2) {
-      track.scrollLeft += half;
-    }
-  }
-
-  function tick() {
+  function tick(now = performance.now()) {
     state.raf = null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const deltaSeconds = Math.min(0.08, Math.max(0.001, ((now - (state.lastTime || now)) / 1000) || 0.016));
+    state.lastTime = now;
 
     state.tracks.forEach((track) => {
       if (!track.isConnected) {
@@ -101,9 +120,14 @@
         return;
       }
 
-      if (!reduceMotion && track.dataset.hover !== 'true' && !document.body.classList.contains('model-lightbox-open')) {
-        const speed = Number(track.dataset.speed || 0.12);
-        track.scrollLeft += speed;
+      const page = track.closest('.model-page');
+      const isActiveModelPage = page && page.isConnected && !page.classList.contains('is-leaving');
+      const isManual = Number(track.dataset.manualUntil || 0) > now;
+      const isLightboxOpen = document.body.classList.contains('model-lightbox-open');
+
+      if (!reduceMotion && isActiveModelPage && !isManual && !isLightboxOpen) {
+        const speed = Number(track.dataset.speed || DEFAULT_SPEED);
+        track.scrollLeft += speed * deltaSeconds;
         normalizeLoop(track);
         syncProgress(track);
       }
@@ -246,11 +270,16 @@
         moveLightbox(1);
       }
     });
+
+    document.addEventListener('visibilitychange', () => {
+      state.lastTime = performance.now();
+    });
   }
 
   function initModelPage() {
     bindGlobalEvents();
     document.querySelectorAll('.model-page .model-strip-track').forEach(bindTrack);
+    state.lastTime = performance.now();
     startLoop();
   }
 
