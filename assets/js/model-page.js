@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.3 MODELE FILM STRIPS TRANSFORM LOOP === */
+/* === MARCO PATCH v0.5.4 MODELE FILM STRIPS TRANSFORM LOOP === */
 (() => {
   const state = {
     raf: null,
