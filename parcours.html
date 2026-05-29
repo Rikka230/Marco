@@ -4,46 +4,83 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Marco Charlas-Hou - Parcours</title>
-  <meta name="description" content="Parcours, formation, expériences et compétences de Marco Charlas-Hou." />
-  <link rel="stylesheet" href="/style.css?v=0.4.5" />
+  <meta name="description" content="Parcours, études, expériences professionnelles et compétences artistiques de Marco Charlas-Hou." />
+  <link rel="stylesheet" href="/style.css?v=0.4.9" />
   <link rel="stylesheet" href="/assets/css/model-page.css?v=0.5.5" />
   <link rel="stylesheet" href="/assets/css/marco-bg-veil.css?v=0.5.5" />
+  <link rel="stylesheet" href="/assets/css/parcours-page.css?v=0.5.6" />
 </head>
 <body>
   <div class="film-grain" aria-hidden="true"></div>
   <div class="shell">
     <a class="mini-brand" href="/index.html" data-pjax aria-label="Retour accueil"><span></span>MARCO CHARLAS-HOU</a>
+
     <main id="app">
-      <section class="page poster-page inner parcours-page" data-page="parcours" data-bg="scores" data-theme="projects" data-transition-label="PARCOURS">
+      <section class="page poster-page inner parcours-page parcours-rebuild" data-page="parcours" data-bg="scores" data-theme="parcours" data-transition-label="PARCOURS" aria-labelledby="parcours-title">
         <div class="photo-bg" aria-hidden="true"></div>
-        <div class="title-wrap" aria-hidden="true">
-          <h1 class="mega first">PARCOURS</h1>
-          <h2 class="mega last">FORMATION</h2>
+        <div class="parcours-atmosphere" aria-hidden="true"></div>
+
+        <div class="parcours-kicker" aria-label="Résumé de la page">
+          <span>Parcours</span>
+          <strong>Études · expériences · compétences</strong>
         </div>
-        <img class="hero-person page-person projects-person" src="/assets/img/marco-projects.png" alt="Portrait detoure placeholder de Marco" />
-        <a class="cover-hit nav-home" href="/index.html" data-pjax><strong>HOME</strong><span>COVER <i></i> IDENTITY</span></a>
-        <a class="cover-hit nav-music" href="/music.html" data-pjax><strong>VIOLON</strong><span>LIVE <i></i> RECORDINGS</span></a>
-        <a class="cover-hit nav-gallery" href="/filmographie.html" data-pjax><strong>FILMO</strong><span>SCREEN <i></i> ROLES</span></a>
-        <a class="cover-hit nav-contact" href="/contact.html" data-pjax><strong>CONTACT</strong><span>BOOKING <i></i> COLLABS</span></a>
-        <div class="inner-copy">
-          <p>TRAINING / EXPERIENCE / PROFILE</p>
-          <h1>BUILDING<br />THE LINE</h1>
+
+        <div class="title-wrap parcours-title-wrap" aria-hidden="true">
+          <h1 id="parcours-title" class="mega first">PARCOURS</h1>
+          <h2 class="mega last">TRAJECTOIRE</h2>
         </div>
-        <nav class="inner-nav" aria-label="Parcours">
-          <a href="/filmographie.html" data-pjax><strong>FILMOGRAPHIE</strong><span>Apparitions, pubs, roles et silhouettes</span></a>
-          <a href="/gallery.html" data-pjax><strong>MODELE</strong><span>Photo, image et portfolio editorial</span></a>
-          <a href="/contact.html" data-pjax><strong>CONTACT</strong><span>Booking professionnel</span></a>
-        </nav>
+
+        <img class="hero-person page-person projects-person parcours-person" src="/assets/img/marco-projects.png" alt="Portrait détouré de Marco pour la page Parcours" />
+
+        <div class="parcours-copy" aria-label="Positionnement du parcours">
+          <p>Études, expériences et compétences au service d’une <b>vision artistique globale</b>.</p>
+        </div>
+
+        <section class="parcours-panel parcours-studies" aria-labelledby="parcours-studies-title">
+          <header>
+            <span>01</span>
+            <h2 id="parcours-studies-title">Formation / Études</h2>
+          </header>
+          <div class="parcours-study-list" data-parcours-studies></div>
+        </section>
+
+        <section class="parcours-timeline-zone" aria-labelledby="parcours-timeline-title">
+          <header>
+            <span>Timeline dynamique</span>
+            <h2 id="parcours-timeline-title">De la formation à l’expérience</h2>
+          </header>
+          <div class="parcours-timeline" data-parcours-timeline></div>
+        </section>
+
+        <section class="parcours-panel parcours-experiences" aria-labelledby="parcours-experiences-title">
+          <header>
+            <span>02</span>
+            <h2 id="parcours-experiences-title">Expériences</h2>
+          </header>
+          <div class="parcours-experience-list" data-parcours-experiences></div>
+        </section>
+
+        <section class="parcours-skills" aria-labelledby="parcours-skills-title">
+          <h2 id="parcours-skills-title">Profil / Compétences</h2>
+          <div class="parcours-skill-list" data-parcours-skills></div>
+        </section>
+
+        <blockquote class="parcours-quote">
+          <p>Un parcours façonné par la rigueur, porté par la créativité, guidé par l’exigence.</p>
+          <cite>Marco C-H.</cite>
+        </blockquote>
       </section>
     </main>
+
     <canvas id="dotWave" aria-hidden="true"></canvas>
     <div class="mini-player">
       <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
-      <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>
+      <span class="track-label"><b>03</b><b>PARCOURS ARTISTIQUE</b><b>ÉTUDES · EXPÉRIENCES · COMPÉTENCES</b></span>
       <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="auto" loop></audio>
     </div>
   </div>
   <script src="/script.js"></script>
   <script src="/assets/js/model-page.js?v=0.5.5"></script>
+  <script src="/assets/js/parcours-page.js?v=0.5.6"></script>
 </body>
 </html>

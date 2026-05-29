@@ -1,0 +1,484 @@
+/* === MARCO PATCH v0.5.6 PARCOURS REBUILD === */
+.parcours-rebuild {
+  --parcours-blue: #19a8ff;
+  --parcours-blue-deep: #0668c8;
+  --parcours-cyan: #62d7ff;
+  --parcours-soft: rgba(25, 168, 255, 0.18);
+  --parcours-line: rgba(98, 215, 255, 0.34);
+  --parcours-cream: rgba(244, 249, 255, 0.9);
+  --marco-page-accent: var(--parcours-blue);
+  --marco-nav-accent: var(--parcours-blue);
+  color: var(--parcours-cream);
+  background: #03080e;
+  overflow: hidden;
+}
+
+.shell:has(.parcours-rebuild)::after {
+  content: "MARCO v0.5.6" !important;
+  color: color-mix(in srgb, var(--parcours-blue) 82%, #fff 18%) !important;
+  border-color: color-mix(in srgb, var(--parcours-blue) 72%, rgba(255,255,255,0.26)) !important;
+  box-shadow:
+    0 0 18px rgba(25, 168, 255, 0.28),
+    0 12px 30px rgba(0, 0, 0, 0.42) !important;
+}
+
+.parcours-rebuild .photo-bg {
+  filter: saturate(0.82) contrast(1.1) brightness(0.58) blur(0.2px);
+  transform: scale(1.075);
+}
+
+.parcours-rebuild .photo-bg::before {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(25, 168, 255, 0.24), transparent 30%),
+    radial-gradient(circle at 58% 20%, rgba(112, 232, 255, 0.14), transparent 32%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 10, 18, 0.26) 46%, rgba(0, 0, 0, 0.82)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 48%, rgba(0, 0, 0, 0.55));
+}
+
+.parcours-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(25,168,255,0.16) 0 1px, transparent 1px),
+    linear-gradient(0deg, rgba(25,168,255,0.11) 0 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 48%, transparent 0 24%, rgba(0,0,0,0.24) 58%, rgba(0,0,0,0.72) 100%);
+  background-size: 9vw 100%, 100% 18vh, 100% 100%;
+  opacity: 0.42;
+  mix-blend-mode: screen;
+}
+
+.parcours-kicker,
+.parcours-copy,
+.parcours-panel,
+.parcours-timeline-zone,
+.parcours-skills,
+.parcours-quote {
+  position: absolute;
+  z-index: 32;
+  font-family: var(--heavy);
+  text-transform: uppercase;
+}
+
+.parcours-kicker {
+  left: 3.8vw;
+  top: 3.6vh;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  color: var(--parcours-cream);
+  font-size: clamp(8px, 0.72vw, 13px);
+  letter-spacing: 0.13em;
+}
+
+.parcours-kicker::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  content: "";
+  background: var(--parcours-blue);
+  box-shadow: 0 0 16px var(--parcours-blue);
+}
+
+.parcours-kicker span {
+  color: var(--parcours-blue);
+}
+
+.parcours-title-wrap {
+  z-index: 18;
+  pointer-events: none;
+}
+
+.parcours-rebuild .parcours-title-wrap .mega.first {
+  top: 5.1vh;
+  left: 50%;
+  width: 112vw;
+  color: var(--parcours-blue);
+  font-size: clamp(112px, 20vw, 392px);
+  line-height: 0.72;
+  letter-spacing: -0.09em;
+  opacity: 0.92;
+  text-align: center;
+  transform: translateX(-50%) scaleX(0.9);
+  text-shadow:
+    0 0 34px rgba(25, 168, 255, 0.16),
+    0 28px 52px rgba(0, 0, 0, 0.6);
+}
+
+.parcours-rebuild .parcours-title-wrap .mega.last {
+  left: 51%;
+  bottom: -2.2vh;
+  width: 114vw;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(25, 168, 255, 0.24);
+  text-stroke: 1px rgba(25, 168, 255, 0.24);
+  font-size: clamp(70px, 13.4vw, 250px);
+  letter-spacing: -0.07em;
+  opacity: 0.62;
+  transform: translateX(-50%) scaleX(0.94);
+}
+
+.parcours-rebuild .parcours-person {
+  z-index: 36;
+  left: 50%;
+  bottom: -10vh;
+  height: 112vh;
+  max-height: none;
+  transform: translateX(-47%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
+  filter:
+    brightness(1.02)
+    contrast(1.03)
+    saturate(0.94)
+    drop-shadow(0 30px 42px rgba(0, 0, 0, 0.58));
+}
+
+.parcours-copy {
+  left: 3.8vw;
+  top: 25.6vh;
+  max-width: min(28vw, 520px);
+  color: rgba(244, 249, 255, 0.82);
+  font-size: clamp(9px, 0.72vw, 14px);
+  line-height: 1.32;
+  letter-spacing: 0.12em;
+  text-shadow: 0 8px 22px rgba(0,0,0,0.74);
+}
+
+.parcours-copy p {
+  margin: 0;
+}
+
+.parcours-copy b {
+  color: var(--parcours-blue);
+  font-weight: inherit;
+}
+
+.parcours-panel {
+  width: min(31vw, 560px);
+  border: 1px solid rgba(98, 215, 255, 0.20);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.016)),
+    rgba(0, 8, 16, 0.54);
+  box-shadow:
+    inset 0 0 28px rgba(25, 168, 255, 0.04),
+    0 22px 52px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(10px);
+}
+
+.parcours-panel header,
+.parcours-timeline-zone header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(12px, 1.4vh, 18px);
+}
+
+.parcours-panel header span,
+.parcours-timeline-zone header span {
+  color: rgba(244, 249, 255, 0.7);
+  font-size: clamp(8px, 0.68vw, 12px);
+  letter-spacing: 0.12em;
+}
+
+.parcours-panel h2,
+.parcours-timeline-zone h2,
+.parcours-skills h2 {
+  margin: 0;
+  color: var(--parcours-blue);
+  font-size: clamp(18px, 1.6vw, 34px);
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+  text-shadow: 0 0 18px rgba(25, 168, 255, 0.28);
+}
+
+.parcours-studies {
+  left: 3.8vw;
+  top: 32.5vh;
+  padding: clamp(18px, 2vw, 34px);
+}
+
+.parcours-experiences {
+  right: clamp(122px, 8.8vw, 180px);
+  top: 31.8vh;
+  padding: clamp(18px, 2vw, 34px);
+}
+
+.parcours-study-list,
+.parcours-experience-list {
+  display: grid;
+  gap: clamp(10px, 1.2vh, 16px);
+}
+
+.parcours-study-card,
+.parcours-experience-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(38px, 3vw, 58px) minmax(0, 1fr);
+  gap: clamp(12px, 1.1vw, 18px);
+  align-items: center;
+  min-height: clamp(58px, 7.3vh, 96px);
+  padding: 0 0 clamp(10px, 1.1vh, 16px);
+  border-bottom: 1px solid rgba(98, 215, 255, 0.14);
+}
+
+.parcours-study-card:last-child,
+.parcours-experience-card:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.parcours-card-icon {
+  display: grid;
+  place-items: center;
+  width: clamp(38px, 3vw, 58px);
+  height: clamp(38px, 3vw, 58px);
+  border: 1px solid rgba(98, 215, 255, 0.28);
+  color: var(--parcours-blue);
+  background: rgba(25, 168, 255, 0.05);
+  box-shadow: inset 0 0 18px rgba(25, 168, 255, 0.06);
+  font-size: clamp(18px, 1.35vw, 28px);
+}
+
+.parcours-card-main {
+  min-width: 0;
+}
+
+.parcours-card-main strong {
+  display: block;
+  color: rgba(244, 249, 255, 0.96);
+  font-size: clamp(13px, 1vw, 19px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+}
+
+.parcours-card-main p {
+  margin: 0.32rem 0 0;
+  color: rgba(244, 249, 255, 0.68);
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(10px, 0.7vw, 13px);
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.parcours-card-main small {
+  display: block;
+  margin-top: 0.32rem;
+  color: var(--parcours-blue);
+  font-size: clamp(8px, 0.6vw, 11px);
+  letter-spacing: 0.12em;
+}
+
+.parcours-timeline-zone {
+  left: 26.2vw;
+  right: clamp(32vw, 34vw, 680px);
+  top: 45.2vh;
+  z-index: 38;
+  pointer-events: auto;
+}
+
+.parcours-timeline-zone header {
+  margin-left: 0.1rem;
+  margin-bottom: clamp(16px, 2vh, 26px);
+}
+
+.parcours-timeline-zone h2 {
+  font-size: clamp(14px, 1.05vw, 22px);
+}
+
+.parcours-timeline {
+  --point-count: 3;
+  position: relative;
+  min-height: clamp(126px, 17vh, 196px);
+}
+
+.parcours-timeline::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: clamp(52px, 6.4vh, 72px);
+  height: 1px;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent, rgba(98,215,255,0.42), rgba(25,168,255,0.95), rgba(98,215,255,0.42), transparent);
+  box-shadow: 0 0 18px rgba(25, 168, 255, 0.38);
+}
+
+.parcours-timeline::after {
+  position: absolute;
+  right: -0.35rem;
+  top: calc(clamp(52px, 6.4vh, 72px) - 4px);
+  width: 9px;
+  height: 9px;
+  content: "";
+  border-top: 1px solid var(--parcours-blue);
+  border-right: 1px solid var(--parcours-blue);
+  transform: rotate(45deg);
+}
+
+.parcours-timeline-list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--point-count), minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 36px);
+}
+
+.parcours-timeline-point {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  padding-top: clamp(82px, 9.2vh, 112px);
+}
+
+.parcours-timeline-point::before {
+  position: absolute;
+  left: 0;
+  top: clamp(44px, 5.55vh, 64px);
+  width: clamp(11px, 0.84vw, 16px);
+  height: clamp(11px, 0.84vw, 16px);
+  border-radius: 999px;
+  content: "";
+  background: var(--parcours-blue);
+  box-shadow:
+    0 0 0 7px rgba(25,168,255,0.12),
+    0 0 22px rgba(25,168,255,0.62);
+}
+
+.parcours-timeline-point strong {
+  color: var(--parcours-blue);
+  font-size: clamp(13px, 0.9vw, 17px);
+  line-height: 0.92;
+  letter-spacing: 0.08em;
+}
+
+.parcours-timeline-point p {
+  margin: 0.34rem 0 0;
+  max-width: 14ch;
+  color: rgba(244,249,255,0.84);
+  font-size: clamp(10px, 0.72vw, 13px);
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+}
+
+.parcours-timeline-point small {
+  display: block;
+  margin-top: 0.72rem;
+  color: rgba(244, 249, 255, 0.58);
+  font-size: clamp(8px, 0.62vw, 11px);
+  letter-spacing: 0.08em;
+}
+
+.parcours-skills {
+  left: 3.8vw;
+  bottom: 14.8vh;
+  width: min(34vw, 620px);
+}
+
+.parcours-skills h2 {
+  margin-bottom: 0.72rem;
+}
+
+.parcours-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(7px, 0.7vw, 12px);
+}
+
+.parcours-skill {
+  display: inline-grid;
+  place-items: center;
+  min-height: clamp(26px, 3vh, 36px);
+  padding: 0 0.9rem;
+  border: 1px solid rgba(25, 168, 255, 0.46);
+  color: var(--parcours-blue);
+  background: rgba(0, 10, 20, 0.46);
+  box-shadow: inset 0 0 14px rgba(25, 168, 255, 0.05);
+  font-size: clamp(8px, 0.62vw, 12px);
+  letter-spacing: 0.1em;
+}
+
+.parcours-quote {
+  right: clamp(150px, 10vw, 220px);
+  bottom: 16vh;
+  width: min(25vw, 430px);
+  margin: 0;
+  color: rgba(244,249,255,0.82);
+  font-size: clamp(10px, 0.82vw, 15px);
+  line-height: 1.25;
+  letter-spacing: 0.12em;
+  text-shadow: 0 8px 22px rgba(0,0,0,0.72);
+}
+
+.parcours-quote::before {
+  content: "“";
+  position: absolute;
+  left: -2.6rem;
+  top: -1.2rem;
+  color: var(--parcours-blue);
+  font-size: clamp(52px, 4vw, 82px);
+  line-height: 1;
+}
+
+.parcours-quote p {
+  margin: 0;
+}
+
+.parcours-quote cite {
+  display: block;
+  margin-top: 1rem;
+  color: var(--parcours-blue);
+  font-style: normal;
+  font-size: clamp(12px, 1vw, 22px);
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+@media (max-width: 980px) {
+  .parcours-rebuild .parcours-title-wrap .mega.first {
+    top: 7vh;
+    font-size: clamp(76px, 20vw, 160px);
+  }
+
+  .parcours-rebuild .parcours-person {
+    height: 88vh;
+    bottom: -8vh;
+    transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
+    opacity: 0.74;
+  }
+
+  .parcours-copy {
+    left: 6vw;
+    top: 19vh;
+    max-width: 78vw;
+  }
+
+  .parcours-studies,
+  .parcours-experiences,
+  .parcours-timeline-zone,
+  .parcours-skills,
+  .parcours-quote {
+    width: auto;
+    left: 5vw;
+    right: 5vw;
+  }
+
+  .parcours-studies { top: 27vh; }
+  .parcours-timeline-zone { top: 50vh; }
+  .parcours-experiences { top: 68vh; display: none; }
+  .parcours-skills { bottom: 11vh; }
+  .parcours-quote { display: none; }
+
+  .parcours-panel {
+    padding: 1rem;
+  }
+
+  .parcours-timeline-list {
+    gap: 1rem;
+  }
+
+  .parcours-timeline-point p {
+    max-width: none;
+  }
+}
