@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/style.css?v=0.4.9" />
   <link rel="stylesheet" href="/assets/css/model-page.css?v=0.5.5" />
   <link rel="stylesheet" href="/assets/css/marco-bg-veil.css?v=0.5.5" />
-  <link rel="stylesheet" href="/assets/css/parcours-page.css?v=0.6.2" />
+  <link rel="stylesheet" href="/assets/css/parcours-page.css?v=0.6.3" />
 </head>
 <body>
   <div class="film-grain" aria-hidden="true"></div>
@@ -60,6 +60,44 @@
           <h2 id="parcours-skills-title">Profil</h2>
           <div class="parcours-skill-list" data-parcours-skills></div>
         </section>
+
+        <section class="parcours-mobile-flow" data-parcours-mobile data-no-page-wheel aria-label="Parcours mobile">
+          <div class="parcours-mobile-frame">
+            <section class="parcours-mobile-hero" aria-labelledby="parcours-mobile-title">
+              <div class="parcours-mobile-title" aria-hidden="true"></div>
+              <img class="parcours-mobile-person" src="/assets/img/marco-parcour.png" alt="Portrait detoure de Marco avec livres" />
+
+              <div class="parcours-mobile-copy">
+                <h1 id="parcours-mobile-title">Mon<br />parcours.</h1>
+                <p>De la formation &agrave; l'exp&eacute;rience, un chemin guid&eacute; par la passion et la <b>cr&eacute;ation</b>.</p>
+              </div>
+            </section>
+
+            <nav class="parcours-mobile-chips" data-parcours-mobile-chips aria-label="Filtres parcours"></nav>
+
+            <section class="parcours-mobile-section parcours-mobile-timeline-section" aria-label="Timeline Parcours">
+              <div class="parcours-mobile-timeline" data-parcours-mobile-timeline></div>
+            </section>
+
+            <section class="parcours-mobile-section parcours-mobile-experiences" aria-labelledby="parcours-mobile-experiences-title">
+              <h2 id="parcours-mobile-experiences-title">Exp&eacute;riences</h2>
+              <div class="parcours-mobile-experience-grid" data-parcours-mobile-experiences></div>
+            </section>
+
+            <section class="parcours-mobile-section parcours-mobile-profile" aria-labelledby="parcours-mobile-profile-title">
+              <h2 id="parcours-mobile-profile-title">Profil</h2>
+              <div class="parcours-mobile-skill-list" data-parcours-mobile-skills></div>
+            </section>
+
+            <div class="parcours-mobile-player" data-parcours-mobile-player>
+              <button class="parcours-mobile-play" type="button" data-parcours-mobile-play aria-label="Lancer la boucle audio">PLAY</button>
+              <span class="parcours-mobile-track-index">01</span>
+              <strong class="parcours-mobile-track-title">Cinematic Strings</strong>
+              <button class="parcours-mobile-music" type="button" data-parcours-mobile-music aria-label="Ouvrir les musiques">Musiques <i aria-hidden="true">&uarr;</i></button>
+              <span class="parcours-mobile-bars" aria-hidden="true"></span>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -72,6 +110,6 @@
   </div>
   <script src="/script.js"></script>
   <script src="/assets/js/model-page.js?v=0.5.5"></script>
-  <script src="/assets/js/parcours-page.js?v=0.6.2"></script>
+  <script src="/assets/js/parcours-page.js?v=0.6.3"></script>
 </body>
 </html>

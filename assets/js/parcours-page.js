@@ -1,6 +1,32 @@
-/* === MARCO PATCH v0.6.2 PARCOURS V1 DATA RENDERER === */
+/* === MARCO PATCH v0.6.3 PARCOURS V1 DATA RENDERER === */
 (() => {
   const ICONS = {
+    study: `
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M4 11.5 16 6l12 5.5L16 17 4 11.5Z" />
+        <path d="M9 14.5v5.2c2.8 2.3 11.2 2.3 14 0v-5.2" />
+        <path d="M27 12v7" />
+      </svg>
+    `,
+    waveform: `
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M5 18v-4M9 21V11M13 24V8M17 22V10M21 25V7M25 20v-8M29 17v-2" />
+      </svg>
+    `,
+    mic: `
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="12" y="5" width="8" height="15" rx="4" />
+        <path d="M7.5 16.5c0 5 3.4 8 8.5 8s8.5-3 8.5-8" />
+        <path d="M16 24.5V29M11.5 29h9" />
+      </svg>
+    `,
+    violin: `
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M22.5 4.5 27.5 9.5M11 21l10-10M19.5 7.5l5 5" />
+        <path d="M12.5 16.5c-2.8-2.2-5.8-1.3-7.1.8-1.6 2.5.6 5.5 3.7 4.7-1.1 2.9 2.4 5.4 5 3.5 2.2-1.6 2.5-4.7.2-7.2" />
+        <path d="M16 11.5c2.2-1.9 4.9-1.6 6.1.3 1.3 2-.2 4.5-2.6 4.3" />
+      </svg>
+    `,
     music: `
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <path d="M12 22.5V7.5l12-2v14" />
@@ -93,6 +119,55 @@
         title: "D\u00e9veloppement Artistique",
         detail: "Composition - MAO - Direction artistique - \u00c9criture",
         period: "2016 -> 2018"
+      }
+    ],
+    mobileChips: [
+      { label: "Formation", target: "formation", icon: "study" },
+      { label: "Acting", target: "acting", icon: "clapper" },
+      { label: "Composition", target: "composition", icon: "waveform" },
+      { label: "Interpr\u00e8te", target: "interprete", icon: "mic" },
+      { label: "Mod\u00e8le", target: "modele", icon: "camera" }
+    ],
+    mobileTimeline: [
+      {
+        id: "formation",
+        icon: "violin",
+        title: "Conservatoire",
+        subtitle: "Violon classique \u00b7 Formation musicale \u00b7 Interpr\u00e9tation",
+        period: "2008 - 2014",
+        tone: "blue"
+      },
+      {
+        id: "acting",
+        icon: "clapper",
+        title: "Training Acting",
+        subtitle: "Jeu cam\u00e9ra \u00b7 Improvisation \u00b7 M\u00e9thode Stanislavski",
+        period: "2015 - 2016",
+        tone: "blue"
+      },
+      {
+        id: "composition",
+        icon: "waveform",
+        title: "D\u00e9veloppement artistique",
+        subtitle: "Composition \u00b7 MAO \u00b7 Direction artistique \u00b7 \u00c9criture",
+        period: "2016 - 2018",
+        tone: "blue"
+      },
+      {
+        id: "interprete",
+        icon: "mic",
+        title: "Interpr\u00e8te",
+        subtitle: "Concerts \u00b7 Sessions \u00b7 Sc\u00e8ne",
+        period: "2019 - 2021",
+        tone: "green"
+      },
+      {
+        id: "modele",
+        icon: "camera",
+        title: "Mod\u00e8le",
+        subtitle: "Campagnes \u00b7 Editorial \u00b7 Image de marque",
+        period: "2021 - 2023",
+        tone: "green"
       }
     ],
     timeline: [
@@ -284,6 +359,94 @@
     `;
   }
 
+  function renderMobileChips(data) {
+    const target = document.querySelector("[data-parcours-mobile-chips]");
+    const chips = data.mobileChips || [];
+    if (!target || !chips.length) return;
+
+    target.innerHTML = chips.map((chip, index) => `
+      <button class="parcours-mobile-chip${index === 0 ? " is-active" : ""}" type="button" data-mobile-target="${escapeHtml(chip.target)}">
+        <span aria-hidden="true">${iconMarkup(chip.icon)}</span>
+        ${escapeHtml(chip.label)}
+      </button>
+    `).join("");
+  }
+
+  function renderMobileTimeline(data) {
+    const target = document.querySelector("[data-parcours-mobile-timeline]");
+    const items = data.mobileTimeline || [];
+    if (!target || !items.length) return;
+
+    target.innerHTML = items.map((item) => `
+      <article class="parcours-mobile-timeline-card" data-mobile-id="${escapeHtml(item.id)}" data-tone="${escapeHtml(item.tone || "blue")}">
+        <small>${escapeHtml(item.period)}</small>
+        <div class="parcours-mobile-card-body">
+          <strong>${escapeHtml(item.title)}</strong>
+          <p>${escapeHtml(item.subtitle)}</p>
+          <span class="parcours-mobile-card-icon" aria-hidden="true">${iconMarkup(item.icon)}</span>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderMobileExperiences(data) {
+    const target = document.querySelector("[data-parcours-mobile-experiences]");
+    if (!target) return;
+
+    target.innerHTML = (data.experiences || []).map((item) => `
+      <article class="parcours-mobile-experience-card">
+          <span class="parcours-mobile-experience-icon" aria-hidden="true">${iconMarkup(item.icon)}</span>
+        <div>
+          <strong>${escapeHtml(item.title)}</strong>
+          <p>${escapeHtml(String(item.detail ?? "").replace(/ - /g, " \u00b7 "))}</p>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderMobileSkills(data) {
+    const target = document.querySelector("[data-parcours-mobile-skills]");
+    if (!target) return;
+
+    target.innerHTML = (data.skills || []).map((skill, index) => `
+      <span class="parcours-mobile-skill" data-tone="${index % 5 === 2 ? "pink" : index % 4 === 3 ? "green" : "blue"}">${escapeHtml(skill)}</span>
+    `).join("");
+  }
+
+  function enableMobileChips() {
+    const page = document.querySelector(".parcours-rebuild");
+    const flow = document.querySelector("[data-parcours-mobile]");
+    const chips = document.querySelectorAll("[data-mobile-target]");
+    if (!page || !flow || !chips.length || flow.dataset.chipsReady === "true") return;
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const target = page.querySelector(`[data-mobile-id="${chip.dataset.mobileTarget}"]`);
+        if (!target) return;
+
+        chips.forEach((item) => item.classList.toggle("is-active", item === chip));
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+
+    flow.dataset.chipsReady = "true";
+  }
+
+  function enableMobilePlayer() {
+    const player = document.querySelector("[data-parcours-mobile-player]");
+    if (!player || player.dataset.playerReady === "true") return;
+
+    player.querySelector("[data-parcours-mobile-play]")?.addEventListener("click", () => {
+      document.querySelector(".shell > .mini-player #playBtn, #playBtn")?.click();
+    });
+
+    player.querySelector("[data-parcours-mobile-music]")?.addEventListener("click", () => {
+      document.querySelector(".shell > .mini-player .music-drawer-toggle, .music-drawer-toggle")?.click();
+    });
+
+    player.dataset.playerReady = "true";
+  }
+
   function updateTimelineScrollState(target) {
     const maxScroll = Math.max(0, target.scrollWidth - target.clientWidth);
     const scrollLeft = Math.max(0, target.scrollLeft);
@@ -335,7 +498,9 @@
     const page = document.querySelector(".parcours-rebuild");
     const label = document.querySelector(".track-label");
     if (!page || !label) return;
-    label.innerHTML = "<b>03</b><b>PARCOURS ARTISTIQUE</b><b>&Eacute;TUDES - EXP&Eacute;RIENCES - COMP&Eacute;TENCES</b>";
+    label.innerHTML = window.matchMedia("(max-width: 768px)").matches
+      ? "<b>01</b><b>CINEMATIC STRINGS</b><b>MUSIQUES &uarr;</b>"
+      : "<b>03</b><b>PARCOURS ARTISTIQUE</b><b>&Eacute;TUDES - EXP&Eacute;RIENCES - COMP&Eacute;TENCES</b>";
   }
 
   function initParcoursPage() {
@@ -347,7 +512,13 @@
     renderExperiences(data);
     renderTimeline(data);
     renderSkills(data);
+    renderMobileChips(data);
+    renderMobileTimeline(data);
+    renderMobileExperiences(data);
+    renderMobileSkills(data);
     enableTimelineScroll();
+    enableMobileChips();
+    enableMobilePlayer();
     syncMiniPlayerLabel();
     page.dataset.parcoursReady = "true";
   }
@@ -357,11 +528,13 @@
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       initParcoursPage();
+      window.addEventListener("resize", syncMiniPlayerLabel);
       const app = document.querySelector("#app");
       if (app) observer.observe(app, { childList: true, subtree: true });
     });
   } else {
     initParcoursPage();
+    window.addEventListener("resize", syncMiniPlayerLabel);
     const app = document.querySelector("#app");
     if (app) observer.observe(app, { childList: true, subtree: true });
   }
