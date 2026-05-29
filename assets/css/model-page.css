@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.2 MODELE FILM STRIPS === */
+/* === MARCO PATCH v0.5.5 MODELE FILM STRIPS === */
 .model-page {
   --model-pink: #f293c9;
   --model-pink-soft: rgba(242, 147, 201, 0.58);
@@ -591,9 +591,9 @@
 }
 
 
-/* === MARCO PATCH v0.5.3 MODEL PAGE FINAL OVERRIDES === */
+/* === MARCO PATCH v0.5.5 MODEL PAGE FINAL OVERRIDES === */
 .shell:has(.model-page)::after {
-  content: "MARCO v0.5.3" !important;
+  content: "MARCO v0.5.5" !important;
 }
 
 .model-page .model-strip-progress span {

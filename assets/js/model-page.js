@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.4 MODELE FILM STRIPS TRANSFORM LOOP === */
+/* === MARCO PATCH v0.5.5 MODELE FILM STRIPS AUTOSCROLL FIX === */
 (() => {
   const state = {
     raf: null,
@@ -10,7 +10,7 @@
   };
 
   const DEFAULT_SPEED = 64;
-  const MANUAL_PAUSE_MS = 320;
+  const MANUAL_PAUSE_MS = 260;
   const CLONE_SETS = 6;
 
   function uniqueFrames() {
@@ -114,7 +114,6 @@
 
   function tick(now = performance.now()) {
     state.raf = null;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const deltaSeconds = Math.min(0.05, Math.max(0.001, ((now - (state.lastTime || now)) / 1000) || (1 / 60)));
     state.lastTime = now;
 
@@ -129,7 +128,7 @@
       const manuallyBrowsing = data.manualUntil > now;
       const lightboxOpen = document.body.classList.contains('model-lightbox-open');
 
-      if (!reduceMotion && activeModelPage && !manuallyBrowsing && !lightboxOpen && data.loopWidth) {
+      if (activeModelPage && !manuallyBrowsing && !lightboxOpen && data.loopWidth) {
         data.offset += data.speed * deltaSeconds;
         applyTrackPosition(track, data);
       }

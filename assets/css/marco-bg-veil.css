@@ -1,11 +1,11 @@
-/* === MARCO PATCH v0.5.4 GLOBAL BACKGROUND VEIL === */
+/* === MARCO PATCH v0.5.5 GLOBAL BACKGROUND VEIL === */
 :root {
   --marco-v054-accent: var(--accent, #f293c9);
 }
 
 /* Version badge override for every page using this patch. */
 .shell::after {
-  content: "MARCO v0.5.4" !important;
+  content: "MARCO v0.5.5" !important;
   position: fixed;
   top: clamp(14px, 2vh, 24px);
   right: clamp(86px, 7vw, 142px);
