@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.7 PARCOURS DATA RENDERER === */
+/* === MARCO PATCH v0.5.8 PARCOURS DATA RENDERER === */
 (() => {
   const DEFAULT_DATA = {
     studies: [
@@ -10,31 +10,34 @@
       },
       {
         icon: "▣",
-        title: "Training acting",
+        title: "Training Acting",
         detail: "Jeu caméra · Improvisation · Méthode Stanislavski",
         period: "2015 – 2016"
       },
       {
         icon: "◌",
-        title: "Développement artistique",
+        title: "Développement Artistique",
         detail: "Composition · MAO · Direction artistique · Écriture",
         period: "2016 – 2018"
       }
     ],
     timeline: [
       {
+        icon: "▯",
         title: "Apprendre",
         subtitle: "Fonder les bases",
         period: "2008 – 2014",
         type: "formation"
       },
       {
+        icon: "◇",
         title: "Explorer",
         subtitle: "Expérimenter · se développer",
         period: "2015 – 2018",
         type: "formation"
       },
       {
+        icon: "✦",
         title: "Créer",
         subtitle: "Partager · transmettre",
         period: "2019 – Aujourd’hui",
@@ -69,8 +72,6 @@
       "Présence",
       "Création",
       "Rigueur",
-      "Sens du détail",
-      "Adaptabilité",
       "Curiosité"
     ]
   };
@@ -129,9 +130,10 @@
       <div class="parcours-timeline-list">
         ${items.map((item, index) => `
           <article class="parcours-timeline-point" data-index="${index}" data-type="${escapeHtml(item.type || "parcours")}">
+            <span class="parcours-timeline-icon" aria-hidden="true">${escapeHtml(item.icon || "•")}</span>
+            <small>${escapeHtml(item.period)}</small>
             <strong>${escapeHtml(item.title)}</strong>
             <p>${escapeHtml(item.subtitle)}</p>
-            <small>${escapeHtml(item.period)}</small>
           </article>
         `).join("")}
       </div>
