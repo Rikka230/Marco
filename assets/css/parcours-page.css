@@ -1,38 +1,49 @@
-/* === MARCO PATCH v0.5.6 PARCOURS REBUILD === */
+/* === MARCO PATCH v0.5.7 PARCOURS POP REBUILD === */
 .parcours-rebuild {
-  --parcours-blue: #19a8ff;
-  --parcours-blue-deep: #0668c8;
-  --parcours-cyan: #62d7ff;
-  --parcours-soft: rgba(25, 168, 255, 0.18);
-  --parcours-line: rgba(98, 215, 255, 0.34);
-  --parcours-cream: rgba(244, 249, 255, 0.9);
+  --parcours-blue: #18a8ff;
+  --parcours-blue-deep: #0560c9;
+  --parcours-cyan: #70ddff;
+  --parcours-pop: #e86dff;
+  --parcours-green: #86ffb1;
+  --parcours-cream: rgba(246, 250, 255, 0.92);
+  --parcours-muted: rgba(246, 250, 255, 0.64);
+  --parcours-line: rgba(112, 221, 255, 0.32);
   --marco-page-accent: var(--parcours-blue);
   --marco-nav-accent: var(--parcours-blue);
   color: var(--parcours-cream);
-  background: #03080e;
+  background: #02070c;
   overflow: hidden;
 }
 
 .shell:has(.parcours-rebuild)::after {
-  content: "MARCO v0.5.6" !important;
+  content: "MARCO v0.5.7" !important;
   color: color-mix(in srgb, var(--parcours-blue) 82%, #fff 18%) !important;
   border-color: color-mix(in srgb, var(--parcours-blue) 72%, rgba(255,255,255,0.26)) !important;
   box-shadow:
-    0 0 18px rgba(25, 168, 255, 0.28),
+    0 0 18px rgba(24, 168, 255, 0.3),
     0 12px 30px rgba(0, 0, 0, 0.42) !important;
 }
 
+/* Force Parcours background to bg-scores.png. No image asset is included in this patch. */
 .parcours-rebuild .photo-bg {
-  filter: saturate(0.82) contrast(1.1) brightness(0.58) blur(0.2px);
-  transform: scale(1.075);
+  background-image: url("/assets/img/bg-scores.png") !important;
+  background-size: cover !important;
+  background-position: 50% 50% !important;
+  filter: saturate(0.86) contrast(1.09) brightness(0.62) blur(0.12px);
+  transform: scale(1.055);
 }
 
 .parcours-rebuild .photo-bg::before {
   background:
-    radial-gradient(circle at 20% 18%, rgba(25, 168, 255, 0.24), transparent 30%),
-    radial-gradient(circle at 58% 20%, rgba(112, 232, 255, 0.14), transparent 32%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 10, 18, 0.26) 46%, rgba(0, 0, 0, 0.82)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 48%, rgba(0, 0, 0, 0.55));
+    radial-gradient(circle at 20% 17%, rgba(24, 168, 255, 0.22), transparent 29%),
+    radial-gradient(circle at 76% 28%, rgba(232, 109, 255, 0.10), transparent 24%),
+    radial-gradient(circle at 42% 74%, rgba(134, 255, 177, 0.09), transparent 30%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.80), rgba(2, 16, 28, 0.20) 43%, rgba(0, 0, 0, 0.80)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 48%, rgba(0, 0, 0, 0.56));
+}
+
+.parcours-rebuild .photo-bg::after {
+  opacity: 0.62 !important;
 }
 
 .parcours-atmosphere {
@@ -41,19 +52,20 @@
   z-index: 5;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(25,168,255,0.16) 0 1px, transparent 1px),
-    linear-gradient(0deg, rgba(25,168,255,0.11) 0 1px, transparent 1px),
-    radial-gradient(ellipse at 50% 48%, transparent 0 24%, rgba(0,0,0,0.24) 58%, rgba(0,0,0,0.72) 100%);
-  background-size: 9vw 100%, 100% 18vh, 100% 100%;
+    linear-gradient(90deg, rgba(24, 168, 255, 0.15) 0 1px, transparent 1px),
+    linear-gradient(0deg, rgba(24, 168, 255, 0.09) 0 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 46%, transparent 0 22%, rgba(0,0,0,0.22) 56%, rgba(0,0,0,0.74) 100%);
+  background-size: 8.4vw 100%, 100% 17vh, 100% 100%;
   opacity: 0.42;
   mix-blend-mode: screen;
 }
 
 .parcours-kicker,
 .parcours-copy,
-.parcours-panel,
+.parcours-zone,
 .parcours-timeline-zone,
 .parcours-skills,
+.parcours-pop-note,
 .parcours-quote {
   position: absolute;
   z-index: 32;
@@ -62,14 +74,17 @@
 }
 
 .parcours-kicker {
-  left: 3.8vw;
-  top: 3.6vh;
+  left: 4.2vw;
+  top: 7.6vh;
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  max-width: 44vw;
   color: var(--parcours-cream);
-  font-size: clamp(8px, 0.72vw, 13px);
-  letter-spacing: 0.13em;
+  font-size: clamp(7px, 0.6vw, 11px);
+  line-height: 1;
+  letter-spacing: 0.15em;
+  opacity: 0.92;
 }
 
 .parcours-kicker::before {
@@ -91,32 +106,32 @@
 }
 
 .parcours-rebuild .parcours-title-wrap .mega.first {
-  top: 5.1vh;
+  top: 6vh;
   left: 50%;
-  width: 112vw;
+  width: 108vw;
   color: var(--parcours-blue);
-  font-size: clamp(112px, 20vw, 392px);
+  font-size: clamp(104px, 17.6vw, 330px);
   line-height: 0.72;
-  letter-spacing: -0.09em;
-  opacity: 0.92;
+  letter-spacing: -0.086em;
+  opacity: 0.82;
   text-align: center;
-  transform: translateX(-50%) scaleX(0.9);
+  transform: translateX(-50%) scaleX(0.94);
   text-shadow:
-    0 0 34px rgba(25, 168, 255, 0.16),
-    0 28px 52px rgba(0, 0, 0, 0.6);
+    0 0 34px rgba(24, 168, 255, 0.18),
+    0 28px 52px rgba(0, 0, 0, 0.64);
 }
 
 .parcours-rebuild .parcours-title-wrap .mega.last {
   left: 51%;
-  bottom: -2.2vh;
-  width: 114vw;
+  bottom: 4.5vh;
+  width: 108vw;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(25, 168, 255, 0.24);
-  text-stroke: 1px rgba(25, 168, 255, 0.24);
-  font-size: clamp(70px, 13.4vw, 250px);
+  -webkit-text-stroke: 1px rgba(24, 168, 255, 0.17);
+  text-stroke: 1px rgba(24, 168, 255, 0.17);
+  font-size: clamp(58px, 10.4vw, 196px);
   letter-spacing: -0.07em;
-  opacity: 0.62;
-  transform: translateX(-50%) scaleX(0.94);
+  opacity: 0.42;
+  transform: translateX(-50%) scaleX(0.95);
 }
 
 .parcours-rebuild .parcours-person {
@@ -127,117 +142,131 @@
   max-height: none;
   transform: translateX(-47%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter:
-    brightness(1.02)
-    contrast(1.03)
+    brightness(1.03)
+    contrast(1.04)
     saturate(0.94)
     drop-shadow(0 30px 42px rgba(0, 0, 0, 0.58));
 }
 
 .parcours-copy {
-  left: 3.8vw;
-  top: 25.6vh;
-  max-width: min(28vw, 520px);
-  color: rgba(244, 249, 255, 0.82);
-  font-size: clamp(9px, 0.72vw, 14px);
-  line-height: 1.32;
+  left: 4.2vw;
+  top: 24.5vh;
+  max-width: min(27vw, 460px);
+  color: var(--parcours-muted);
+  font-size: clamp(8px, 0.66vw, 12px);
+  line-height: 1.34;
   letter-spacing: 0.12em;
   text-shadow: 0 8px 22px rgba(0,0,0,0.74);
+}
+
+.parcours-copy span {
+  display: inline-block;
+  margin-bottom: 0.38rem;
+  color: var(--parcours-blue);
+  letter-spacing: 0.16em;
 }
 
 .parcours-copy p {
   margin: 0;
 }
 
-.parcours-copy b {
-  color: var(--parcours-blue);
-  font-weight: inherit;
+.parcours-zone {
+  width: min(26vw, 470px);
+  padding: clamp(12px, 1.3vw, 22px) 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
-.parcours-panel {
-  width: min(31vw, 560px);
-  border: 1px solid rgba(98, 215, 255, 0.20);
+.parcours-zone::before {
+  position: absolute;
+  left: -1.1vw;
+  right: -0.8vw;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  content: "";
+  border-left: 1px solid rgba(112,221,255,0.24);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.016)),
-    rgba(0, 8, 16, 0.54);
-  box-shadow:
-    inset 0 0 28px rgba(25, 168, 255, 0.04),
-    0 22px 52px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(10px);
+    linear-gradient(90deg, rgba(24,168,255,0.08), transparent 52%),
+    linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.006));
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
 }
 
-.parcours-panel header,
+.parcours-zone header,
 .parcours-timeline-zone header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: clamp(12px, 1.4vh, 18px);
+  margin-bottom: clamp(9px, 1vh, 14px);
 }
 
-.parcours-panel header span,
+.parcours-zone header span,
 .parcours-timeline-zone header span {
-  color: rgba(244, 249, 255, 0.7);
-  font-size: clamp(8px, 0.68vw, 12px);
-  letter-spacing: 0.12em;
+  color: rgba(246,250,255,0.56);
+  font-size: clamp(7px, 0.58vw, 10px);
+  letter-spacing: 0.14em;
 }
 
-.parcours-panel h2,
+.parcours-zone h2,
 .parcours-timeline-zone h2,
 .parcours-skills h2 {
   margin: 0;
   color: var(--parcours-blue);
-  font-size: clamp(18px, 1.6vw, 34px);
+  font-size: clamp(17px, 1.34vw, 29px);
   line-height: 0.84;
-  letter-spacing: -0.055em;
-  text-shadow: 0 0 18px rgba(25, 168, 255, 0.28);
+  letter-spacing: -0.045em;
+  text-shadow: 0 0 18px rgba(24, 168, 255, 0.28);
 }
 
 .parcours-studies {
-  left: 3.8vw;
-  top: 32.5vh;
-  padding: clamp(18px, 2vw, 34px);
+  left: 4.2vw;
+  top: 35vh;
 }
 
 .parcours-experiences {
-  right: clamp(122px, 8.8vw, 180px);
-  top: 31.8vh;
-  padding: clamp(18px, 2vw, 34px);
+  right: clamp(128px, 9vw, 190px);
+  top: 34.5vh;
 }
 
 .parcours-study-list,
 .parcours-experience-list {
   display: grid;
-  gap: clamp(10px, 1.2vh, 16px);
+  gap: clamp(7px, 0.88vh, 12px);
 }
 
 .parcours-study-card,
 .parcours-experience-card {
   position: relative;
   display: grid;
-  grid-template-columns: clamp(38px, 3vw, 58px) minmax(0, 1fr);
-  gap: clamp(12px, 1.1vw, 18px);
+  grid-template-columns: clamp(26px, 2.15vw, 40px) minmax(0, 1fr);
+  gap: clamp(10px, 0.85vw, 15px);
   align-items: center;
-  min-height: clamp(58px, 7.3vh, 96px);
-  padding: 0 0 clamp(10px, 1.1vh, 16px);
-  border-bottom: 1px solid rgba(98, 215, 255, 0.14);
+  min-height: clamp(43px, 5.6vh, 72px);
+  padding: clamp(6px, 0.62vh, 10px) 0 clamp(8px, 0.82vh, 12px);
+  border-bottom: 1px solid rgba(112,221,255,0.12);
 }
 
 .parcours-study-card:last-child,
 .parcours-experience-card:last-child {
   border-bottom: 0;
-  padding-bottom: 0;
 }
 
 .parcours-card-icon {
   display: grid;
   place-items: center;
-  width: clamp(38px, 3vw, 58px);
-  height: clamp(38px, 3vw, 58px);
-  border: 1px solid rgba(98, 215, 255, 0.28);
+  width: clamp(26px, 2.15vw, 40px);
+  height: clamp(26px, 2.15vw, 40px);
+  border: 1px solid rgba(112, 221, 255, 0.26);
   color: var(--parcours-blue);
-  background: rgba(25, 168, 255, 0.05);
-  box-shadow: inset 0 0 18px rgba(25, 168, 255, 0.06);
-  font-size: clamp(18px, 1.35vw, 28px);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(112,221,255,0.12), transparent 62%),
+    rgba(0, 10, 20, 0.18);
+  box-shadow: inset 0 0 18px rgba(24, 168, 255, 0.04);
+  font-size: clamp(13px, 1vw, 20px);
 }
 
 .parcours-card-main {
@@ -246,74 +275,81 @@
 
 .parcours-card-main strong {
   display: block;
-  color: rgba(244, 249, 255, 0.96);
-  font-size: clamp(13px, 1vw, 19px);
-  line-height: 0.92;
+  color: rgba(246, 250, 255, 0.96);
+  font-size: clamp(12px, 0.9vw, 17px);
+  line-height: 0.95;
   letter-spacing: 0.02em;
 }
 
 .parcours-card-main p {
-  margin: 0.32rem 0 0;
-  color: rgba(244, 249, 255, 0.68);
+  margin: 0.26rem 0 0;
+  color: rgba(246, 250, 255, 0.64);
   font-family: var(--sans, system-ui, sans-serif);
-  font-size: clamp(10px, 0.7vw, 13px);
-  line-height: 1.28;
+  font-size: clamp(9px, 0.62vw, 12px);
+  line-height: 1.22;
   letter-spacing: 0.01em;
   text-transform: none;
 }
 
 .parcours-card-main small {
   display: block;
-  margin-top: 0.32rem;
-  color: var(--parcours-blue);
-  font-size: clamp(8px, 0.6vw, 11px);
-  letter-spacing: 0.12em;
+  margin-top: 0.26rem;
+  color: var(--parcours-cyan);
+  font-size: clamp(7px, 0.54vw, 10px);
+  letter-spacing: 0.13em;
 }
 
 .parcours-timeline-zone {
-  left: 26.2vw;
-  right: clamp(32vw, 34vw, 680px);
-  top: 45.2vh;
-  z-index: 38;
+  left: 30.5vw;
+  right: 31.5vw;
+  top: 64.2vh;
+  z-index: 34;
   pointer-events: auto;
 }
 
 .parcours-timeline-zone header {
-  margin-left: 0.1rem;
-  margin-bottom: clamp(16px, 2vh, 26px);
+  margin-left: 0;
+  margin-bottom: clamp(10px, 1.2vh, 16px);
+}
+
+.parcours-timeline-zone header span {
+  color: var(--parcours-pop);
+  text-shadow: 0 0 14px rgba(232,109,255,0.3);
 }
 
 .parcours-timeline-zone h2 {
-  font-size: clamp(14px, 1.05vw, 22px);
+  color: var(--parcours-cyan);
+  font-size: clamp(11px, 0.84vw, 16px);
+  letter-spacing: 0.08em;
 }
 
 .parcours-timeline {
   --point-count: 3;
   position: relative;
-  min-height: clamp(126px, 17vh, 196px);
+  min-height: clamp(92px, 12vh, 142px);
 }
 
 .parcours-timeline::before {
   position: absolute;
   left: 0;
   right: 0;
-  top: clamp(52px, 6.4vh, 72px);
+  top: clamp(34px, 4.8vh, 52px);
   height: 1px;
   content: "";
   background:
-    linear-gradient(90deg, transparent, rgba(98,215,255,0.42), rgba(25,168,255,0.95), rgba(98,215,255,0.42), transparent);
-  box-shadow: 0 0 18px rgba(25, 168, 255, 0.38);
+    linear-gradient(90deg, transparent, rgba(112,221,255,0.34), rgba(24,168,255,0.95), rgba(232,109,255,0.42), transparent);
+  box-shadow: 0 0 18px rgba(24, 168, 255, 0.34);
 }
 
 .parcours-timeline::after {
   position: absolute;
   right: -0.35rem;
-  top: calc(clamp(52px, 6.4vh, 72px) - 4px);
+  top: calc(clamp(34px, 4.8vh, 52px) - 4px);
   width: 9px;
   height: 9px;
   content: "";
-  border-top: 1px solid var(--parcours-blue);
-  border-right: 1px solid var(--parcours-blue);
+  border-top: 1px solid var(--parcours-cyan);
+  border-right: 1px solid var(--parcours-cyan);
   transform: rotate(45deg);
 }
 
@@ -321,7 +357,7 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--point-count), minmax(0, 1fr));
-  gap: clamp(18px, 2vw, 36px);
+  gap: clamp(14px, 1.5vw, 28px);
 }
 
 .parcours-timeline-point {
@@ -329,95 +365,137 @@
   display: grid;
   align-content: start;
   min-width: 0;
-  padding-top: clamp(82px, 9.2vh, 112px);
+  padding-top: clamp(58px, 7.2vh, 82px);
 }
 
 .parcours-timeline-point::before {
   position: absolute;
   left: 0;
-  top: clamp(44px, 5.55vh, 64px);
-  width: clamp(11px, 0.84vw, 16px);
-  height: clamp(11px, 0.84vw, 16px);
+  top: clamp(27px, 3.85vh, 44px);
+  width: clamp(9px, 0.72vw, 13px);
+  height: clamp(9px, 0.72vw, 13px);
   border-radius: 999px;
   content: "";
   background: var(--parcours-blue);
   box-shadow:
-    0 0 0 7px rgba(25,168,255,0.12),
-    0 0 22px rgba(25,168,255,0.62);
+    0 0 0 6px rgba(24,168,255,0.11),
+    0 0 22px rgba(24,168,255,0.58);
+}
+
+.parcours-timeline-point[data-type="experience"]::before {
+  background: var(--parcours-pop);
+  box-shadow:
+    0 0 0 6px rgba(232,109,255,0.12),
+    0 0 22px rgba(232,109,255,0.56);
 }
 
 .parcours-timeline-point strong {
   color: var(--parcours-blue);
-  font-size: clamp(13px, 0.9vw, 17px);
-  line-height: 0.92;
-  letter-spacing: 0.08em;
+  font-size: clamp(11px, 0.74vw, 15px);
+  line-height: 0.95;
+  letter-spacing: 0.1em;
+}
+
+.parcours-timeline-point[data-type="experience"] strong {
+  color: var(--parcours-pop);
 }
 
 .parcours-timeline-point p {
-  margin: 0.34rem 0 0;
-  max-width: 14ch;
-  color: rgba(244,249,255,0.84);
-  font-size: clamp(10px, 0.72vw, 13px);
-  line-height: 1.2;
+  margin: 0.28rem 0 0;
+  max-width: 16ch;
+  color: rgba(246,250,255,0.84);
+  font-size: clamp(8px, 0.58vw, 11px);
+  line-height: 1.22;
   letter-spacing: 0.09em;
 }
 
 .parcours-timeline-point small {
   display: block;
-  margin-top: 0.72rem;
-  color: rgba(244, 249, 255, 0.58);
-  font-size: clamp(8px, 0.62vw, 11px);
+  margin-top: 0.55rem;
+  color: rgba(246, 250, 255, 0.58);
+  font-size: clamp(7px, 0.52vw, 10px);
   letter-spacing: 0.08em;
 }
 
 .parcours-skills {
-  left: 3.8vw;
-  bottom: 14.8vh;
-  width: min(34vw, 620px);
+  left: 4.2vw;
+  bottom: 15.2vh;
+  width: min(30vw, 550px);
 }
 
 .parcours-skills h2 {
-  margin-bottom: 0.72rem;
+  margin-bottom: 0.6rem;
+  color: var(--parcours-blue);
 }
 
 .parcours-skill-list {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(7px, 0.7vw, 12px);
+  gap: clamp(6px, 0.58vw, 10px);
 }
 
 .parcours-skill {
   display: inline-grid;
   place-items: center;
-  min-height: clamp(26px, 3vh, 36px);
-  padding: 0 0.9rem;
-  border: 1px solid rgba(25, 168, 255, 0.46);
-  color: var(--parcours-blue);
-  background: rgba(0, 10, 20, 0.46);
-  box-shadow: inset 0 0 14px rgba(25, 168, 255, 0.05);
-  font-size: clamp(8px, 0.62vw, 12px);
+  min-height: clamp(22px, 2.55vh, 32px);
+  padding: 0 0.78rem;
+  border: 1px solid rgba(24, 168, 255, 0.45);
+  color: var(--parcours-cyan);
+  background: rgba(0, 10, 20, 0.33);
+  box-shadow: inset 0 0 14px rgba(24, 168, 255, 0.035);
+  font-size: clamp(7px, 0.54vw, 10px);
   letter-spacing: 0.1em;
 }
 
-.parcours-quote {
-  right: clamp(150px, 10vw, 220px);
-  bottom: 16vh;
-  width: min(25vw, 430px);
-  margin: 0;
-  color: rgba(244,249,255,0.82);
-  font-size: clamp(10px, 0.82vw, 15px);
-  line-height: 1.25;
+.parcours-skill:nth-child(3n) {
+  border-color: rgba(232,109,255,0.42);
+  color: color-mix(in srgb, var(--parcours-pop) 72%, white 28%);
+}
+
+.parcours-pop-note {
+  right: clamp(160px, 11vw, 220px);
+  bottom: 13.2vh;
+  width: min(23vw, 390px);
+  color: var(--parcours-cream);
+  text-align: right;
+}
+
+.parcours-pop-note b {
+  display: block;
+  color: var(--parcours-green);
+  font-size: clamp(13px, 1vw, 20px);
+  letter-spacing: -0.035em;
+}
+
+.parcours-pop-note span {
+  display: block;
+  margin-top: 0.18rem;
+  color: rgba(246,250,255,0.66);
+  font-size: clamp(7px, 0.56vw, 11px);
   letter-spacing: 0.12em;
+}
+
+.parcours-quote {
+  right: clamp(160px, 11vw, 220px);
+  bottom: 20.8vh;
+  width: min(22vw, 360px);
+  margin: 0;
+  color: rgba(246,250,255,0.78);
+  font-size: clamp(8px, 0.66vw, 12px);
+  line-height: 1.22;
+  letter-spacing: 0.12em;
+  text-align: right;
   text-shadow: 0 8px 22px rgba(0,0,0,0.72);
 }
 
 .parcours-quote::before {
   content: "“";
   position: absolute;
-  left: -2.6rem;
-  top: -1.2rem;
+  right: 100%;
+  top: -0.8rem;
+  margin-right: 0.54rem;
   color: var(--parcours-blue);
-  font-size: clamp(52px, 4vw, 82px);
+  font-size: clamp(36px, 3vw, 58px);
   line-height: 1;
 }
 
@@ -427,11 +505,11 @@
 
 .parcours-quote cite {
   display: block;
-  margin-top: 1rem;
+  margin-top: 0.62rem;
   color: var(--parcours-blue);
   font-style: normal;
-  font-size: clamp(12px, 1vw, 22px);
-  letter-spacing: 0.06em;
+  font-size: clamp(10px, 0.82vw, 17px);
+  letter-spacing: 0.08em;
   text-transform: none;
 }
 
@@ -445,12 +523,17 @@
     height: 88vh;
     bottom: -8vh;
     transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
-    opacity: 0.74;
+    opacity: 0.72;
+  }
+
+  .parcours-kicker {
+    top: 7vh;
+    max-width: 72vw;
   }
 
   .parcours-copy {
     left: 6vw;
-    top: 19vh;
+    top: 20vh;
     max-width: 78vw;
   }
 
@@ -458,21 +541,19 @@
   .parcours-experiences,
   .parcours-timeline-zone,
   .parcours-skills,
+  .parcours-pop-note,
   .parcours-quote {
     width: auto;
     left: 5vw;
     right: 5vw;
   }
 
-  .parcours-studies { top: 27vh; }
-  .parcours-timeline-zone { top: 50vh; }
-  .parcours-experiences { top: 68vh; display: none; }
-  .parcours-skills { bottom: 11vh; }
+  .parcours-studies { top: 29vh; }
+  .parcours-timeline-zone { top: 54vh; }
+  .parcours-experiences,
+  .parcours-pop-note,
   .parcours-quote { display: none; }
-
-  .parcours-panel {
-    padding: 1rem;
-  }
+  .parcours-skills { bottom: 11vh; }
 
   .parcours-timeline-list {
     gap: 1rem;

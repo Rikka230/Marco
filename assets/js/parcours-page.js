@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.6 PARCOURS DATA RENDERER === */
+/* === MARCO PATCH v0.5.7 PARCOURS DATA RENDERER === */
 (() => {
   const DEFAULT_DATA = {
     studies: [
@@ -36,7 +36,7 @@
       },
       {
         title: "Créer",
-        subtitle: "Partager et transmettre",
+        subtitle: "Partager · transmettre",
         period: "2019 – Aujourd’hui",
         type: "experience"
       }
