@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.6.3 PARCOURS V1 DATA RENDERER === */
+/* === MARCO PATCH v0.6.6 PARCOURS V1 DATA RENDERER === */
 (() => {
   const ICONS = {
     study: `
@@ -447,6 +447,75 @@
     player.dataset.playerReady = "true";
   }
 
+  function enableMobileScrollState() {
+    const flow = document.querySelector("[data-parcours-mobile]");
+    if (!flow || flow.dataset.scrollStateReady === "true") return;
+
+    let ticking = false;
+    const update = () => {
+      const shouldHideHeader = window.matchMedia("(max-width: 768px)").matches && flow.scrollTop > 72;
+      document.body.classList.toggle("parcours-mobile-scrolled", shouldHideHeader);
+    };
+
+    flow.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    }, { passive: true });
+
+    window.addEventListener("resize", update);
+    update();
+    flow.dataset.scrollStateReady = "true";
+  }
+
+  function enableMobilePageSwitch() {
+    const flow = document.querySelector("[data-parcours-mobile]");
+    if (!flow || flow.dataset.pageSwitchReady === "true") return;
+
+    const threshold = 82;
+    let buffer = 0;
+    let locked = false;
+
+    const go = (direction) => {
+      const step = document.querySelector(`[data-chapter-step="${direction > 0 ? "next" : "prev"}"]`);
+      if (!step) return;
+
+      locked = true;
+      step.click();
+      window.setTimeout(() => {
+        locked = false;
+        buffer = 0;
+      }, 820);
+    };
+
+    flow.addEventListener("wheel", (event) => {
+      if (!window.matchMedia("(max-width: 768px)").matches) return;
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+      const atTop = flow.scrollTop <= 2;
+      const atBottom = flow.scrollTop + flow.clientHeight >= flow.scrollHeight - 2;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const shouldSwitch = (direction < 0 && atTop) || (direction > 0 && atBottom);
+
+      if (!shouldSwitch) {
+        buffer = 0;
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      if (locked) return;
+
+      buffer += event.deltaY;
+      if (Math.abs(buffer) >= threshold) go(direction);
+    }, { passive: false });
+
+    flow.dataset.pageSwitchReady = "true";
+  }
+
   function updateTimelineScrollState(target) {
     const maxScroll = Math.max(0, target.scrollWidth - target.clientWidth);
     const scrollLeft = Math.max(0, target.scrollLeft);
@@ -505,7 +574,15 @@
 
   function initParcoursPage() {
     const page = document.querySelector(".parcours-rebuild");
-    if (!page || page.dataset.parcoursReady === "true") return;
+    if (!page) {
+      document.body.classList.remove("parcours-mobile-scrolled");
+      return;
+    }
+    if (page.dataset.parcoursReady === "true") {
+      enableMobileScrollState();
+      enableMobilePageSwitch();
+      return;
+    }
 
     const data = getData();
     renderStudies(data);
@@ -519,6 +596,8 @@
     enableTimelineScroll();
     enableMobileChips();
     enableMobilePlayer();
+    enableMobileScrollState();
+    enableMobilePageSwitch();
     syncMiniPlayerLabel();
     page.dataset.parcoursReady = "true";
   }
