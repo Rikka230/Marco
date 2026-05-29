@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.5.8 PARCOURS DATA RENDERER === */
+/* === MARCO PATCH v0.5.9 PARCOURS DATA RENDERER === */
 (() => {
   const DEFAULT_DATA = {
     studies: [
