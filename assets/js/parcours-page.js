@@ -1,4 +1,4 @@
-/* === MARCO PATCH v0.6.6 PARCOURS V1 DATA RENDERER === */
+/* === MARCO PATCH v0.6.18 PARCOURS V1 DATA RENDERER === */
 (() => {
   const ICONS = {
     study: `
@@ -167,6 +167,22 @@
         title: "Mod\u00e8le",
         subtitle: "Campagnes \u00b7 Editorial \u00b7 Image de marque",
         period: "2021 - 2023",
+        tone: "green"
+      },
+      {
+        id: "cinema",
+        icon: "clapper",
+        title: "Cin\u00e9ma",
+        subtitle: "Courts-m\u00e9trages \u00b7 R\u00f4les \u00b7 Casting",
+        period: "2023 - 2025",
+        tone: "pink"
+      },
+      {
+        id: "projets",
+        icon: "stage",
+        title: "Projets",
+        subtitle: "Cr\u00e9ation \u00b7 Transmission \u00b7 Performances",
+        period: "2025 - Aujourd'hui",
         tone: "green"
       }
     ],
@@ -516,6 +532,28 @@
     flow.dataset.pageSwitchReady = "true";
   }
 
+  function enableMobileTimelineScroll() {
+    const target = document.querySelector("[data-parcours-mobile-timeline]");
+    if (!target || target.dataset.mobileScrollReady === "true") return;
+
+    target.addEventListener("wheel", (event) => {
+      if (!window.matchMedia("(max-width: 768px)").matches) return;
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+      const maxScroll = Math.max(0, target.scrollHeight - target.clientHeight);
+      if (maxScroll <= 2) return;
+
+      const next = Math.min(maxScroll, Math.max(0, target.scrollTop + event.deltaY));
+      if (Math.abs(next - target.scrollTop) <= 0.5) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      target.scrollTop = next;
+    }, { passive: false });
+
+    target.dataset.mobileScrollReady = "true";
+  }
+
   function updateTimelineScrollState(target) {
     const maxScroll = Math.max(0, target.scrollWidth - target.clientWidth);
     const scrollLeft = Math.max(0, target.scrollLeft);
@@ -580,6 +618,7 @@
     }
     if (page.dataset.parcoursReady === "true") {
       enableMobileScrollState();
+      enableMobileTimelineScroll();
       enableMobilePageSwitch();
       return;
     }
@@ -597,6 +636,7 @@
     enableMobileChips();
     enableMobilePlayer();
     enableMobileScrollState();
+    enableMobileTimelineScroll();
     enableMobilePageSwitch();
     syncMiniPlayerLabel();
     page.dataset.parcoursReady = "true";
