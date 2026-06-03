@@ -1079,7 +1079,7 @@
   Cible : rail + scroll molette
 */
 (() => {
-  const WHEEL_LOCK_MS = 480;
+  const WHEEL_LOCK_MS = 620;
   const WHEEL_THRESHOLD = 64;
 
   const pages = [

@@ -1289,21 +1289,21 @@ body.is-transitioning .mini-brand {
   76% { transform: translateX(12%); opacity: 0.24; }
 }
 
-.page.slide-from-right { animation: posterInRight 0.58s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
-.page.slide-from-left { animation: posterInLeft 0.58s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
-.page.slide-out-left { animation: posterOutLeft 0.42s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
-.page.slide-out-right { animation: posterOutRight 0.42s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
+.page.slide-from-right { animation: posterInRight 0.8s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
+.page.slide-from-left { animation: posterInLeft 0.8s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
+.page.slide-out-left { animation: posterOutLeft 0.46s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
+.page.slide-out-right { animation: posterOutRight 0.46s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
 
 .page.slide-from-right .title-wrap,
 .page.slide-from-left .title-wrap {
-  animation: titleLayerIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
+  animation: titleLayerIn 0.64s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
 }
 
 .page.slide-from-right .hero-person,
 .page.slide-from-left .hero-person {
   animation:
-    personLayerIn 0.54s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both,
-    personFloat 7.5s ease-in-out 0.7s infinite alternate;
+    personLayerIn 0.68s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both,
+    personFloat 7.5s ease-in-out 0.9s infinite alternate;
 }
 
 .page.slide-out-left .title-wrap,
@@ -1418,7 +1418,7 @@ body.is-transitioning .mini-brand {
 }
 
 .transition-band.is-active {
-  animation: bandCross 0.5s cubic-bezier(0.5, 0, 0.2, 1) both;
+  animation: bandCross 0.68s cubic-bezier(0.5, 0, 0.2, 1) both;
 }
 
 @keyframes bandCross {
