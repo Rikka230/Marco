@@ -273,6 +273,7 @@
       document.body.classList.remove('is-transitioning');
       busy = false;
       inflight = null;
+      emit('settled', { page: currentPage });
     } catch (err) {
       window.clearTimeout(timer);
       // Une navigation plus récente ou un timeout a annulé ce fetch.
@@ -1095,6 +1096,7 @@
   let wheelLocked = false;
   let wheelBuffer = 0;
   let syncFrame = 0;
+  let wheelFallback = 0;
 
   function detectMarcoPage() {
     const page = document.querySelector('#app .page');
@@ -1228,10 +1230,12 @@
     event.preventDefault();
     navigateRelativePage(direction);
 
-    window.setTimeout(() => {
+    // Filet : si l'event 'settled' n'arrive pas (erreur, page externe), liberer apres un delai large.
+    window.clearTimeout(wheelFallback);
+    wheelFallback = window.setTimeout(() => {
       wheelLocked = false;
       wheelBuffer = 0;
-    }, WHEEL_LOCK_MS);
+    }, 1600);
   }
 
   document.addEventListener('wheel', onGlobalWheel, { passive: false });
@@ -1243,6 +1247,12 @@
   // Cycle de vie PageTransition au lieu du MutationObserver.
   if (window.Marco && window.Marco.lifecycle) {
     window.Marco.lifecycle.addEventListener('ready', requestSyncGlobalNavTheme);
+    // Debloque la molette des que le moteur a reellement fini la transition (fin de la fenetre morte).
+    window.Marco.lifecycle.addEventListener('settled', () => {
+      window.clearTimeout(wheelFallback);
+      wheelLocked = false;
+      wheelBuffer = 0;
+    });
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', requestSyncGlobalNavTheme);
