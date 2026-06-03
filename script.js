@@ -750,9 +750,10 @@
     if (event.key === 'Escape') closeChapterNav();
   });
 
-  // Cycle de vie PageTransition au lieu du MutationObserver.
+  // Cycle de vie PageTransition : mise a jour APRES le swap complet (event 'settled'),
+  // sinon detectChapterId lit encore l'ancienne page (1er enfant de #app) -> rail fige.
   if (window.Marco && window.Marco.lifecycle) {
-    window.Marco.lifecycle.addEventListener('ready', () => window.requestAnimationFrame(ensureChapterNav));
+    window.Marco.lifecycle.addEventListener('settled', () => window.requestAnimationFrame(ensureChapterNav));
   }
   document.addEventListener('DOMContentLoaded', ensureChapterNav);
   if (document.readyState !== 'loading') ensureChapterNav();
@@ -1244,9 +1245,10 @@
   window.addEventListener('pageshow', requestSyncGlobalNavTheme);
   window.addEventListener('popstate', requestSyncGlobalNavTheme);
 
-  // Cycle de vie PageTransition au lieu du MutationObserver.
+  // Cycle de vie PageTransition : sync theme/accent APRES le swap complet ('settled'),
+  // sinon detectMarcoPage lit encore l'ancienne page.
   if (window.Marco && window.Marco.lifecycle) {
-    window.Marco.lifecycle.addEventListener('ready', requestSyncGlobalNavTheme);
+    window.Marco.lifecycle.addEventListener('settled', requestSyncGlobalNavTheme);
     // Debloque la molette des que le moteur a reellement fini la transition (fin de la fenetre morte).
     window.Marco.lifecycle.addEventListener('settled', () => {
       window.clearTimeout(wheelFallback);
