@@ -482,7 +482,7 @@
       });
     }, { passive: true });
 
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", update, pageSignal ? { signal: pageSignal } : undefined);
     update();
     flow.dataset.scrollStateReady = "true";
   }
@@ -587,7 +587,7 @@
       });
     });
 
-    window.addEventListener("resize", () => updateTimelineScrollState(target));
+    window.addEventListener("resize", () => updateTimelineScrollState(target), pageSignal ? { signal: pageSignal } : undefined);
     updateTimelineScrollState(target);
     target.dataset.scrollReady = "true";
   }
@@ -610,18 +610,15 @@
       : "<b>03</b><b>PARCOURS ARTISTIQUE</b><b>&Eacute;TUDES - EXP&Eacute;RIENCES - COMP&Eacute;TENCES</b>";
   }
 
+  let pageSignal = null;
+
   function initParcoursPage() {
     const page = document.querySelector(".parcours-rebuild");
     if (!page) {
       document.body.classList.remove("parcours-mobile-scrolled");
       return;
     }
-    if (page.dataset.parcoursReady === "true") {
-      enableMobileScrollState();
-      enableMobileTimelineScroll();
-      enableMobilePageSwitch();
-      return;
-    }
+    if (page.dataset.parcoursReady === "true") return;
 
     const data = getData();
     renderStudies(data);
@@ -642,19 +639,25 @@
     page.dataset.parcoursReady = "true";
   }
 
-  const observer = new MutationObserver(() => window.requestAnimationFrame(initParcoursPage));
+  // Cycle de vie PageTransition : enter/cleanup au lieu du MutationObserver auto.
+  // Tous les listeners window (resize) passent par ctx.signal -> retirés au cleanup (fin des fuites).
+  function enterParcours(pageEl, ctx) {
+    pageSignal = ctx && ctx.signal;
+    initParcoursPage();
+    window.addEventListener("resize", syncMiniPlayerLabel, pageSignal ? { signal: pageSignal } : undefined);
+  }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      initParcoursPage();
-      window.addEventListener("resize", syncMiniPlayerLabel);
-      const app = document.querySelector("#app");
-      if (app) observer.observe(app, { childList: true, subtree: true });
+  if (window.Marco && typeof window.Marco.registerPage === "function") {
+    window.Marco.registerPage("parcours", {
+      enter: enterParcours,
+      cleanup() { document.body.classList.remove("parcours-mobile-scrolled"); }
     });
   } else {
-    initParcoursPage();
-    window.addEventListener("resize", syncMiniPlayerLabel);
-    const app = document.querySelector("#app");
-    if (app) observer.observe(app, { childList: true, subtree: true });
+    // Filet de sécurité si le seam n'est pas chargé.
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => enterParcours(null, null));
+    } else {
+      enterParcours(null, null);
+    }
   }
 })();
