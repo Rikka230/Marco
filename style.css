@@ -151,28 +151,28 @@ button {
   display: none;
 }
 
-.shell:has(.page[data-theme="music"]) .mini-brand,
-.shell:has(.page[data-theme="music"]) .mini-player {
+.shell:has(.page:not(.is-leaving)[data-theme="music"]) .mini-brand,
+.shell:has(.page:not(.is-leaving)[data-theme="music"]) .mini-player {
   color: #f0c56f;
 }
 
-.shell:has(.page[data-theme="projects"]) .mini-brand,
-.shell:has(.page[data-theme="projects"]) .mini-player {
+.shell:has(.page:not(.is-leaving)[data-theme="projects"]) .mini-brand,
+.shell:has(.page:not(.is-leaving)[data-theme="projects"]) .mini-player {
   color: #74b8ff;
 }
 
-.shell:has(.page[data-theme="gallery"]) .mini-brand,
-.shell:has(.page[data-theme="gallery"]) .mini-player {
+.shell:has(.page:not(.is-leaving)[data-theme="gallery"]) .mini-brand,
+.shell:has(.page:not(.is-leaving)[data-theme="gallery"]) .mini-player {
   color: #f293c9;
 }
 
-.shell:has(.page[data-theme="contact"]) .mini-brand,
-.shell:has(.page[data-theme="contact"]) .mini-player {
+.shell:has(.page:not(.is-leaving)[data-theme="contact"]) .mini-brand,
+.shell:has(.page:not(.is-leaving)[data-theme="contact"]) .mini-player {
   color: #f0e7ce;
 }
 
-.shell:has(.page.inner) .mini-brand span,
-.shell:has(.page.inner) .mini-player button {
+.shell:has(.page:not(.is-leaving).inner) .mini-brand span,
+.shell:has(.page:not(.is-leaving).inner) .mini-player button {
   background: currentColor;
 }
 
@@ -1753,12 +1753,12 @@ body.is-transitioning .mini-brand {
   opacity: 1;
 }
 
-.shell:has(.page[data-theme="home"]) .chapter-nav,
+.shell:has(.page:not(.is-leaving)[data-theme="home"]) .chapter-nav,
 .shell:has(.home) .chapter-nav {
   opacity: 0.42;
 }
 
-.shell:has(.page[data-theme="home"]) .chapter-nav:not(.is-open):hover,
+.shell:has(.page:not(.is-leaving)[data-theme="home"]) .chapter-nav:not(.is-open):hover,
 .shell:has(.home) .chapter-nav:not(.is-open):hover {
   opacity: 0.86;
 }
@@ -1846,13 +1846,13 @@ body.is-transitioning .mini-brand {
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
 /* === MARCO CHAPTER NAV READABILITY FIX - START === */
-.shell:has(.page[data-theme="home"]) .chapter-nav,
+.shell:has(.page:not(.is-leaving)[data-theme="home"]) .chapter-nav,
 .shell:has(.home) .chapter-nav {
   opacity: 1;
 }
 
-.shell:has(.page[data-theme="home"]) .chapter-nav:not(.is-open) .chapter-toggle,
-.shell:has(.page[data-theme="home"]) .chapter-nav:not(.is-open) .chapter-step,
+.shell:has(.page:not(.is-leaving)[data-theme="home"]) .chapter-nav:not(.is-open) .chapter-toggle,
+.shell:has(.page:not(.is-leaving)[data-theme="home"]) .chapter-nav:not(.is-open) .chapter-step,
 .shell:has(.home) .chapter-nav:not(.is-open) .chapter-toggle,
 .shell:has(.home) .chapter-nav:not(.is-open) .chapter-step {
   opacity: 0.9;
@@ -2984,24 +2984,24 @@ body.marco-page-wheel-locked .chapter-nav::after {
   --marco-v045-version-bg: rgba(5, 0, 6, 0.82);
 }
 
-.shell:has(.page[data-page="music"]) {
+.shell:has(.page:not(.is-leaving)[data-page="music"]) {
   --marco-page-accent: #f4bd68;
   --marco-v045-edge: rgba(244, 189, 104, 0.20);
 }
 
-.shell:has(.page[data-page="composition"]),
-.shell:has(.page[data-theme="composition"]) {
+.shell:has(.page:not(.is-leaving)[data-page="composition"]),
+.shell:has(.page:not(.is-leaving)[data-theme="composition"]) {
   --marco-page-accent: #ff304f;
   --marco-v045-edge: rgba(255, 48, 79, 0.22);
 }
 
-.shell:has(.page[data-page="gallery"]) { --marco-page-accent: #f08ac8; --marco-v045-edge: rgba(240, 138, 200, 0.16); }
-.shell:has(.page[data-page="filmographie"]) { --marco-page-accent: #6fd7ff; --marco-v045-edge: rgba(111, 215, 255, 0.16); }
-.shell:has(.page[data-page="parcours"]),
-.shell:has(.page[data-page="scores"]) { --marco-page-accent: #73aaf6; --marco-v045-edge: rgba(115, 170, 246, 0.16); }
-.shell:has(.page[data-page="booking"]) { --marco-page-accent: #d8c3ff; --marco-v045-edge: rgba(216, 195, 255, 0.16); }
+.shell:has(.page:not(.is-leaving)[data-page="gallery"]) { --marco-page-accent: #f08ac8; --marco-v045-edge: rgba(240, 138, 200, 0.16); }
+.shell:has(.page:not(.is-leaving)[data-page="filmographie"]) { --marco-page-accent: #6fd7ff; --marco-v045-edge: rgba(111, 215, 255, 0.16); }
+.shell:has(.page:not(.is-leaving)[data-page="parcours"]),
+.shell:has(.page:not(.is-leaving)[data-page="scores"]) { --marco-page-accent: #73aaf6; --marco-v045-edge: rgba(115, 170, 246, 0.16); }
+.shell:has(.page:not(.is-leaving)[data-page="booking"]) { --marco-page-accent: #d8c3ff; --marco-v045-edge: rgba(216, 195, 255, 0.16); }
 
-.shell:has(.page.inner:not([data-page="home"]))::after {
+.shell:has(.page:not(.is-leaving).inner:not([data-page="home"]))::after {
   content: "MARCO v0.4.9";
   position: fixed;
   top: clamp(14px, 2vh, 24px);
@@ -3176,7 +3176,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 
 /* Mini-player : pas de plaque translucide, seulement la ligne haute. */
-.shell:has(.page.inner:not([data-page="home"])) .mini-player {
+.shell:has(.page:not(.is-leaving).inner:not([data-page="home"])) .mini-player {
   bottom: clamp(42px, 5.4vh, 72px) !important;
   padding: 0.72rem 0 0 !important;
   border: 0 !important;
@@ -3187,7 +3187,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   -webkit-backdrop-filter: none !important;
 }
 
-.shell:has(.page.inner:not([data-page="home"])) .mini-player::before {
+.shell:has(.page:not(.is-leaving).inner:not([data-page="home"])) .mini-player::before {
   content: "" !important;
   position: absolute !important;
   left: 0 !important;
@@ -3200,7 +3200,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   pointer-events: none !important;
 }
 
-.shell:has(.page.inner:not([data-page="home"])) .mini-player::after {
+.shell:has(.page:not(.is-leaving).inner:not([data-page="home"])) .mini-player::after {
   content: none !important;
   display: none !important;
 }
@@ -3237,7 +3237,7 @@ body.music-drawer-open .music-drawer-sheet {
 }
 
 @media (max-width: 900px) {
-  .shell:has(.page.inner:not([data-page="home"]))::after {
+  .shell:has(.page:not(.is-leaving).inner:not([data-page="home"]))::after {
     top: 12px;
     right: 16px;
     min-width: 84px;
