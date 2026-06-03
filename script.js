@@ -120,6 +120,24 @@
     band.classList.add('is-active');
   }
 
+  // Attend la fin réelle des animations de l'élément (au lieu d'un délai codé en dur),
+  // avec un repli temporisé si getAnimations est absent / l'élément est retiré / onglet en arrière-plan.
+  function waitForAnimations(el, fallbackMs = 1100) {
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = () => { if (settled) return; settled = true; resolve(); };
+      const fallback = window.setTimeout(finish, fallbackMs);
+      if (!el || typeof el.getAnimations !== 'function') return;
+      let anims;
+      try { anims = el.getAnimations({ subtree: true }); } catch (e) { anims = el.getAnimations(); }
+      if (!anims || !anims.length) { window.clearTimeout(fallback); finish(); return; }
+      Promise.allSettled(anims.map((a) => a.finished)).then(() => {
+        window.clearTimeout(fallback);
+        finish();
+      });
+    });
+  }
+
   let inflight = null;
 
   async function goTo(url, push = true) {
@@ -162,17 +180,20 @@
         current.classList.add(forward ? 'slide-out-left' : 'slide-out-right', 'is-leaving');
       }
 
-      window.setTimeout(() => {
-        [...app.querySelectorAll('.page.is-leaving')].forEach((el) => el.remove());
-        next.classList.remove('slide-from-right', 'slide-from-left');
-        currentPage = next.dataset.page || nextPage;
-        syncPageShell(currentPage);
-        if (push) history.pushState({ page: currentPage }, '', absolute.pathname);
-        document.title = doc.title || document.title;
-        document.body.classList.remove('is-transitioning');
-        busy = false;
-        inflight = null;
-      }, 920);
+      await Promise.all([
+        waitForAnimations(next),
+        current ? waitForAnimations(current) : Promise.resolve()
+      ]);
+
+      [...app.querySelectorAll('.page.is-leaving')].forEach((el) => el.remove());
+      next.classList.remove('slide-from-right', 'slide-from-left');
+      currentPage = next.dataset.page || nextPage;
+      syncPageShell(currentPage);
+      if (push) history.pushState({ page: currentPage }, '', absolute.pathname);
+      document.title = doc.title || document.title;
+      document.body.classList.remove('is-transitioning');
+      busy = false;
+      inflight = null;
     } catch (err) {
       window.clearTimeout(timer);
       // Une navigation plus récente ou un timeout a annulé ce fetch.
