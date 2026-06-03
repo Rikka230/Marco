@@ -589,7 +589,7 @@
   ];
 
   function detectChapterId() {
-    const page = document.querySelector('#app .page');
+    const page = document.querySelector('#app .page:not(.is-leaving)') || document.querySelector('#app .page');
     const dataPage = page?.dataset?.page;
     const path = window.location.pathname.toLowerCase();
 
@@ -1111,7 +1111,7 @@
   let wheelFallback = 0;
 
   function detectMarcoPage() {
-    const page = document.querySelector('#app .page');
+    const page = document.querySelector('#app .page:not(.is-leaving)') || document.querySelector('#app .page');
     const dataPage = page?.dataset?.page;
     const dataTheme = page?.dataset?.theme;
     const path = window.location.pathname.toLowerCase();
@@ -1209,9 +1209,7 @@
     } else {
       window.location.href = target.href;
     }
-
-    window.setTimeout(requestSyncGlobalNavTheme, 90);
-    window.setTimeout(requestSyncGlobalNavTheme, 360);
+    // (sync theme gere par les events 'render'/'settled' du cycle de vie)
   }
 
   function onGlobalWheel(event) {
