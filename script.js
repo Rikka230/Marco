@@ -69,8 +69,9 @@
     return [...document.querySelectorAll(selector)].some((asset) => assetKey(asset.getAttribute(attr) || asset[attr] || '') === key);
   }
 
-  function loadStylesFrom(doc, baseUrl) {
+  function loadStylesFrom(doc, baseUrl, ownerPage) {
     const links = [...doc.querySelectorAll('link[rel~="stylesheet"][href]')];
+    const hrefs = links.map((source) => new URL(source.getAttribute('href'), baseUrl).href);
 
     return Promise.all(links.map((source) => new Promise((resolve) => {
       const href = new URL(source.getAttribute('href'), baseUrl).href;
@@ -84,10 +85,22 @@
       link.href = href;
       if (source.media) link.media = source.media;
       link.dataset.pjaxAsset = 'true';
+      if (ownerPage) link.dataset.ownerPage = ownerPage;
       link.addEventListener('load', resolve, { once: true });
       link.addEventListener('error', resolve, { once: true });
       document.head.appendChild(link);
-    })));
+    }))).then(() => new Set(hrefs));
+  }
+
+  // Retire les CSS PJAX appartenant à la page sortante et non requis par la page entrante.
+  // Ne touche jamais aux CSS de base (chargés via le HTML, donc sans data-pjax-asset).
+  function cleanupStyles(leavingPageId, keepHrefs) {
+    if (!leavingPageId) return;
+    document.querySelectorAll('link[data-pjax-asset][data-owner-page]').forEach((link) => {
+      if (link.dataset.ownerPage === leavingPageId && !(keepHrefs && keepHrefs.has(link.href))) {
+        link.remove();
+      }
+    });
   }
 
   async function loadScriptsFrom(doc, baseUrl) {
@@ -162,10 +175,10 @@
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const next = doc.querySelector('#app .page');
       if (!next) throw new Error('Page PJAX introuvable');
-      await loadStylesFrom(doc, absolute.href);
+      const nextPage = pageFromPath(absolute.pathname);
+      const enteringHrefs = await loadStylesFrom(doc, absolute.href, nextPage);
 
       const fromIndex = order.indexOf(currentPage);
-      const nextPage = pageFromPath(absolute.pathname);
       const toIndex = order.indexOf(nextPage);
       const forward = toIndex >= fromIndex;
       const current = app.querySelector('.page');
@@ -187,7 +200,9 @@
 
       [...app.querySelectorAll('.page.is-leaving')].forEach((el) => el.remove());
       next.classList.remove('slide-from-right', 'slide-from-left');
+      const leavingPageId = currentPage;
       currentPage = next.dataset.page || nextPage;
+      cleanupStyles(leavingPageId, enteringHrefs);
       syncPageShell(currentPage);
       if (push) history.pushState({ page: currentPage }, '', absolute.pathname);
       document.title = doc.title || document.title;
