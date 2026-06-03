@@ -120,6 +120,8 @@
     band.classList.add('is-active');
   }
 
+  let inflight = null;
+
   async function goTo(url, push = true) {
     if (busy) return;
     const absolute = new URL(url, window.location.href);
@@ -128,8 +130,16 @@
     busy = true;
     document.body.classList.add('is-transitioning');
 
+    if (inflight) inflight.abort();
+    inflight = new AbortController();
+    const controller = inflight;
+    const timer = window.setTimeout(() => controller.abort(), 8000);
+    let appended = false;
+
     try {
-      const res = await fetch(absolute.pathname, { headers: { 'X-PJAX': 'true' }});
+      const res = await fetch(absolute.pathname, { headers: { 'X-PJAX': 'true' }, signal: controller.signal });
+      window.clearTimeout(timer);
+      if (!res.ok) throw new Error(`PJAX ${res.status} sur ${absolute.pathname}`);
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const next = doc.querySelector('#app .page');
@@ -144,6 +154,7 @@
 
       next.classList.add(forward ? 'slide-from-right' : 'slide-from-left');
       app.appendChild(next);
+      appended = true;
       await loadScriptsFrom(doc, absolute.href);
       runBand(transitionLabel(next, nextPage), next);
 
@@ -160,10 +171,25 @@
         document.title = doc.title || document.title;
         document.body.classList.remove('is-transitioning');
         busy = false;
+        inflight = null;
       }, 920);
     } catch (err) {
+      window.clearTimeout(timer);
+      // Une navigation plus récente ou un timeout a annulé ce fetch.
+      if (err && err.name === 'AbortError') {
+        if (!appended) {
+          busy = false;
+          document.body.classList.remove('is-transitioning');
+          window.location.href = absolute.href;
+        }
+        return;
+      }
       console.error(err);
-      window.location.href = absolute.href;
+      busy = false;
+      document.body.classList.remove('is-transitioning');
+      inflight = null;
+      // Échec avant insertion : repli sur un chargement complet (jamais une page figée).
+      if (!appended) window.location.href = absolute.href;
     }
   }
 
