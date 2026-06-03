@@ -654,11 +654,11 @@
     return nav;
   }
 
-  function updateChapterNav() {
+  function updateChapterNav(forcedId) {
     const nav = document.querySelector('[data-chapter-nav]');
     if (!nav) return;
 
-    const activeId = detectChapterId();
+    const activeId = forcedId || detectChapterId();
     const activeIndex = Math.max(0, chapters.findIndex((chapter) => chapter.id === activeId));
     const active = chapters[activeIndex] || chapters[0];
 
@@ -703,7 +703,7 @@
     window.location.href = target.href;
   }
 
-  function ensureChapterNav() {
+  function ensureChapterNav(forcedId) {
     const shell = document.querySelector('.shell');
     if (!shell) return;
 
@@ -737,7 +737,7 @@
       });
     }
 
-    updateChapterNav();
+    updateChapterNav(forcedId);
   }
 
   document.addEventListener('click', (event) => {
@@ -750,12 +750,23 @@
     if (event.key === 'Escape') closeChapterNav();
   });
 
-  // Cycle de vie PageTransition : mise a jour APRES le swap complet (event 'settled'),
-  // sinon detectChapterId lit encore l'ancienne page (1er enfant de #app) -> rail fige.
-  if (window.Marco && window.Marco.lifecycle) {
-    window.Marco.lifecycle.addEventListener('settled', () => window.requestAnimationFrame(ensureChapterNav));
+  function chapterIdFromDataPage(dataPage) {
+    if (!dataPage) return null;
+    if (dataPage === 'scores') return 'composition';
+    return chapters.some((chapter) => chapter.id === dataPage) ? dataPage : null;
   }
-  document.addEventListener('DOMContentLoaded', ensureChapterNav);
+
+  // Cycle de vie PageTransition :
+  // - 'render' (tot) avec l'id explicite de la NOUVELLE page -> rail a jour sans latence ;
+  // - 'settled' (apres swap) comme filet, via lecture DOM/chemin corriges.
+  if (window.Marco && window.Marco.lifecycle) {
+    window.Marco.lifecycle.addEventListener('render', (event) => {
+      const id = chapterIdFromDataPage(event.detail && event.detail.pageEl && event.detail.pageEl.dataset.page);
+      window.requestAnimationFrame(() => ensureChapterNav(id || undefined));
+    });
+    window.Marco.lifecycle.addEventListener('settled', () => window.requestAnimationFrame(() => ensureChapterNav()));
+  }
+  document.addEventListener('DOMContentLoaded', () => ensureChapterNav());
   if (document.readyState !== 'loading') ensureChapterNav();
 })();
 /* === MARCO GLOBAL CHAPTER NAV - END === */
@@ -1245,9 +1256,23 @@
   window.addEventListener('pageshow', requestSyncGlobalNavTheme);
   window.addEventListener('popstate', requestSyncGlobalNavTheme);
 
-  // Cycle de vie PageTransition : sync theme/accent APRES le swap complet ('settled'),
-  // sinon detectMarcoPage lit encore l'ancienne page.
+  // Cycle de vie PageTransition :
+  // - 'render' (tot) : applique le theme/accent de la NOUVELLE page sans latence (id explicite) ;
+  // - 'settled' : filet via detectMarcoPage + deblocage molette.
   if (window.Marco && window.Marco.lifecycle) {
+    window.Marco.lifecycle.addEventListener('render', (event) => {
+      const dataPage = event.detail && event.detail.pageEl && event.detail.pageEl.dataset.page;
+      const id = dataPage === 'scores' ? 'composition' : dataPage;
+      const active = pages.find((page) => page.id === id);
+      if (!active) return;
+      document.body.dataset.marcoPage = active.id;
+      document.documentElement.style.setProperty('--marco-nav-accent', active.accent);
+      const nav = document.querySelector('[data-chapter-nav]');
+      if (nav) {
+        nav.dataset.activePage = active.id;
+        nav.style.setProperty('--marco-nav-accent', active.accent);
+      }
+    });
     window.Marco.lifecycle.addEventListener('settled', requestSyncGlobalNavTheme);
     // Debloque la molette des que le moteur a reellement fini la transition (fin de la fenetre morte).
     window.Marco.lifecycle.addEventListener('settled', () => {
