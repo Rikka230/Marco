@@ -734,23 +734,12 @@
     if (event.key === 'Escape') closeChapterNav();
   });
 
-  const observer = new MutationObserver(() => {
-    window.requestAnimationFrame(() => {
-      ensureChapterNav();
-    });
-  });
-
-  document.addEventListener('DOMContentLoaded', () => {
-    ensureChapterNav();
-    const app = document.querySelector('#app');
-    if (app) observer.observe(app, { childList: true, subtree: true });
-  });
-
-  if (document.readyState !== 'loading') {
-    ensureChapterNav();
-    const app = document.querySelector('#app');
-    if (app) observer.observe(app, { childList: true, subtree: true });
+  // Cycle de vie PageTransition au lieu du MutationObserver.
+  if (window.Marco && window.Marco.lifecycle) {
+    window.Marco.lifecycle.addEventListener('ready', () => window.requestAnimationFrame(ensureChapterNav));
   }
+  document.addEventListener('DOMContentLoaded', ensureChapterNav);
+  if (document.readyState !== 'loading') ensureChapterNav();
 })();
 /* === MARCO GLOBAL CHAPTER NAV - END === */
 
@@ -1236,22 +1225,14 @@
   window.addEventListener('pageshow', requestSyncGlobalNavTheme);
   window.addEventListener('popstate', requestSyncGlobalNavTheme);
 
-  const observer = new MutationObserver(requestSyncGlobalNavTheme);
-
-  function bootObserver() {
-    requestSyncGlobalNavTheme();
-
-    const app = document.querySelector('#app');
-    if (app && !app.dataset.marcoGlobalNavObserved) {
-      app.dataset.marcoGlobalNavObserved = 'true';
-      observer.observe(app, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-page', 'data-theme', 'class'] });
-    }
+  // Cycle de vie PageTransition au lieu du MutationObserver.
+  if (window.Marco && window.Marco.lifecycle) {
+    window.Marco.lifecycle.addEventListener('ready', requestSyncGlobalNavTheme);
   }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootObserver);
+    document.addEventListener('DOMContentLoaded', requestSyncGlobalNavTheme);
   } else {
-    bootObserver();
+    requestSyncGlobalNavTheme();
   }
 })();
 /* === MARCO PATCH v0.3.0 GLOBAL NAVIGATION - END === */
