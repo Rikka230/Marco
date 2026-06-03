@@ -289,13 +289,20 @@
     page.dataset.ready = "true";
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initFilmographie);
+  // Cycle de vie PageTransition : enter au lieu du MutationObserver auto.
+  // Les listeners sont attachés aux éléments internes de la page (retirés avec le DOM),
+  // un cleanup explicite n'est donc pas nécessaire ici.
+  if (window.Marco && typeof window.Marco.registerPage === "function") {
+    window.Marco.registerPage("filmographie", {
+      enter() { initFilmographie(); },
+      cleanup() {}
+    });
   } else {
-    initFilmographie();
+    // Filet de sécurité si le seam n'est pas chargé.
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initFilmographie);
+    } else {
+      initFilmographie();
+    }
   }
-
-  const observer = new MutationObserver(() => window.requestAnimationFrame(initFilmographie));
-  const app = document.querySelector("#app");
-  if (app) observer.observe(app, { childList: true, subtree: true });
 })();
