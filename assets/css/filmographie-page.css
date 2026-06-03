@@ -1,0 +1,743 @@
+/* === MARCO PATCH v0.1.0 FILMOGRAPHIE MOCKUP BASE === */
+.filmographie-rebuild {
+  --film-gold: #f4bd68;
+  --film-gold-deep: #9a6420;
+  --film-cream: #fff1c2;
+  --film-ink: #080603;
+  --film-panel: rgba(8, 6, 3, 0.76);
+  --film-line: rgba(244, 189, 104, 0.44);
+  --accent: var(--film-gold);
+  --marco-page-accent: var(--film-gold);
+  --marco-nav-accent: var(--film-gold);
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #070503;
+  color: var(--film-cream);
+  isolation: isolate;
+}
+
+body:has(.filmographie-rebuild) {
+  --marco-nav-accent: #f4bd68;
+  --marco-page-accent: #f4bd68;
+}
+
+html:has(.filmographie-rebuild),
+body:has(.filmographie-rebuild),
+body:has(.filmographie-rebuild) [data-chapter-nav] {
+  --marco-nav-accent: #f4bd68 !important;
+}
+
+body:has(.filmographie-rebuild) .shell::after {
+  content: "MARCO v0.5.5" !important;
+}
+
+.filmographie-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.12) 44%, rgba(0, 0, 0, 0.58) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 28%, rgba(0, 0, 0, 0.62) 100%),
+    url("/assets/img/filmographie/filmographie-bg.png") center / cover no-repeat;
+  filter: brightness(1.06) saturate(1.08) contrast(1.06);
+}
+
+.filmographie-bg::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at 74% 16%, rgba(244, 189, 104, 0.34), transparent 17%),
+    radial-gradient(circle at 26% 58%, rgba(244, 189, 104, 0.12), transparent 36%),
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 4px);
+  mix-blend-mode: screen;
+  opacity: 0.34;
+}
+
+.filmographie-title-img {
+  position: absolute;
+  z-index: 1;
+  top: clamp(3rem, 5.1vh, 5.4rem);
+  left: 5.7vw;
+  width: min(87.4vw, 1640px);
+  max-width: none;
+  height: auto;
+  opacity: 0.88;
+  filter:
+    drop-shadow(0 0 18px rgba(244, 189, 104, 0.12))
+    drop-shadow(0 22px 34px rgba(0, 0, 0, 0.34));
+  pointer-events: none;
+}
+
+.filmographie-person-wrap {
+  position: absolute;
+  z-index: 3;
+  left: 51.2%;
+  bottom: -3.8vh;
+  width: min(28.8vw, 540px);
+  max-width: none;
+  transform: translateX(-50%);
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.filmographie-person-wrap::before,
+.filmographie-person-wrap::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  -webkit-mask: url("/assets/img/filmographie/marco-filmographie-tight.png?v=20260603-tight1") center / 100% auto no-repeat;
+  mask: url("/assets/img/filmographie/marco-filmographie-tight.png?v=20260603-tight1") center / 100% auto no-repeat;
+  pointer-events: none;
+}
+
+.filmographie-person-wrap::before {
+  background:
+    radial-gradient(ellipse at 70% 19%, rgba(255, 222, 147, 0.18), transparent 27%),
+    linear-gradient(104deg, transparent 0 45%, rgba(244, 189, 104, 0.09) 58%, transparent 75%),
+    linear-gradient(270deg, rgba(255, 204, 112, 0.1), transparent 42%);
+  mix-blend-mode: screen;
+  opacity: 0.68;
+}
+
+.filmographie-person-wrap::after {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent 34%, rgba(244, 189, 104, 0.045) 76%, rgba(244, 189, 104, 0.1)),
+    radial-gradient(ellipse at 48% 92%, rgba(0, 0, 0, 0.2), transparent 46%);
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+}
+
+.filmographie-person {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter:
+    brightness(0.98)
+    contrast(1.04)
+    saturate(0.98)
+    drop-shadow(0 26px 30px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 22px rgba(244, 189, 104, 0.1));
+}
+
+.filmographie-credits {
+  position: absolute;
+  z-index: 4;
+  left: clamp(5.2rem, 6.2vw, 7.4rem);
+  top: clamp(15.8rem, 29vh, 20.5rem);
+  width: min(45.6vw, 790px);
+}
+
+.filmographie-kicker {
+  margin: 0 0 0.56rem 1.52rem;
+  color: var(--film-gold);
+  font-family: var(--heavy);
+  font-size: clamp(0.88rem, 1.02vw, 1.18rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(244, 189, 104, 0.18);
+}
+
+.filmographie-search {
+  position: relative;
+  display: grid;
+  align-items: center;
+  margin: 0 0 0.8rem 1.52rem;
+}
+
+.filmographie-search span {
+  position: absolute;
+  left: 0.94rem;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--film-cream);
+  border-radius: 999px;
+  opacity: 0.94;
+}
+
+.filmographie-search span::after {
+  position: absolute;
+  right: -0.44rem;
+  bottom: -0.34rem;
+  width: 0.52rem;
+  height: 2px;
+  content: "";
+  background: var(--film-cream);
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.filmographie-search input {
+  width: 100%;
+  height: clamp(2.55rem, 4.1vh, 3.2rem);
+  padding: 0 1.1rem 0 3rem;
+  border: 1px solid rgba(244, 189, 104, 0.82);
+  border-radius: 999px;
+  color: var(--film-cream);
+  outline: none;
+  background: rgba(7, 5, 3, 0.68);
+  box-shadow:
+    inset 0 0 18px rgba(244, 189, 104, 0.035),
+    0 10px 22px rgba(0, 0, 0, 0.24);
+  font-family: var(--ui);
+  font-weight: 800;
+}
+
+.filmographie-search input::placeholder {
+  color: rgba(255, 241, 194, 0.78);
+}
+
+.filmographie-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.54rem;
+  margin: 0 0 1rem 1.52rem;
+}
+
+.filmographie-filter {
+  min-height: 2.1rem;
+  padding: 0 1.04rem;
+  border: 1px solid rgba(244, 189, 104, 0.48);
+  border-radius: 999px;
+  color: var(--film-cream);
+  background: rgba(8, 6, 3, 0.72);
+  cursor: pointer;
+  font-family: var(--ui);
+  font-size: clamp(0.7rem, 0.72vw, 0.86rem);
+  font-weight: 900;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.filmographie-filter:hover,
+.filmographie-filter.is-active {
+  border-color: var(--film-gold);
+  color: #1a1005;
+  background: linear-gradient(180deg, #ffe19a, var(--film-gold));
+  box-shadow: 0 0 18px rgba(244, 189, 104, 0.24);
+  transform: translateY(-1px);
+}
+
+.filmographie-list {
+  position: relative;
+  display: grid;
+  max-height: min(41vh, 430px);
+  padding-left: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(180deg, #000 0 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0 88%, transparent 100%);
+}
+
+.filmographie-list:focus-visible {
+  outline: 1px solid rgba(244, 189, 104, 0.58);
+  outline-offset: 0.35rem;
+}
+
+.filmographie-list::-webkit-scrollbar {
+  display: none;
+}
+
+.filmographie-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.3rem minmax(10rem, 1.25fr) minmax(5.4rem, 0.72fr) minmax(5.2rem, 0.7fr) minmax(5.4rem, 0.68fr) auto;
+  align-items: center;
+  gap: clamp(0.5rem, 0.84vw, 1rem);
+  min-height: clamp(3.46rem, 5.6vh, 4.36rem);
+  margin-left: 1.52rem;
+  padding: 0.36rem 0.72rem 0.36rem 1.22rem;
+  border-top: 1px solid rgba(244, 189, 104, 0.16);
+  border-bottom: 1px solid rgba(244, 189, 104, 0.18);
+  color: var(--film-cream);
+  background:
+    linear-gradient(90deg, rgba(244, 189, 104, 0.16), rgba(244, 189, 104, 0.065) 58%, rgba(0,0,0,0.1)),
+    rgba(8, 6, 3, 0.7);
+  cursor: pointer;
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+}
+
+.filmographie-row + .filmographie-row {
+  margin-top: 0.08rem;
+}
+
+.filmographie-row::before {
+  position: absolute;
+  z-index: 3;
+  left: -1.52rem;
+  top: 0;
+  bottom: 0;
+  width: 1.36rem;
+  content: "";
+  background: url("/assets/img/filmographie/film-strip-vertical.png") center / 100% 100% no-repeat;
+  opacity: 0.86;
+  filter: drop-shadow(0 0 10px rgba(244, 189, 104, 0.12));
+  pointer-events: none;
+}
+
+.filmographie-row:hover,
+.filmographie-row.is-active {
+  border-color: rgba(244, 189, 104, 0.48);
+  background:
+    linear-gradient(90deg, rgba(244, 189, 104, 0.28), rgba(244, 189, 104, 0.08) 62%, rgba(0,0,0,0.06)),
+    rgba(12, 8, 3, 0.86);
+  box-shadow:
+    inset 0 0 22px rgba(244, 189, 104, 0.06),
+    0 0 18px rgba(244, 189, 104, 0.08);
+}
+
+.filmographie-year {
+  color: var(--film-gold);
+  font-family: var(--heavy);
+  font-size: clamp(1.18rem, 1.45vw, 1.9rem);
+  line-height: 1;
+}
+
+.filmographie-title-cell {
+  color: var(--film-cream);
+  font-family: var(--heavy);
+  font-size: clamp(1.02rem, 1.44vw, 1.68rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.filmographie-meta {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  font-family: var(--ui);
+  font-size: clamp(0.56rem, 0.63vw, 0.78rem);
+  font-weight: 800;
+  line-height: 1.04;
+}
+
+.filmographie-meta span {
+  color: rgba(255, 241, 194, 0.66);
+  font-size: 0.68em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filmographie-meta b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filmographie-row-play {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.38rem;
+  min-width: max-content;
+  min-height: 1.84rem;
+  padding: 0 0.72rem;
+  border: 1px solid rgba(244, 189, 104, 0.82);
+  border-radius: 999px;
+  color: var(--film-gold);
+  background: rgba(3, 2, 1, 0.62);
+  font-family: var(--heavy);
+  font-size: clamp(0.54rem, 0.58vw, 0.68rem);
+  text-transform: uppercase;
+}
+
+.filmographie-row-play i {
+  width: 0;
+  height: 0;
+  border-top: 0.35rem solid transparent;
+  border-bottom: 0.35rem solid transparent;
+  border-left: 0.52rem solid var(--film-gold);
+}
+
+.filmographie-selected {
+  position: absolute;
+  z-index: 5;
+  right: clamp(7.6rem, 9.2vw, 11rem);
+  top: clamp(18.2rem, 35.8vh, 25rem);
+  width: min(25.2vw, 470px);
+  padding: clamp(1.1rem, 1.35vw, 1.55rem);
+  border: 1px solid rgba(244, 189, 104, 0.62);
+  border-radius: 8px;
+  color: var(--film-cream);
+  background:
+    linear-gradient(180deg, rgba(9, 6, 2, 0.88), rgba(2, 1, 0, 0.9));
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, 0.46),
+    inset 0 0 24px rgba(244, 189, 104, 0.035);
+}
+
+.filmographie-selected > p {
+  margin: 0 0 0.32rem;
+  color: var(--film-gold);
+  font-family: var(--heavy);
+  font-size: clamp(0.58rem, 0.62vw, 0.76rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filmographie-selected h2 {
+  margin: 0;
+  color: var(--film-cream);
+  font-family: var(--heavy);
+  font-size: clamp(1.18rem, 1.75vw, 2rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.filmographie-selected > strong {
+  display: block;
+  margin: 0.4rem 0 1rem;
+  color: rgba(255, 241, 194, 0.86);
+  font-family: var(--heavy);
+  font-size: clamp(0.6rem, 0.68vw, 0.8rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filmographie-video {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(244, 189, 104, 0.3);
+  aspect-ratio: 16 / 9;
+  background: #050301;
+}
+
+.filmographie-video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.82;
+  filter: saturate(0.94) contrast(1.12);
+}
+
+.filmographie-video::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(180deg, transparent, rgba(0,0,0,0.3)),
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 4px);
+  pointer-events: none;
+}
+
+.filmographie-video button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: clamp(3.8rem, 4.3vw, 5.2rem);
+  height: clamp(3.8rem, 4.3vw, 5.2rem);
+  border: 1px solid rgba(255, 241, 194, 0.48);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 225, 154, 0.36), rgba(244, 189, 104, 0.88) 62%, rgba(68, 37, 6, 0.86));
+  box-shadow: 0 0 32px rgba(244, 189, 104, 0.42);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.filmographie-video button span {
+  width: 0;
+  height: 0;
+  margin-left: 0.25rem;
+  border-top: 0.72rem solid transparent;
+  border-bottom: 0.72rem solid transparent;
+  border-left: 1.05rem solid #fff6d2;
+}
+
+.filmographie-player-ui {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.66rem;
+  margin: 0.56rem 0 1.12rem;
+  font-family: var(--ui);
+  font-size: clamp(0.55rem, 0.58vw, 0.68rem);
+  font-weight: 900;
+}
+
+.filmographie-player-ui i {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(244, 189, 104, 0.62);
+}
+
+.filmographie-player-ui i::before,
+.filmographie-player-ui i::after {
+  position: absolute;
+  top: 50%;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  content: "";
+  background: var(--film-gold);
+  transform: translateY(-50%);
+}
+
+.filmographie-player-ui i::before { left: 0; }
+.filmographie-player-ui i::after { left: 58%; }
+
+.filmographie-player-ui b {
+  width: 2.1rem;
+  height: 1rem;
+  background: repeating-linear-gradient(90deg, var(--film-gold) 0 2px, transparent 2px 5px);
+  clip-path: polygon(0 42%, 12% 25%, 24% 55%, 36% 18%, 48% 70%, 60% 35%, 72% 62%, 84% 24%, 100% 48%, 100% 100%, 0 100%);
+  opacity: 0.88;
+}
+
+.filmographie-selected-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+  margin: 0;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(244, 189, 104, 0.22);
+  font-family: var(--ui);
+}
+
+.filmographie-selected-meta div {
+  min-width: 0;
+}
+
+.filmographie-selected-meta dt {
+  margin-bottom: 0.28rem;
+  color: var(--film-gold);
+  font-family: var(--heavy);
+  font-size: clamp(0.5rem, 0.54vw, 0.64rem);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.filmographie-selected-meta dd {
+  margin: 0;
+  color: var(--film-cream);
+  font-size: clamp(0.58rem, 0.64vw, 0.74rem);
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.filmographie-badge {
+  position: absolute;
+  z-index: 4;
+  right: clamp(3.9rem, 5.2vw, 6.4rem);
+  bottom: clamp(3.2rem, 8.1vh, 6rem);
+  width: min(9.3vw, 168px);
+  height: auto;
+  filter: drop-shadow(0 0 16px rgba(244, 189, 104, 0.2));
+}
+
+body:has(.filmographie-rebuild) #dotWave {
+  opacity: 0.72;
+  mix-blend-mode: screen;
+}
+
+body:has(.filmographie-rebuild) .mini-player {
+  color: var(--film-gold);
+}
+
+body:has(.filmographie-rebuild) .mini-player #playBtn {
+  background: #fff1c2;
+  color: #120b03;
+}
+
+@media (max-width: 1180px) {
+  .filmographie-person-wrap {
+    width: min(39vw, 540px);
+    left: 54%;
+  }
+
+  .filmographie-credits {
+    width: 51vw;
+  }
+
+  .filmographie-selected {
+    right: 5.2rem;
+    width: 30vw;
+  }
+
+  .filmographie-row {
+    grid-template-columns: 3.6rem minmax(9rem, 1fr) minmax(4.8rem, 0.65fr) minmax(4.8rem, 0.62fr) auto;
+  }
+
+  .filmographie-row .filmographie-meta:nth-of-type(3) {
+    display: none;
+  }
+}
+
+@media (min-width: 1700px) and (min-height: 900px) {
+  .filmographie-title-img {
+    left: 6vw;
+    width: min(84vw, 1660px);
+  }
+
+  .filmographie-person-wrap {
+    left: 51.6%;
+    bottom: -5vh;
+    width: min(33vw, 625px);
+  }
+
+  .filmographie-credits {
+    left: clamp(5.7rem, 5.7vw, 7.3rem);
+    top: clamp(16.6rem, 30.6vh, 21rem);
+    width: min(43.6vw, 780px);
+  }
+
+  .filmographie-selected {
+    right: clamp(8.7rem, 8.2vw, 10.4rem);
+    top: clamp(18.4rem, 32.2vh, 22.5rem);
+  }
+
+  .filmographie-badge {
+    right: clamp(5.2rem, 5.4vw, 7rem);
+    bottom: clamp(3.6rem, 6.7vh, 5rem);
+  }
+}
+
+@media (min-width: 2200px) and (min-height: 1150px) {
+  .filmographie-title-img {
+    top: clamp(2.7rem, 3.6vh, 3.7rem);
+    left: 4.7vw;
+    width: min(88vw, 2250px);
+  }
+
+  .filmographie-person-wrap {
+    left: 52.2%;
+    bottom: -5.8vh;
+    width: min(34vw, 870px);
+  }
+
+  .filmographie-credits {
+    left: clamp(6.6rem, 5.2vw, 8.3rem);
+    top: clamp(27.5rem, 41.5vh, 36rem);
+    width: min(34vw, 860px);
+  }
+
+  .filmographie-selected {
+    right: clamp(9rem, 7.2vw, 12rem);
+    top: clamp(27.6rem, 41vh, 36rem);
+    width: min(23.5vw, 540px);
+  }
+
+  .filmographie-badge {
+    right: clamp(6.5rem, 5vw, 8rem);
+    bottom: clamp(4.3rem, 6vh, 5.3rem);
+    width: min(8vw, 190px);
+  }
+}
+
+@media (max-width: 820px) {
+  .filmographie-rebuild {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4.8rem 1rem 7rem;
+  }
+
+  .filmographie-rebuild::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filmographie-bg {
+    position: fixed;
+  }
+
+  .filmographie-title-img {
+    position: relative;
+    top: auto;
+    left: 50%;
+    display: block;
+    width: 132vw;
+    margin: 0 0 -2.2rem;
+    transform: translateX(-50%);
+  }
+
+  .filmographie-person-wrap {
+    position: relative;
+    left: 50%;
+    bottom: auto;
+    display: block;
+    width: min(82vw, 420px);
+    margin: 0 auto -1.6rem;
+  }
+
+  .filmographie-credits,
+  .filmographie-selected {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    z-index: 5;
+    width: 100%;
+  }
+
+  .filmographie-kicker,
+  .filmographie-search,
+  .filmographie-filters {
+    margin-left: 0;
+  }
+
+  .filmographie-list {
+    max-height: none;
+    padding-left: 0;
+    overflow: visible;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .filmographie-list::before {
+    display: none;
+  }
+
+  .filmographie-row {
+    grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+    gap: 0.48rem;
+    min-height: 4.2rem;
+    margin-left: 1.2rem;
+    padding: 0.5rem 0.48rem 0.5rem 0.7rem;
+  }
+
+  .filmographie-row::before {
+    left: -1.2rem;
+    width: 1rem;
+  }
+
+  .filmographie-title-cell {
+    font-size: 1rem;
+  }
+
+  .filmographie-row .filmographie-meta {
+    display: none;
+  }
+
+  .filmographie-selected {
+    margin-top: 1.2rem;
+    padding: 1rem;
+  }
+
+  .filmographie-selected-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filmographie-badge {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    display: block;
+    width: 9rem;
+    margin: 1.4rem auto 0;
+  }
+}

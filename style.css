@@ -2797,7 +2797,7 @@ body[data-marco-page="home"] { --marco-nav-accent: #86f5a8; }
 body[data-marco-page="music"] { --marco-nav-accent: #f4bd68; }
 body[data-marco-page="parcours"] { --marco-nav-accent: #73aaf6; }
 body[data-marco-page="gallery"] { --marco-nav-accent: #f08ac8; }
-body[data-marco-page="filmographie"] { --marco-nav-accent: #6fd7ff; }
+body[data-marco-page="filmographie"] { --marco-nav-accent: #f4bd68; }
 body[data-marco-page="composition"] { --marco-nav-accent: #ff355d; }
 body[data-marco-page="booking"] { --marco-nav-accent: #d8c3ff; }
 

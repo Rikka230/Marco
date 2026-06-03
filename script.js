@@ -3,6 +3,16 @@
   if (!app) return;
 
   const order = ['home', 'music', 'parcours', 'gallery', 'filmographie', 'composition', 'scores', 'booking'];
+  const pageAccents = {
+    home: '#86f5a8',
+    music: '#f4bd68',
+    parcours: '#73aaf6',
+    gallery: '#f08ac8',
+    filmographie: '#f4bd68',
+    composition: '#ff355d',
+    scores: '#ff355d',
+    booking: '#d8c3ff'
+  };
   let currentPage = app.querySelector('.page')?.dataset.page || 'home';
   let busy = false;
 
@@ -31,6 +41,76 @@
     fallback.toUpperCase()
   );
 
+  function syncPageShell(pageId = currentPage) {
+    const active = pageId === 'scores' ? 'composition' : pageId;
+    const accent = pageAccents[pageId] || pageAccents[active] || pageAccents.home;
+
+    document.body.dataset.marcoPage = active;
+    document.documentElement.style.setProperty('--marco-nav-accent', accent);
+
+    const nav = document.querySelector('[data-chapter-nav]');
+    if (nav) {
+      nav.dataset.activePage = active;
+      nav.style.setProperty('--marco-nav-accent', accent);
+    }
+  }
+
+  const assetKey = (value, base = window.location.href) => {
+    try {
+      const url = new URL(value, base);
+      return `${url.origin}${url.pathname}`;
+    } catch (error) {
+      return String(value || '');
+    }
+  };
+
+  function hasAsset(selector, attr, value, base = window.location.href) {
+    const key = assetKey(value, base);
+    return [...document.querySelectorAll(selector)].some((asset) => assetKey(asset.getAttribute(attr) || asset[attr] || '') === key);
+  }
+
+  function loadStylesFrom(doc, baseUrl) {
+    const links = [...doc.querySelectorAll('link[rel~="stylesheet"][href]')];
+
+    return Promise.all(links.map((source) => new Promise((resolve) => {
+      const href = new URL(source.getAttribute('href'), baseUrl).href;
+      if (hasAsset('link[rel~="stylesheet"][href]', 'href', href)) {
+        resolve();
+        return;
+      }
+
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      if (source.media) link.media = source.media;
+      link.dataset.pjaxAsset = 'true';
+      link.addEventListener('load', resolve, { once: true });
+      link.addEventListener('error', resolve, { once: true });
+      document.head.appendChild(link);
+    })));
+  }
+
+  async function loadScriptsFrom(doc, baseUrl) {
+    const scripts = [...doc.querySelectorAll('script[src]')];
+
+    for (const source of scripts) {
+      const src = new URL(source.getAttribute('src'), baseUrl).href;
+      const path = new URL(src).pathname;
+      if (path.endsWith('/script.js') || hasAsset('script[src]', 'src', src)) continue;
+
+      await new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = false;
+        if (source.type) script.type = source.type;
+        script.dataset.pjaxAsset = 'true';
+        script.addEventListener('load', resolve, { once: true });
+        script.addEventListener('error', resolve, { once: true });
+        document.body.appendChild(script);
+      });
+    }
+  }
+
   function runBand(label, page) {
     const accent = getComputedStyle(page).getPropertyValue('--accent').trim() || '#86f8a7';
     band.style.setProperty('--band-accent', accent);
@@ -54,6 +134,7 @@
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const next = doc.querySelector('#app .page');
       if (!next) throw new Error('Page PJAX introuvable');
+      await loadStylesFrom(doc, absolute.href);
 
       const fromIndex = order.indexOf(currentPage);
       const nextPage = pageFromPath(absolute.pathname);
@@ -63,6 +144,7 @@
 
       next.classList.add(forward ? 'slide-from-right' : 'slide-from-left');
       app.appendChild(next);
+      await loadScriptsFrom(doc, absolute.href);
       runBand(transitionLabel(next, nextPage), next);
 
       if (current) {
@@ -73,6 +155,7 @@
         [...app.querySelectorAll('.page.is-leaving')].forEach((el) => el.remove());
         next.classList.remove('slide-from-right', 'slide-from-left');
         currentPage = next.dataset.page || nextPage;
+        syncPageShell(currentPage);
         if (push) history.pushState({ page: currentPage }, '', absolute.pathname);
         document.title = doc.title || document.title;
         document.body.classList.remove('is-transitioning');
@@ -94,6 +177,8 @@
   });
 
   window.addEventListener('popstate', () => goTo(window.location.href, false));
+  syncPageShell(currentPage);
+  window.setTimeout(() => syncPageShell(currentPage), 120);
 
   const audio = document.querySelector('#audioLoop');
   const play = document.querySelector('#playBtn');
@@ -1018,7 +1103,7 @@
     { id: 'music', href: '/music.html', accent: '#f4bd68' },
     { id: 'parcours', href: '/parcours.html', accent: '#73aaf6' },
     { id: 'gallery', href: '/gallery.html', accent: '#f08ac8' },
-    { id: 'filmographie', href: '/filmographie.html', accent: '#6fd7ff' },
+    { id: 'filmographie', href: '/filmographie.html', accent: '#f4bd68' },
     { id: 'composition', href: '/composition.html', accent: '#ff355d' },
     { id: 'booking', href: '/contact.html', accent: '#d8c3ff' }
   ];
