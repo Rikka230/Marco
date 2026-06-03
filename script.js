@@ -509,6 +509,21 @@
 
   window.addEventListener('pointerleave', () => scheduleParallax(), { passive: true });
 
+  // === Phase 2 — entree "rolling reveal" des listes (branche sur le cycle de vie) ===
+  function applyListEntrance(page) {
+    if (!page) return;
+    const items = page.querySelectorAll(
+      '.composition-track, .filmographie-row, .parcours-timeline-point, .parcours-mobile-timeline-card, .model-frame:not([data-clone="true"])'
+    );
+    items.forEach((el, i) => {
+      el.style.setProperty('--enter-i', String(Math.min(i, 16)));
+      el.classList.remove('marco-enter-list');
+      void el.offsetWidth;
+      el.classList.add('marco-enter-list');
+    });
+  }
+  lifecycle.addEventListener('ready', (event) => applyListEntrance(event.detail && event.detail.pageEl));
+
   document.addEventListener('click', (e) => {
     const trackButton = e.target.closest('.composition-track .track-play');
     if (!trackButton) return;
@@ -1064,8 +1079,8 @@
   Cible : rail + scroll molette
 */
 (() => {
-  const WHEEL_LOCK_MS = 880;
-  const WHEEL_THRESHOLD = 72;
+  const WHEEL_LOCK_MS = 480;
+  const WHEEL_THRESHOLD = 64;
 
   const pages = [
     { id: 'home', href: '/index.html', accent: '#86f5a8' },

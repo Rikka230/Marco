@@ -1289,31 +1289,31 @@ body.is-transitioning .mini-brand {
   76% { transform: translateX(12%); opacity: 0.24; }
 }
 
-.page.slide-from-right { animation: posterInRight 0.88s cubic-bezier(0.76, 0, 0.16, 1) forwards; }
-.page.slide-from-left { animation: posterInLeft 0.88s cubic-bezier(0.76, 0, 0.16, 1) forwards; }
-.page.slide-out-left { animation: posterOutLeft 0.88s cubic-bezier(0.76, 0, 0.16, 1) forwards; }
-.page.slide-out-right { animation: posterOutRight 0.88s cubic-bezier(0.76, 0, 0.16, 1) forwards; }
+.page.slide-from-right { animation: posterInRight 0.58s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
+.page.slide-from-left { animation: posterInLeft 0.58s cubic-bezier(0.33, 1, 0.45, 1) forwards; }
+.page.slide-out-left { animation: posterOutLeft 0.42s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
+.page.slide-out-right { animation: posterOutRight 0.42s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
 
 .page.slide-from-right .title-wrap,
 .page.slide-from-left .title-wrap {
-  animation: titleLayerIn 0.82s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+  animation: titleLayerIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
 }
 
 .page.slide-from-right .hero-person,
 .page.slide-from-left .hero-person {
   animation:
-    personLayerIn 0.86s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both,
-    personFloat 7.5s ease-in-out 1s infinite alternate;
+    personLayerIn 0.54s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both,
+    personFloat 7.5s ease-in-out 0.7s infinite alternate;
 }
 
 .page.slide-out-left .title-wrap,
 .page.slide-out-right .title-wrap {
-  animation: titleLayerOut 0.88s cubic-bezier(0.76, 0, 0.16, 1) both;
+  animation: titleLayerOut 0.42s cubic-bezier(0.5, 0, 0.75, 0) both;
 }
 
 .page.slide-out-left .hero-person,
 .page.slide-out-right .hero-person {
-  animation: personLayerOut 0.88s cubic-bezier(0.76, 0, 0.16, 1) both;
+  animation: personLayerOut 0.42s cubic-bezier(0.5, 0, 0.75, 0) both;
 }
 
 @keyframes posterInRight {
@@ -1391,30 +1391,34 @@ body.is-transitioning .mini-brand {
 
 .transition-band::before {
   position: absolute;
-  left: -16vw;
-  right: -16vw;
-  top: 38vh;
-  height: 24vh;
+  left: -10vw;
+  right: -10vw;
+  top: 39vh;
+  height: 22vh;
   content: "";
-  transform: skewY(-4deg);
-  background:
-    linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.78) 18%, rgba(0, 0, 0, 0.82) 82%, transparent),
-    linear-gradient(90deg, transparent, var(--band-accent, var(--mint)), transparent);
-  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.44);
+  transform: skewY(-3deg);
+  background: linear-gradient(90deg, transparent, rgba(6, 7, 9, 0.62) 12%, rgba(6, 7, 9, 0.72) 88%, transparent);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  border-top: 1px solid color-mix(in srgb, var(--band-accent, var(--mint)) 55%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--band-accent, var(--mint)) 22%, transparent);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
 }
 
 .transition-band span {
   position: relative;
   z-index: 1;
-  font-size: clamp(78px, 15vw, 300px);
-  line-height: 0.76;
-  letter-spacing: -0.08em;
-  opacity: 0.9;
-  text-shadow: 0 0 18px rgba(134, 248, 167, 0.12);
+  font-size: clamp(70px, 13vw, 260px);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  opacity: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.4px color-mix(in srgb, var(--band-accent, var(--mint)) 88%, white);
+  text-shadow: 0 0 44px color-mix(in srgb, var(--band-accent, var(--mint)) 30%, transparent);
 }
 
 .transition-band.is-active {
-  animation: bandCross 0.82s cubic-bezier(0.76, 0, 0.16, 1) both;
+  animation: bandCross 0.5s cubic-bezier(0.5, 0, 0.2, 1) both;
 }
 
 @keyframes bandCross {
@@ -1442,6 +1446,26 @@ body.is-transitioning .mini-brand {
     clip-path: none !important;
   }
   .transition-band.is-active { animation-duration: 0.001s !important; }
+}
+
+/* === Phase 2 — entree "rolling reveal" des listes (scroll d'apparition puis calage) === */
+.marco-enter-list {
+  animation: marcoEnterList 0.52s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--enter-i, 0) * 42ms + 0.16s) both;
+  will-change: transform, opacity;
+}
+
+@keyframes marcoEnterList {
+  0% { opacity: 0; transform: translateY(30px) scale(0.985); }
+  58% { opacity: 1; }
+  82% { transform: translateY(-4px) scale(1.003); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marco-enter-list {
+    animation-duration: 0.001s !important;
+    animation-delay: 0s !important;
+  }
 }
 
 @media (max-width: 900px) {
