@@ -3290,3 +3290,95 @@ body.music-drawer-open .music-drawer-sheet {
   }
 }
 /* === MARCO PATCH v0.4.9 COMPOSITION TRACKLIST LOWERING - END === */
+
+/* ============================================================
+   Phase 2 — Micro-interactions (press / hover glow / focus-visible)
+   Le press utilise la propriete `scale` (se compose avec les `transform` existants).
+   ============================================================ */
+
+/* Transitions (sans ecraser les comportements existants utiles) */
+.cover-hit { transition: transform 0.25s ease, opacity 0.25s ease, scale 0.14s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease; }
+.mini-brand,
+.mini-player button,
+.model-frame,
+.filmographie-row,
+.filmographie-filter,
+.composition-track,
+.music-drawer-toggle,
+.music-drawer-track,
+.parcours-mobile-chip,
+.contact-submit {
+  transition: scale 0.14s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Press feedback */
+.cover-hit:active,
+.key-project:active,
+.mini-brand:active,
+.mini-player button:active,
+.model-frame:active,
+.filmographie-row:active,
+.filmographie-filter:active,
+.composition-track:active,
+.music-drawer-toggle:active,
+.music-drawer-track:active,
+.parcours-mobile-chip:active,
+.contact-submit:active {
+  scale: 0.95;
+}
+
+/* Hover glow discret */
+.cover-hit:hover { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent, var(--mint)) 42%, transparent)); }
+.key-project:hover { filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent, var(--mint)) 40%, transparent)); }
+.mini-brand:hover { scale: 1.03; }
+.mini-player button:hover { scale: 1.12; filter: brightness(1.14); }
+.model-frame:hover { filter: brightness(1.08) drop-shadow(0 0 12px color-mix(in srgb, var(--marco-page-accent, var(--mint)) 30%, transparent)); }
+.filmographie-row:hover,
+.composition-track:hover,
+.music-drawer-track:hover { filter: brightness(1.07); }
+
+/* Focus-visible (accessibilite clavier) */
+.cover-hit:focus-visible,
+.key-project:focus-visible,
+.mini-brand:focus-visible,
+.mini-player button:focus-visible,
+.chapter-toggle:focus-visible,
+.chapter-step:focus-visible,
+.chapter-link:focus-visible,
+.model-frame:focus-visible,
+.filmographie-row:focus-visible,
+.filmographie-row-play:focus-visible,
+.filmographie-filter:focus-visible,
+.composition-track:focus-visible,
+.track-play:focus-visible,
+.music-drawer-toggle:focus-visible,
+.music-drawer-track:focus-visible,
+.parcours-mobile-chip:focus-visible,
+.parcours-mobile-play:focus-visible,
+.parcours-mobile-music:focus-visible,
+.contact-submit:focus-visible,
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible,
+.request-type label:focus-within,
+a[data-pjax]:focus-visible {
+  outline: 2px solid var(--marco-nav-accent, var(--mint));
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-hit,
+  .mini-brand,
+  .mini-player button,
+  .model-frame,
+  .filmographie-row,
+  .filmographie-filter,
+  .composition-track,
+  .music-drawer-toggle,
+  .music-drawer-track,
+  .parcours-mobile-chip,
+  .contact-submit {
+    transition-duration: 0.001s !important;
+  }
+}
