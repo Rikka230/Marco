@@ -22,17 +22,78 @@
   band.innerHTML = '<span></span>';
   document.body.appendChild(band);
 
-  const pageFromPath = (path) => {
-    const file = path.split('/').pop() || 'index.html';
-    if (file.includes('music')) return 'music';
-    if (file.includes('composition')) return 'composition';
-    if (file.includes('parcours')) return 'parcours';
-    if (file.includes('filmographie')) return 'filmographie';
-    if (file.includes('composition')) return 'composition';
-    if (file.includes('projects')) return 'scores';
-    if (file.includes('gallery')) return 'gallery';
-    if (file.includes('contact')) return 'booking';
-    return 'home';
+  const Routes = [
+    { id: 'home', href: '/index.html', accent: '#86f5a8' },
+    { id: 'music', href: '/music.html', accent: '#f4bd68' },
+    { id: 'parcours', href: '/parcours.html', accent: '#73aaf6' },
+    { id: 'gallery', href: '/gallery.html', accent: '#f08ac8' },
+    { id: 'filmographie', href: '/filmographie.html', accent: '#f4bd68' },
+    { id: 'composition', href: '/composition.html', accent: '#ff355d' },
+    { id: 'scores', href: '/projects.html', accent: '#ff355d' },
+    { id: 'booking', href: '/contact.html', accent: '#d8c3ff' }
+  ];
+
+  function routeFromPath(path) {
+    const file = (path.split('/').pop() || 'index.html').toLowerCase();
+    const by = (id) => Routes.find((r) => r.id === id);
+    if (file.includes('music') || file.includes('violon')) return by('music');
+    if (file.includes('composition')) return by('composition');
+    if (file.includes('parcours')) return by('parcours');
+    if (file.includes('filmographie')) return by('filmographie');
+    if (file.includes('projects')) return by('scores');
+    if (file.includes('gallery') || file.includes('modele')) return by('gallery');
+    if (file.includes('contact')) return by('booking');
+    return by('home');
+  }
+
+  const pageFromPath = (path) => routeFromPath(path).id;
+
+  // === Seam de cycle de vie des pages (PageTransition) — voir plan Phase 0 ===
+  // En commit 4 il est DORMANT : aucun module ne s'enregistre encore, donc enter/cleanup ne font rien.
+  const Marco = (window.Marco = window.Marco || {});
+  Marco.pages = Marco.pages || {};
+  Marco.routes = Routes;
+  const lifecycle = new EventTarget();
+  Marco.lifecycle = lifecycle;
+  const emit = (type, detail) => lifecycle.dispatchEvent(new CustomEvent(type, { detail }));
+  const pageControllers = new WeakMap();
+  const enteredPages = new WeakSet();
+
+  Marco.activatePage = function (pageEl, pageId, opts = {}) {
+    if (!pageEl || enteredPages.has(pageEl)) return;
+    emit('render', { pageEl, pageId });
+    const reg = Marco.pages[pageId];
+    if (reg && typeof reg.enter === 'function') {
+      let controller = pageControllers.get(pageEl);
+      if (!controller) { controller = new AbortController(); pageControllers.set(pageEl, controller); }
+      enteredPages.add(pageEl);
+      try { reg.enter(pageEl, { signal: controller.signal, pageId, isHardLoad: !!opts.isHardLoad }); }
+      catch (e) { console.error('[Marco] enter', pageId, e); }
+    }
+    emit('ready', { pageEl, pageId });
+  };
+
+  Marco.deactivatePage = function (pageEl, pageId) {
+    if (!pageEl) return;
+    emit('leave', { pageEl, pageId });
+    const reg = Marco.pages[pageId];
+    const controller = pageControllers.get(pageEl);
+    if (reg && typeof reg.cleanup === 'function') {
+      try { reg.cleanup(pageEl, { signal: controller && controller.signal, pageId }); }
+      catch (e) { console.error('[Marco] cleanup', pageId, e); }
+    }
+    if (controller) controller.abort();
+    pageControllers.delete(pageEl);
+    enteredPages.delete(pageEl);
+  };
+
+  Marco.registerPage = function (pageId, handlers) {
+    Marco.pages[pageId] = handlers;
+    // Rattrapage hard-load : le module est chargé APRÈS le CORE ; si son .page est déjà actif, on l'entre.
+    const el = app.querySelector('.page:not(.is-leaving)');
+    if (el && (el.dataset.page === pageId || routeFromPath(window.location.pathname).id === pageId)) {
+      Marco.activatePage(el, pageId, { isHardLoad: true });
+    }
   };
 
   const transitionLabel = (page, fallback) => (
@@ -160,6 +221,7 @@
 
     busy = true;
     document.body.classList.add('is-transitioning');
+    emit('before-load', { from: currentPage, to: pageFromPath(absolute.pathname), url: absolute.href });
 
     if (inflight) inflight.abort();
     inflight = new AbortController();
@@ -188,6 +250,7 @@
       appended = true;
       await loadScriptsFrom(doc, absolute.href);
       runBand(transitionLabel(next, nextPage), next);
+      Marco.activatePage(next, nextPage, { isHardLoad: false });
 
       if (current) {
         current.classList.add(forward ? 'slide-out-left' : 'slide-out-right', 'is-leaving');
@@ -198,9 +261,10 @@
         current ? waitForAnimations(current) : Promise.resolve()
       ]);
 
+      const leavingPageId = currentPage;
+      if (current) Marco.deactivatePage(current, leavingPageId);
       [...app.querySelectorAll('.page.is-leaving')].forEach((el) => el.remove());
       next.classList.remove('slide-from-right', 'slide-from-left');
-      const leavingPageId = currentPage;
       currentPage = next.dataset.page || nextPage;
       cleanupStyles(leavingPageId, enteringHrefs);
       syncPageShell(currentPage);
@@ -240,6 +304,8 @@
 
   window.addEventListener('popstate', () => goTo(window.location.href, false));
   syncPageShell(currentPage);
+  const initialPage = app.querySelector('.page');
+  if (initialPage) Marco.activatePage(initialPage, initialPage.dataset.page || currentPage, { isHardLoad: true });
   window.setTimeout(() => syncPageShell(currentPage), 120);
 
   const audio = document.querySelector('#audioLoop');
