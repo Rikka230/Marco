@@ -156,9 +156,24 @@
         <span class="filmographie-meta"><span>Role</span><b>${escapeHtml(item.role)}</b></span>
         <span class="filmographie-meta"><span>Real.</span><b>${escapeHtml(item.director)}</b></span>
         <span class="filmographie-meta"><span>Format</span><b>${escapeHtml(item.format)}</b></span>
-        <span class="filmographie-row-play"><i></i> Voir l'extrait</span>
+        <span class="filmographie-row-play" role="button" tabindex="0"><i></i> Voir l'extrait</span>
       </article>
     `).join("");
+  }
+
+  function isMobileLayout() {
+    return window.matchMedia("(max-width: 820px)").matches;
+  }
+
+  function scrollSelectedIntoView() {
+    if (!isMobileLayout()) return;
+
+    const selected = document.querySelector(".filmographie-selected");
+    if (!selected) return;
+
+    window.requestAnimationFrame(() => {
+      selected.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   function setSelected(item) {
@@ -200,6 +215,22 @@
       if (!row) return;
       const item = DATA.find((entry) => entry.id === row.dataset.filmographyId);
       setSelected(item);
+      if (event.target.closest(".filmographie-row-play")) {
+        scrollSelectedIntoView();
+      }
+    });
+
+    target.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+
+      const play = event.target.closest(".filmographie-row-play");
+      if (!play) return;
+
+      event.preventDefault();
+      const row = play.closest("[data-filmography-id]");
+      const item = DATA.find((entry) => entry.id === row?.dataset.filmographyId);
+      setSelected(item);
+      scrollSelectedIntoView();
     });
 
     target.dataset.ready = "true";

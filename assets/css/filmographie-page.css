@@ -660,8 +660,8 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     top: auto;
     left: 50%;
     display: block;
-    width: 132vw;
-    margin: 0 0 -2.2rem;
+    width: min(108vw, 520px);
+    margin: 0 0 -0.95rem;
     transform: translateX(-50%);
   }
 
@@ -726,6 +726,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
   .filmographie-selected {
     margin-top: 1.2rem;
     padding: 1rem;
+    scroll-margin-top: 1rem;
   }
 
   .filmographie-selected-meta {
@@ -739,5 +740,12 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     display: block;
     width: 9rem;
     margin: 1.4rem auto 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .filmographie-title-img {
+    width: 98vw;
+    margin-bottom: -0.55rem;
   }
 }
