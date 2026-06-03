@@ -2,6 +2,7 @@
 (() => {
   const state = {
     raf: null,
+    running: false,
     tracks: new Map(),
     lightbox: null,
     frames: [],
@@ -138,7 +139,7 @@
   }
 
   function startLoop() {
-    if (state.raf !== null) return;
+    if (state.raf !== null || !state.running) return;
     state.raf = window.requestAnimationFrame(tick);
   }
 
@@ -288,19 +289,25 @@
     startLoop();
   }
 
-  const observer = new MutationObserver(() => {
-    window.requestAnimationFrame(initModelPage);
-  });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initModelPage();
-      const app = document.querySelector('#app');
-      if (app) observer.observe(app, { childList: true, subtree: true });
-    });
-  } else {
+  // Cycle de vie PageTransition : la boucle d'animation ne tourne que sur la page Modèle active.
+  function enterModelPage() {
+    state.running = true;
     initModelPage();
-    const app = document.querySelector('#app');
-    if (app) observer.observe(app, { childList: true, subtree: true });
+  }
+
+  function cleanupModelPage() {
+    state.running = false;
+    if (state.raf !== null) { window.cancelAnimationFrame(state.raf); state.raf = null; }
+  }
+
+  if (window.Marco && typeof window.Marco.registerPage === 'function') {
+    window.Marco.registerPage('gallery', { enter: enterModelPage, cleanup: cleanupModelPage });
+  } else {
+    // Filet de sécurité si le seam n'est pas chargé.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', enterModelPage);
+    } else {
+      enterModelPage();
+    }
   }
 })();
