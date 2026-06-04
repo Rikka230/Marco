@@ -4,10 +4,20 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
+<style is:global>
+  /* Couche de profondeur WebGL de la page Modele : ambiante, derriere les strips. */
+  #gallery-gl {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    z-index: 8; pointer-events: none; opacity: 0.9;
+  }
+</style>
+
+
 <BaseLayout title="Marco Charlas-Hou - Modèle" description="Portfolio modèle, portraits, campagnes, éditorial et visuels de casting de Marco Charlas-Hou." page="gallery">
   <section class="page poster-page inner gallery model-page" data-page="gallery" data-bg="gallery" data-theme="gallery" data-transition-label="MODELE" aria-labelledby="model-title">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="model-atmosphere" aria-hidden="true"></div>
+    <canvas id="gallery-gl" aria-hidden="true"></canvas>
 
     <div class="model-strip-field" aria-label="Bandes photo du portfolio modèle">
       <section class="model-strip model-strip-a" aria-labelledby="strip-editorial">

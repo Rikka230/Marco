@@ -109,9 +109,29 @@ function tryInitVisualizer() {
   else window.setTimeout(start, 200);
 }
 
+/* === Profondeur WebGL de la page Modele (lazy, nettoyee a la sortie) === */
+let galleryCleanup: (() => void) | null = null;
+let gallerySwapBound = false;
+function tryInitGalleryDepth() {
+  if (!gallerySwapBound) {
+    gallerySwapBound = true;
+    document.addEventListener('astro:before-swap', () => {
+      if (galleryCleanup) { galleryCleanup(); galleryCleanup = null; }
+    });
+  }
+  if (galleryCleanup) return; // deja actif
+  if (!document.querySelector('.model-page')) return;
+  const canvas = document.querySelector<HTMLCanvasElement>('#gallery-gl');
+  if (!canvas) return;
+  import('./webgl/gallery-depth')
+    .then((m) => { galleryCleanup = m.initGalleryDepth(canvas); })
+    .catch((e) => console.warn('[gallery] WebGL echoue', e));
+}
+
 /* === Cycle de vie Astro === */
 function onPageLoad() {
   tryInitVisualizer();
+  tryInitGalleryDepth();
   initAudio();
   initDotWave();
   initNav();
