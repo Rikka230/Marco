@@ -72,7 +72,8 @@ export function initTransitionFx(canvas: HTMLCanvasElement): PlayFn | null {
   const mesh = new Mesh(gl, { geometry, program });
 
   function resize() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    // canvas dans le .stage (taille de reference) : dimensionner sur sa taille reelle.
+    renderer.setSize(canvas.clientWidth || window.innerWidth, canvas.clientHeight || window.innerHeight);
   }
   window.addEventListener('resize', resize, { passive: true });
   resize();

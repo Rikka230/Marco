@@ -60,7 +60,7 @@
   background:
     linear-gradient(90deg, rgba(7,143,255,0.025) 0 1px, transparent 1px),
     linear-gradient(0deg, rgba(7,143,255,0.018) 0 1px, transparent 1px);
-  background-size: 8.7vw 100%, 100% 17vh;
+  background-size: 8.7cqw 100%, 100% 17cqh;
   opacity: 0.16;
   mix-blend-mode: screen;
 }
@@ -92,9 +92,9 @@
 }
 
 .parcours-rebuild .parcours-title-wrap .mega.first {
-  top: 5vh;
+  top: 5cqh;
   left: 51.8%;
-  width: min(72vw, 1160px);
+  width: min(72cqw, 1160px);
   aspect-ratio: 2033 / 434;
   overflow: visible;
   color: transparent;
@@ -117,8 +117,8 @@
 
 .parcours-rebuild .parcours-title-wrap .mega.last {
   left: 58%;
-  bottom: 1.8vh;
-  width: min(66vw, 1080px);
+  bottom: 1.8cqh;
+  width: min(66cqw, 1080px);
   aspect-ratio: 2488 / 443;
   overflow: visible;
   color: transparent;
@@ -135,8 +135,8 @@
 .parcours-rebuild .parcours-person {
   z-index: 35;
   left: 50%;
-  bottom: -10.5vh;
-  height: 98vh;
+  bottom: -10.5cqh;
+  height: 98cqh;
   max-height: none;
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter:
@@ -148,9 +148,9 @@
 }
 
 .parcours-copy {
-  left: 7.2vw;
-  top: 10.8vh;
-  max-width: 10.2vw;
+  left: 7.2cqw;
+  top: 10.8cqh;
+  max-width: 10.2cqw;
   color: var(--parcours-cream);
   font-family: var(--marker-font);
   text-transform: uppercase;
@@ -160,7 +160,7 @@
 
 .parcours-copy::after {
   display: block;
-  width: clamp(2.6rem, 4.4vw, 4rem);
+  width: clamp(2.6rem, 4.4cqw, 4rem);
   aspect-ratio: 607 / 66;
   height: auto;
   margin-top: 1.05rem;
@@ -175,7 +175,7 @@
   margin-bottom: 0.74rem;
   color: #fff;
   font-weight: 400;
-  font-size: clamp(1.5rem, 4.7vh, 2.7rem);
+  font-size: clamp(1.5rem, 4.7cqh, 2.7rem);
   line-height: 0.86;
 }
 
@@ -183,7 +183,7 @@
   margin: 0;
   color: rgba(247,251,255,0.84);
   font-family: var(--text-font);
-  font-size: clamp(0.58rem, 1.32vh, 0.76rem);
+  font-size: clamp(0.58rem, 1.32cqh, 0.76rem);
   line-height: 1.34;
   text-transform: none;
 }
@@ -193,13 +193,13 @@
 }
 
 .parcours-zone {
-  width: min(28vw, 520px);
+  width: min(28cqw, 520px);
   font-family: var(--text-font);
 }
 
 .parcours-zone header {
   display: block;
-  margin-bottom: clamp(0.72rem, 2vh, 1.15rem);
+  margin-bottom: clamp(0.72rem, 2cqh, 1.15rem);
 }
 
 .parcours-zone header span {
@@ -213,7 +213,7 @@
   margin: 0;
   color: var(--parcours-blue);
   font-family: var(--block-font);
-  font-size: clamp(1.5rem, 3.6vh, 2.2rem);
+  font-size: clamp(1.5rem, 3.6cqh, 2.2rem);
   line-height: 0.84;
   letter-spacing: 0;
   text-shadow: 0 0 18px rgba(7, 143, 255, 0.34);
@@ -234,14 +234,14 @@
 }
 
 .parcours-studies {
-  left: 6.85vw;
-  top: 34.1vh;
+  left: 6.85cqw;
+  top: 34.1cqh;
 }
 
 .parcours-experiences {
-  right: clamp(70px, 5.5vw, 130px);
-  top: 33.6vh;
-  width: min(22vw, 410px);
+  right: clamp(70px, 5.5cqw, 130px);
+  top: 33.6cqh;
+  width: min(22cqw, 410px);
 }
 
 .parcours-study-list,
@@ -251,7 +251,7 @@
 }
 
 .parcours-study-list {
-  gap: clamp(1rem, 2.3vh, 1.55rem);
+  gap: clamp(1rem, 2.3cqh, 1.55rem);
   padding-left: 2.12rem;
 }
 
@@ -278,7 +278,7 @@
 
 .parcours-study-card {
   display: block;
-  min-height: clamp(4.2rem, 8.6vh, 5.7rem);
+  min-height: clamp(4.2rem, 8.6cqh, 5.7rem);
 }
 
 .parcours-study-card::before {
@@ -300,25 +300,25 @@
 }
 
 .parcours-experience-list {
-  gap: clamp(1rem, 2.2vh, 1.5rem);
+  gap: clamp(1rem, 2.2cqh, 1.5rem);
   padding-left: 0;
 }
 
 .parcours-experience-list::before {
-  left: clamp(2.45rem, 5.2vh, 3.1rem);
+  left: clamp(2.45rem, 5.2cqh, 3.1rem);
 }
 
 .parcours-experience-card {
   display: grid;
-  grid-template-columns: clamp(2.2rem, 5.2vh, 3rem) minmax(0, 1fr);
+  grid-template-columns: clamp(2.2rem, 5.2cqh, 3rem) minmax(0, 1fr);
   align-items: start;
-  gap: clamp(0.9rem, 1.5vw, 1.18rem);
+  gap: clamp(0.9rem, 1.5cqw, 1.18rem);
   padding-bottom: 0.18rem;
 }
 
 .parcours-experience-card::before {
   position: absolute;
-  left: clamp(2.3rem, 4.95vh, 2.95rem);
+  left: clamp(2.3rem, 4.95cqh, 2.95rem);
   top: 0.78rem;
   width: 0.34rem;
   height: 0.34rem;
@@ -331,8 +331,8 @@
 .parcours-card-icon {
   display: grid;
   place-items: center;
-  width: clamp(2rem, 4.8vh, 2.7rem);
-  height: clamp(2rem, 4.8vh, 2.7rem);
+  width: clamp(2rem, 4.8cqh, 2.7rem);
+  height: clamp(2rem, 4.8cqh, 2.7rem);
   color: var(--parcours-blue);
 }
 
@@ -356,7 +356,7 @@
   display: block;
   color: rgba(247, 251, 255, 0.98);
   font-family: var(--marker-font);
-  font-size: clamp(1.08rem, 3vh, 1.75rem);
+  font-size: clamp(1.08rem, 3cqh, 1.75rem);
   font-weight: 400;
   line-height: 0.96;
   letter-spacing: 0.015em;
@@ -369,7 +369,7 @@
   margin: 0.36rem 0 0;
   color: var(--parcours-muted);
   font-family: var(--text-font);
-  font-size: clamp(0.64rem, 1.45vh, 0.8rem);
+  font-size: clamp(0.64rem, 1.45cqh, 0.8rem);
   line-height: 1.22;
   text-transform: none;
 }
@@ -379,15 +379,15 @@
   margin-top: 0.46rem;
   color: var(--parcours-blue);
   font-family: var(--display-font);
-  font-size: clamp(0.78rem, 1.9vh, 1rem);
+  font-size: clamp(0.78rem, 1.9cqh, 1rem);
   line-height: 1;
   letter-spacing: 0;
 }
 
 .parcours-timeline-zone {
-  left: 30.6vw;
-  right: 29vw;
-  top: 65.8vh;
+  left: 30.6cqw;
+  right: 29cqw;
+  top: 65.8cqh;
   z-index: 52;
   font-family: var(--display-font);
   pointer-events: auto;
@@ -398,9 +398,9 @@
 }
 
 .parcours-timeline {
-  --timeline-pad-left: clamp(0.85rem, 1.35vw, 1.35rem);
+  --timeline-pad-left: clamp(0.85rem, 1.35cqw, 1.35rem);
   position: relative;
-  min-height: clamp(7.2rem, 18vh, 10rem);
+  min-height: clamp(7.2rem, 18cqh, 10rem);
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior: contain;
@@ -430,7 +430,7 @@
 .parcours-timeline::after {
   position: absolute;
   right: 0.25rem;
-  top: calc(clamp(2.05rem, 5.4vh, 3.2rem) - 5px);
+  top: calc(clamp(2.05rem, 5.4cqh, 3.2rem) - 5px);
   width: 12px;
   height: 12px;
   content: "";
@@ -443,18 +443,18 @@
 .parcours-timeline-list {
   position: relative;
   display: flex;
-  gap: clamp(1.8rem, 3.2vw, 3rem);
+  gap: clamp(1.8rem, 3.2cqw, 3rem);
   width: max-content;
   min-width: 100%;
   padding-left: var(--timeline-pad-left);
-  padding-right: clamp(2.4rem, 5vw, 5.8rem);
+  padding-right: clamp(2.4rem, 5cqw, 5.8rem);
 }
 
 .parcours-timeline-list::before {
   position: absolute;
   left: var(--timeline-pad-left);
   right: 0;
-  top: clamp(2.05rem, 5.4vh, 3.2rem);
+  top: clamp(2.05rem, 5.4cqh, 3.2rem);
   height: 2px;
   content: "";
   background:
@@ -475,18 +475,18 @@
   position: relative;
   display: grid;
   justify-items: start;
-  flex: 0 0 clamp(7.5rem, 10.5vw, 10.8rem);
+  flex: 0 0 clamp(7.5rem, 10.5cqw, 10.8rem);
   min-width: 0;
-  padding-top: clamp(4rem, 8.7vh, 5.8rem);
+  padding-top: clamp(4rem, 8.7cqh, 5.8rem);
   scroll-snap-align: start;
 }
 
 .parcours-timeline-point::before {
   position: absolute;
   left: 0;
-  top: clamp(1.72rem, 4.2vh, 2.55rem);
-  width: clamp(0.88rem, 2.1vh, 1.15rem);
-  height: clamp(0.88rem, 2.1vh, 1.15rem);
+  top: clamp(1.72rem, 4.2cqh, 2.55rem);
+  width: clamp(0.88rem, 2.1cqh, 1.15rem);
+  height: clamp(0.88rem, 2.1cqh, 1.15rem);
   border-radius: 999px;
   content: "";
   background: var(--timeline-color);
@@ -505,7 +505,7 @@
   top: 0.22rem;
   color: rgba(247,251,255,0.94);
   font-family: var(--display-font);
-  font-size: clamp(0.82rem, 2vh, 1rem);
+  font-size: clamp(0.82rem, 2cqh, 1rem);
   line-height: 1;
   letter-spacing: 0;
 }
@@ -515,7 +515,7 @@
   display: inline-block;
   color: #fff;
   font-family: var(--marker-font);
-  font-size: clamp(1rem, 2.8vh, 1.62rem);
+  font-size: clamp(1rem, 2.8cqh, 1.62rem);
   font-weight: 400;
   line-height: 0.86;
   text-transform: uppercase;
@@ -529,7 +529,7 @@
   bottom: -0.36rem;
   width: calc(100% + 0.72rem);
   min-width: 4.4rem;
-  height: clamp(0.3rem, 0.8vh, 0.48rem);
+  height: clamp(0.3rem, 0.8cqh, 0.48rem);
   content: "";
   background: var(--timeline-stroke-image) left center / 100% 100% no-repeat;
   filter: drop-shadow(0 0 7px color-mix(in srgb, var(--timeline-color) 52%, transparent));
@@ -541,22 +541,22 @@
   max-width: 13ch;
   color: rgba(247,251,255,0.9);
   font-family: var(--text-font);
-  font-size: clamp(0.54rem, 1.18vh, 0.7rem);
+  font-size: clamp(0.54rem, 1.18cqh, 0.7rem);
   font-weight: 700;
   line-height: 1.08;
   text-transform: none;
 }
 
 .parcours-skills {
-  left: 6.85vw;
-  bottom: 8.6vh;
-  width: min(26vw, 450px);
+  left: 6.85cqw;
+  bottom: 8.6cqh;
+  width: min(26cqw, 450px);
   font-family: var(--display-font);
 }
 
 .parcours-skills h2 {
   margin: 0 0 1.08rem;
-  font-size: clamp(1.5rem, 3.6vh, 2.2rem);
+  font-size: clamp(1.5rem, 3.6cqh, 2.2rem);
 }
 
 .parcours-skill-list {
@@ -575,7 +575,7 @@
   background: rgba(0, 10, 20, 0.34);
   font-family: var(--marker-font);
   font-weight: 400;
-  font-size: clamp(0.58rem, 1.35vh, 0.78rem);
+  font-size: clamp(0.58rem, 1.35cqh, 0.78rem);
   line-height: 1;
   text-transform: uppercase;
   box-shadow:
@@ -599,25 +599,25 @@
 
 @media (max-width: 980px) {
   .parcours-rebuild .parcours-title-wrap .mega.first {
-    top: 7vh;
-    font-size: clamp(5.8rem, 24vh, 10rem);
+    top: 7cqh;
+    font-size: clamp(5.8rem, 24cqh, 10rem);
   }
 
   .parcours-rebuild .parcours-title-wrap .mega.last {
-    bottom: 6vh;
-    font-size: clamp(3.2rem, 10vh, 7rem);
+    bottom: 6cqh;
+    font-size: clamp(3.2rem, 10cqh, 7rem);
   }
 
   .parcours-rebuild .parcours-person {
-    height: 86vh;
-    bottom: -7vh;
+    height: 86cqh;
+    bottom: -7cqh;
     opacity: 0.68;
   }
 
   .parcours-copy {
-    left: 7vw;
-    top: 16vh;
-    max-width: 54vw;
+    left: 7cqw;
+    top: 16cqh;
+    max-width: 54cqw;
   }
 
   .parcours-studies,
@@ -625,14 +625,14 @@
   .parcours-timeline-zone,
   .parcours-skills {
     width: auto;
-    left: 5vw;
-    right: 5vw;
+    left: 5cqw;
+    right: 5cqw;
   }
 
-  .parcours-studies { top: 31vh; }
+  .parcours-studies { top: 31cqh; }
   .parcours-experiences { display: none; }
-  .parcours-timeline-zone { top: 60.8vh; }
-  .parcours-skills { bottom: 10.5vh; }
+  .parcours-timeline-zone { top: 60.8cqh; }
+  .parcours-skills { bottom: 10.5cqh; }
 
   .parcours-zone header {
     margin-bottom: 0.56rem;
@@ -640,7 +640,7 @@
 
   .parcours-zone h2,
   .parcours-skills h2 {
-    font-size: clamp(1.28rem, 3.35vh, 1.72rem);
+    font-size: clamp(1.28rem, 3.35cqh, 1.72rem);
   }
 
   .parcours-study-list {
@@ -663,18 +663,18 @@
   }
 
   .parcours-card-main strong {
-    font-size: clamp(0.94rem, 2.65vh, 1.22rem);
+    font-size: clamp(0.94rem, 2.65cqh, 1.22rem);
   }
 
   .parcours-card-main p {
     margin-top: 0.22rem;
-    font-size: clamp(0.54rem, 1.28vh, 0.62rem);
+    font-size: clamp(0.54rem, 1.28cqh, 0.62rem);
     line-height: 1.08;
   }
 
   .parcours-card-main small {
     margin-top: 0.24rem;
-    font-size: clamp(0.62rem, 1.55vh, 0.72rem);
+    font-size: clamp(0.62rem, 1.55cqh, 0.72rem);
   }
 
   .parcours-timeline-list {
@@ -699,7 +699,7 @@
   }
 
   .shell:has(.parcours-rebuild) .chapter-nav {
-    right: clamp(10px, 3.4vw, 18px);
+    right: clamp(10px, 3.4cqw, 18px);
     top: calc(max(13px, env(safe-area-inset-top)) + 38px);
     bottom: auto;
     z-index: 2147483002;
@@ -747,11 +747,11 @@
 
   .shell:has(.parcours-rebuild) .mini-brand {
     top: max(17px, env(safe-area-inset-top));
-    left: clamp(18px, 6vw, 52px);
+    left: clamp(18px, 6cqw, 52px);
     z-index: 2147483001;
     gap: 0.34rem;
     color: #f5fff9;
-    font-size: clamp(0.58rem, 2.35vw, 0.76rem);
+    font-size: clamp(0.58rem, 2.35cqw, 0.76rem);
     letter-spacing: 0.075em;
     text-shadow:
       0 0 9px rgba(7,143,255,0.96),
@@ -771,7 +771,7 @@
   .shell:has(.parcours-rebuild)::after {
     content: "MARCO v5.8" !important;
     top: max(13px, env(safe-area-inset-top));
-    right: clamp(18px, 5.2vw, 46px);
+    right: clamp(18px, 5.2cqw, 46px);
     min-width: 92px;
     height: 30px;
     padding: 0 0.78rem;
@@ -851,10 +851,10 @@
     width: min(100%, 760px);
     min-height: 100dvh;
     margin: 0 auto;
-    padding: 0 clamp(14px, 4vw, 32px) calc(1.4rem + env(safe-area-inset-bottom));
+    padding: 0 clamp(14px, 4cqw, 32px) calc(1.4rem + env(safe-area-inset-bottom));
     overflow: hidden;
     border: 1px solid rgba(206, 226, 255, 0.2);
-    border-radius: clamp(18px, 4.6vw, 34px);
+    border-radius: clamp(18px, 4.6cqw, 34px);
     background:
       radial-gradient(ellipse at 50% 7%, rgba(7,143,255,0.17), transparent 44%),
       linear-gradient(180deg, rgba(0,8,20,0.18), rgba(0,0,0,0.72) 58%, rgba(0,0,0,0.94));
@@ -891,10 +891,10 @@
 
   .parcours-mobile-title {
     position: absolute;
-    left: clamp(16px, 4.2vw, 28px);
-    right: clamp(16px, 4.2vw, 28px);
+    left: clamp(16px, 4.2cqw, 28px);
+    right: clamp(16px, 4.2cqw, 28px);
     top: clamp(56px, 7.8dvh, 74px);
-    height: clamp(126px, 32vw, 214px);
+    height: clamp(126px, 32cqw, 214px);
     overflow: hidden;
     background: url("/assets/img/parcours-title.png") 50% top / contain no-repeat;
     filter:
@@ -924,10 +924,10 @@
 
   .parcours-mobile-copy {
     position: absolute;
-    left: clamp(16px, 5vw, 42px);
+    left: clamp(16px, 5cqw, 42px);
     top: clamp(270px, 34dvh, 336px);
     z-index: 3;
-    width: min(15.8rem, 62vw);
+    width: min(15.8rem, 62cqw);
     color: #fff;
     text-shadow: 0 5px 16px rgba(0,0,0,0.86);
   }
@@ -936,7 +936,7 @@
     position: relative;
     margin: 0 0 1rem;
     font-family: var(--marker-font);
-    font-size: clamp(2rem, 9.7vw, 3.95rem);
+    font-size: clamp(2rem, 9.7cqw, 3.95rem);
     font-weight: 400;
     line-height: 0.82;
     letter-spacing: 0;
@@ -946,7 +946,7 @@
 
   .parcours-mobile-copy h1::after {
     display: block;
-    width: clamp(5.2rem, 25vw, 8.6rem);
+    width: clamp(5.2rem, 25cqw, 8.6rem);
     aspect-ratio: 607 / 66;
     margin-top: 0.52rem;
     content: "";
@@ -959,7 +959,7 @@
     margin: 0;
     color: rgba(247,251,255,0.9);
     font-family: var(--text-font);
-    font-size: clamp(0.78rem, 2.95vw, 0.98rem);
+    font-size: clamp(0.78rem, 2.95cqw, 0.98rem);
     font-weight: 600;
     line-height: 1.34;
     text-transform: none;
@@ -973,8 +973,8 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 0.46rem;
-    margin: clamp(-3.2rem, -8.8vw, -2.18rem) calc(-1 * clamp(14px, 4vw, 32px)) 0.92rem;
-    padding: 0 clamp(14px, 4vw, 32px) 0.16rem;
+    margin: clamp(-3.2rem, -8.8cqw, -2.18rem) calc(-1 * clamp(14px, 4cqw, 32px)) 0.92rem;
+    padding: 0 clamp(14px, 4cqw, 32px) 0.16rem;
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-inline: contain;
@@ -1004,7 +1004,7 @@
       inset 0 0 18px rgba(255,255,255,0.02),
       0 10px 24px rgba(0,0,0,0.28);
     font-family: var(--text-font);
-    font-size: clamp(0.74rem, 2.62vw, 0.9rem);
+    font-size: clamp(0.74rem, 2.62cqw, 0.9rem);
     font-weight: 700;
     line-height: 1;
     cursor: pointer;
@@ -1036,7 +1036,7 @@
   }
 
   .parcours-mobile-section {
-    margin-top: clamp(1rem, 3.4vw, 1.72rem);
+    margin-top: clamp(1rem, 3.4cqw, 1.72rem);
   }
 
   .parcours-mobile-timeline {
@@ -1072,11 +1072,11 @@
 
   .parcours-mobile-timeline-card {
     --mobile-tone: var(--parcours-blue);
-    --mobile-line-x: calc(clamp(1.72rem, 6.8vw, 2.6rem) - 0.16rem);
+    --mobile-line-x: calc(clamp(1.72rem, 6.8cqw, 2.6rem) - 0.16rem);
     position: relative;
     display: grid;
-    grid-template-columns: clamp(4.85rem, 18vw, 6.8rem) minmax(0, 1fr);
-    gap: clamp(0.16rem, 1.05vw, 0.42rem);
+    grid-template-columns: clamp(4.85rem, 18cqw, 6.8rem) minmax(0, 1fr);
+    gap: clamp(0.16rem, 1.05cqw, 0.42rem);
     align-items: start;
     min-width: 0;
   }
@@ -1115,7 +1115,7 @@
   .parcours-mobile-timeline-card::before {
     position: absolute;
     z-index: 2;
-    left: calc(clamp(1.72rem, 6.8vw, 2.6rem) - 0.49rem);
+    left: calc(clamp(1.72rem, 6.8cqw, 2.6rem) - 0.49rem);
     top: 0.72rem;
     width: 0.68rem;
     height: 0.68rem;
@@ -1131,10 +1131,10 @@
   .parcours-mobile-timeline-card small {
     position: relative;
     z-index: 1;
-    padding: 0.6rem 0 0 clamp(2.32rem, 8vw, 3.34rem);
+    padding: 0.6rem 0 0 clamp(2.32rem, 8cqw, 3.34rem);
     color: var(--mobile-tone);
     font-family: var(--display-font);
-    font-size: clamp(0.62rem, 2.18vw, 0.78rem);
+    font-size: clamp(0.62rem, 2.18cqw, 0.78rem);
     line-height: 1;
     white-space: nowrap;
     text-shadow: 0 0 14px color-mix(in srgb, var(--mobile-tone) 58%, transparent);
@@ -1161,7 +1161,7 @@
     display: block;
     color: #fff;
     font-family: var(--block-font);
-    font-size: clamp(0.74rem, 2.7vw, 1rem);
+    font-size: clamp(0.74rem, 2.7cqw, 1rem);
     line-height: 0.95;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -1171,7 +1171,7 @@
     margin: 0.14rem 0 0;
     color: rgba(247,251,255,0.86);
     font-family: var(--text-font);
-    font-size: clamp(0.54rem, 1.96vw, 0.68rem);
+    font-size: clamp(0.54rem, 1.96cqw, 0.68rem);
     line-height: 1.1;
     text-transform: none;
   }
@@ -1197,7 +1197,7 @@
     padding-left: 1.72rem;
     color: var(--parcours-blue);
     font-family: var(--block-font);
-    font-size: clamp(1.34rem, 5.6vw, 2rem);
+    font-size: clamp(1.34rem, 5.6cqw, 2rem);
     line-height: 0.9;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -1267,7 +1267,7 @@
     display: block;
     color: #fff;
     font-family: var(--block-font);
-    font-size: clamp(0.98rem, 4vw, 1.3rem);
+    font-size: clamp(0.98rem, 4cqw, 1.3rem);
     line-height: 0.95;
     text-transform: uppercase;
   }
@@ -1276,7 +1276,7 @@
     margin: 0.26rem 0 0;
     color: rgba(247,251,255,0.82);
     font-family: var(--text-font);
-    font-size: clamp(0.76rem, 2.95vw, 0.9rem);
+    font-size: clamp(0.76rem, 2.95cqw, 0.9rem);
     line-height: 1.23;
     text-transform: none;
   }
@@ -1297,7 +1297,7 @@
     color: rgba(247,251,255,0.94);
     background: rgba(0,8,18,0.45);
     font-family: var(--text-font);
-    font-size: clamp(0.72rem, 2.75vw, 0.88rem);
+    font-size: clamp(0.72rem, 2.75cqw, 0.88rem);
     font-weight: 800;
     letter-spacing: 0.07em;
     line-height: 1;
@@ -1317,12 +1317,12 @@
   .parcours-mobile-player {
     position: relative;
     display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr) auto clamp(32px, 11vw, 72px);
-    gap: clamp(0.48rem, 2.4vw, 0.86rem);
+    grid-template-columns: auto auto minmax(0, 1fr) auto clamp(32px, 11cqw, 72px);
+    gap: clamp(0.48rem, 2.4cqw, 0.86rem);
     align-items: center;
     min-height: 66px;
-    margin: clamp(1.25rem, 4vw, 2rem) 0 0;
-    padding: 0.62rem clamp(0.66rem, 2.5vw, 0.94rem);
+    margin: clamp(1.25rem, 4cqw, 2rem) 0 0;
+    padding: 0.62rem clamp(0.66rem, 2.5cqw, 0.94rem);
     border: 1px solid rgba(205,226,255,0.2);
     border-radius: 18px;
     background:
@@ -1336,8 +1336,8 @@
 
   .parcours-mobile-player::before {
     position: absolute;
-    left: clamp(4.7rem, 17vw, 5.6rem);
-    right: clamp(5.2rem, 22vw, 9rem);
+    left: clamp(4.7rem, 17cqw, 5.6rem);
+    right: clamp(5.2rem, 22cqw, 9rem);
     bottom: 0.82rem;
     height: 2px;
     border-radius: 999px;
@@ -1377,7 +1377,7 @@
   .parcours-mobile-music {
     color: rgba(247,251,255,0.88);
     font-family: var(--block-font);
-    font-size: clamp(0.68rem, 2.8vw, 0.88rem);
+    font-size: clamp(0.68rem, 2.8cqw, 0.88rem);
     line-height: 1;
     letter-spacing: 0.085em;
     text-transform: uppercase;
@@ -1417,8 +1417,8 @@
   }
 
   .shell:has(.page.inner.parcours-rebuild) .mini-player {
-    left: clamp(14px, 4.6vw, 36px) !important;
-    right: clamp(14px, 4.6vw, 36px) !important;
+    left: clamp(14px, 4.6cqw, 36px) !important;
+    right: clamp(14px, 4.6cqw, 36px) !important;
     bottom: calc(12px + env(safe-area-inset-bottom)) !important;
     z-index: 2147482999 !important;
     display: flex !important;
@@ -1439,7 +1439,7 @@
 
   .shell:has(.page.inner.parcours-rebuild) .mini-player::before {
     left: calc(4.4rem + 0.82rem) !important;
-    right: clamp(7rem, 24vw, 10rem) !important;
+    right: clamp(7rem, 24cqw, 10rem) !important;
     top: auto !important;
     bottom: 1.03rem !important;
     width: auto !important;
@@ -1453,7 +1453,7 @@
   .shell:has(.page.inner.parcours-rebuild) .mini-player::after {
     content: "" !important;
     display: block !important;
-    width: clamp(54px, 17vw, 92px);
+    width: clamp(54px, 17cqw, 92px);
     height: 36px;
     margin-left: auto;
     background:
@@ -1492,7 +1492,7 @@
     flex: 1 1 auto;
     min-width: 0;
     max-width: none !important;
-    gap: clamp(0.62rem, 3.4vw, 1.1rem);
+    gap: clamp(0.62rem, 3.4cqw, 1.1rem);
     overflow: hidden;
     opacity: 1;
   }
@@ -1501,7 +1501,7 @@
     flex: 0 0 auto;
     min-width: 0;
     color: rgba(247,251,255,0.88);
-    font-size: clamp(0.7rem, 2.75vw, 0.88rem);
+    font-size: clamp(0.7rem, 2.75cqw, 0.88rem);
     letter-spacing: 0.085em;
     white-space: nowrap;
   }
@@ -1530,7 +1530,7 @@
 
   .shell:has(.page.inner.parcours-rebuild) .mini-player .music-drawer-toggle span,
   .shell:has(.page.inner.parcours-rebuild) .mini-player .music-drawer-toggle i {
-    font-size: clamp(0.66rem, 2.8vw, 0.82rem) !important;
+    font-size: clamp(0.66rem, 2.8cqw, 0.82rem) !important;
   }
 
   .shell:has(.page.inner.parcours-rebuild) > .mini-player {
@@ -1546,8 +1546,8 @@
     border-left: 0;
     border-right: 0;
     border-radius: 0;
-    padding-right: clamp(13px, 3.9vw, 18px);
-    padding-left: clamp(13px, 3.9vw, 18px);
+    padding-right: clamp(13px, 3.9cqw, 18px);
+    padding-left: clamp(13px, 3.9cqw, 18px);
   }
 
   .parcours-mobile-hero {
@@ -1569,11 +1569,11 @@
 
   .parcours-mobile-copy {
     top: clamp(300px, 36dvh, 326px);
-    width: min(15.6rem, 76vw);
+    width: min(15.6rem, 76cqw);
   }
 
   .parcours-mobile-copy h1 {
-    font-size: clamp(2rem, 9.2vw, 3.25rem);
+    font-size: clamp(2rem, 9.2cqw, 3.25rem);
   }
 
   .parcours-mobile-copy p {
@@ -1611,7 +1611,7 @@
   }
 
   .parcours-mobile-card-body strong {
-    font-size: clamp(0.68rem, 2.82vw, 0.82rem);
+    font-size: clamp(0.68rem, 2.82cqw, 0.82rem);
     white-space: nowrap;
   }
 

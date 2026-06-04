@@ -5,6 +5,20 @@
   --ink: #050807;
   --heavy: "Arial Black", "Helvetica Neue", Arial, Impact, sans-serif;
   --ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* === Adaptabilite multi-resolution (rendu STRICTEMENT identique sur tout ecran) ===
+     Approche LETTERBOX : toute la page est construite a une taille de reference
+     fixe 2560x1440 (.stage), puis mise a l'echelle d'un seul bloc via
+     transform: scale(--k) pour tenir dans l'ecran. --k = min(vw/2560, vh/1440),
+     recalcule en JS. Sur un ratio != 16:9, le stage est centre et .shell (noir)
+     apparait en barres (letterbox). Rendu identique quels que soient resolution,
+     zoom, scaling Windows ou DPI.
+     --u reste = 1px : les valeurs en calc(N*var(--u)) / cqw / cqh sont donc des
+     px fixes a la reference, et c'est le stage qui scale l'ensemble. */
+  --ref-w: 2560;
+  --ref-h: 1440;
+  --u: 1px;
+  --k: 1;
 }
 
 * {
@@ -22,6 +36,50 @@ body {
   font-family: var(--ui);
 }
 
+/* rem fixe a 16px (=16*1px) ; toute l'echelle vient du stage. */
+html {
+  font-size: calc(16 * var(--u));
+}
+
+/* === STAGE : la page entiere a taille de reference fixe, mise a l'echelle d'un
+   bloc pour tenir dans l'ecran. Centre dans .shell ; le fond noir de .shell
+   forme les barres letterbox sur les formats != 16:9. === */
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(2560 * var(--u));
+  height: calc(1440 * var(--u));
+  transform: translate(-50%, -50%) scale(var(--k, 1));
+  transform-origin: center center;
+  /* Conteneur de reference : TOUS les descendants (pages internes incluses)
+     utilisent cqw/cqh = % de 2560x1440 au lieu de vw/vh (= viewport). */
+  container-type: size;
+}
+
+/* Conteneurs de reference qui remplissent le stage (2560x1440).
+   container-type:size => les enfants utilisent cqw/cqh (= % de 2560x1440)
+   au lieu de vw/vh. pointer-events:none => seuls les enfants interactifs
+   (liens, boutons) repassent en auto. */
+.compo,
+.compo-chrome {
+  position: absolute;
+  inset: 0;
+  container-type: size;
+  pointer-events: none;
+  z-index: 6;
+}
+/* La chrome doit surplomber le dotWave (z:23) et la page, comme avant. */
+.compo-chrome {
+  z-index: 34;
+}
+.compo a,
+.compo button,
+.compo-chrome a,
+.compo-chrome button {
+  pointer-events: auto;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -37,7 +95,41 @@ button {
   height: 100vh;
   overflow: hidden;
   isolation: isolate;
-  background: #020403;
+  background-color: #020403;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* === Pas de barres noires ===
+   Le stage (compo) est letterboxe (centre, scale rigide). Pour qu'il n'y ait pas
+   de barres noires sur les ratios != 16:9, .shell (plein viewport, DERRIERE le stage)
+   affiche le fond de la page courante en cover + un voile sombre (pour qu'il se lise
+   comme un fond ambiant et limite l'ecart avec la zone centrale voilee).
+   Mappe par data-page (unique). */
+.shell:has(.page[data-page="home"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.34), rgba(2, 4, 3, 0.5)), url("/assets/img/marco-cover-bg.png");
+}
+.shell:has(.page[data-page="music"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.38), rgba(2, 4, 3, 0.54)), url("/assets/img/bg-music.jpg");
+}
+.shell:has(.page[data-page="scores"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.38), rgba(2, 4, 3, 0.54)), url("/assets/img/bg-scores.jpg");
+}
+.shell:has(.page[data-page="composition"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.42), rgba(2, 4, 3, 0.58)), url("/assets/img/bg-scores.jpg");
+}
+.shell:has(.page[data-page="booking"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.38), rgba(2, 4, 3, 0.54)), url("/assets/img/bg-booking.jpg");
+}
+.shell:has(.page[data-page="gallery"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.4), rgba(2, 4, 3, 0.56)), url("/assets/img/bg-gallery.jpg");
+}
+.shell:has(.page[data-page="filmographie"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.42), rgba(2, 4, 3, 0.58)), url("/assets/img/filmographie/filmographie-bg.png");
+}
+.shell:has(.page[data-page="parcours"]) {
+  background-image: linear-gradient(rgba(2, 4, 3, 0.42), rgba(2, 4, 3, 0.58)), url("/assets/img/parcours-bg.png");
 }
 
 .film-grain {
@@ -177,14 +269,14 @@ button {
 }
 
 .mini-brand {
-  top: 3.9vh;
-  left: 3.2vw;
+  top: 3.9cqh;
+  left: 3.2cqw;
   display: flex;
   align-items: center;
   gap: 0.42rem;
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.52vw, 11px);
+  font-size: clamp(calc(7 * var(--u)), 0.52cqw, calc(11 * var(--u)));
   letter-spacing: 0.06em;
   opacity: 0.92;
 }
@@ -217,12 +309,12 @@ button {
 }
 
 .home .mega.first {
-  top: 4vh;
+  top: 4cqh;
   left: 50%;
-  width: 100vw;
+  width: 100cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.94);
-  font-size: clamp(170px, 24.2vw, 500px);
+  font-size: clamp(calc(170 * var(--u)), 24.2cqw, calc(500 * var(--u)));
   line-height: 0.68;
   letter-spacing: -0.072em;
   opacity: 0.95;
@@ -244,11 +336,11 @@ button {
 
 .home .mega.last {
   left: 50%;
-  bottom: 6.2vh;
-  width: 100vw;
+  bottom: 6.2cqh;
+  width: 100cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.86);
-  font-size: clamp(48px, 7vw, 136px);
+  font-size: clamp(calc(48 * var(--u)), 7cqw, calc(136 * var(--u)));
   line-height: 0.78;
   letter-spacing: -0.025em;
   opacity: 0.84;
@@ -258,9 +350,9 @@ button {
   position: absolute;
   z-index: 21;
   left: 50%;
-  bottom: -9vh;
+  bottom: -9cqh;
   width: auto;
-  height: 104vh;
+  height: 104cqh;
   max-height: none;
   object-fit: contain;
   transform: translateX(-32%);
@@ -276,7 +368,7 @@ button {
 
 @keyframes personFloat {
   from { translate: 0 0; }
-  to { translate: 0.22vw -0.22vh; }
+  to { translate: 0.22cqw -0.22cqh; }
 }
 
 .cover-hit,
@@ -302,7 +394,7 @@ button {
 }
 
 .cover-hit strong {
-  font-size: clamp(18px, 1.34vw, 30px);
+  font-size: clamp(calc(18 * var(--u)), 1.34cqw, calc(30 * var(--u)));
   line-height: 0.88;
   letter-spacing: -0.045em;
 }
@@ -312,7 +404,7 @@ button {
   align-items: center;
   gap: 0.36rem;
   color: rgba(239, 255, 241, 0.92);
-  font-size: clamp(7px, 0.56vw, 12px);
+  font-size: clamp(calc(7 * var(--u)), 0.56cqw, calc(12 * var(--u)));
   line-height: 1;
   letter-spacing: 0.02em;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.58);
@@ -329,19 +421,19 @@ button {
 
 .cover-hit:hover {
   opacity: 1;
-  transform: translateX(0.16vw);
+  transform: translateX(0.16cqw);
 }
 
-.cover-hit.left-a { left: 5.3vw; top: 33.4vh; }
-.cover-hit.left-b { left: 5.3vw; top: 65.2vh; }
-.cover-hit.right-a { right: 5.2vw; top: 34.2vh; text-align: right; }
-.cover-hit.right-b { right: 5.2vw; top: 67vh; text-align: right; }
+.cover-hit.left-a { left: 5.3cqw; top: 33.4cqh; }
+.cover-hit.left-b { left: 5.3cqw; top: 65.2cqh; }
+.cover-hit.right-a { right: 5.2cqw; top: 34.2cqh; text-align: right; }
+.cover-hit.right-b { right: 5.2cqw; top: 67cqh; text-align: right; }
 .cover-hit.right-a:hover,
-.cover-hit.right-b:hover { transform: translateX(-0.16vw); }
+.cover-hit.right-b:hover { transform: translateX(-0.16cqw); }
 
 .key-project {
-  left: 5.2vw;
-  top: 43.1vh;
+  left: 5.2cqw;
+  top: 43.1cqh;
   z-index: 19;
   display: grid;
   gap: 0.1rem;
@@ -351,14 +443,14 @@ button {
 
 .key-project span {
   display: block;
-  font-size: clamp(34px, 3.45vw, 76px);
+  font-size: clamp(calc(34 * var(--u)), 3.45cqw, calc(76 * var(--u)));
   letter-spacing: -0.065em;
   white-space: nowrap;
 }
 
 .cover-tagline {
-  right: 2.6vw;
-  top: 42.4vh;
+  right: 2.6cqw;
+  top: 42.4cqh;
   display: grid;
   gap: 0.08rem;
   max-width: none;
@@ -368,33 +460,33 @@ button {
 
 .cover-tagline span {
   display: block;
-  font-size: clamp(28px, 2.38vw, 54px);
+  font-size: clamp(calc(28 * var(--u)), 2.38cqw, calc(54 * var(--u)));
   letter-spacing: -0.065em;
   white-space: nowrap;
 }
 
 #dotWave {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 23;
-  width: 100vw;
-  height: 88px;
+  width: 100%;
+  height: calc(88 * var(--u));
   pointer-events: none;
   opacity: 0.64;
   mix-blend-mode: screen;
 }
 
 .mini-player {
-  left: 3.25vw;
-  bottom: 3.6vh;
+  left: 3.25cqw;
+  bottom: 3.6cqh;
   display: flex;
   align-items: center;
   gap: 1rem;
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.52vw, 10px);
+  font-size: clamp(calc(7 * var(--u)), 0.52cqw, calc(10 * var(--u)));
   letter-spacing: 0.055em;
   text-transform: uppercase;
 }
@@ -419,9 +511,9 @@ button {
   height: 0;
   content: "";
   transform: translate(-44%, -50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 6px solid #061108;
+  border-top: calc(4 * var(--u)) solid transparent;
+  border-bottom: calc(4 * var(--u)) solid transparent;
+  border-left: calc(6 * var(--u)) solid #061108;
 }
 
 .track-label {
@@ -441,23 +533,23 @@ button {
 }
 
 .inner .mega.first {
-  top: 5vh;
+  top: 5cqh;
   left: 50%;
-  width: 100vw;
+  width: 100cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.96);
-  font-size: clamp(105px, 21vw, 410px);
+  font-size: clamp(105px, 21cqw, 410px);
   line-height: 0.76;
   letter-spacing: -0.09em;
 }
 
 .inner .mega.last {
   left: 50%;
-  bottom: 3vh;
-  width: 100vw;
+  bottom: 3cqh;
+  width: 100cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.82);
-  font-size: clamp(58px, 11vw, 200px);
+  font-size: clamp(58px, 11cqw, 200px);
   line-height: 0.76;
   letter-spacing: -0.085em;
 }
@@ -465,9 +557,9 @@ button {
 .inner-copy {
   position: absolute;
   z-index: 18;
-  left: 6vw;
-  top: 39vh;
-  max-width: 42vw;
+  left: 6cqw;
+  top: 39cqh;
+  max-width: 42cqw;
   color: var(--mint);
   font-family: var(--heavy);
   text-transform: uppercase;
@@ -476,13 +568,13 @@ button {
 .inner-copy p {
   margin: 0 0 0.35rem;
   color: var(--cream);
-  font-size: clamp(10px, 0.78vw, 16px);
+  font-size: clamp(10px, 0.78cqw, 16px);
   letter-spacing: 0.08em;
 }
 
 .inner-copy h1 {
   margin: 0;
-  font-size: clamp(42px, 6.8vw, 130px);
+  font-size: clamp(42px, 6.8cqw, 130px);
   line-height: 0.82;
   letter-spacing: -0.07em;
 }
@@ -490,11 +582,11 @@ button {
 .inner-nav {
   position: absolute;
   z-index: 18;
-  right: 8vw;
-  top: 36vh;
+  right: 8cqw;
+  top: 36cqh;
   display: grid;
   gap: 1rem;
-  min-width: min(26vw, 420px);
+  min-width: min(26cqw, 420px);
   color: var(--mint);
   font-family: var(--heavy);
   text-transform: uppercase;
@@ -507,19 +599,19 @@ button {
 }
 
 .inner-nav a strong {
-  font-size: clamp(22px, 2.6vw, 50px);
+  font-size: clamp(22px, 2.6cqw, 50px);
   line-height: 0.85;
   letter-spacing: -0.065em;
 }
 
 .inner-nav a span {
   color: var(--cream);
-  font-size: clamp(8px, 0.7vw, 13px);
+  font-size: clamp(8px, 0.7cqw, 13px);
   letter-spacing: 0.09em;
 }
 
 .inner-nav a:hover {
-  transform: translateX(-0.5vw);
+  transform: translateX(-0.5cqw);
   filter: brightness(1.12);
 }
 
@@ -532,81 +624,81 @@ body.is-transitioning .mini-brand {
 @media (max-width: 1100px) {
   .home .mega.first {
     top: 0;
-    font-size: clamp(128px, 25vw, 310px);
+    font-size: clamp(128px, 25cqw, 310px);
   }
 
   .home .mega.last {
-    bottom: 8.5vh;
-    font-size: clamp(48px, 12vw, 130px);
+    bottom: 8.5cqh;
+    font-size: clamp(48px, 12cqw, 130px);
   }
 
   .hero-person {
     width: auto;
-    height: 104vh;
+    height: 104cqh;
     max-height: none;
-    bottom: -9vh;
+    bottom: -9cqh;
     transform: translateX(-32%);
   }
 }
 
 @media (max-width: 850px) {
   .home .mega.first {
-    top: 4vh;
-    font-size: clamp(78px, 30vw, 210px);
+    top: 4cqh;
+    font-size: clamp(78px, 30cqw, 210px);
     transform: translateX(-50%) scaleX(0.94);
   }
 
   .hero-person {
-    bottom: -7vh;
+    bottom: -7cqh;
     width: auto;
-    height: 92vh;
+    height: 92cqh;
     max-height: none;
     transform: translateX(-34%);
   }
 
   .home .mega.last {
-    bottom: 9vh;
-    font-size: clamp(32px, 11vw, 84px);
+    bottom: 9cqh;
+    font-size: clamp(32px, 11cqw, 84px);
   }
 
   .key-project {
-    left: 6vw;
-    top: 35vh;
-    max-width: 72vw;
+    left: 6cqw;
+    top: 35cqh;
+    max-width: 72cqw;
   }
 
   .key-project span {
-    font-size: clamp(26px, 7vw, 58px);
+    font-size: clamp(26px, 7cqw, 58px);
   }
 
   .cover-tagline {
-    right: 6vw;
-    top: 56vh;
-    max-width: 54vw;
+    right: 6cqw;
+    top: 56cqh;
+    max-width: 54cqw;
   }
 
   .cover-tagline span {
-    font-size: clamp(20px, 5vw, 42px);
+    font-size: clamp(20px, 5cqw, 42px);
   }
 
-  .cover-hit.left-a { left: 6vw; top: 24vh; }
-  .cover-hit.left-b { left: 6vw; top: 65vh; }
-  .cover-hit.right-a { right: 6vw; top: 24vh; }
-  .cover-hit.right-b { right: 6vw; top: 65vh; }
-  .cover-hit strong { font-size: clamp(16px, 4.5vw, 32px); }
-  .cover-hit span { font-size: clamp(7px, 1.7vw, 11px); }
+  .cover-hit.left-a { left: 6cqw; top: 24cqh; }
+  .cover-hit.left-b { left: 6cqw; top: 65cqh; }
+  .cover-hit.right-a { right: 6cqw; top: 24cqh; }
+  .cover-hit.right-b { right: 6cqw; top: 65cqh; }
+  .cover-hit strong { font-size: clamp(16px, 4.5cqw, 32px); }
+  .cover-hit span { font-size: clamp(7px, 1.7cqw, 11px); }
 
   .inner-copy {
-    left: 7vw;
-    top: 34vh;
-    max-width: 78vw;
+    left: 7cqw;
+    top: 34cqh;
+    max-width: 78cqw;
   }
 
   .inner-nav {
-    left: 7vw;
+    left: 7cqw;
     right: auto;
-    top: 57vh;
-    min-width: 74vw;
+    top: 57cqh;
+    min-width: 74cqw;
   }
 
   #dotWave {
@@ -617,8 +709,8 @@ body.is-transitioning .mini-brand {
 @media (max-width: 560px) {
   .hero-person {
     width: auto;
-    height: 82vh;
-    bottom: -6vh;
+    height: 82cqh;
+    bottom: -6cqh;
     max-height: none;
     transform: translateX(-42%);
   }
@@ -743,12 +835,12 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .mega.first {
-  top: 4.2vh;
+  top: 4.2cqh;
   left: 50%;
-  width: 104vw;
+  width: 104cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.93);
-  font-size: clamp(118px, 19.4vw, 360px);
+  font-size: clamp(118px, 19.4cqw, 360px);
   line-height: 0.73;
   letter-spacing: -0.078em;
   opacity: 0.92;
@@ -756,12 +848,12 @@ body.is-transitioning .mini-brand {
 
 .inner .mega.last {
   left: 50%;
-  bottom: 7.2vh;
-  width: 104vw;
+  bottom: 7.2cqh;
+  width: 104cqw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.78);
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(46px, 6.45vw, 124px);
+  font-size: clamp(46px, 6.45cqw, 124px);
   font-weight: 720;
   line-height: 0.78;
   letter-spacing: -0.032em;
@@ -774,8 +866,8 @@ body.is-transitioning .mini-brand {
 .inner .hero-person {
   z-index: 22;
   left: 50%;
-  bottom: -10vh;
-  height: 108vh;
+  bottom: -10cqh;
+  height: 108cqh;
   max-height: none;
   transform: translateX(-24%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter:
@@ -788,15 +880,15 @@ body.is-transitioning .mini-brand {
 
 .music .hero-person {
   left: 52%;
-  bottom: -11vh;
-  height: 109vh;
+  bottom: -11cqh;
+  height: 109cqh;
   transform: translateX(-30%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
 }
 
 .scores .hero-person {
   left: 56%;
-  bottom: -13vh;
-  height: 113vh;
+  bottom: -13cqh;
+  height: 113cqh;
   transform: translateX(-24%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   opacity: 1;
   filter:
@@ -809,8 +901,8 @@ body.is-transitioning .mini-brand {
 
 .gallery .hero-person {
   left: 48%;
-  bottom: -10vh;
-  height: 110vh;
+  bottom: -10cqh;
+  height: 110cqh;
   transform: translateX(-43%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter:
     brightness(1.07)
@@ -821,8 +913,8 @@ body.is-transitioning .mini-brand {
 
 .booking .hero-person {
   left: 58%;
-  bottom: -12vh;
-  height: 106vh;
+  bottom: -12cqh;
+  height: 106cqh;
   transform: translateX(-30%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   opacity: 1;
   filter:
@@ -850,101 +942,101 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .cover-hit strong {
-  font-size: clamp(18px, 1.48vw, 34px);
+  font-size: clamp(18px, 1.48cqw, 34px);
   letter-spacing: -0.05em;
 }
 
 .inner .cover-hit span {
   color: currentColor;
-  font-size: clamp(7px, 0.58vw, 12px);
+  font-size: clamp(7px, 0.58cqw, 12px);
 }
 
 .inner .cover-hit:hover {
-  transform: translate3d(0.22vw, -0.08vh, 0);
+  transform: translate3d(0.22cqw, -0.08cqh, 0);
   text-shadow:
     0 0 8px rgba(134, 248, 167, 0.28),
     0 7px 18px rgba(0, 0, 0, 0.68);
 }
 
-.inner .nav-home { left: 5.2vw; top: 13.4vh; }
+.inner .nav-home { left: 5.2cqw; top: 13.4cqh; }
 .inner .nav-music,
-.inner .nav-projects { left: 5.4vw; bottom: 18.6vh; }
-.inner .nav-gallery { right: 5.4vw; top: 16.4vh; text-align: right; }
-.inner .nav-contact { right: 5.4vw; bottom: 24.6vh; text-align: right; }
+.inner .nav-projects { left: 5.4cqw; bottom: 18.6cqh; }
+.inner .nav-gallery { right: 5.4cqw; top: 16.4cqh; text-align: right; }
+.inner .nav-contact { right: 5.4cqw; bottom: 24.6cqh; text-align: right; }
 
-.music .nav-projects { right: 6vw; left: auto; top: 18.5vh; bottom: auto; text-align: right; }
-.music .nav-gallery { right: 8vw; top: 65.2vh; }
-.music .nav-contact { left: 5.5vw; right: auto; top: 71vh; bottom: auto; text-align: left; }
+.music .nav-projects { right: 6cqw; left: auto; top: 18.5cqh; bottom: auto; text-align: right; }
+.music .nav-gallery { right: 8cqw; top: 65.2cqh; }
+.music .nav-contact { left: 5.5cqw; right: auto; top: 71cqh; bottom: auto; text-align: left; }
 
-.scores .nav-home { left: 5vw; top: 70vh; }
-.scores .nav-music { left: 6vw; top: 18vh; bottom: auto; }
-.scores .nav-gallery { right: 5vw; top: 14vh; }
-.scores .nav-contact { right: 6vw; bottom: 18vh; }
+.scores .nav-home { left: 5cqw; top: 70cqh; }
+.scores .nav-music { left: 6cqw; top: 18cqh; bottom: auto; }
+.scores .nav-gallery { right: 5cqw; top: 14cqh; }
+.scores .nav-contact { right: 6cqw; bottom: 18cqh; }
 
-.gallery .nav-home { left: 5.4vw; top: 13vh; }
-.gallery .nav-music { right: 5.6vw; left: auto; top: 19vh; bottom: auto; text-align: right; }
-.gallery .nav-projects { left: 5.2vw; bottom: 18vh; }
-.gallery .nav-contact { right: 6.2vw; bottom: 16vh; }
+.gallery .nav-home { left: 5.4cqw; top: 13cqh; }
+.gallery .nav-music { right: 5.6cqw; left: auto; top: 19cqh; bottom: auto; text-align: right; }
+.gallery .nav-projects { left: 5.2cqw; bottom: 18cqh; }
+.gallery .nav-contact { right: 6.2cqw; bottom: 16cqh; }
 
-.booking .nav-home { left: 5.4vw; top: 12vh; }
-.booking .nav-music { left: 5.4vw; bottom: 18vh; }
-.booking .nav-projects { right: 6vw; left: auto; top: 18vh; bottom: auto; text-align: right; }
-.booking .nav-gallery { right: 6vw; top: 64vh; }
+.booking .nav-home { left: 5.4cqw; top: 12cqh; }
+.booking .nav-music { left: 5.4cqw; bottom: 18cqh; }
+.booking .nav-projects { right: 6cqw; left: auto; top: 18cqh; bottom: auto; text-align: right; }
+.booking .nav-gallery { right: 6cqw; top: 64cqh; }
 
 .inner .key-project {
-  top: 43vh;
-  left: 5.1vw;
+  top: 43cqh;
+  left: 5.1cqw;
   z-index: 31;
-  max-width: 48vw;
+  max-width: 48cqw;
 }
 
 .inner .key-project span {
-  font-size: clamp(34px, 4.2vw, 86px);
+  font-size: clamp(34px, 4.2cqw, 86px);
   line-height: 0.82;
   letter-spacing: -0.062em;
 }
 
-.music .key-project { top: 42vh; left: 5.4vw; }
-.scores .key-project { top: 42vh; left: 5.2vw; max-width: 56vw; }
-.gallery .key-project { top: 40vh; left: 6vw; }
-.booking .key-project { top: 43vh; left: 6vw; }
+.music .key-project { top: 42cqh; left: 5.4cqw; }
+.scores .key-project { top: 42cqh; left: 5.2cqw; max-width: 56cqw; }
+.gallery .key-project { top: 40cqh; left: 6cqw; }
+.booking .key-project { top: 43cqh; left: 6cqw; }
 
 .music .mega.last {
-  left: 31vw;
+  left: 31cqw;
   transform: translateX(-50%) scaleX(0.72);
 }
 
 .scores .mega.last {
-  left: 36vw;
+  left: 36cqw;
   transform: translateX(-50%) scaleX(0.68);
 }
 
 .gallery .mega.last {
-  left: 35vw;
+  left: 35cqw;
   transform: translateX(-50%) scaleX(0.72);
 }
 
 .booking .mega.last {
-  left: 39vw;
+  left: 39cqw;
   transform: translateX(-50%) scaleX(0.66);
 }
 
 .inner .cover-tagline {
-  top: 43vh;
-  right: 4.6vw;
+  top: 43cqh;
+  right: 4.6cqw;
   z-index: 31;
-  max-width: 46vw;
+  max-width: 46cqw;
 }
 
 .inner .cover-tagline span {
-  font-size: clamp(26px, 3vw, 62px);
+  font-size: clamp(26px, 3cqw, 62px);
   letter-spacing: -0.058em;
 }
 
-.music .cover-tagline { top: 45vh; right: 4.8vw; }
-.scores .cover-tagline { top: 50vh; right: 5.2vw; }
-.gallery .cover-tagline { top: 47vh; right: 5vw; }
-.booking .cover-tagline { top: 45vh; right: 5vw; }
+.music .cover-tagline { top: 45cqh; right: 4.8cqw; }
+.scores .cover-tagline { top: 50cqh; right: 5.2cqw; }
+.gallery .cover-tagline { top: 47cqh; right: 5cqw; }
+.booking .cover-tagline { top: 45cqh; right: 5cqw; }
 
 .editorial-stack {
   position: absolute;
@@ -958,45 +1050,45 @@ body.is-transitioning .mini-brand {
 
 .editorial-stack span {
   display: block;
-  font-size: clamp(17px, 1.55vw, 34px);
+  font-size: clamp(17px, 1.55cqw, 34px);
   letter-spacing: -0.05em;
   white-space: nowrap;
 }
 
 .music-stack {
-  left: 42vw;
-  bottom: 20vh;
+  left: 42cqw;
+  bottom: 20cqh;
 }
 
 .projects-stack {
-  right: 20vw;
-  top: 29vh;
+  right: 20cqw;
+  top: 29cqh;
   text-align: right;
 }
 
 .gallery-stack {
-  left: 60vw;
-  bottom: 22vh;
+  left: 60cqw;
+  bottom: 22cqh;
 }
 
 .contact-stack {
-  left: 6vw;
-  bottom: 33vh;
+  left: 6cqw;
+  bottom: 33cqh;
 }
 
 .contact-stack span {
-  font-size: clamp(20px, 1.95vw, 40px);
+  font-size: clamp(20px, 1.95cqw, 40px);
 }
 
 .contact-form {
   position: absolute;
-  right: 4.8vw;
-  bottom: 10.8vh;
+  right: 4.8cqw;
+  bottom: 10.8cqh;
   z-index: 34;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.68rem 1rem;
-  width: min(36vw, 580px);
+  width: min(36cqw, 580px);
   padding: 0.9rem 0 0;
   color: var(--accent);
   font-family: var(--ui);
@@ -1030,7 +1122,7 @@ body.is-transitioning .mini-brand {
 .request-type legend {
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 12px);
+  font-size: clamp(8px, 0.58cqw, 12px);
   line-height: 1;
   letter-spacing: 0.04em;
 }
@@ -1046,7 +1138,7 @@ body.is-transitioning .mini-brand {
   outline: 0;
   background: transparent;
   color: currentColor;
-  font: 700 clamp(12px, 0.9vw, 16px) / 1.12 var(--ui);
+  font: 700 clamp(12px, 0.9cqw, 16px) / 1.12 var(--ui);
   letter-spacing: 0.01em;
   transition: border-color 0.18s ease, color 0.18s ease, translate 0.18s ease;
 }
@@ -1099,7 +1191,7 @@ body.is-transitioning .mini-brand {
   border-bottom: 1px solid transparent;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(10px, 0.74vw, 14px);
+  font-size: clamp(10px, 0.74cqw, 14px);
   line-height: 1;
   letter-spacing: -0.025em;
   transition: color 0.18s ease, border-color 0.18s ease, translate 0.18s ease;
@@ -1121,7 +1213,7 @@ body.is-transitioning .mini-brand {
   background: transparent;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(18px, 1.45vw, 32px);
+  font-size: clamp(18px, 1.45cqw, 32px);
   line-height: 0.9;
   letter-spacing: -0.055em;
   text-transform: uppercase;
@@ -1161,7 +1253,7 @@ body.is-transitioning .mini-brand {
   margin: -0.1rem 0 0;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 12px);
+  font-size: clamp(8px, 0.58cqw, 12px);
   line-height: 1;
   letter-spacing: 0.04em;
 }
@@ -1171,12 +1263,12 @@ body.is-transitioning .mini-brand {
 }
 
 .booking .nav-gallery {
-  right: 6vw;
-  top: 33.4vh;
+  right: 6cqw;
+  top: 33.4cqh;
 }
 
 .booking .cover-tagline {
-  top: 40.5vh;
+  top: 40.5cqh;
 }
 
 .music .mega.last,
@@ -1280,8 +1372,8 @@ body.is-transitioning .mini-brand {
 }
 
 @keyframes stringPulse {
-  from { transform: translateX(-0.35vw); opacity: 0.16; }
-  to { transform: translateX(0.35vw); opacity: 0.28; }
+  from { transform: translateX(-0.35cqw); opacity: 0.16; }
+  to { transform: translateX(0.35cqw); opacity: 0.28; }
 }
 
 @keyframes filmSweep {
@@ -1355,23 +1447,23 @@ body.is-transitioning .mini-brand {
 }
 
 @keyframes titleLayerIn {
-  from { translate: 6vw 0; opacity: 0; clip-path: inset(0 0 100% 0); }
+  from { translate: 6cqw 0; opacity: 0; clip-path: inset(0 0 100% 0); }
   to { translate: 0 0; opacity: 0.92; clip-path: inset(0 0 0% 0); }
 }
 
 @keyframes titleLayerOut {
   from { translate: 0 0; opacity: 0.92; }
-  to { translate: -8vw 0; opacity: 0.18; }
+  to { translate: -8cqw 0; opacity: 0.18; }
 }
 
 @keyframes personLayerIn {
-  from { translate: 5vw 0; opacity: 0.52; }
+  from { translate: 5cqw 0; opacity: 0.52; }
   to { translate: 0 0; opacity: 1; }
 }
 
 @keyframes personLayerOut {
   from { translate: 0 0; opacity: 1; }
-  to { translate: -3vw 0; opacity: 0.38; }
+  to { translate: -3cqw 0; opacity: 0.38; }
 }
 
 .transition-band {
@@ -1391,10 +1483,10 @@ body.is-transitioning .mini-brand {
 
 .transition-band::before {
   position: absolute;
-  left: -10vw;
-  right: -10vw;
-  top: 39vh;
-  height: 22vh;
+  left: -10cqw;
+  right: -10cqw;
+  top: 39cqh;
+  height: 22cqh;
   content: "";
   transform: skewY(-3deg);
   background: linear-gradient(90deg, transparent, rgba(6, 7, 9, 0.62) 12%, rgba(6, 7, 9, 0.72) 88%, transparent);
@@ -1408,7 +1500,7 @@ body.is-transitioning .mini-brand {
 .transition-band span {
   position: relative;
   z-index: 1;
-  font-size: clamp(70px, 13vw, 260px);
+  font-size: clamp(70px, 13cqw, 260px);
   line-height: 0.8;
   letter-spacing: -0.06em;
   opacity: 1;
@@ -1470,35 +1562,35 @@ body.is-transitioning .mini-brand {
 
 @media (max-width: 900px) {
   .inner .mega.first {
-    top: 5vh;
-    font-size: clamp(76px, 25vw, 230px);
+    top: 5cqh;
+    font-size: clamp(76px, 25cqw, 230px);
   }
 
   .inner .mega.last {
-    bottom: 8vh;
-    font-size: clamp(34px, 11vw, 96px);
+    bottom: 8cqh;
+    font-size: clamp(34px, 11cqw, 96px);
   }
 
   .inner .hero-person {
-    height: 90vh;
-    bottom: -7vh;
+    height: 90cqh;
+    bottom: -7cqh;
     transform: translateX(-38%);
   }
 
   .inner .key-project {
-    left: 6vw;
-    top: 36vh;
-    max-width: 82vw;
+    left: 6cqw;
+    top: 36cqh;
+    max-width: 82cqw;
   }
 
   .inner .key-project span {
-    font-size: clamp(28px, 8vw, 64px);
+    font-size: clamp(28px, 8cqw, 64px);
   }
 
   .inner .cover-tagline {
-    right: 6vw;
-    top: 56vh;
-    max-width: 70vw;
+    right: 6cqw;
+    top: 56cqh;
+    max-width: 70cqw;
   }
 
   .editorial-stack {
@@ -1506,10 +1598,10 @@ body.is-transitioning .mini-brand {
   }
 
   .contact-form {
-    left: 6vw;
+    left: 6cqw;
     right: auto;
-    bottom: 10vh;
-    width: 88vw;
+    bottom: 10cqh;
+    width: 88cqw;
     grid-template-columns: 1fr;
     gap: 0.56rem;
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.12));
@@ -1532,7 +1624,7 @@ body.is-transitioning .mini-brand {
 .chapter-nav {
   position: fixed;
   z-index: 34;
-  right: clamp(10px, 1.55vw, 26px);
+  right: clamp(calc(10 * var(--u)), 1.55cqw, calc(26 * var(--u)));
   top: 50%;
   display: grid;
   justify-items: center;
@@ -1550,8 +1642,8 @@ body.is-transitioning .mini-brand {
   display: grid;
   place-items: center;
   justify-self: center;
-  width: clamp(38px, 3vw, 54px);
-  height: clamp(30px, 2.3vw, 40px);
+  width: clamp(calc(38 * var(--u)), 3cqw, calc(54 * var(--u)));
+  height: clamp(calc(30 * var(--u)), 2.3cqw, calc(40 * var(--u)));
   padding: 0;
   border: 1px solid color-mix(in srgb, currentColor 34%, transparent);
   background:
@@ -1561,7 +1653,7 @@ body.is-transitioning .mini-brand {
   cursor: pointer;
   clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%);
   font-family: var(--heavy);
-  font-size: clamp(11px, 0.86vw, 16px);
+  font-size: clamp(calc(11 * var(--u)), 0.86cqw, calc(16 * var(--u)));
   line-height: 1;
   box-shadow:
     0 12px 26px rgba(0, 0, 0, 0.26),
@@ -1593,8 +1685,8 @@ body.is-transitioning .mini-brand {
   display: grid;
   justify-items: center;
   gap: 0.34rem;
-  width: clamp(38px, 3vw, 54px);
-  min-height: clamp(168px, 24vh, 260px);
+  width: clamp(calc(38 * var(--u)), 3cqw, calc(54 * var(--u)));
+  min-height: clamp(calc(168 * var(--u)), 24cqh, calc(260 * var(--u)));
   padding: 0.72rem 0.28rem;
   border: 1px solid color-mix(in srgb, currentColor 42%, transparent);
   background:
@@ -1611,7 +1703,7 @@ body.is-transitioning .mini-brand {
 
 .chapter-num {
   color: var(--cream);
-  font-size: clamp(16px, 1.2vw, 24px);
+  font-size: clamp(calc(16 * var(--u)), 1.2cqw, calc(24 * var(--u)));
   line-height: 0.8;
   letter-spacing: -0.08em;
   transform: skewY(-7deg);
@@ -1621,7 +1713,7 @@ body.is-transitioning .mini-brand {
   writing-mode: vertical-rl;
   max-height: 8rem;
   color: currentColor;
-  font-size: clamp(8px, 0.64vw, 12px);
+  font-size: clamp(calc(8 * var(--u)), 0.64cqw, calc(12 * var(--u)));
   line-height: 0.95;
   letter-spacing: 0.08em;
   transform: rotate(180deg);
@@ -1650,7 +1742,7 @@ body.is-transitioning .mini-brand {
 .chapter-index-label {
   writing-mode: vertical-rl;
   color: var(--cream);
-  font-size: clamp(7px, 0.52vw, 10px);
+  font-size: clamp(calc(7 * var(--u)), 0.52cqw, calc(10 * var(--u)));
   letter-spacing: 0.11em;
   transform: rotate(180deg);
   opacity: 0.82;
@@ -1658,15 +1750,15 @@ body.is-transitioning .mini-brand {
 
 .chapter-panel {
   position: absolute;
-  right: clamp(44px, 3.6vw, 68px);
+  right: clamp(calc(44 * var(--u)), 3.6cqw, calc(68 * var(--u)));
   top: 50%;
   display: grid;
   gap: 0.48rem;
-  min-width: min(42vw, 460px);
+  min-width: min(42cqw, calc(460 * var(--u)));
   padding: 1rem 0.2rem 1rem 1rem;
   pointer-events: none;
   opacity: 0;
-  transform: translate(1.3vw, -50%) rotate(-5deg) scale(0.98);
+  transform: translate(1.3cqw, -50%) rotate(-5deg) scale(0.98);
   transition:
     opacity 0.22s ease,
     transform 0.22s ease;
@@ -1685,7 +1777,7 @@ body.is-transitioning .mini-brand {
   align-items: end;
   gap: 0.78rem;
   width: fit-content;
-  min-width: min(34vw, 380px);
+  min-width: min(34cqw, calc(380 * var(--u)));
   padding: 0.46rem 1rem 0.44rem 1.18rem;
   color: var(--cream);
   transform: skewX(-12deg) translateX(calc(var(--step, 0) * -0.62rem));
@@ -1727,20 +1819,20 @@ body.is-transitioning .mini-brand {
 
 .chapter-link span {
   color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(11px, 0.84vw, 16px);
+  font-size: clamp(calc(11 * var(--u)), 0.84cqw, calc(16 * var(--u)));
   line-height: 0.9;
   letter-spacing: -0.035em;
 }
 
 .chapter-link strong {
-  font-size: clamp(20px, 2vw, 42px);
+  font-size: clamp(calc(20 * var(--u)), 2cqw, calc(42 * var(--u)));
   line-height: 0.78;
   letter-spacing: -0.075em;
 }
 
 .chapter-nav::before {
   position: absolute;
-  inset: -20vh -4vw;
+  inset: -20cqh -4cqw;
   z-index: -1;
   content: "";
   pointer-events: none;
@@ -1769,8 +1861,8 @@ body.is-transitioning .mini-brand {
   }
 
   .chapter-nav {
-    right: 4.4vw;
-    top: 3.6vh;
+    right: 4.4cqw;
+    top: 3.6cqh;
     transform: none;
   }
 
@@ -1813,8 +1905,8 @@ body.is-transitioning .mini-brand {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 100vw;
-    padding: 10vh 7vw;
+    min-width: 100cqw;
+    padding: 10cqh 7cqw;
     background:
       radial-gradient(circle at 76% 18%, color-mix(in srgb, currentColor 26%, transparent), transparent 34%),
       rgba(0, 0, 0, 0.82);
@@ -1828,7 +1920,7 @@ body.is-transitioning .mini-brand {
 
   .chapter-link,
   .chapter-link:nth-child(odd) {
-    width: 86vw;
+    width: 86cqw;
     min-width: 0;
     margin-left: 0;
     transform: skewX(-8deg);
@@ -1840,7 +1932,7 @@ body.is-transitioning .mini-brand {
   }
 
   .chapter-link strong {
-    font-size: clamp(27px, 10vw, 58px);
+    font-size: clamp(27px, 10cqw, 58px);
   }
 }
 /* === MARCO GLOBAL CHAPTER NAV - END === */
@@ -1932,8 +2024,8 @@ body.is-transitioning .mini-brand {
 .composition-page .composition-person,
 .composition-page .music-person {
   left: 50%;
-  bottom: -10vh;
-  height: 112vh;
+  bottom: -10cqh;
+  height: 112cqh;
   opacity: 1;
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter:
@@ -1951,8 +2043,8 @@ body.is-transitioning .mini-brand {
   .composition-page .composition-person,
   .composition-page .music-person {
     left: 50%;
-    height: 88vh;
-    bottom: -9vh;
+    height: 88cqh;
+    bottom: -9cqh;
     opacity: 0.95;
     transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   }
@@ -2011,8 +2103,8 @@ body.is-transitioning .mini-brand {
 .composition-page .composition-person,
 .composition-page .music-person {
   left: 48%;
-  bottom: -8vh;
-  height: 106vh;
+  bottom: -8cqh;
+  height: 106cqh;
   opacity: 1;
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   mix-blend-mode: normal;
@@ -2035,11 +2127,11 @@ body.is-transitioning .mini-brand {
 
 /* Composition diagonal tracklist: keep it diagonal, lowered, scrollable, and without horizontal drift. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(122px, 7vw, 174px);
-  top: clamp(248px, 26vh, 324px);
-  width: min(37vw, 680px);
-  height: clamp(360px, 47vh, 610px);
-  max-height: calc(100vh - clamp(360px, 36vh, 430px));
+  right: clamp(122px, 7cqw, 174px);
+  top: clamp(248px, 26cqh, 324px);
+  width: min(37cqw, 680px);
+  height: clamp(360px, 47cqh, 610px);
+  max-height: calc(100cqh - clamp(360px, 36cqh, 430px));
   overflow: visible;
   z-index: 42;
   transform: rotate(-7.25deg);
@@ -2052,7 +2144,7 @@ body.is-transitioning .mini-brand {
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px);
+  padding: clamp(22px, 2.4cqh, 34px) clamp(86px, 5.4cqw, 124px) clamp(86px, 9cqh, 128px) clamp(8px, 0.55cqw, 14px);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 48, 79, 0.82) rgba(255, 255, 255, 0.045);
   scrollbar-gutter: stable;
@@ -2077,10 +2169,10 @@ body.is-transitioning .mini-brand {
 .composition-page .composition-track {
   box-sizing: border-box;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  width: calc(100% - clamp(28px, 2vw, 44px));
-  min-height: clamp(48px, 5.5vh, 68px);
-  margin: 0 0 clamp(6px, 0.75vh, 9px) 0;
-  padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px);
+  width: calc(100% - clamp(28px, 2cqw, 44px));
+  min-height: clamp(48px, 5.5cqh, 68px);
+  margin: 0 0 clamp(6px, 0.75cqh, 9px) 0;
+  padding: clamp(6px, 0.72cqh, 9px) clamp(10px, 0.8cqw, 14px) clamp(6px, 0.72cqh, 9px) clamp(12px, 0.9cqw, 16px);
   background:
     linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
@@ -2091,33 +2183,33 @@ body.is-transitioning .mini-brand {
 }
 
 .composition-page .composition-track:nth-child(even) {
-  margin-left: clamp(12px, 1vw, 20px);
+  margin-left: clamp(12px, 1cqw, 20px);
 }
 
 .composition-page .composition-track:nth-child(3n) {
-  margin-left: clamp(4px, 0.45vw, 10px);
+  margin-left: clamp(4px, 0.45cqw, 10px);
 }
 
 .composition-page .track-title {
   max-width: 100%;
   overflow: visible;
-  font-size: clamp(17px, 1.55vw, 32px);
+  font-size: clamp(17px, 1.55cqw, 32px);
 }
 
 .composition-page .track-index {
-  font-size: clamp(25px, 2.2vw, 42px);
+  font-size: clamp(25px, 2.2cqw, 42px);
 }
 
 .composition-page .track-meta {
-  gap: clamp(5px, 0.42vw, 9px);
-  font-size: clamp(6px, 0.48vw, 9px);
+  gap: clamp(5px, 0.42cqw, 9px);
+  font-size: clamp(6px, 0.48cqw, 9px);
   white-space: nowrap;
 }
 
 .composition-page .track-play {
-  width: clamp(30px, 2.15vw, 40px);
-  height: clamp(30px, 2.15vw, 40px);
-  font-size: clamp(7px, 0.55vw, 10px);
+  width: clamp(30px, 2.15cqw, 40px);
+  height: clamp(30px, 2.15cqw, 40px);
+  font-size: clamp(7px, 0.55cqw, 10px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.32);
 }
 
@@ -2139,7 +2231,7 @@ body.is-transitioning .mini-brand {
   min-height: 28px;
   padding: 0 0.78rem;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 10px);
+  font-size: clamp(8px, 0.58cqw, 10px);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
@@ -2152,7 +2244,7 @@ body.is-transitioning .mini-brand {
 }
 
 .mini-player .track-label {
-  max-width: min(58vw, 820px);
+  max-width: min(58cqw, 820px);
   overflow: hidden;
 }
 
@@ -2163,10 +2255,10 @@ body.is-transitioning .mini-brand {
 @media (max-width: 900px) {
   .composition-page .composition-diagonal-zone {
     right: auto;
-    left: 3vw;
-    top: 42vh;
-    width: 94vw;
-    height: 42vh;
+    left: 3cqw;
+    top: 42cqh;
+    width: 94cqw;
+    height: 42cqh;
     max-height: none;
     transform: rotate(-4.5deg);
   }
@@ -2175,7 +2267,7 @@ body.is-transitioning .mini-brand {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 4vh 8vw 10vh 2vw;
+    padding: 4cqh 8cqw 10cqh 2cqw;
   }
 
   .composition-page .composition-track:nth-child(even),
@@ -2184,7 +2276,7 @@ body.is-transitioning .mini-brand {
   }
 
   .composition-page .composition-track {
-    width: calc(100% - 2vw);
+    width: calc(100% - 2cqw);
     min-height: 66px;
     margin-bottom: 0.7rem;
   }
@@ -2192,12 +2284,12 @@ body.is-transitioning .mini-brand {
   .composition-page .composition-person,
   .composition-page .music-person {
     left: 50%;
-    height: 88vh;
-    bottom: -9vh;
+    height: 88cqh;
+    bottom: -9cqh;
   }
 
   .mini-player .track-label {
-    max-width: 58vw;
+    max-width: 58cqw;
   }
 }
 /* === MARCO PATCH V0.1.0 STABILISATION - END === */
@@ -2220,7 +2312,7 @@ body.is-transitioning .mini-brand {
   align-items: center;
   gap: 0.36rem;
   margin-left: auto;
-  margin-right: clamp(110px, 8.5vw, 154px);
+  margin-right: clamp(110px, 8.5cqw, 154px);
   min-height: 28px;
   padding: 0 0.78rem;
   border: 1px solid color-mix(in srgb, var(--accent, var(--mint)) 28%, transparent);
@@ -2230,7 +2322,7 @@ body.is-transitioning .mini-brand {
   color: color-mix(in srgb, var(--accent, var(--mint)) 72%, var(--cream) 28%);
   cursor: pointer;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.56vw, 10px);
+  font-size: clamp(8px, 0.56cqw, 10px);
   letter-spacing: 0.11em;
   text-transform: uppercase;
   box-shadow:
@@ -2259,18 +2351,18 @@ body.is-transitioning .mini-brand {
 
 .music-drawer-sheet {
   position: fixed;
-  left: clamp(18px, 3.8vw, 74px);
-  right: clamp(112px, 8.8vw, 164px);
+  left: clamp(18px, 3.8cqw, 74px);
+  right: clamp(112px, 8.8cqw, 164px);
   bottom: 0;
   z-index: 72;
   display: grid;
   grid-template-columns: minmax(220px, 0.72fr) minmax(0, 2fr);
-  gap: clamp(0.72rem, 1vw, 1.1rem);
-  height: clamp(258px, 36vh, 386px);
+  gap: clamp(0.72rem, 1cqw, 1.1rem);
+  height: clamp(258px, 36cqh, 386px);
   padding:
-    clamp(0.84rem, 1vw, 1.05rem)
-    clamp(0.84rem, 1vw, 1.05rem)
-    clamp(3.45rem, 5.8vh, 4.6rem);
+    clamp(0.84rem, 1cqw, 1.05rem)
+    clamp(0.84rem, 1cqw, 1.05rem)
+    clamp(3.45rem, 5.8cqh, 4.6rem);
   border: 1px solid rgba(236, 243, 255, 0.12);
   border-bottom: 0;
   border-radius: 26px 26px 0 0;
@@ -2301,7 +2393,7 @@ body.music-drawer-open .music-drawer-sheet {
   align-content: end;
   gap: 0.38rem;
   min-width: 0;
-  padding: clamp(0.84rem, 1vw, 1.08rem);
+  padding: clamp(0.84rem, 1cqw, 1.08rem);
   border: 1px solid rgba(255, 255, 255, 0.095);
   border-radius: 18px;
   background:
@@ -2328,7 +2420,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-eyebrow {
   color: rgba(236, 243, 255, 0.56);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.56vw, 10px);
+  font-size: clamp(8px, 0.56cqw, 10px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -2336,7 +2428,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-now strong {
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(22px, 1.7vw, 36px);
+  font-size: clamp(22px, 1.7cqw, 36px);
   line-height: 0.86;
   letter-spacing: -0.07em;
   text-transform: uppercase;
@@ -2345,7 +2437,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-now span[data-now-meta] {
   color: rgba(236, 243, 255, 0.64);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.62vw, 11px);
+  font-size: clamp(8px, 0.62cqw, 11px);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -2380,14 +2472,14 @@ body.music-drawer-open .music-drawer-sheet {
   gap: 1rem;
   color: rgba(236, 243, 255, 0.68);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.62vw, 11px);
+  font-size: clamp(8px, 0.62cqw, 11px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .music-drawer-header strong {
   color: var(--cream);
-  font-size: clamp(12px, 0.92vw, 16px);
+  font-size: clamp(12px, 0.92cqw, 16px);
   letter-spacing: -0.02em;
 }
 
@@ -2442,7 +2534,7 @@ body.music-drawer-open .music-drawer-sheet {
 
 .music-drawer-index {
   color: color-mix(in srgb, var(--accent, var(--mint)) 82%, var(--cream) 18%);
-  font-size: clamp(16px, 1.1vw, 22px);
+  font-size: clamp(16px, 1.1cqw, 22px);
   line-height: 0.85;
   letter-spacing: -0.06em;
 }
@@ -2456,7 +2548,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-name strong {
   overflow: hidden;
   color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(10px, 0.72vw, 14px);
+  font-size: clamp(10px, 0.72cqw, 14px);
   line-height: 1;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -2466,7 +2558,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-name span {
   overflow: hidden;
   color: rgba(236, 243, 255, 0.55);
-  font-size: clamp(7px, 0.5vw, 9px);
+  font-size: clamp(7px, 0.5cqw, 9px);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -2474,7 +2566,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-duration {
   color: rgba(236, 243, 255, 0.5);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.5vw, 9px);
+  font-size: clamp(7px, 0.5cqw, 9px);
   letter-spacing: 0.08em;
 }
 
@@ -2496,14 +2588,14 @@ body.music-drawer-open .music-drawer-sheet {
   }
 
   .mini-player .music-drawer-toggle {
-    margin-right: 4vw;
+    margin-right: 4cqw;
   }
 
   .music-drawer-sheet {
-    left: 4vw;
-    right: 4vw;
+    left: 4cqw;
+    right: 4cqw;
     grid-template-columns: 1fr;
-    height: min(62vh, 500px);
+    height: min(62cqh, 500px);
     padding-bottom: 4.4rem;
   }
 
@@ -2724,7 +2816,7 @@ button.music-drawer-toggle,
   align-items: center !important;
   gap: 0.42rem !important;
   margin-left: auto !important;
-  margin-right: clamp(110px, 8.5vw, 154px) !important;
+  margin-right: clamp(110px, 8.5cqw, 154px) !important;
   padding: 0 !important;
   width: auto !important;
   min-width: 0 !important;
@@ -2739,7 +2831,7 @@ button.music-drawer-toggle,
   cursor: pointer !important;
   color: color-mix(in srgb, var(--accent, var(--mint)) 88%, var(--cream) 12%) !important;
   font-family: var(--heavy) !important;
-  font-size: clamp(8px, 0.58vw, 10px) !important;
+  font-size: clamp(8px, 0.58cqw, 10px) !important;
   line-height: 1 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
@@ -2793,7 +2885,7 @@ button.music-drawer-toggle::after,
   color: var(--cream) !important;
   font-family: var(--heavy) !important;
   font-style: normal !important;
-  font-size: clamp(15px, 1.18vw, 22px) !important;
+  font-size: clamp(15px, 1.18cqw, 22px) !important;
   font-weight: 900 !important;
   line-height: 0.75 !important;
   text-shadow:
@@ -2826,7 +2918,7 @@ button.music-drawer-toggle::after,
   .mini-player button.music-drawer-toggle,
   button.music-drawer-toggle,
   .music-drawer-toggle {
-    margin-right: 4vw !important;
+    margin-right: 4cqw !important;
   }
 }
 /* === MARCO PATCH v0.2.4 MUSIC TEXT TOGGLE ARROW - END === */
@@ -2944,7 +3036,7 @@ body.marco-page-wheel-locked .chapter-dots i.is-active {
   margin-right: 0.55rem;
   color: var(--marco-nav-accent);
   font-family: var(--heavy);
-  font-size: clamp(6px, 0.48vw, 8px);
+  font-size: clamp(calc(6 * var(--u)), 0.48cqw, calc(8 * var(--u)));
   letter-spacing: 0.18em;
   text-transform: uppercase;
   opacity: 0;
@@ -3004,8 +3096,8 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .shell:has(.page:not(.is-leaving).inner:not([data-page="home"]))::after {
   content: "MARCO v0.4.9";
   position: fixed;
-  top: clamp(14px, 2vh, 24px);
-  right: clamp(86px, 7vw, 142px);
+  top: clamp(14px, 2cqh, 24px);
+  right: clamp(86px, 7cqw, 142px);
   z-index: 2147483000;
   display: inline-grid !important;
   place-items: center;
@@ -3031,11 +3123,11 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Composition tracklist active rules: lowered viewport, vertical scroll, soft fade, no horizontal scrollbar. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(122px, 7vw, 174px) !important;
-  top: clamp(248px, 26vh, 324px) !important;
-  width: min(37vw, 680px) !important;
-  height: clamp(360px, 47vh, 610px) !important;
-  max-height: calc(100vh - clamp(360px, 36vh, 430px)) !important;
+  right: clamp(122px, 7cqw, 174px) !important;
+  top: clamp(248px, 26cqh, 324px) !important;
+  width: min(37cqw, 680px) !important;
+  height: clamp(360px, 47cqh, 610px) !important;
+  max-height: calc(100cqh - clamp(360px, 36cqh, 430px)) !important;
   overflow: visible !important;
   z-index: 42 !important;
   transform: rotate(-7.25deg) !important;
@@ -3048,7 +3140,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px) !important;
+  padding: clamp(22px, 2.4cqh, 34px) clamp(86px, 5.4cqw, 124px) clamp(86px, 9cqh, 128px) clamp(8px, 0.55cqw, 14px) !important;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
   scrollbar-width: thin !important;
@@ -3073,10 +3165,10 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .composition-page .composition-track {
   box-sizing: border-box !important;
   grid-template-columns: auto minmax(0, 1fr) auto !important;
-  width: calc(100% - clamp(28px, 2vw, 44px)) !important;
-  min-height: clamp(48px, 5.5vh, 68px) !important;
-  margin: 0 0 clamp(6px, 0.75vh, 9px) 0 !important;
-  padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px) !important;
+  width: calc(100% - clamp(28px, 2cqw, 44px)) !important;
+  min-height: clamp(48px, 5.5cqh, 68px) !important;
+  margin: 0 0 clamp(6px, 0.75cqh, 9px) 0 !important;
+  padding: clamp(6px, 0.72cqh, 9px) clamp(10px, 0.8cqw, 14px) clamp(6px, 0.72cqh, 9px) clamp(12px, 0.9cqw, 16px) !important;
   background:
     linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) !important;
@@ -3087,34 +3179,34 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 
 .composition-page .composition-track:nth-child(even) {
-  margin-left: clamp(12px, 1vw, 20px) !important;
+  margin-left: clamp(12px, 1cqw, 20px) !important;
 }
 
 .composition-page .composition-track:nth-child(3n) {
-  margin-left: clamp(4px, 0.45vw, 10px) !important;
+  margin-left: clamp(4px, 0.45cqw, 10px) !important;
 }
 
 .composition-page .track-index {
-  font-size: clamp(25px, 2.2vw, 42px) !important;
+  font-size: clamp(25px, 2.2cqw, 42px) !important;
 }
 
 .composition-page .track-title {
   max-width: 100% !important;
   overflow: visible !important;
-  font-size: clamp(17px, 1.55vw, 32px) !important;
+  font-size: clamp(17px, 1.55cqw, 32px) !important;
   line-height: 0.82 !important;
 }
 
 .composition-page .track-meta {
-  gap: clamp(5px, 0.42vw, 9px) !important;
-  font-size: clamp(6px, 0.48vw, 9px) !important;
+  gap: clamp(5px, 0.42cqw, 9px) !important;
+  font-size: clamp(6px, 0.48cqw, 9px) !important;
   white-space: nowrap !important;
 }
 
 .composition-page .track-play {
-  width: clamp(30px, 2.15vw, 40px) !important;
-  height: clamp(30px, 2.15vw, 40px) !important;
-  font-size: clamp(7px, 0.55vw, 10px) !important;
+  width: clamp(30px, 2.15cqw, 40px) !important;
+  height: clamp(30px, 2.15cqw, 40px) !important;
+  font-size: clamp(7px, 0.55cqw, 10px) !important;
   box-shadow: 0 8px 18px rgba(0,0,0,0.32) !important;
 }
 
@@ -3140,8 +3232,8 @@ body.marco-page-wheel-locked .chapter-nav::after {
   position: absolute;
   z-index: 23;
   left: 50%;
-  bottom: -10vh;
-  height: 112vh;
+  bottom: -10cqh;
+  height: 112cqh;
   aspect-ratio: 982 / 964;
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   transform-origin: 50% 82%;
@@ -3177,7 +3269,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Mini-player : pas de plaque translucide, seulement la ligne haute. */
 .shell:has(.page:not(.is-leaving).inner:not([data-page="home"])) .mini-player {
-  bottom: clamp(42px, 5.4vh, 72px) !important;
+  bottom: clamp(42px, 5.4cqh, 72px) !important;
   padding: 0.72rem 0 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -3192,7 +3284,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   position: absolute !important;
   left: 0 !important;
   top: 0 !important;
-  width: min(74vw, 880px) !important;
+  width: min(74cqw, 880px) !important;
   height: 1px !important;
   display: block !important;
   background: linear-gradient(90deg, color-mix(in srgb, var(--marco-page-accent) 70%, rgba(255,255,255,0.16)), rgba(255,255,255,0.16) 38%, transparent 100%) !important;
@@ -3207,8 +3299,8 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Drawer musique global : le vrai tiroir, pas la liste Composition. */
 .music-drawer-sheet {
-  height: clamp(420px, 58vh, 620px) !important;
-  padding: clamp(1rem, 1.25vw, 1.35rem) clamp(1rem, 1.25vw, 1.35rem) clamp(5rem, 8vh, 6.2rem) !important;
+  height: clamp(420px, 58cqh, 620px) !important;
+  padding: clamp(1rem, 1.25cqw, 1.35rem) clamp(1rem, 1.25cqw, 1.35rem) clamp(5rem, 8cqh, 6.2rem) !important;
   overflow: visible !important;
 }
 
@@ -3247,10 +3339,10 @@ body.music-drawer-open .music-drawer-sheet {
 
   .composition-page .composition-diagonal-zone {
     right: auto !important;
-    left: 3vw !important;
-    top: 42vh !important;
-    width: 94vw !important;
-    height: 42vh !important;
+    left: 3cqw !important;
+    top: 42cqh !important;
+    width: 94cqw !important;
+    height: 42cqh !important;
     max-height: none !important;
     transform: rotate(-4.5deg) !important;
   }
@@ -3260,7 +3352,7 @@ body.music-drawer-open .music-drawer-sheet {
     max-height: none !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 4vh 8vw 10vh 2vw !important;
+    padding: 4cqh 8cqw 10cqh 2cqw !important;
   }
 
   .composition-page .composition-track:nth-child(even),
@@ -3269,18 +3361,18 @@ body.music-drawer-open .music-drawer-sheet {
   }
 
   .composition-page .composition-track {
-    width: calc(100% - 2vw) !important;
+    width: calc(100% - 2cqw) !important;
     min-height: 66px !important;
     margin-bottom: 0.7rem !important;
   }
 
   .composition-page .marco-person-shader {
-    height: 86vh;
-    bottom: -8vh;
+    height: 86cqh;
+    bottom: -8cqh;
   }
 
   .music-drawer-sheet {
-    height: min(76vh, 620px) !important;
+    height: min(76cqh, 620px) !important;
     grid-template-columns: 1fr !important;
     padding-bottom: 5.4rem !important;
   }

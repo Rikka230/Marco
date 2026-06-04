@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 6.3';
+const BUILD = 'MARCO 6.7';
 ---
 
 <!doctype html>
@@ -49,46 +49,72 @@ const BUILD = 'MARCO 6.3';
       body[data-marco-page='composition'] { --marco-nav-accent: #ff355d; }
       body[data-marco-page='booking'] { --marco-nav-accent: #d8c3ff; }
 
-      /* Canvas du visualizer WebGL : superpose a l'identique #dotWave. */
+      /* Canvas du visualizer WebGL : superpose a l'identique #dotWave (dans le stage). */
       #dotwave-gl {
-        position: fixed; left: 0; right: 0; bottom: 0; z-index: 23;
-        width: 100vw; height: 88px; pointer-events: none;
+        position: absolute; left: 0; right: 0; bottom: 0; z-index: 23;
+        width: 100%; height: calc(88 * var(--u)); pointer-events: none;
         opacity: 0.78; mix-blend-mode: screen; display: none;
       }
       /* Quand le visualizer WebGL tourne : on l'affiche et on masque le dotWave 2D. */
       html[data-gl-viz='on'] #dotwave-gl { display: block; }
       html[data-gl-viz='on'] #dotWave { display: none; }
 
-      /* Overlay shader de transition : plein ecran, au-dessus de la page, sous la bande. */
+      /* Overlay shader de transition : remplit le stage, au-dessus de la page, sous la bande. */
       #transition-gl {
-        position: fixed; inset: 0; width: 100vw; height: 100vh;
+        position: absolute; inset: 0; width: 100%; height: 100%;
         z-index: 66; pointer-events: none; mix-blend-mode: screen;
       }
 
     </style>
+    <script is:inline>
+      /* Echelle du stage = min(largeur/2560, hauteur/1440).
+         IMPORTANT : ClientRouter recopie les attributs du <html> entrant a chaque
+         navigation et EFFACE le style inline --k -> il faut le reappliquer apres
+         chaque swap (sinon la page entrante s'affiche a l'echelle 1 = "gros zoom"). */
+      (function () {
+        function setK() {
+          var k = Math.min(window.innerWidth / 2560, window.innerHeight / 1440);
+          document.documentElement.style.setProperty('--k', String(k));
+        }
+        setK();
+        window.addEventListener('resize', setK, { passive: true });
+        document.addEventListener('astro:before-swap', setK);
+        document.addEventListener('astro:after-swap', setK);
+        document.addEventListener('astro:page-load', setK);
+      })();
+    </script>
   </head>
   <body data-marco-page={page} style={`--marco-build: '${BUILD}'`}>
     <div class="film-grain" aria-hidden="true"></div>
     <div class="shell">
-      <a class="mini-brand" href="/" aria-label="Retour accueil"><span></span>MARCO CHARLAS-HOU</a>
+      <!-- STAGE : toute la page a taille de reference 2560x1440, mise a l'echelle
+           d'un bloc (transform: scale(--k)) pour tenir dans l'ecran. Le fond noir
+           de .shell forme les barres letterbox sur les formats != 16:9. -->
+      <div class="stage">
+        <main id="app">
+          <slot />
+        </main>
 
-      <main id="app">
-        <slot />
-      </main>
+        <canvas id="dotWave" aria-hidden="true" transition:persist="dotwave"></canvas>
+        <canvas id="dotwave-gl" aria-hidden="true" transition:persist="dotwave-gl"></canvas>
 
-      <canvas id="dotWave" aria-hidden="true" transition:persist="dotwave"></canvas>
-      <canvas id="dotwave-gl" aria-hidden="true" transition:persist="dotwave-gl"></canvas>
-      <div class="mini-player" transition:persist="mini-player">
-        <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
-        <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>
-        <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="auto" loop></audio>
+        <!-- Chrome persistante (brand + mini-player + rail). Un seul persist sur le
+             wrapper => audio continu + rail conserve (pas de double-persist). -->
+        <div class="compo-chrome" transition:persist="compo-chrome">
+          <a class="mini-brand" href="/" aria-label="Retour accueil"><span></span>MARCO CHARLAS-HOU</a>
+
+          <div class="mini-player">
+            <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
+            <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>
+            <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="auto" loop></audio>
+          </div>
+
+          <ChapterNav active={page} />
+        </div>
+
+        <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>
+        <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
       </div>
-
-      <ChapterNav active={page} />
-
-      <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>
-      <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
-
     </div>
 
     <script>
