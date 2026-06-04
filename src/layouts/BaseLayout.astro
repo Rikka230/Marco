@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 6.0';
+const BUILD = 'MARCO 6.1';
 ---
 
 <!doctype html>
@@ -59,6 +59,12 @@ const BUILD = 'MARCO 6.0';
       html[data-gl-viz='on'] #dotwave-gl { display: block; }
       html[data-gl-viz='on'] #dotWave { display: none; }
 
+      /* Overlay shader de transition : plein ecran, au-dessus de la page, sous la bande. */
+      #transition-gl {
+        position: fixed; inset: 0; width: 100vw; height: 100vh;
+        z-index: 66; pointer-events: none; mix-blend-mode: screen;
+      }
+
       /* Badge de build temporaire (migration Astro) */
       .marco-build-badge {
         position: fixed; left: 10px; bottom: 8px; z-index: 9999;
@@ -88,6 +94,7 @@ const BUILD = 'MARCO 6.0';
 
       <ChapterNav active={page} />
 
+      <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>
       <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
 
       <div class="marco-build-badge" aria-hidden="true">{BUILD} · {page}</div>

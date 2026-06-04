@@ -20,6 +20,14 @@ const LABELS: Record<string, string> = {
 const EASE_IN = 'cubic-bezier(0.33, 1, 0.45, 1)';
 const EASE_OUT = 'cubic-bezier(0.5, 0, 0.2, 1)';
 
+function hexToRgb(hex: string): [number, number, number] {
+  const h = hex.replace('#', '');
+  return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255];
+}
+
+// Overlay shader de transition (lazy) — fallback silencieux si WebGL absent.
+let playFx: ((c: [number, number, number], fwd: boolean) => void) | null = null;
+
 function idFromPath(pathname: string): string {
   const file = (pathname.split('/').pop() || '').toLowerCase();
   if (!file || file === 'index') return 'home';
@@ -95,6 +103,14 @@ export function initTransitions() {
   if (bound) return;
   bound = true;
 
+  // Charge l'overlay shader (lazy). Si WebGL echoue, playFx reste null -> wipe seul.
+  const fxCanvas = document.querySelector<HTMLCanvasElement>('#transition-gl');
+  if (fxCanvas) {
+    import('./webgl/transition-fx')
+      .then((m) => { playFx = m.initTransitionFx(fxCanvas); })
+      .catch((e) => console.warn('[fx] chargement WebGL echoue', e));
+  }
+
   // Sens de navigation = ordre de page (rail/molette/cover-hit sont tous "push" historique).
   document.addEventListener('astro:before-preparation', (event) => {
     const e = event as unknown as { from?: URL; to?: URL };
@@ -106,8 +122,10 @@ export function initTransitions() {
   // Bande au moment ou la nouvelle page se prepare a entrer.
   document.addEventListener('astro:before-swap', (event) => {
     const e = event as unknown as { to?: URL };
+    const id = idFromPath(e.to?.pathname || window.location.pathname);
     document.body.classList.add('is-transitioning');
-    runBand(idFromPath(e.to?.pathname || window.location.pathname));
+    runBand(id);
+    if (playFx) playFx(hexToRgb(ACCENTS[id] || ACCENTS.home), forward);
   });
 
   // Nouvelle page en DOM -> on l'anime (WAAPI, insensible a reduced-motion).
