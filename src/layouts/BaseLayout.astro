@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 6.1';
+const BUILD = 'MARCO 6.2';
 ---
 
 <!doctype html>
@@ -67,7 +67,7 @@ const BUILD = 'MARCO 6.1';
 
       /* Badge de build temporaire (migration Astro) */
       .marco-build-badge {
-        position: fixed; left: 10px; bottom: 8px; z-index: 9999;
+        position: fixed; right: 10px; top: 10px; z-index: 9999;
         font: 700 11px/1.2 system-ui, sans-serif; letter-spacing: .04em;
         padding: 4px 9px; border-radius: 999px; pointer-events: none;
         color: #0b0b0c; background: var(--marco-nav-accent, #86f5a8);
