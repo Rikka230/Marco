@@ -1,10 +1,8 @@
 // Phase C — pilotage des transitions cinematiques (events ClientRouter).
-// - direction du wipe par ORDRE DE PAGE (pas l'historique) -> html[data-marco-dir]
-// - bande de transition (recreation de runBand du PJAX) declenchee a before-swap
-// - body.is-transitioning pendant la transition (dotWave/parallax se calment)
-// - entree differee titre + portrait sur la page entrante (astro:page-load)
-
-const ORDER = ['home', 'music', 'parcours', 'gallery', 'filmographie', 'composition', 'scores', 'booking'];
+// Le wipe directionnel est gere par la directive transition:animate sur <main>
+// (BaseLayout). Ici on ajoute : la bande de transition (runBand du PJAX) au
+// before-swap, body.is-transitioning pendant la transition, et l'entree differee
+// titre + portrait sur la page entrante (astro:page-load).
 
 const ACCENTS: Record<string, string> = {
   home: '#86f5a8', music: '#f4bd68', parcours: '#73aaf6', gallery: '#f08ac8',
@@ -62,16 +60,6 @@ let bound = false;
 export function initTransitions() {
   if (bound) return;
   bound = true;
-
-  // Direction du wipe selon l'ordre des pages (rail/molette/cover-hit = tous "push" historique).
-  document.addEventListener('astro:before-preparation', (event) => {
-    const e = event as unknown as { from?: URL; to?: URL };
-    const fromId = idFromPath(e.from?.pathname || window.location.pathname);
-    const toId = idFromPath(e.to?.pathname || window.location.pathname);
-    const fi = ORDER.indexOf(fromId);
-    const ti = ORDER.indexOf(toId);
-    document.documentElement.dataset.marcoDir = ti >= fi ? 'forward' : 'back';
-  });
 
   // Bande + etat "en transition" au moment du swap.
   document.addEventListener('astro:before-swap', (event) => {
