@@ -27,23 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 5.7';
-
-// Animation "poster" appliquee au swap de <main> (wipe directionnel Phase 2).
-// Astro choisit forwards/backwards selon le sens de navigation ; les @keyframes
-// (vtPoster*) sont definis dans src/styles/transitions.css.
-const EASE_IN = 'cubic-bezier(0.33, 1, 0.45, 1)';
-const EASE_OUT = 'cubic-bezier(0.5, 0, 0.75, 0)';
-const poster = {
-  forwards: {
-    old: { name: 'vtPosterOutLeft', duration: '0.52s', easing: EASE_OUT, fillMode: 'both' },
-    new: { name: 'vtPosterInRight', duration: '0.92s', easing: EASE_IN, fillMode: 'both' },
-  },
-  backwards: {
-    old: { name: 'vtPosterOutRight', duration: '0.52s', easing: EASE_OUT, fillMode: 'both' },
-    new: { name: 'vtPosterInLeft', duration: '0.92s', easing: EASE_IN, fillMode: 'both' },
-  },
-};
+const BUILD = 'MARCO 5.8';
 ---
 
 <!doctype html>
@@ -80,7 +64,7 @@ const poster = {
     <div class="shell">
       <a class="mini-brand" href="/" aria-label="Retour accueil"><span></span>MARCO CHARLAS-HOU</a>
 
-      <main id="app" transition:animate={poster}>
+      <main id="app">
         <slot />
       </main>
 

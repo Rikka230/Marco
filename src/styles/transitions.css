@@ -1,74 +1,11 @@
-/* === Phase C — Transitions cinematiques via View Transitions API ===
-   Recree le wipe directionnel "poster" de la Phase 2. L'animation est appliquee
-   via la directive Astro `transition:animate={poster}` sur <main id="app"> (voir
-   BaseLayout) : Astro scope le view-transition-name UNIQUEMENT pendant la transition
-   et choisit forwards/backwards selon le sens de navigation. Ces @keyframes sont
-   reference par leur nom dans l'objet d'animation.
-   Les elements transition:persist (mini-player, dotWave, rail, bande) ont leur propre
-   groupe et ne sont donc PAS emportes par le wipe. */
-
-/* Astro (cette version) pose `animation-name` depuis transition:animate mais OMET
-   la duree/easing/fill -> animation de 0s = invisible. On les fournit ici (proprietes
-   distinctes de animation-name, donc elles se combinent avec le nom pose par Astro).
-   new = page entrante (0.92s ease-in) ; old = page sortante (0.52s ease-out). */
+/* === Phase C — neutralisation des animations View Transitions d'Astro ===
+   On NE veut PAS que les groupes VT d'Astro animent : sinon les elements persistes
+   (mini-player, rail, dotWave, bande) "morphent" et tremblent (spasmes) a chaque nav.
+   Toute l'animation cinematique est faite en Web Animations API dans transitions.ts
+   (insensible a prefer-reduced-motion -> transitions visibles meme reduced-motion ON).
+   Le swap reste instantane cote Astro ; notre WAAPI anime la page entrante par-dessus. */
+::view-transition-group(*),
+::view-transition-old(*),
 ::view-transition-new(*) {
-  animation-duration: 0.92s;
-  animation-timing-function: cubic-bezier(0.33, 1, 0.45, 1);
-  animation-fill-mode: both;
-}
-::view-transition-old(*) {
-  animation-duration: 0.52s;
-  animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
-  animation-fill-mode: both;
-}
-
-/* Mode FALLBACK (navigateurs sans View Transitions natives, ex Opera GX) :
-   Astro anime les VRAIS elements via [data-astro-transition-fallback] et pose seulement
-   animation-name -> on fournit ici la duree/easing/fill correspondantes. */
-[data-astro-transition-fallback='new'] [data-astro-transition-scope],
-[data-astro-transition-fallback='new'][data-astro-transition-scope] {
-  animation-duration: 0.92s;
-  animation-timing-function: cubic-bezier(0.33, 1, 0.45, 1);
-  animation-fill-mode: both;
-}
-[data-astro-transition-fallback='old'] [data-astro-transition-scope],
-[data-astro-transition-fallback='old'][data-astro-transition-scope] {
-  animation-duration: 0.52s;
-  animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
-  animation-fill-mode: both;
-}
-
-@keyframes vtPosterInRight {
-  from { transform: translate3d(14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 0 0 24%); }
-  60% { opacity: 1; }
-  to { transform: translate3d(0, 0, 0) scale(1); opacity: 1; clip-path: inset(0 0 0 0); }
-}
-@keyframes vtPosterInLeft {
-  from { transform: translate3d(-14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 24% 0 0); }
-  60% { opacity: 1; }
-  to { transform: translate3d(0, 0, 0) scale(1); opacity: 1; clip-path: inset(0 0 0 0); }
-}
-@keyframes vtPosterOutLeft {
-  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-  to { transform: translate3d(-16%, 0, 0) scale(0.988); opacity: 0.01; }
-}
-@keyframes vtPosterOutRight {
-  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-  to { transform: translate3d(16%, 0, 0) scale(0.988); opacity: 0.01; }
-}
-
-/* Entree differee du gros titre + portrait sur la page entrante (reveal "couche"),
-   appliquee en JS via .marco-enter-title / .marco-enter-person sur astro:page-load.
-   (titleLayerIn / personLayerIn sont definis dans style.css) */
-.marco-enter-title {
-  animation: titleLayerIn 0.74s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
-}
-.marco-enter-person {
-  animation: personLayerIn 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marco-enter-title,
-  .marco-enter-person { animation-duration: 0.001s !important; animation-delay: 0s !important; }
-  .transition-band.is-active { animation-duration: 0.001s !important; }
+  animation: none !important;
 }
