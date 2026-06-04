@@ -1,0 +1,55 @@
+---
+// Rail de navigation globale (ex-buildChapterNav du script.js, desormais rendu cote serveur).
+// Persiste entre les pages (transition:persist) ; l'etat actif est calcule cote serveur ici
+// et resynchronise par syncNav() apres chaque navigation ClientRouter.
+const chapters = [
+  { id: 'home', short: 'HOME', label: 'HOME', href: '/' },
+  { id: 'music', short: 'VIOLON', label: 'VIOLON', href: '/music' },
+  { id: 'parcours', short: 'PARCOURS', label: 'PARCOURS', href: '/parcours' },
+  { id: 'gallery', short: 'MODELE', label: 'MODELE', href: '/gallery' },
+  { id: 'filmographie', short: 'FILMO', label: 'FILMOGRAPHIE', href: '/filmographie' },
+  { id: 'composition', short: 'COMPO', label: 'COMPOSITION', href: '/composition' },
+  { id: 'booking', short: 'CONTACT', label: 'CONTACT', href: '/contact' },
+];
+
+interface Props { active: string; }
+const { active } = Astro.props;
+const activeIndex = Math.max(0, chapters.findIndex((c) => c.id === active));
+const current = chapters[activeIndex] || chapters[0];
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<nav
+  class="chapter-nav"
+  data-chapter-nav
+  data-active-page={current.id}
+  aria-label="Navigation globale du site"
+  transition:persist="chapter-nav"
+>
+  <button class="chapter-step chapter-step-prev" type="button" data-chapter-step="prev" aria-label="Page précédente"><span>▲</span></button>
+
+  <button class="chapter-toggle" type="button" aria-expanded="false">
+    <span class="chapter-num">{pad(activeIndex + 1)}</span>
+    <span class="chapter-current">{current.short}</span>
+    <span class="chapter-dots" aria-hidden="true">
+      {chapters.map((_, i) => <i class:list={[{ 'is-active': i === activeIndex }]}></i>)}
+    </span>
+    <span class="chapter-index-label">INDEX</span>
+  </button>
+
+  <button class="chapter-step chapter-step-next" type="button" data-chapter-step="next" aria-label="Page suivante"><span>▼</span></button>
+
+  <div class="chapter-panel">
+    {chapters.map((chapter, index) => (
+      <a
+        class:list={['chapter-link', { 'is-active': chapter.id === current.id }]}
+        href={chapter.href}
+        data-chapter-id={chapter.id}
+        style={`--step:${index}`}
+        aria-current={chapter.id === current.id ? 'page' : undefined}
+      >
+        <span>{pad(index + 1)}</span><strong>{chapter.label}</strong>
+      </a>
+    ))}
+  </div>
+</nav>

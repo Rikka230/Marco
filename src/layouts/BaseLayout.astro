@@ -1,8 +1,10 @@
 ---
 // Coquille persistante du site Marco (ex-`.shell` de index.html).
-// Contient mini-brand, <main id="app"> (slot = contenu de page), dotWave et mini-player.
-// Phase A : CSS historiques importes verbatim pour garantir la parite visuelle.
-// Le decoupage tokens.css/global.css interviendra en Phase B/C.
+// - <ClientRouter /> : View Transitions natives (remplacent le routeur PJAX maison).
+// - mini-player / dotWave / rail : transition:persist => audio continu + pas de re-init.
+// - data-marco-page rendu cote serveur => accent/theme sans latence (CSS pur).
+import { ClientRouter } from 'astro:transitions';
+import ChapterNav from '../components/ChapterNav.astro';
 import '../../style.css';
 import '../../assets/css/model-page.css';
 import '../../assets/css/marco-bg-veil.css';
@@ -10,7 +12,7 @@ import '../../assets/css/marco-bg-veil.css';
 interface Props {
   title: string;
   description?: string;
-  /** Valeur data-marco-page : pilote le theme/accent global (rendu cote serveur = zero latence). */
+  /** Cle marco-page : pilote l'accent global + le rail (home|music|parcours|gallery|filmographie|composition|booking). */
   page: string;
 }
 
@@ -28,6 +30,17 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <ClientRouter />
+    <style is:global>
+      /* Accent global par page (ex --marco-nav-accent pose par JS dans le PJAX, desormais CSS pur). */
+      body[data-marco-page='home'] { --marco-nav-accent: #86f5a8; }
+      body[data-marco-page='music'] { --marco-nav-accent: #f4bd68; }
+      body[data-marco-page='parcours'] { --marco-nav-accent: #73aaf6; }
+      body[data-marco-page='gallery'] { --marco-nav-accent: #f08ac8; }
+      body[data-marco-page='filmographie'] { --marco-nav-accent: #f4bd68; }
+      body[data-marco-page='composition'] { --marco-nav-accent: #ff355d; }
+      body[data-marco-page='booking'] { --marco-nav-accent: #d8c3ff; }
+    </style>
   </head>
   <body data-marco-page={page}>
     <div class="film-grain" aria-hidden="true"></div>
@@ -38,12 +51,18 @@ const {
         <slot />
       </main>
 
-      <canvas id="dotWave" aria-hidden="true"></canvas>
-      <div class="mini-player">
+      <canvas id="dotWave" aria-hidden="true" transition:persist="dotwave"></canvas>
+      <div class="mini-player" transition:persist="mini-player">
         <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
         <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>
         <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="auto" loop></audio>
       </div>
+
+      <ChapterNav active={page} />
     </div>
+
+    <script>
+      import '../scripts/main.ts';
+    </script>
   </body>
 </html>

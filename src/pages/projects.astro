@@ -1,0 +1,52 @@
+---
+// Page Scores — portage fidele de projects.html.
+// marco-page = "composition" (accent rouge + rail COMPO, comportement existant pour scores).
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Marco Charlas-Hou - Scores" description="Scores originaux, musique de film, scene et campagnes par Marco Charlas-Hou." page="composition">
+  <section class="page poster-page inner scores" data-page="scores" data-bg="scores" data-theme="projects" data-transition-label="SCORES">
+    <div class="photo-bg" aria-hidden="true"></div>
+    <div class="film-sweep" aria-hidden="true"></div>
+
+    <div class="title-wrap" aria-hidden="true">
+      <h1 class="mega first">SCORES</h1>
+      <h2 class="mega last">ORIGINAL WORKS</h2>
+    </div>
+
+    <img class="hero-person page-person projects-person" src="/assets/img/marco-projects.png" alt="Portrait detoure placeholder de Marco avec violon" />
+
+    <a class="cover-hit nav-home" href="/">
+      <strong>HOME</strong>
+      <span>COVER <i></i> IDENTITY</span>
+    </a>
+    <a class="cover-hit nav-music" href="/music">
+      <strong>VIOLIN</strong>
+      <span>LIVE <i></i> RECORDINGS</span>
+    </a>
+    <a class="cover-hit nav-gallery" href="/gallery">
+      <strong>MODELE</strong>
+      <span>PHOTO <i></i> CASTING</span>
+    </a>
+    <a class="cover-hit nav-contact" href="/contact">
+      <strong>CONTACT</strong>
+      <span>BOOKING <i></i> COLLABS</span>
+    </a>
+
+    <a class="key-project" href="/projects" aria-label="Page scores">
+      <span>CINEMATIC STRINGS</span>
+      <span>ORIGINAL SCORE</span>
+    </a>
+
+    <div class="cover-tagline" aria-hidden="true">
+      <span>FILM MUSIC</span>
+      <span>STAGE CAMPAIGNS</span>
+    </div>
+
+    <div class="editorial-stack projects-stack" aria-hidden="true">
+      <span>CUSTOM MUSIC</span>
+      <span>PICTURE / STAGE</span>
+      <span>MOTIFS</span>
+    </div>
+  </section>
+</BaseLayout>
