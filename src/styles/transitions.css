@@ -22,6 +22,22 @@
   animation-fill-mode: both;
 }
 
+/* Mode FALLBACK (navigateurs sans View Transitions natives, ex Opera GX) :
+   Astro anime les VRAIS elements via [data-astro-transition-fallback] et pose seulement
+   animation-name -> on fournit ici la duree/easing/fill correspondantes. */
+[data-astro-transition-fallback='new'] [data-astro-transition-scope],
+[data-astro-transition-fallback='new'][data-astro-transition-scope] {
+  animation-duration: 0.92s;
+  animation-timing-function: cubic-bezier(0.33, 1, 0.45, 1);
+  animation-fill-mode: both;
+}
+[data-astro-transition-fallback='old'] [data-astro-transition-scope],
+[data-astro-transition-fallback='old'][data-astro-transition-scope] {
+  animation-duration: 0.52s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+  animation-fill-mode: both;
+}
+
 @keyframes vtPosterInRight {
   from { transform: translate3d(14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 0 0 24%); }
   60% { opacity: 1; }

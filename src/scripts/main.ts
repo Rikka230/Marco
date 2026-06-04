@@ -95,19 +95,8 @@ function applyListEntrance() {
   });
 }
 
-/* === Badge de build temporaire : prouve que la navigation client (donc les VT) tourne === */
-let navCount = 0;
-function updateBuildBadge() {
-  const badge = document.querySelector('[data-build-badge]');
-  if (!badge) return;
-  const page = document.body.dataset.marcoPage || '?';
-  badge.textContent = `${badge.textContent?.split(' · ')[0] || 'C2'} · ${page} · ${navCount}`;
-  navCount += 1;
-}
-
 /* === Cycle de vie Astro === */
 function onPageLoad() {
-  updateBuildBadge();
   initAudio();
   initDotWave();
   initNav();

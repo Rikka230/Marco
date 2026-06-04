@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 5.5';
+const BUILD = 'MARCO 5.6';
 
 // Animation "poster" appliquee au swap de <main> (wipe directionnel Phase 2).
 // Astro choisit forwards/backwards selon le sens de navigation ; les @keyframes
@@ -91,7 +91,7 @@ const poster = {
 
       <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
 
-      <div class="marco-build-badge" data-build-badge transition:persist="build-badge">{BUILD} · {page} · 0</div>
+      <div class="marco-build-badge" aria-hidden="true">{BUILD} · {page}</div>
     </div>
 
     <script>
