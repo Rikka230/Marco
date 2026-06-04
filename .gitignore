@@ -8,3 +8,7 @@ dist/
 build/
 .firebase/
 .cache/
+# Astro
+.astro/
+# Jonction dev vers le dossier assets/ historique (servi tel quel pendant la migration)
+public/assets/
