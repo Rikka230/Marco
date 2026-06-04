@@ -1,0 +1,101 @@
+---
+// Page Modele — portage fidele de gallery.html (strips photo + lightbox).
+// La logique d'autoscroll/lightbox est dans src/scripts/pages/model.ts (importe globalement).
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Marco Charlas-Hou - Modèle" description="Portfolio modèle, portraits, campagnes, éditorial et visuels de casting de Marco Charlas-Hou." page="gallery">
+  <section class="page poster-page inner gallery model-page" data-page="gallery" data-bg="gallery" data-theme="gallery" data-transition-label="MODELE" aria-labelledby="model-title">
+    <div class="photo-bg" aria-hidden="true"></div>
+    <div class="model-atmosphere" aria-hidden="true"></div>
+
+    <div class="model-strip-field" aria-label="Bandes photo du portfolio modèle">
+      <section class="model-strip model-strip-a" aria-labelledby="strip-editorial">
+        <div class="model-strip-heading">
+          <span>01</span>
+          <strong id="strip-editorial">Editorial portraits</strong>
+          <em>tests / attitude / presence</em>
+        </div>
+        <div class="model-strip-track" data-speed="72" tabindex="0" aria-label="Défiler les portraits éditoriaux">
+          <div class="model-strip-row">
+            <button class="model-frame" type="button" data-photo-id="editorial-01" data-src="/assets/img/cover-1.jpg" data-title="Editorial portrait" data-meta="PORTRAIT / LOW KEY / MODEL TEST"><img src="/assets/img/cover-1.jpg" alt="Portrait éditorial modèle placeholder" /><span>Portrait</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-02" data-src="/assets/img/cover-2.jpg" data-title="Casting profile" data-meta="CASTING / PROFILE / NATURAL"><img src="/assets/img/cover-2.jpg" alt="Profil casting modèle placeholder" /><span>Casting</span></button>
+            <button class="model-frame is-featured" type="button" data-photo-id="editorial-03" data-src="/assets/img/cover-3.jpg" data-title="Campaign face" data-meta="EDITORIAL / CLOSE-UP / CAMPAIGN"><img src="/assets/img/cover-3.jpg" alt="Portrait campagne modèle placeholder" /><span>Campaign face</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-04" data-src="/assets/img/cover-4.jpg" data-title="Commercial gaze" data-meta="COMMERCIAL / SOFT LOOK / PRESS"><img src="/assets/img/cover-4.jpg" alt="Regard commercial modèle placeholder" /><span>Commercial</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-05" data-src="/assets/img/cover-5.jpg" data-title="Visual identity" data-meta="IDENTITY / PORTRAIT / BRAND"><img src="/assets/img/cover-5.jpg" alt="Identité visuelle modèle placeholder" /><span>Identity</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-06" data-src="/assets/img/cover-6.jpg" data-title="Press visual" data-meta="PRESS / LOOK BOOK / MODEL"><img src="/assets/img/cover-6.jpg" alt="Visuel presse modèle placeholder" /><span>Press</span></button>
+          </div>
+        </div>
+        <div class="model-strip-progress" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section class="model-strip model-strip-b" aria-labelledby="strip-campaign">
+        <div class="model-strip-heading">
+          <span>02</span>
+          <strong id="strip-campaign">Campaign looks</strong>
+          <em>brand / pub / fashion frame</em>
+        </div>
+        <div class="model-strip-track" data-speed="-58" tabindex="0" aria-label="Défiler les images de campagne">
+          <div class="model-strip-row">
+            <button class="model-frame is-wide" type="button" data-photo-id="campaign-01" data-src="/assets/img/cover-4.jpg" data-title="Brand frame" data-meta="CAMPAIGN / WARDROBE / BLACK SUIT"><img src="/assets/img/cover-4.jpg" alt="Campagne publicitaire placeholder" /><span>Brand frame</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-02" data-src="/assets/img/cover-6.jpg" data-title="Lookbook cut" data-meta="LOOKBOOK / FASHION / ATTITUDE"><img src="/assets/img/cover-6.jpg" alt="Lookbook modèle placeholder" /><span>Lookbook</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-03" data-src="/assets/img/cover-2.jpg" data-title="Advertising pose" data-meta="ADVERTISING / POSE / CINEMATIC"><img src="/assets/img/cover-2.jpg" alt="Pose publicitaire placeholder" /><span>Advertising</span></button>
+            <button class="model-frame is-featured" type="button" data-photo-id="campaign-04" data-src="/assets/img/cover-1.jpg" data-title="Luxury mood" data-meta="LUXURY / EDITORIAL / MOODY"><img src="/assets/img/cover-1.jpg" alt="Mood luxe placeholder" /><span>Luxury mood</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-05" data-src="/assets/img/cover-5.jpg" data-title="Poster visual" data-meta="POSTER / CAMPAIGN / FACE"><img src="/assets/img/cover-5.jpg" alt="Affiche campagne placeholder" /><span>Poster</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-06" data-src="/assets/img/cover-3.jpg" data-title="Commercial portrait" data-meta="COMMERCIAL / PORTRAIT / BRAND"><img src="/assets/img/cover-3.jpg" alt="Portrait commercial placeholder" /><span>Portrait</span></button>
+          </div>
+        </div>
+        <div class="model-strip-progress" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section class="model-strip model-strip-c" aria-labelledby="strip-press">
+        <div class="model-strip-heading">
+          <span>03</span>
+          <strong id="strip-press">Press visuals</strong>
+          <em>face range / archive / agency</em>
+        </div>
+        <div class="model-strip-track" data-speed="48" tabindex="0" aria-label="Défiler les visuels presse">
+          <div class="model-strip-row">
+            <button class="model-frame" type="button" data-photo-id="press-01" data-src="/assets/img/cover-5.jpg" data-title="Face range 01" data-meta="PRESS / FACE RANGE / FRONT"><img src="/assets/img/cover-5.jpg" alt="Face range frontal placeholder" /><span>Front</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-02" data-src="/assets/img/cover-3.jpg" data-title="Face range 02" data-meta="PRESS / SIDE PROFILE / MOOD"><img src="/assets/img/cover-3.jpg" alt="Profil visage placeholder" /><span>Profile</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-03" data-src="/assets/img/cover-1.jpg" data-title="Expression test" data-meta="CASTING / EXPRESSION / STILL"><img src="/assets/img/cover-1.jpg" alt="Test expression placeholder" /><span>Expression</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-04" data-src="/assets/img/cover-2.jpg" data-title="Agency visual" data-meta="AGENCY / BOOK / SELECTION"><img src="/assets/img/cover-2.jpg" alt="Visuel agence placeholder" /><span>Agency</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-05" data-src="/assets/img/cover-6.jpg" data-title="Mood archive" data-meta="ARCHIVE / BLACK / CINEMA"><img src="/assets/img/cover-6.jpg" alt="Archive mood placeholder" /><span>Archive</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-06" data-src="/assets/img/cover-4.jpg" data-title="Book update" data-meta="BOOK / UPDATE / MODEL"><img src="/assets/img/cover-4.jpg" alt="Book update placeholder" /><span>Book</span></button>
+          </div>
+        </div>
+        <div class="model-strip-progress" aria-hidden="true"><span></span></div>
+      </section>
+    </div>
+
+    <div class="title-wrap model-title-wrap" aria-hidden="true">
+      <h1 id="model-title" class="mega first">MODELE</h1>
+      <h2 class="mega last">PHOTO BOOK</h2>
+    </div>
+
+    <div class="model-copy model-copy-left" aria-label="Positionnement modèle">
+      <strong>ACTING MODEL</strong>
+      <span>Editorial / campaign / commercial image</span>
+    </div>
+
+    <div class="model-copy model-copy-right" aria-label="Catégories photographie">
+      <strong>PORTRAITS</strong>
+      <strong>CAMPAIGNS</strong>
+      <strong>CASTING VISUALS</strong>
+    </div>
+
+    <div class="model-copy model-copy-bottom" aria-label="Instructions interaction">
+      <span>Hover a strip + wheel to browse</span>
+      <span>Click any frame to open lightbox</span>
+    </div>
+
+    <img class="hero-person page-person gallery-person model-person" src="/assets/img/marco-gallery.png" alt="Portrait détouré de Marco pour la page modèle" />
+
+    <div class="model-booking-note" aria-hidden="true">
+      <span>MODEL BOOK</span>
+      <b>Editorial</b>
+      <b>Campaign</b>
+      <b>Press visuals</b>
+    </div>
+  </section>
+</BaseLayout>

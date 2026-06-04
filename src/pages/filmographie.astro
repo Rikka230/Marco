@@ -1,0 +1,66 @@
+---
+// Page Filmographie — portage fidele de filmographie.html.
+// Liste/credits rendus par assets/js/filmographie-page.js (via le shim de cycle de vie).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../../assets/css/filmographie-page.css';
+---
+
+<BaseLayout title="Marco Charlas-Hou - Filmographie" description="Filmographie, apparitions, roles, publicites et projets ecran de Marco Charlas-Hou." page="filmographie">
+  <section class="page filmographie-page filmographie-rebuild" data-page="filmographie" data-bg="filmographie" data-theme="filmographie" data-transition-label="FILMOGRAPHIE" aria-labelledby="filmographie-title">
+    <div class="filmographie-bg" aria-hidden="true"></div>
+    <img class="filmographie-title-img" src="/assets/img/filmographie/filmographie-title-tight.png?v=20260603-tight1" alt="" aria-hidden="true" />
+    <div class="filmographie-person-wrap" aria-label="Portrait detoure de Marco pour la page Filmographie">
+      <img class="filmographie-person" src="/assets/img/filmographie/marco-filmographie-tight.png?v=20260603-tight1" alt="" />
+    </div>
+
+    <section class="filmographie-credits" aria-labelledby="filmographie-credits-title">
+      <p class="filmographie-kicker" id="filmographie-credits-title">Roles & credits acting</p>
+      <label class="filmographie-search">
+        <span aria-hidden="true"></span>
+        <input type="search" data-filmography-search placeholder="Rechercher un role, un film, un realisateur..." />
+      </label>
+      <nav class="filmographie-filters" aria-label="Filtrer la filmographie" data-filmography-filters></nav>
+      <div class="filmographie-list" data-filmography-list data-no-page-wheel tabindex="0" aria-label="Credits filmographie"></div>
+    </section>
+
+    <aside class="filmographie-selected" aria-label="Extrait selectionne">
+      <p>Extrait selectionne</p>
+      <h2 data-filmography-selected-title>Dernier Signal</h2>
+      <strong><span data-filmography-selected-year>2023</span> - <span data-filmography-selected-format>Serie</span></strong>
+      <div class="filmographie-video">
+        <img data-filmography-selected-image src="/assets/img/filmographie/filmographie-extrait-placeholder.jpg" alt="Image d'extrait selectionne" />
+        <button type="button" data-filmography-play aria-label="Voir l'extrait selectionne"><span></span></button>
+      </div>
+      <div class="filmographie-player-ui" aria-hidden="true">
+        <span>00:00</span>
+        <i></i>
+        <span data-filmography-selected-duration>01:24</span>
+        <b></b>
+      </div>
+      <dl class="filmographie-selected-meta">
+        <div>
+          <dt>Role</dt>
+          <dd data-filmography-selected-role>Role principal</dd>
+        </div>
+        <div>
+          <dt>Realisateur</dt>
+          <dd data-filmography-selected-director>N. Bernard</dd>
+        </div>
+        <div>
+          <dt>Format</dt>
+          <dd data-filmography-selected-format-meta>Serie</dd>
+        </div>
+        <div>
+          <dt>Diffusion</dt>
+          <dd data-filmography-selected-diffusion>Plateforme privee</dd>
+        </div>
+        <div>
+          <dt>Annee</dt>
+          <dd data-filmography-selected-year-meta>2023</dd>
+        </div>
+      </dl>
+    </aside>
+
+    <img class="filmographie-badge" src="/assets/img/filmographie/cinema-acting-badge-crop.png" alt="Cinema Acting - Passion et experience" />
+  </section>
+</BaseLayout>

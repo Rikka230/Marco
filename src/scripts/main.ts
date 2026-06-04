@@ -6,6 +6,12 @@
 import { initAudio, restoreTrack } from './audio';
 import { initDotWave } from './dotwave';
 import { initNav, syncNav } from './nav';
+// Modules de page historiques reutilises VERBATIM via le shim de cycle de vie.
+// Le shim doit etre importe AVANT (il definit window.Marco.registerPage).
+import './pages/lifecycle-shim.js';
+import '../../assets/js/model-page.js';
+import '../../assets/js/filmographie-page.js';
+import '../../assets/js/parcours-page.js';
 
 /* === Parallax pointeur (port du CORE) === */
 let parallaxBound = false;
