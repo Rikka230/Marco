@@ -7,6 +7,21 @@
    Les elements transition:persist (mini-player, dotWave, rail, bande) ont leur propre
    groupe et ne sont donc PAS emportes par le wipe. */
 
+/* Astro (cette version) pose `animation-name` depuis transition:animate mais OMET
+   la duree/easing/fill -> animation de 0s = invisible. On les fournit ici (proprietes
+   distinctes de animation-name, donc elles se combinent avec le nom pose par Astro).
+   new = page entrante (0.92s ease-in) ; old = page sortante (0.52s ease-out). */
+::view-transition-new(*) {
+  animation-duration: 0.92s;
+  animation-timing-function: cubic-bezier(0.33, 1, 0.45, 1);
+  animation-fill-mode: both;
+}
+::view-transition-old(*) {
+  animation-duration: 0.52s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+  animation-fill-mode: both;
+}
+
 @keyframes vtPosterInRight {
   from { transform: translate3d(14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 0 0 24%); }
   60% { opacity: 1; }
