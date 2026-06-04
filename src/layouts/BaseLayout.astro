@@ -22,6 +22,9 @@ const {
   description = 'Prototype cover interactive pour Marco Charlas-Hou, violoniste, compositeur, acteur et modele.',
   page,
 } = Astro.props;
+
+// Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
+const BUILD = 'C2';
 ---
 
 <!doctype html>
@@ -41,6 +44,15 @@ const {
       body[data-marco-page='filmographie'] { --marco-nav-accent: #f4bd68; }
       body[data-marco-page='composition'] { --marco-nav-accent: #ff355d; }
       body[data-marco-page='booking'] { --marco-nav-accent: #d8c3ff; }
+
+      /* Badge de build temporaire (migration Astro) */
+      .marco-build-badge {
+        position: fixed; left: 10px; bottom: 8px; z-index: 9999;
+        font: 700 11px/1.2 system-ui, sans-serif; letter-spacing: .04em;
+        padding: 4px 9px; border-radius: 999px; pointer-events: none;
+        color: #0b0b0c; background: var(--marco-nav-accent, #86f5a8);
+        box-shadow: 0 4px 14px rgba(0,0,0,.4); text-transform: uppercase;
+      }
     </style>
   </head>
   <body data-marco-page={page}>
@@ -62,6 +74,8 @@ const {
       <ChapterNav active={page} />
 
       <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
+
+      <div class="marco-build-badge" data-build-badge transition:persist="build-badge">{BUILD} · {page} · 0</div>
     </div>
 
     <script>
