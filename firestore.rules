@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Verrouillage par defaut : le site est front-only, Firestore n'est pas encore
+// consomme. On ouvrira des regles ciblees quand une feature l'utilisera.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

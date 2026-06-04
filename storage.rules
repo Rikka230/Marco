@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Verrouillage par defaut : aucun upload/download public tant qu'aucune
+// feature ne l'exige. A ouvrir de maniere ciblee le moment venu.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
