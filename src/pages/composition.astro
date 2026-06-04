@@ -2,7 +2,6 @@
 // Page Composition (v0.4.6) — portage de composition.html, CSS inline externalise.
 // Les clics .track-play sont geres par l'AudioManager (src/scripts/audio.ts).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/pages/composition.css';
 
 const tracks = [
   { n: '01', title: 'Cinematic Strings', meta: ['Score', '2026', '02:48', 'Featured'], active: true },
@@ -28,7 +27,7 @@ const tracks = [
 ];
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Composition" description="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." page="composition">
+<BaseLayout title="Marco Charlas-Hou - Composition" description="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." page="composition" pageStyles={['/assets/css/composition-page.css']}>
   <section class="page poster-page inner composition-page" data-page="composition" data-bg="scores" data-theme="composition" data-transition-label="COMPOSITION">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="film-sweep" aria-hidden="true"></div>

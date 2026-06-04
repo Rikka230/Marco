@@ -2,10 +2,9 @@
 // Page Filmographie — portage fidele de filmographie.html.
 // Liste/credits rendus par assets/js/filmographie-page.js (via le shim de cycle de vie).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../../assets/css/filmographie-page.css';
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Filmographie" description="Filmographie, apparitions, roles, publicites et projets ecran de Marco Charlas-Hou." page="filmographie">
+<BaseLayout title="Marco Charlas-Hou - Filmographie" description="Filmographie, apparitions, roles, publicites et projets ecran de Marco Charlas-Hou." page="filmographie" pageStyles={['/assets/css/filmographie-page.css']}>
   <section class="page filmographie-page filmographie-rebuild" data-page="filmographie" data-bg="filmographie" data-theme="filmographie" data-transition-label="FILMOGRAPHIE" aria-labelledby="filmographie-title">
     <div class="filmographie-bg" aria-hidden="true"></div>
     <img class="filmographie-title-img" src="/assets/img/filmographie/filmographie-title-tight.png?v=20260603-tight1" alt="" aria-hidden="true" />

@@ -2,10 +2,9 @@
 // Page Parcours — portage fidele de parcours.html (desktop + flux mobile).
 // Contenu rendu par assets/js/parcours-page.js (via le shim de cycle de vie).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../../assets/css/parcours-page.css';
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Parcours" description="Parcours, études, expériences professionnelles et compétences artistiques de Marco Charlas-Hou." page="parcours">
+<BaseLayout title="Marco Charlas-Hou - Parcours" description="Parcours, études, expériences professionnelles et compétences artistiques de Marco Charlas-Hou." page="parcours" pageStyles={['/assets/css/parcours-page.css']}>
   <section class="page poster-page inner parcours-page parcours-rebuild" data-page="parcours" data-bg="scores" data-theme="parcours" data-transition-label="PARCOURS" aria-labelledby="parcours-title">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="parcours-atmosphere" aria-hidden="true"></div>
