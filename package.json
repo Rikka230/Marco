@@ -10,6 +10,7 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^6.4.4"
+    "astro": "^6.4.4",
+    "ogl": "^1.0.11"
   }
 }

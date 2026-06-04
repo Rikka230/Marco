@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 5.8';
+const BUILD = 'MARCO 5.9';
 ---
 
 <!doctype html>
@@ -49,6 +49,16 @@ const BUILD = 'MARCO 5.8';
       body[data-marco-page='composition'] { --marco-nav-accent: #ff355d; }
       body[data-marco-page='booking'] { --marco-nav-accent: #d8c3ff; }
 
+      /* Canvas du visualizer WebGL : superpose a l'identique #dotWave. */
+      #dotwave-gl {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 23;
+        width: 100vw; height: 88px; pointer-events: none;
+        opacity: 0.78; mix-blend-mode: screen; display: none;
+      }
+      /* Quand le visualizer WebGL tourne : on l'affiche et on masque le dotWave 2D. */
+      html[data-gl-viz='on'] #dotwave-gl { display: block; }
+      html[data-gl-viz='on'] #dotWave { display: none; }
+
       /* Badge de build temporaire (migration Astro) */
       .marco-build-badge {
         position: fixed; left: 10px; bottom: 8px; z-index: 9999;
@@ -69,6 +79,7 @@ const BUILD = 'MARCO 5.8';
       </main>
 
       <canvas id="dotWave" aria-hidden="true" transition:persist="dotwave"></canvas>
+      <canvas id="dotwave-gl" aria-hidden="true" transition:persist="dotwave-gl"></canvas>
       <div class="mini-player" transition:persist="mini-player">
         <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
         <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>

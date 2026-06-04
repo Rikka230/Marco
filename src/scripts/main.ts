@@ -95,8 +95,23 @@ function applyListEntrance() {
   });
 }
 
+/* === Visualizer WebGL (lazy) : remplace dotWave si WebGL dispo, sinon fallback 2D === */
+let glTried = false;
+function tryInitVisualizer() {
+  if (glTried) return;
+  glTried = true;
+  const canvas = document.querySelector<HTMLCanvasElement>('#dotwave-gl');
+  if (!canvas) return;
+  const start = () => import('./webgl/audio-visualizer')
+    .then((m) => m.initVisualizer(canvas))
+    .catch((e) => console.warn('[viz] chargement WebGL echoue (fallback 2D)', e));
+  if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(start);
+  else window.setTimeout(start, 200);
+}
+
 /* === Cycle de vie Astro === */
 function onPageLoad() {
+  tryInitVisualizer();
   initAudio();
   initDotWave();
   initNav();

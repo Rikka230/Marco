@@ -63,6 +63,9 @@ export function initDotWave() {
     if (!canvas || !ctx) return;
     waveFrame = null;
 
+    // Si le visualizer WebGL a pris le relais, on arrete la boucle 2D (economie CPU).
+    if (document.documentElement.dataset.glViz === 'on') return;
+
     const w = window.innerWidth;
     const h = canvas.offsetHeight;
     const page = activePage();
