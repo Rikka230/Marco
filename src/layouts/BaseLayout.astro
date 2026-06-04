@@ -8,6 +8,7 @@ import ChapterNav from '../components/ChapterNav.astro';
 import '../../style.css';
 import '../../assets/css/model-page.css';
 import '../../assets/css/marco-bg-veil.css';
+import '../styles/transitions.css';
 
 interface Props {
   title: string;
@@ -59,6 +60,8 @@ const {
       </div>
 
       <ChapterNav active={page} />
+
+      <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
     </div>
 
     <script>

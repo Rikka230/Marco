@@ -1,0 +1,75 @@
+/* === Phase C — Transitions cinematiques via View Transitions API ===
+   Recree le wipe directionnel "poster" de la Phase 2 (ex .page.slide-from-*),
+   mais sur les pseudo-elements ::view-transition-old/new(root).
+   Les elements transition:persist (mini-player, dotWave, rail, bande) ont leur
+   propre view-transition-name et NE sont donc PAS emportes par le wipe du root.
+   La direction (forward/back par ordre de page) est posee par transitions.ts
+   sur html[data-marco-dir]. */
+
+/* Le groupe root dure le temps de l'entree (la sortie est plus courte). */
+::view-transition-group(root) {
+  animation-duration: 0.92s;
+}
+
+/* Pas de cross-fade par defaut : on pilote nous-memes old + new. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+/* Sens AVANT (defaut) : l'ancienne page sort vers la gauche, la nouvelle entre depuis la droite. */
+::view-transition-old(root) {
+  animation: vtPosterOutLeft 0.52s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+::view-transition-new(root) {
+  animation: vtPosterInRight 0.92s cubic-bezier(0.33, 1, 0.45, 1) both;
+}
+
+/* Sens ARRIERE : miroir. */
+html[data-marco-dir='back']::view-transition-old(root) {
+  animation-name: vtPosterOutRight;
+}
+html[data-marco-dir='back']::view-transition-new(root) {
+  animation-name: vtPosterInLeft;
+}
+
+@keyframes vtPosterInRight {
+  from { transform: translate3d(14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 0 0 24%); }
+  60% { opacity: 1; }
+  to { transform: translate3d(0, 0, 0) scale(1); opacity: 1; clip-path: inset(0 0 0 0); }
+}
+@keyframes vtPosterInLeft {
+  from { transform: translate3d(-14%, 0, 0) scale(0.985); opacity: 0.01; clip-path: inset(0 24% 0 0); }
+  60% { opacity: 1; }
+  to { transform: translate3d(0, 0, 0) scale(1); opacity: 1; clip-path: inset(0 0 0 0); }
+}
+@keyframes vtPosterOutLeft {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  to { transform: translate3d(-16%, 0, 0) scale(0.988); opacity: 0.01; }
+}
+@keyframes vtPosterOutRight {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  to { transform: translate3d(16%, 0, 0) scale(0.988); opacity: 0.01; }
+}
+
+/* Entree differee du gros titre + portrait sur la page entrante (reveal "couche"),
+   appliquee en JS via .marco-enter-title / .marco-enter-person sur astro:page-load. */
+.marco-enter-title {
+  animation: titleLayerIn 0.74s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+.marco-enter-person {
+  animation: personLayerIn 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.001s !important;
+    animation-delay: 0s !important;
+    clip-path: none !important;
+  }
+  .marco-enter-title,
+  .marco-enter-person { animation-duration: 0.001s !important; animation-delay: 0s !important; }
+  .transition-band.is-active { animation-duration: 0.001s !important; }
+}

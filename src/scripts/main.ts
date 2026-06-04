@@ -6,6 +6,7 @@
 import { initAudio, restoreTrack } from './audio';
 import { initDotWave } from './dotwave';
 import { initNav, syncNav } from './nav';
+import { initTransitions } from './transitions';
 // Modules de page historiques reutilises VERBATIM via le shim de cycle de vie.
 // Le shim doit etre importe AVANT (il definit window.Marco.registerPage).
 import './pages/lifecycle-shim.js';
@@ -99,6 +100,7 @@ function onPageLoad() {
   initAudio();
   initDotWave();
   initNav();
+  initTransitions();
   initParallax();
   initForms();
   restoreTrack();
