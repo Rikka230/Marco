@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 6.2';
+const BUILD = 'MARCO 6.3';
 ---
 
 <!doctype html>
@@ -65,17 +65,9 @@ const BUILD = 'MARCO 6.2';
         z-index: 66; pointer-events: none; mix-blend-mode: screen;
       }
 
-      /* Badge de build temporaire (migration Astro) */
-      .marco-build-badge {
-        position: fixed; right: 10px; top: 10px; z-index: 9999;
-        font: 700 11px/1.2 system-ui, sans-serif; letter-spacing: .04em;
-        padding: 4px 9px; border-radius: 999px; pointer-events: none;
-        color: #0b0b0c; background: var(--marco-nav-accent, #86f5a8);
-        box-shadow: 0 4px 14px rgba(0,0,0,.4); text-transform: uppercase;
-      }
     </style>
   </head>
-  <body data-marco-page={page}>
+  <body data-marco-page={page} style={`--marco-build: '${BUILD}'`}>
     <div class="film-grain" aria-hidden="true"></div>
     <div class="shell">
       <a class="mini-brand" href="/" aria-label="Retour accueil"><span></span>MARCO CHARLAS-HOU</a>
@@ -97,7 +89,6 @@ const BUILD = 'MARCO 6.2';
       <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>
       <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
 
-      <div class="marco-build-badge" aria-hidden="true">{BUILD} · {page}</div>
     </div>
 
     <script>

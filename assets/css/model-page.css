@@ -593,7 +593,7 @@
 
 /* === MARCO PATCH v0.5.5 MODEL PAGE FINAL OVERRIDES === */
 .shell:has(.model-page)::after {
-  content: "MARCO v0.5.5" !important;
+  content: var(--marco-build, "MARCO") !important;
 }
 
 .model-page .model-strip-progress span {

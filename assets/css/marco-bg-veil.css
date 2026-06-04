@@ -3,9 +3,10 @@
   --marco-v054-accent: var(--accent, #f293c9);
 }
 
-/* Version badge override for every page using this patch. */
+/* Version badge override for every page using this patch.
+   Le texte est pilote par --marco-build (pose sur <body> par BaseLayout) -> une seule source. */
 .shell::after {
-  content: "MARCO v0.5.5" !important;
+  content: var(--marco-build, "MARCO") !important;
   position: fixed;
   top: clamp(14px, 2vh, 24px);
   right: clamp(86px, 7vw, 142px);

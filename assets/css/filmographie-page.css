@@ -29,7 +29,7 @@ body:has(.filmographie-rebuild) [data-chapter-nav] {
 }
 
 body:has(.filmographie-rebuild) .shell::after {
-  content: "MARCO v0.5.5" !important;
+  content: var(--marco-build, "MARCO") !important;
 }
 
 .filmographie-bg {
