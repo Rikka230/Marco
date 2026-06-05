@@ -575,14 +575,10 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 }
 
 @media (min-width: 1700px) and (max-width: 2199px) and (min-height: 900px) {
+  /* TITRE : taille d'origine conservee (element du design, on n'y touche pas). */
   .filmographie-title-img {
     left: 6vw;
-    /* Reduit + plafonne la HAUTEUR du titre : a 1920x1080 il debordait (h353,
-       bas y409) sur la liste/recherche et le visualiseur. Limite en hauteur pour
-       liberer la place sous le titre, quelle que soit la hauteur d'ecran. */
-    width: auto;
-    max-width: min(72vw, 1400px);
-    max-height: clamp(180px, 22vh, 250px);
+    width: min(84vw, 1660px);
   }
 
   .filmographie-person-wrap {
@@ -591,23 +587,33 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     width: min(33vw, 625px);
   }
 
+  /* A 1920x1080 la liste/recherche et le visualiseur etaient places TROP HAUT
+     (ils chevauchaient le titre) et trop grands. On les descend SOUS le titre
+     (comme au palier >=2200 valide) et on REDUIT le visualiseur pour qu'il tienne
+     au-dessus du badge cine, sans toucher au titre. */
+  /* LISTE (a gauche, sous le texte du titre) : descendue sous le titre. */
   .filmographie-credits {
     left: clamp(5.7rem, 5.7vw, 7.3rem);
-    top: clamp(16.6rem, 30.6vh, 21rem);
+    top: 26rem;
     width: min(43.6vw, 780px);
   }
 
+  .filmographie-list {
+    max-height: min(32vh, 340px);
+  }
+
+  /* VISUALISEUR (a droite, zone vide du titre) : position haute d'origine, juste
+     un peu reduit ; et BADGE cine descendu, pour qu'il degage le badge meme en
+     fenetre courte (1920x950 ~ navigateur maximise). */
   .filmographie-selected {
     right: clamp(8.7rem, 8.2vw, 10.4rem);
-    /* Remonte le visualiseur (a droite du titre) pour qu'il tienne au-dessus du
-       badge cine sur les ecrans courts (ex. fenetre 1920x950). */
-    top: clamp(15rem, 27vh, 20rem);
-    width: min(23vw, 440px);
+    top: clamp(18.4rem, 32.2vh, 22.5rem);
+    width: min(22vw, 420px);
   }
 
   .filmographie-badge {
     right: clamp(5.2rem, 5.4vw, 7rem);
-    bottom: clamp(3.6rem, 6.7vh, 5rem);
+    bottom: clamp(0.8rem, 1.8vh, 1.5rem);
   }
 }
 
