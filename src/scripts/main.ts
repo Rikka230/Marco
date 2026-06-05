@@ -45,9 +45,12 @@ function initParallax() {
   if (parallaxBound) return;
   parallaxBound = true;
   window.addEventListener('pointermove', (e) => {
+    // PC faible : pas de parallaxe (translater le fond plein ecran filtre/blend
+    // a chaque mouvement souris = recompositing GPU tres couteux).
+    if (perf.low) return;
     scheduleParallax(e.clientX / window.innerWidth - 0.5, e.clientY / window.innerHeight - 0.5);
   }, { passive: true });
-  window.addEventListener('pointerleave', () => scheduleParallax(), { passive: true });
+  window.addEventListener('pointerleave', () => { if (!perf.low) scheduleParallax(); }, { passive: true });
 }
 
 /* === Formulaire contact (front-only, port du CORE) === */

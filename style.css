@@ -43,6 +43,24 @@ html[data-perf="low"] #dotwave-gl,
 html[data-perf="low"] #gallery-gl {
   display: none !important;
 }
+/* Allege le compositing : pas de couches GPU permanentes (will-change), pas de
+   blur/filtres plein ecran, pas de blend-mode (recomposite toute la pile a chaque
+   repaint), pas de translate de parallaxe residuel. */
+html[data-perf="low"] .photo-bg,
+html[data-perf="low"] .photo-bg::before,
+html[data-perf="low"] .photo-bg::after,
+html[data-perf="low"] .poster-page .photo-bg::after,
+html[data-perf="low"] .hero-person,
+html[data-perf="low"] .title-wrap,
+html[data-perf="low"] .cover-signature,
+html[data-perf="low"] .filmographie-bg,
+html[data-perf="low"] .model-atmosphere {
+  will-change: auto !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  translate: none !important;
+  animation: none !important;
+}
 
 html,
 body {
