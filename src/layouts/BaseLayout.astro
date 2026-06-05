@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 7.4';
+const BUILD = 'MARCO 7.5';
 ---
 
 <!doctype html>
@@ -37,7 +37,9 @@ const BUILD = 'MARCO 7.4';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {pageStyles.map((href) => <link rel="stylesheet" href={href} />)}
+    {/* ?v=BUILD : cache-bust du CSS de page (nom fixe, sinon le navigateur peut servir
+        une ancienne version desync du style.css bundle -> width invalides -> visuel "explose"). */}
+    {pageStyles.map((href) => <link rel="stylesheet" href={`${href}?v=${encodeURIComponent(BUILD)}`} />)}
     <ClientRouter />
     <style is:global>
       /* Accent global par page (ex --marco-nav-accent pose par JS dans le PJAX, desormais CSS pur). */
