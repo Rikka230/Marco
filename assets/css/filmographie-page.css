@@ -60,7 +60,7 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 1;
   top: clamp(3rem, 5.1vh, 5.4rem);
   left: 5.7vw;
-  width: min(87.4vw, 1640px);
+  width: min(87.4vw, calc(1640 * var(--u)));
   max-width: none;
   height: auto;
   opacity: 0.88;
@@ -75,7 +75,7 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 3;
   left: 51.2%;
   bottom: -3.8vh;
-  width: min(28.8vw, 540px);
+  width: min(28.8vw, calc(540 * var(--u)));
   max-width: none;
   transform: translateX(-50%);
   isolation: isolate;
@@ -129,7 +129,7 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 4;
   left: clamp(5.2rem, 6.2vw, 7.4rem);
   top: clamp(15.8rem, 29vh, 20.5rem);
-  width: min(45.6vw, 790px);
+  width: min(45.6vw, calc(790 * var(--u)));
 }
 
 .filmographie-kicker {
@@ -225,7 +225,7 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-list {
   position: relative;
   display: grid;
-  max-height: min(41vh, 430px);
+  max-height: min(41vh, calc(430 * var(--u)));
   padding-left: 0;
   overflow: hidden auto;
   overscroll-behavior: contain;
@@ -360,7 +360,7 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 5;
   right: clamp(7.6rem, 9.2vw, 11rem);
   top: clamp(18.2rem, 35.8vh, 25rem);
-  width: min(25.2vw, 470px);
+  width: min(25.2vw, calc(470 * var(--u)));
   padding: clamp(1.1rem, 1.35vw, 1.55rem);
   border: 1px solid rgba(244, 189, 104, 0.62);
   border-radius: 8px;
@@ -531,7 +531,7 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 4;
   right: clamp(3.9rem, 5.2vw, 6.4rem);
   bottom: clamp(3.2rem, 8.1vh, 6rem);
-  width: min(9.3vw, 168px);
+  width: min(9.3vw, calc(168 * var(--u)));
   height: auto;
   filter: drop-shadow(0 0 16px rgba(244, 189, 104, 0.2));
 }
@@ -552,7 +552,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 
 @media (max-width: 1180px) {
   .filmographie-person-wrap {
-    width: min(39vw, 540px);
+    width: min(39vw, calc(540 * var(--u)));
     left: 54%;
   }
 
@@ -577,19 +577,19 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 @media (min-width: 1700px) and (min-height: 900px) {
   .filmographie-title-img {
     left: 6vw;
-    width: min(84vw, 1660px);
+    width: min(84vw, calc(1660 * var(--u)));
   }
 
   .filmographie-person-wrap {
     left: 51.6%;
     bottom: -5vh;
-    width: min(33vw, 625px);
+    width: min(33vw, calc(625 * var(--u)));
   }
 
   .filmographie-credits {
     left: clamp(5.7rem, 5.7vw, 7.3rem);
     top: clamp(16.6rem, 30.6vh, 21rem);
-    width: min(43.6vw, 780px);
+    width: min(43.6vw, calc(780 * var(--u)));
   }
 
   .filmographie-selected {
@@ -607,31 +607,31 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
   .filmographie-title-img {
     top: clamp(2.7rem, 3.6vh, 3.7rem);
     left: 4.7vw;
-    width: min(88vw, 2250px);
+    width: min(88vw, calc(2250 * var(--u)));
   }
 
   .filmographie-person-wrap {
     left: 52.2%;
     bottom: -5.8vh;
-    width: min(34vw, 870px);
+    width: min(34vw, calc(870 * var(--u)));
   }
 
   .filmographie-credits {
     left: clamp(6.6rem, 5.2vw, 8.3rem);
     top: clamp(27.5rem, 41.5vh, 36rem);
-    width: min(34vw, 860px);
+    width: min(34vw, calc(860 * var(--u)));
   }
 
   .filmographie-selected {
     right: clamp(9rem, 7.2vw, 12rem);
     top: clamp(27.6rem, 41vh, 36rem);
-    width: min(23.5vw, 540px);
+    width: min(23.5vw, calc(540 * var(--u)));
   }
 
   .filmographie-badge {
     right: clamp(6.5rem, 5vw, 8rem);
     bottom: clamp(4.3rem, 6vh, 5.3rem);
-    width: min(8vw, 190px);
+    width: min(8vw, calc(190 * var(--u)));
   }
 }
 
@@ -660,7 +660,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     top: auto;
     left: 50%;
     display: block;
-    width: min(108vw, 520px);
+    width: min(108vw, calc(520 * var(--u)));
     margin: 0 0 -0.95rem;
     transform: translateX(-50%);
   }
@@ -670,7 +670,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     left: 50%;
     bottom: auto;
     display: block;
-    width: min(82vw, 420px);
+    width: min(82vw, calc(420 * var(--u)));
     margin: 0 auto -1.6rem;
   }
 

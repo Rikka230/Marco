@@ -94,7 +94,7 @@
 .parcours-rebuild .parcours-title-wrap .mega.first {
   top: 5vh;
   left: 51.8%;
-  width: min(72vw, 1160px);
+  width: min(72vw, calc(1160 * var(--u)));
   aspect-ratio: 2033 / 434;
   overflow: visible;
   color: transparent;
@@ -118,7 +118,7 @@
 .parcours-rebuild .parcours-title-wrap .mega.last {
   left: 58%;
   bottom: 1.8vh;
-  width: min(66vw, 1080px);
+  width: min(66vw, calc(1080 * var(--u)));
   aspect-ratio: 2488 / 443;
   overflow: visible;
   color: transparent;
@@ -193,7 +193,7 @@
 }
 
 .parcours-zone {
-  width: min(28vw, 520px);
+  width: min(28vw, calc(520 * var(--u)));
   font-family: var(--text-font);
 }
 
@@ -239,9 +239,9 @@
 }
 
 .parcours-experiences {
-  right: clamp(70px, 5.5vw, 130px);
+  right: clamp(calc(70 * var(--u)), 5.5vw, calc(130 * var(--u)));
   top: 33.6vh;
-  width: min(22vw, 410px);
+  width: min(22vw, calc(410 * var(--u)));
 }
 
 .parcours-study-list,
@@ -550,7 +550,7 @@
 .parcours-skills {
   left: 6.85vw;
   bottom: 8.6vh;
-  width: min(26vw, 450px);
+  width: min(26vw, calc(450 * var(--u)));
   font-family: var(--display-font);
 }
 
@@ -699,7 +699,7 @@
   }
 
   .shell:has(.parcours-rebuild) .chapter-nav {
-    right: clamp(10px, 3.4vw, 18px);
+    right: clamp(calc(10 * var(--u)), 3.4vw, calc(18 * var(--u)));
     top: calc(max(13px, env(safe-area-inset-top)) + 38px);
     bottom: auto;
     z-index: 2147483002;
@@ -747,7 +747,7 @@
 
   .shell:has(.parcours-rebuild) .mini-brand {
     top: max(17px, env(safe-area-inset-top));
-    left: clamp(18px, 6vw, 52px);
+    left: clamp(calc(18 * var(--u)), 6vw, calc(52 * var(--u)));
     z-index: 2147483001;
     gap: 0.34rem;
     color: #f5fff9;
@@ -771,7 +771,7 @@
   .shell:has(.parcours-rebuild)::after {
     content: "MARCO v5.8" !important;
     top: max(13px, env(safe-area-inset-top));
-    right: clamp(18px, 5.2vw, 46px);
+    right: clamp(calc(18 * var(--u)), 5.2vw, calc(46 * var(--u)));
     min-width: 92px;
     height: 30px;
     padding: 0 0.78rem;
@@ -851,10 +851,10 @@
     width: min(100%, 760px);
     min-height: 100dvh;
     margin: 0 auto;
-    padding: 0 clamp(14px, 4vw, 32px) calc(1.4rem + env(safe-area-inset-bottom));
+    padding: 0 clamp(calc(14 * var(--u)), 4vw, calc(32 * var(--u))) calc(1.4rem + env(safe-area-inset-bottom));
     overflow: hidden;
     border: 1px solid rgba(206, 226, 255, 0.2);
-    border-radius: clamp(18px, 4.6vw, 34px);
+    border-radius: clamp(calc(18 * var(--u)), 4.6vw, calc(34 * var(--u)));
     background:
       radial-gradient(ellipse at 50% 7%, rgba(7,143,255,0.17), transparent 44%),
       linear-gradient(180deg, rgba(0,8,20,0.18), rgba(0,0,0,0.72) 58%, rgba(0,0,0,0.94));
@@ -891,10 +891,10 @@
 
   .parcours-mobile-title {
     position: absolute;
-    left: clamp(16px, 4.2vw, 28px);
-    right: clamp(16px, 4.2vw, 28px);
+    left: clamp(calc(16 * var(--u)), 4.2vw, calc(28 * var(--u)));
+    right: clamp(calc(16 * var(--u)), 4.2vw, calc(28 * var(--u)));
     top: clamp(56px, 7.8dvh, 74px);
-    height: clamp(126px, 32vw, 214px);
+    height: clamp(calc(126 * var(--u)), 32vw, calc(214 * var(--u)));
     overflow: hidden;
     background: url("/assets/img/parcours-title.webp") 50% top / contain no-repeat;
     filter:
@@ -924,7 +924,7 @@
 
   .parcours-mobile-copy {
     position: absolute;
-    left: clamp(16px, 5vw, 42px);
+    left: clamp(calc(16 * var(--u)), 5vw, calc(42 * var(--u)));
     top: clamp(270px, 34dvh, 336px);
     z-index: 3;
     width: min(15.8rem, 62vw);
@@ -973,8 +973,8 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 0.46rem;
-    margin: clamp(-3.2rem, -8.8vw, -2.18rem) calc(-1 * clamp(14px, 4vw, 32px)) 0.92rem;
-    padding: 0 clamp(14px, 4vw, 32px) 0.16rem;
+    margin: clamp(-3.2rem, -8.8vw, -2.18rem) calc(-1 * clamp(calc(14 * var(--u)), 4vw, calc(32 * var(--u)))) 0.92rem;
+    padding: 0 clamp(calc(14 * var(--u)), 4vw, calc(32 * var(--u))) 0.16rem;
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-inline: contain;
@@ -1317,7 +1317,7 @@
   .parcours-mobile-player {
     position: relative;
     display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr) auto clamp(32px, 11vw, 72px);
+    grid-template-columns: auto auto minmax(0, 1fr) auto clamp(calc(32 * var(--u)), 11vw, calc(72 * var(--u)));
     gap: clamp(0.48rem, 2.4vw, 0.86rem);
     align-items: center;
     min-height: 66px;
@@ -1417,8 +1417,8 @@
   }
 
   .shell:has(.page.inner.parcours-rebuild) .mini-player {
-    left: clamp(14px, 4.6vw, 36px) !important;
-    right: clamp(14px, 4.6vw, 36px) !important;
+    left: clamp(calc(14 * var(--u)), 4.6vw, calc(36 * var(--u))) !important;
+    right: clamp(calc(14 * var(--u)), 4.6vw, calc(36 * var(--u))) !important;
     bottom: calc(12px + env(safe-area-inset-bottom)) !important;
     z-index: 2147482999 !important;
     display: flex !important;
@@ -1453,7 +1453,7 @@
   .shell:has(.page.inner.parcours-rebuild) .mini-player::after {
     content: "" !important;
     display: block !important;
-    width: clamp(54px, 17vw, 92px);
+    width: clamp(calc(54 * var(--u)), 17vw, calc(92 * var(--u)));
     height: 36px;
     margin-left: auto;
     background:
@@ -1546,8 +1546,8 @@
     border-left: 0;
     border-right: 0;
     border-radius: 0;
-    padding-right: clamp(13px, 3.9vw, 18px);
-    padding-left: clamp(13px, 3.9vw, 18px);
+    padding-right: clamp(calc(13 * var(--u)), 3.9vw, calc(18 * var(--u)));
+    padding-left: clamp(calc(13 * var(--u)), 3.9vw, calc(18 * var(--u)));
   }
 
   .parcours-mobile-hero {

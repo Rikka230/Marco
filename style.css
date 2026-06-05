@@ -497,7 +497,7 @@ button {
   width: 100vw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.96);
-  font-size: clamp(105px, 21vw, 410px);
+  font-size: clamp(calc(105 * var(--u)), 21vw, calc(410 * var(--u)));
   line-height: 0.76;
   letter-spacing: -0.09em;
 }
@@ -508,7 +508,7 @@ button {
   width: 100vw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.82);
-  font-size: clamp(58px, 11vw, 200px);
+  font-size: clamp(calc(58 * var(--u)), 11vw, calc(200 * var(--u)));
   line-height: 0.76;
   letter-spacing: -0.085em;
 }
@@ -527,13 +527,13 @@ button {
 .inner-copy p {
   margin: 0 0 0.35rem;
   color: var(--cream);
-  font-size: clamp(10px, 0.78vw, 16px);
+  font-size: clamp(calc(10 * var(--u)), 0.78vw, calc(16 * var(--u)));
   letter-spacing: 0.08em;
 }
 
 .inner-copy h1 {
   margin: 0;
-  font-size: clamp(42px, 6.8vw, 130px);
+  font-size: clamp(calc(42 * var(--u)), 6.8vw, calc(130 * var(--u)));
   line-height: 0.82;
   letter-spacing: -0.07em;
 }
@@ -545,7 +545,7 @@ button {
   top: 36vh;
   display: grid;
   gap: 1rem;
-  min-width: min(26vw, 420px);
+  min-width: min(26vw, calc(420 * var(--u)));
   color: var(--mint);
   font-family: var(--heavy);
   text-transform: uppercase;
@@ -558,14 +558,14 @@ button {
 }
 
 .inner-nav a strong {
-  font-size: clamp(22px, 2.6vw, 50px);
+  font-size: clamp(calc(22 * var(--u)), 2.6vw, calc(50 * var(--u)));
   line-height: 0.85;
   letter-spacing: -0.065em;
 }
 
 .inner-nav a span {
   color: var(--cream);
-  font-size: clamp(8px, 0.7vw, 13px);
+  font-size: clamp(calc(8 * var(--u)), 0.7vw, calc(13 * var(--u)));
   letter-spacing: 0.09em;
 }
 
@@ -583,12 +583,12 @@ body.is-transitioning .mini-brand {
 @media (max-width: 1100px) {
   .home .mega.first {
     top: 0;
-    font-size: clamp(128px, 25vw, 310px);
+    font-size: clamp(calc(128 * var(--u)), 25vw, calc(310 * var(--u)));
   }
 
   .home .mega.last {
     bottom: 8.5vh;
-    font-size: clamp(48px, 12vw, 130px);
+    font-size: clamp(calc(48 * var(--u)), 12vw, calc(130 * var(--u)));
   }
 
   .hero-person {
@@ -603,7 +603,7 @@ body.is-transitioning .mini-brand {
 @media (max-width: 850px) {
   .home .mega.first {
     top: 4vh;
-    font-size: clamp(78px, 30vw, 210px);
+    font-size: clamp(calc(78 * var(--u)), 30vw, calc(210 * var(--u)));
     transform: translateX(-50%) scaleX(0.94);
   }
 
@@ -617,7 +617,7 @@ body.is-transitioning .mini-brand {
 
   .home .mega.last {
     bottom: 9vh;
-    font-size: clamp(32px, 11vw, 84px);
+    font-size: clamp(calc(32 * var(--u)), 11vw, calc(84 * var(--u)));
   }
 
   .key-project {
@@ -627,7 +627,7 @@ body.is-transitioning .mini-brand {
   }
 
   .key-project span {
-    font-size: clamp(26px, 7vw, 58px);
+    font-size: clamp(calc(26 * var(--u)), 7vw, calc(58 * var(--u)));
   }
 
   .cover-tagline {
@@ -637,15 +637,15 @@ body.is-transitioning .mini-brand {
   }
 
   .cover-tagline span {
-    font-size: clamp(20px, 5vw, 42px);
+    font-size: clamp(calc(20 * var(--u)), 5vw, calc(42 * var(--u)));
   }
 
   .cover-hit.left-a { left: 6vw; top: 24vh; }
   .cover-hit.left-b { left: 6vw; top: 65vh; }
   .cover-hit.right-a { right: 6vw; top: 24vh; }
   .cover-hit.right-b { right: 6vw; top: 65vh; }
-  .cover-hit strong { font-size: clamp(16px, 4.5vw, 32px); }
-  .cover-hit span { font-size: clamp(7px, 1.7vw, 11px); }
+  .cover-hit strong { font-size: clamp(calc(16 * var(--u)), 4.5vw, calc(32 * var(--u))); }
+  .cover-hit span { font-size: clamp(calc(7 * var(--u)), 1.7vw, calc(11 * var(--u))); }
 
   .inner-copy {
     left: 7vw;
@@ -799,7 +799,7 @@ body.is-transitioning .mini-brand {
   width: 104vw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.93);
-  font-size: clamp(118px, 19.4vw, 360px);
+  font-size: clamp(calc(118 * var(--u)), 19.4vw, calc(360 * var(--u)));
   line-height: 0.73;
   letter-spacing: -0.078em;
   opacity: 0.92;
@@ -812,7 +812,7 @@ body.is-transitioning .mini-brand {
   text-align: center;
   transform: translateX(-50%) scaleX(0.78);
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(46px, 6.45vw, 124px);
+  font-size: clamp(calc(46 * var(--u)), 6.45vw, calc(124 * var(--u)));
   font-weight: 720;
   line-height: 0.78;
   letter-spacing: -0.032em;
@@ -901,13 +901,13 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .cover-hit strong {
-  font-size: clamp(18px, 1.48vw, 34px);
+  font-size: clamp(calc(18 * var(--u)), 1.48vw, calc(34 * var(--u)));
   letter-spacing: -0.05em;
 }
 
 .inner .cover-hit span {
   color: currentColor;
-  font-size: clamp(7px, 0.58vw, 12px);
+  font-size: clamp(calc(7 * var(--u)), 0.58vw, calc(12 * var(--u)));
 }
 
 .inner .cover-hit:hover {
@@ -950,7 +950,7 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .key-project span {
-  font-size: clamp(34px, 4.2vw, 86px);
+  font-size: clamp(calc(34 * var(--u)), 4.2vw, calc(86 * var(--u)));
   line-height: 0.82;
   letter-spacing: -0.062em;
 }
@@ -988,7 +988,7 @@ body.is-transitioning .mini-brand {
 }
 
 .inner .cover-tagline span {
-  font-size: clamp(26px, 3vw, 62px);
+  font-size: clamp(calc(26 * var(--u)), 3vw, calc(62 * var(--u)));
   letter-spacing: -0.058em;
 }
 
@@ -1009,7 +1009,7 @@ body.is-transitioning .mini-brand {
 
 .editorial-stack span {
   display: block;
-  font-size: clamp(17px, 1.55vw, 34px);
+  font-size: clamp(calc(17 * var(--u)), 1.55vw, calc(34 * var(--u)));
   letter-spacing: -0.05em;
   white-space: nowrap;
 }
@@ -1036,7 +1036,7 @@ body.is-transitioning .mini-brand {
 }
 
 .contact-stack span {
-  font-size: clamp(20px, 1.95vw, 40px);
+  font-size: clamp(calc(20 * var(--u)), 1.95vw, calc(40 * var(--u)));
 }
 
 .contact-form {
@@ -1047,7 +1047,7 @@ body.is-transitioning .mini-brand {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.68rem 1rem;
-  width: min(36vw, 580px);
+  width: min(36vw, calc(580 * var(--u)));
   padding: 0.9rem 0 0;
   color: var(--accent);
   font-family: var(--ui);
@@ -1081,7 +1081,7 @@ body.is-transitioning .mini-brand {
 .request-type legend {
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 12px);
+  font-size: clamp(calc(8 * var(--u)), 0.58vw, calc(12 * var(--u)));
   line-height: 1;
   letter-spacing: 0.04em;
 }
@@ -1097,7 +1097,7 @@ body.is-transitioning .mini-brand {
   outline: 0;
   background: transparent;
   color: currentColor;
-  font: 700 clamp(12px, 0.9vw, 16px) / 1.12 var(--ui);
+  font: 700 clamp(calc(12 * var(--u)), 0.9vw, calc(16 * var(--u))) / 1.12 var(--ui);
   letter-spacing: 0.01em;
   transition: border-color 0.18s ease, color 0.18s ease, translate 0.18s ease;
 }
@@ -1150,7 +1150,7 @@ body.is-transitioning .mini-brand {
   border-bottom: 1px solid transparent;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(10px, 0.74vw, 14px);
+  font-size: clamp(calc(10 * var(--u)), 0.74vw, calc(14 * var(--u)));
   line-height: 1;
   letter-spacing: -0.025em;
   transition: color 0.18s ease, border-color 0.18s ease, translate 0.18s ease;
@@ -1172,7 +1172,7 @@ body.is-transitioning .mini-brand {
   background: transparent;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(18px, 1.45vw, 32px);
+  font-size: clamp(calc(18 * var(--u)), 1.45vw, calc(32 * var(--u)));
   line-height: 0.9;
   letter-spacing: -0.055em;
   text-transform: uppercase;
@@ -1212,7 +1212,7 @@ body.is-transitioning .mini-brand {
   margin: -0.1rem 0 0;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 12px);
+  font-size: clamp(calc(8 * var(--u)), 0.58vw, calc(12 * var(--u)));
   line-height: 1;
   letter-spacing: 0.04em;
 }
@@ -1459,7 +1459,7 @@ body.is-transitioning .mini-brand {
 .transition-band span {
   position: relative;
   z-index: 1;
-  font-size: clamp(70px, 13vw, 260px);
+  font-size: clamp(calc(70 * var(--u)), 13vw, calc(260 * var(--u)));
   line-height: 0.8;
   letter-spacing: -0.06em;
   opacity: 1;
@@ -1522,12 +1522,12 @@ body.is-transitioning .mini-brand {
 @media (max-width: 900px) {
   .inner .mega.first {
     top: 5vh;
-    font-size: clamp(76px, 25vw, 230px);
+    font-size: clamp(calc(76 * var(--u)), 25vw, calc(230 * var(--u)));
   }
 
   .inner .mega.last {
     bottom: 8vh;
-    font-size: clamp(34px, 11vw, 96px);
+    font-size: clamp(calc(34 * var(--u)), 11vw, calc(96 * var(--u)));
   }
 
   .inner .hero-person {
@@ -1543,7 +1543,7 @@ body.is-transitioning .mini-brand {
   }
 
   .inner .key-project span {
-    font-size: clamp(28px, 8vw, 64px);
+    font-size: clamp(calc(28 * var(--u)), 8vw, calc(64 * var(--u)));
   }
 
   .inner .cover-tagline {
@@ -1583,7 +1583,7 @@ body.is-transitioning .mini-brand {
 .chapter-nav {
   position: fixed;
   z-index: 34;
-  right: clamp(10px, 1.55vw, 26px);
+  right: clamp(calc(10 * var(--u)), 1.55vw, calc(26 * var(--u)));
   top: 50%;
   display: grid;
   justify-items: center;
@@ -1709,11 +1709,11 @@ body.is-transitioning .mini-brand {
 
 .chapter-panel {
   position: absolute;
-  right: clamp(44px, 3.6vw, 68px);
+  right: clamp(calc(44 * var(--u)), 3.6vw, calc(68 * var(--u)));
   top: 50%;
   display: grid;
   gap: 0.48rem;
-  min-width: min(42vw, 460px);
+  min-width: min(42vw, calc(460 * var(--u)));
   padding: 1rem 0.2rem 1rem 1rem;
   pointer-events: none;
   opacity: 0;
@@ -1736,7 +1736,7 @@ body.is-transitioning .mini-brand {
   align-items: end;
   gap: 0.78rem;
   width: fit-content;
-  min-width: min(34vw, 380px);
+  min-width: min(34vw, calc(380 * var(--u)));
   padding: 0.46rem 1rem 0.44rem 1.18rem;
   color: var(--cream);
   transform: skewX(-12deg) translateX(calc(var(--step, 0) * -0.62rem));
@@ -1891,7 +1891,7 @@ body.is-transitioning .mini-brand {
   }
 
   .chapter-link strong {
-    font-size: clamp(27px, 10vw, 58px);
+    font-size: clamp(calc(27 * var(--u)), 10vw, calc(58 * var(--u)));
   }
 }
 /* === MARCO GLOBAL CHAPTER NAV - END === */
@@ -2086,11 +2086,11 @@ body.is-transitioning .mini-brand {
 
 /* Composition diagonal tracklist: keep it diagonal, lowered, scrollable, and without horizontal drift. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(122px, 7vw, 174px);
-  top: clamp(248px, 26vh, 324px);
-  width: min(37vw, 680px);
-  height: clamp(360px, 47vh, 610px);
-  max-height: calc(100vh - clamp(360px, 36vh, 430px));
+  right: clamp(calc(122 * var(--u)), 7vw, calc(174 * var(--u)));
+  top: clamp(calc(248 * var(--u)), 26vh, calc(324 * var(--u)));
+  width: min(37vw, calc(680 * var(--u)));
+  height: clamp(calc(360 * var(--u)), 47vh, calc(610 * var(--u)));
+  max-height: calc(100vh - clamp(calc(360 * var(--u)), 36vh, calc(430 * var(--u))));
   overflow: visible;
   z-index: 42;
   transform: rotate(-7.25deg);
@@ -2103,7 +2103,7 @@ body.is-transitioning .mini-brand {
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px);
+  padding: clamp(calc(22 * var(--u)), 2.4vh, calc(34 * var(--u))) clamp(calc(86 * var(--u)), 5.4vw, calc(124 * var(--u))) clamp(calc(86 * var(--u)), 9vh, calc(128 * var(--u))) clamp(calc(8 * var(--u)), 0.55vw, calc(14 * var(--u)));
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 48, 79, 0.82) rgba(255, 255, 255, 0.045);
   scrollbar-gutter: stable;
@@ -2128,10 +2128,10 @@ body.is-transitioning .mini-brand {
 .composition-page .composition-track {
   box-sizing: border-box;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  width: calc(100% - clamp(28px, 2vw, 44px));
-  min-height: clamp(48px, 5.5vh, 68px);
-  margin: 0 0 clamp(6px, 0.75vh, 9px) 0;
-  padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px);
+  width: calc(100% - clamp(calc(28 * var(--u)), 2vw, calc(44 * var(--u))));
+  min-height: clamp(calc(48 * var(--u)), 5.5vh, calc(68 * var(--u)));
+  margin: 0 0 clamp(calc(6 * var(--u)), 0.75vh, calc(9 * var(--u))) 0;
+  padding: clamp(calc(6 * var(--u)), 0.72vh, calc(9 * var(--u))) clamp(calc(10 * var(--u)), 0.8vw, calc(14 * var(--u))) clamp(calc(6 * var(--u)), 0.72vh, calc(9 * var(--u))) clamp(calc(12 * var(--u)), 0.9vw, calc(16 * var(--u)));
   background:
     linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
@@ -2142,33 +2142,33 @@ body.is-transitioning .mini-brand {
 }
 
 .composition-page .composition-track:nth-child(even) {
-  margin-left: clamp(12px, 1vw, 20px);
+  margin-left: clamp(calc(12 * var(--u)), 1vw, calc(20 * var(--u)));
 }
 
 .composition-page .composition-track:nth-child(3n) {
-  margin-left: clamp(4px, 0.45vw, 10px);
+  margin-left: clamp(calc(4 * var(--u)), 0.45vw, calc(10 * var(--u)));
 }
 
 .composition-page .track-title {
   max-width: 100%;
   overflow: visible;
-  font-size: clamp(17px, 1.55vw, 32px);
+  font-size: clamp(calc(17 * var(--u)), 1.55vw, calc(32 * var(--u)));
 }
 
 .composition-page .track-index {
-  font-size: clamp(25px, 2.2vw, 42px);
+  font-size: clamp(calc(25 * var(--u)), 2.2vw, calc(42 * var(--u)));
 }
 
 .composition-page .track-meta {
-  gap: clamp(5px, 0.42vw, 9px);
-  font-size: clamp(6px, 0.48vw, 9px);
+  gap: clamp(calc(5 * var(--u)), 0.42vw, calc(9 * var(--u)));
+  font-size: clamp(calc(6 * var(--u)), 0.48vw, calc(9 * var(--u)));
   white-space: nowrap;
 }
 
 .composition-page .track-play {
-  width: clamp(30px, 2.15vw, 40px);
-  height: clamp(30px, 2.15vw, 40px);
-  font-size: clamp(7px, 0.55vw, 10px);
+  width: clamp(calc(30 * var(--u)), 2.15vw, calc(40 * var(--u)));
+  height: clamp(calc(30 * var(--u)), 2.15vw, calc(40 * var(--u)));
+  font-size: clamp(calc(7 * var(--u)), 0.55vw, calc(10 * var(--u)));
   box-shadow: 0 8px 18px rgba(0,0,0,0.32);
 }
 
@@ -2190,7 +2190,7 @@ body.is-transitioning .mini-brand {
   min-height: 28px;
   padding: 0 0.78rem;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.58vw, 10px);
+  font-size: clamp(calc(8 * var(--u)), 0.58vw, calc(10 * var(--u)));
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
@@ -2203,7 +2203,7 @@ body.is-transitioning .mini-brand {
 }
 
 .mini-player .track-label {
-  max-width: min(58vw, 820px);
+  max-width: min(58vw, calc(820 * var(--u)));
   overflow: hidden;
 }
 
@@ -2271,7 +2271,7 @@ body.is-transitioning .mini-brand {
   align-items: center;
   gap: 0.36rem;
   margin-left: auto;
-  margin-right: clamp(110px, 8.5vw, 154px);
+  margin-right: clamp(calc(110 * var(--u)), 8.5vw, calc(154 * var(--u)));
   min-height: 28px;
   padding: 0 0.78rem;
   border: 1px solid color-mix(in srgb, var(--accent, var(--mint)) 28%, transparent);
@@ -2281,7 +2281,7 @@ body.is-transitioning .mini-brand {
   color: color-mix(in srgb, var(--accent, var(--mint)) 72%, var(--cream) 28%);
   cursor: pointer;
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.56vw, 10px);
+  font-size: clamp(calc(8 * var(--u)), 0.56vw, calc(10 * var(--u)));
   letter-spacing: 0.11em;
   text-transform: uppercase;
   box-shadow:
@@ -2310,14 +2310,14 @@ body.is-transitioning .mini-brand {
 
 .music-drawer-sheet {
   position: fixed;
-  left: clamp(18px, 3.8vw, 74px);
-  right: clamp(112px, 8.8vw, 164px);
+  left: clamp(calc(18 * var(--u)), 3.8vw, calc(74 * var(--u)));
+  right: clamp(calc(112 * var(--u)), 8.8vw, calc(164 * var(--u)));
   bottom: 0;
   z-index: 72;
   display: grid;
   grid-template-columns: minmax(220px, 0.72fr) minmax(0, 2fr);
   gap: clamp(0.72rem, 1vw, 1.1rem);
-  height: clamp(258px, 36vh, 386px);
+  height: clamp(calc(258 * var(--u)), 36vh, calc(386 * var(--u)));
   padding:
     clamp(0.84rem, 1vw, 1.05rem)
     clamp(0.84rem, 1vw, 1.05rem)
@@ -2379,7 +2379,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-eyebrow {
   color: rgba(236, 243, 255, 0.56);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.56vw, 10px);
+  font-size: clamp(calc(8 * var(--u)), 0.56vw, calc(10 * var(--u)));
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -2387,7 +2387,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-now strong {
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(22px, 1.7vw, 36px);
+  font-size: clamp(calc(22 * var(--u)), 1.7vw, calc(36 * var(--u)));
   line-height: 0.86;
   letter-spacing: -0.07em;
   text-transform: uppercase;
@@ -2396,7 +2396,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-now span[data-now-meta] {
   color: rgba(236, 243, 255, 0.64);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.62vw, 11px);
+  font-size: clamp(calc(8 * var(--u)), 0.62vw, calc(11 * var(--u)));
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -2431,14 +2431,14 @@ body.music-drawer-open .music-drawer-sheet {
   gap: 1rem;
   color: rgba(236, 243, 255, 0.68);
   font-family: var(--heavy);
-  font-size: clamp(8px, 0.62vw, 11px);
+  font-size: clamp(calc(8 * var(--u)), 0.62vw, calc(11 * var(--u)));
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .music-drawer-header strong {
   color: var(--cream);
-  font-size: clamp(12px, 0.92vw, 16px);
+  font-size: clamp(calc(12 * var(--u)), 0.92vw, calc(16 * var(--u)));
   letter-spacing: -0.02em;
 }
 
@@ -2493,7 +2493,7 @@ body.music-drawer-open .music-drawer-sheet {
 
 .music-drawer-index {
   color: color-mix(in srgb, var(--accent, var(--mint)) 82%, var(--cream) 18%);
-  font-size: clamp(16px, 1.1vw, 22px);
+  font-size: clamp(calc(16 * var(--u)), 1.1vw, calc(22 * var(--u)));
   line-height: 0.85;
   letter-spacing: -0.06em;
 }
@@ -2507,7 +2507,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-name strong {
   overflow: hidden;
   color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(10px, 0.72vw, 14px);
+  font-size: clamp(calc(10 * var(--u)), 0.72vw, calc(14 * var(--u)));
   line-height: 1;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -2517,7 +2517,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-name span {
   overflow: hidden;
   color: rgba(236, 243, 255, 0.55);
-  font-size: clamp(7px, 0.5vw, 9px);
+  font-size: clamp(calc(7 * var(--u)), 0.5vw, calc(9 * var(--u)));
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -2525,7 +2525,7 @@ body.music-drawer-open .music-drawer-sheet {
 .music-drawer-duration {
   color: rgba(236, 243, 255, 0.5);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.5vw, 9px);
+  font-size: clamp(calc(7 * var(--u)), 0.5vw, calc(9 * var(--u)));
   letter-spacing: 0.08em;
 }
 
@@ -2554,7 +2554,7 @@ body.music-drawer-open .music-drawer-sheet {
     left: 4vw;
     right: 4vw;
     grid-template-columns: 1fr;
-    height: min(62vh, 500px);
+    height: min(62vh, calc(500 * var(--u)));
     padding-bottom: 4.4rem;
   }
 
@@ -2775,7 +2775,7 @@ button.music-drawer-toggle,
   align-items: center !important;
   gap: 0.42rem !important;
   margin-left: auto !important;
-  margin-right: clamp(110px, 8.5vw, 154px) !important;
+  margin-right: clamp(calc(110 * var(--u)), 8.5vw, calc(154 * var(--u))) !important;
   padding: 0 !important;
   width: auto !important;
   min-width: 0 !important;
@@ -2790,7 +2790,7 @@ button.music-drawer-toggle,
   cursor: pointer !important;
   color: color-mix(in srgb, var(--accent, var(--mint)) 88%, var(--cream) 12%) !important;
   font-family: var(--heavy) !important;
-  font-size: clamp(8px, 0.58vw, 10px) !important;
+  font-size: clamp(calc(8 * var(--u)), 0.58vw, calc(10 * var(--u))) !important;
   line-height: 1 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
@@ -2844,7 +2844,7 @@ button.music-drawer-toggle::after,
   color: var(--cream) !important;
   font-family: var(--heavy) !important;
   font-style: normal !important;
-  font-size: clamp(15px, 1.18vw, 22px) !important;
+  font-size: clamp(calc(15 * var(--u)), 1.18vw, calc(22 * var(--u))) !important;
   font-weight: 900 !important;
   line-height: 0.75 !important;
   text-shadow:
@@ -3055,8 +3055,8 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .shell:has(.page:not(.is-leaving).inner:not([data-page="home"]))::after {
   content: "MARCO v0.4.9";
   position: fixed;
-  top: clamp(14px, 2vh, 24px);
-  right: clamp(86px, 7vw, 142px);
+  top: clamp(calc(14 * var(--u)), 2vh, calc(24 * var(--u)));
+  right: clamp(calc(86 * var(--u)), 7vw, calc(142 * var(--u)));
   z-index: 2147483000;
   display: inline-grid !important;
   place-items: center;
@@ -3082,11 +3082,11 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Composition tracklist active rules: lowered viewport, vertical scroll, soft fade, no horizontal scrollbar. */
 .composition-page .composition-diagonal-zone {
-  right: clamp(122px, 7vw, 174px) !important;
-  top: clamp(248px, 26vh, 324px) !important;
-  width: min(37vw, 680px) !important;
-  height: clamp(360px, 47vh, 610px) !important;
-  max-height: calc(100vh - clamp(360px, 36vh, 430px)) !important;
+  right: clamp(calc(122 * var(--u)), 7vw, calc(174 * var(--u))) !important;
+  top: clamp(calc(248 * var(--u)), 26vh, calc(324 * var(--u))) !important;
+  width: min(37vw, calc(680 * var(--u))) !important;
+  height: clamp(calc(360 * var(--u)), 47vh, calc(610 * var(--u))) !important;
+  max-height: calc(100vh - clamp(calc(360 * var(--u)), 36vh, calc(430 * var(--u)))) !important;
   overflow: visible !important;
   z-index: 42 !important;
   transform: rotate(-7.25deg) !important;
@@ -3099,7 +3099,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px) !important;
+  padding: clamp(calc(22 * var(--u)), 2.4vh, calc(34 * var(--u))) clamp(calc(86 * var(--u)), 5.4vw, calc(124 * var(--u))) clamp(calc(86 * var(--u)), 9vh, calc(128 * var(--u))) clamp(calc(8 * var(--u)), 0.55vw, calc(14 * var(--u))) !important;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
   scrollbar-width: thin !important;
@@ -3124,10 +3124,10 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .composition-page .composition-track {
   box-sizing: border-box !important;
   grid-template-columns: auto minmax(0, 1fr) auto !important;
-  width: calc(100% - clamp(28px, 2vw, 44px)) !important;
-  min-height: clamp(48px, 5.5vh, 68px) !important;
-  margin: 0 0 clamp(6px, 0.75vh, 9px) 0 !important;
-  padding: clamp(6px, 0.72vh, 9px) clamp(10px, 0.8vw, 14px) clamp(6px, 0.72vh, 9px) clamp(12px, 0.9vw, 16px) !important;
+  width: calc(100% - clamp(calc(28 * var(--u)), 2vw, calc(44 * var(--u)))) !important;
+  min-height: clamp(calc(48 * var(--u)), 5.5vh, calc(68 * var(--u))) !important;
+  margin: 0 0 clamp(calc(6 * var(--u)), 0.75vh, calc(9 * var(--u))) 0 !important;
+  padding: clamp(calc(6 * var(--u)), 0.72vh, calc(9 * var(--u))) clamp(calc(10 * var(--u)), 0.8vw, calc(14 * var(--u))) clamp(calc(6 * var(--u)), 0.72vh, calc(9 * var(--u))) clamp(calc(12 * var(--u)), 0.9vw, calc(16 * var(--u))) !important;
   background:
     linear-gradient(90deg, rgba(255,48,79,0.92) 0%, rgba(255,48,79,0.42) 28%, rgba(22,0,8,0.68) 68%, rgba(5,0,4,0.18) 100%),
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) !important;
@@ -3138,34 +3138,34 @@ body.marco-page-wheel-locked .chapter-nav::after {
 }
 
 .composition-page .composition-track:nth-child(even) {
-  margin-left: clamp(12px, 1vw, 20px) !important;
+  margin-left: clamp(calc(12 * var(--u)), 1vw, calc(20 * var(--u))) !important;
 }
 
 .composition-page .composition-track:nth-child(3n) {
-  margin-left: clamp(4px, 0.45vw, 10px) !important;
+  margin-left: clamp(calc(4 * var(--u)), 0.45vw, calc(10 * var(--u))) !important;
 }
 
 .composition-page .track-index {
-  font-size: clamp(25px, 2.2vw, 42px) !important;
+  font-size: clamp(calc(25 * var(--u)), 2.2vw, calc(42 * var(--u))) !important;
 }
 
 .composition-page .track-title {
   max-width: 100% !important;
   overflow: visible !important;
-  font-size: clamp(17px, 1.55vw, 32px) !important;
+  font-size: clamp(calc(17 * var(--u)), 1.55vw, calc(32 * var(--u))) !important;
   line-height: 0.82 !important;
 }
 
 .composition-page .track-meta {
-  gap: clamp(5px, 0.42vw, 9px) !important;
-  font-size: clamp(6px, 0.48vw, 9px) !important;
+  gap: clamp(calc(5 * var(--u)), 0.42vw, calc(9 * var(--u))) !important;
+  font-size: clamp(calc(6 * var(--u)), 0.48vw, calc(9 * var(--u))) !important;
   white-space: nowrap !important;
 }
 
 .composition-page .track-play {
-  width: clamp(30px, 2.15vw, 40px) !important;
-  height: clamp(30px, 2.15vw, 40px) !important;
-  font-size: clamp(7px, 0.55vw, 10px) !important;
+  width: clamp(calc(30 * var(--u)), 2.15vw, calc(40 * var(--u))) !important;
+  height: clamp(calc(30 * var(--u)), 2.15vw, calc(40 * var(--u))) !important;
+  font-size: clamp(calc(7 * var(--u)), 0.55vw, calc(10 * var(--u))) !important;
   box-shadow: 0 8px 18px rgba(0,0,0,0.32) !important;
 }
 
@@ -3228,7 +3228,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Mini-player : pas de plaque translucide, seulement la ligne haute. */
 .shell:has(.page:not(.is-leaving).inner:not([data-page="home"])) .mini-player {
-  bottom: clamp(42px, 5.4vh, 72px) !important;
+  bottom: clamp(calc(42 * var(--u)), 5.4vh, calc(72 * var(--u))) !important;
   padding: 0.72rem 0 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -3243,7 +3243,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
   position: absolute !important;
   left: 0 !important;
   top: 0 !important;
-  width: min(74vw, 880px) !important;
+  width: min(74vw, calc(880 * var(--u))) !important;
   height: 1px !important;
   display: block !important;
   background: linear-gradient(90deg, color-mix(in srgb, var(--marco-page-accent) 70%, rgba(255,255,255,0.16)), rgba(255,255,255,0.16) 38%, transparent 100%) !important;
@@ -3258,7 +3258,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 
 /* Drawer musique global : le vrai tiroir, pas la liste Composition. */
 .music-drawer-sheet {
-  height: clamp(420px, 58vh, 620px) !important;
+  height: clamp(calc(420 * var(--u)), 58vh, calc(620 * var(--u))) !important;
   padding: clamp(1rem, 1.25vw, 1.35rem) clamp(1rem, 1.25vw, 1.35rem) clamp(5rem, 8vh, 6.2rem) !important;
   overflow: visible !important;
 }
@@ -3331,7 +3331,7 @@ body.music-drawer-open .music-drawer-sheet {
   }
 
   .music-drawer-sheet {
-    height: min(76vh, 620px) !important;
+    height: min(76vh, calc(620 * var(--u))) !important;
     grid-template-columns: 1fr !important;
     padding-bottom: 5.4rem !important;
   }

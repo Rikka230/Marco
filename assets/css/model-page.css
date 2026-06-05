@@ -4,7 +4,7 @@
   --model-pink-soft: rgba(242, 147, 201, 0.58);
   --model-cream: rgba(247, 240, 228, 0.92);
   --model-ink: rgba(3, 4, 5, 0.86);
-  --strip-h: clamp(86px, 13.4vh, 168px);
+  --strip-h: clamp(calc(86 * var(--u)), 13.4vh, calc(168 * var(--u)));
   background: #050406;
 }
 
@@ -48,9 +48,9 @@
   left: 4.6vw;
   right: 8vw;
   display: grid;
-  grid-template-columns: clamp(118px, 12vw, 236px) minmax(0, 1fr);
+  grid-template-columns: clamp(calc(118 * var(--u)), 12vw, calc(236 * var(--u))) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) 3px;
-  column-gap: clamp(14px, 2vw, 36px);
+  column-gap: clamp(calc(14 * var(--u)), 2vw, calc(36 * var(--u)));
   height: var(--strip-h);
   pointer-events: auto;
   isolation: isolate;
@@ -102,12 +102,12 @@
 
 .model-strip-heading span {
   color: var(--model-cream);
-  font-size: clamp(9px, 0.7vw, 13px);
+  font-size: clamp(calc(9 * var(--u)), 0.7vw, calc(13 * var(--u)));
   letter-spacing: 0.08em;
 }
 
 .model-strip-heading strong {
-  font-size: clamp(18px, 1.45vw, 34px);
+  font-size: clamp(calc(18 * var(--u)), 1.45vw, calc(34 * var(--u)));
   line-height: 0.84;
   letter-spacing: -0.06em;
 }
@@ -115,7 +115,7 @@
 .model-strip-heading em {
   color: rgba(247, 240, 228, 0.76);
   font-style: normal;
-  font-size: clamp(7px, 0.56vw, 11px);
+  font-size: clamp(calc(7 * var(--u)), 0.56vw, calc(11 * var(--u)));
   line-height: 1.12;
   letter-spacing: 0.075em;
 }
@@ -146,7 +146,7 @@
 .model-strip-row {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 0.95vw, 18px);
+  gap: clamp(calc(10 * var(--u)), 0.95vw, calc(18 * var(--u)));
   width: max-content;
   height: 100%;
   min-height: 100%;
@@ -157,9 +157,9 @@
 
 .model-frame {
   position: relative;
-  flex: 0 0 clamp(104px, 9vw, 182px);
+  flex: 0 0 clamp(calc(104 * var(--u)), 9vw, calc(182 * var(--u)));
   display: block;
-  width: clamp(104px, 9vw, 182px);
+  width: clamp(calc(104 * var(--u)), 9vw, calc(182 * var(--u)));
   height: calc(100% - 18px);
   max-height: calc(100% - 18px);
   padding: 0;
@@ -175,8 +175,8 @@
 
 .model-frame.is-featured,
 .model-frame.is-wide {
-  flex-basis: clamp(126px, 11vw, 218px);
-  width: clamp(126px, 11vw, 218px);
+  flex-basis: clamp(calc(126 * var(--u)), 11vw, calc(218 * var(--u)));
+  width: clamp(calc(126 * var(--u)), 11vw, calc(218 * var(--u)));
 }
 
 .model-frame img {
@@ -210,7 +210,7 @@
   justify-content: space-between;
   color: currentColor;
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.56vw, 11px);
+  font-size: clamp(calc(7 * var(--u)), 0.56vw, calc(11 * var(--u)));
   line-height: 1;
   letter-spacing: 0.035em;
   text-align: left;
@@ -267,7 +267,7 @@
   left: 50%;
   width: 106vw;
   color: var(--model-pink);
-  font-size: clamp(118px, 19.2vw, 368px);
+  font-size: clamp(calc(118 * var(--u)), 19.2vw, calc(368 * var(--u)));
   line-height: 0.72;
   letter-spacing: -0.086em;
   opacity: 0.92;
@@ -279,7 +279,7 @@
   left: 38%;
   bottom: 5.8vh;
   color: rgba(242, 147, 201, 0.5);
-  font-size: clamp(44px, 6.2vw, 124px);
+  font-size: clamp(calc(44 * var(--u)), 6.2vw, calc(124 * var(--u)));
   letter-spacing: -0.04em;
   opacity: 0.58;
   transform: translateX(-50%) scaleX(0.75);
@@ -305,7 +305,7 @@
 }
 
 .model-copy-left strong {
-  font-size: clamp(30px, 3.7vw, 74px);
+  font-size: clamp(calc(30 * var(--u)), 3.7vw, calc(74 * var(--u)));
   line-height: 0.78;
   letter-spacing: -0.075em;
 }
@@ -316,7 +316,7 @@
 .model-booking-note b {
   display: block;
   color: rgba(247, 240, 228, 0.84);
-  font-size: clamp(7px, 0.62vw, 12px);
+  font-size: clamp(calc(7 * var(--u)), 0.62vw, calc(12 * var(--u)));
   line-height: 1.22;
   letter-spacing: 0.08em;
 }
@@ -331,7 +331,7 @@
 
 .model-copy-right strong {
   display: block;
-  font-size: clamp(24px, 2.8vw, 62px);
+  font-size: clamp(calc(24 * var(--u)), 2.8vw, calc(62 * var(--u)));
   line-height: 0.82;
   letter-spacing: -0.065em;
 }
@@ -357,7 +357,7 @@
 
 .model-booking-note span {
   color: var(--model-pink);
-  font-size: clamp(12px, 1vw, 18px);
+  font-size: clamp(calc(12 * var(--u)), 1vw, calc(18 * var(--u)));
   letter-spacing: -0.035em;
 }
 
@@ -385,7 +385,7 @@
   z-index: 9999;
   display: none;
   place-items: center;
-  padding: clamp(18px, 3vw, 64px);
+  padding: clamp(calc(18 * var(--u)), 3vw, calc(64 * var(--u)));
   background:
     radial-gradient(circle at 50% 38%, rgba(242, 147, 201, 0.18), transparent 32%),
     rgba(0, 0, 0, 0.88);
@@ -400,10 +400,10 @@
 .model-lightbox-panel {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(180px, 18vw, 320px);
-  gap: clamp(18px, 2.8vw, 54px);
-  width: min(88vw, 1360px);
-  height: min(78vh, 820px);
+  grid-template-columns: minmax(0, 1fr) clamp(calc(180 * var(--u)), 18vw, calc(320 * var(--u)));
+  gap: clamp(calc(18 * var(--u)), 2.8vw, calc(54 * var(--u)));
+  width: min(88vw, calc(1360 * var(--u)));
+  height: min(78vh, calc(820 * var(--u)));
   border: 1px solid rgba(242, 147, 201, 0.34);
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 42%),
@@ -438,21 +438,21 @@
   display: grid;
   align-content: end;
   gap: 0.72rem;
-  padding: clamp(18px, 2.4vw, 38px);
+  padding: clamp(calc(18 * var(--u)), 2.4vw, calc(38 * var(--u)));
   font-family: var(--heavy);
   text-transform: uppercase;
 }
 
 .model-lightbox-count {
   color: rgba(247, 240, 228, 0.76);
-  font-size: clamp(10px, 0.78vw, 14px);
+  font-size: clamp(calc(10 * var(--u)), 0.78vw, calc(14 * var(--u)));
   letter-spacing: 0.08em;
 }
 
 .model-lightbox-title {
   margin: 0;
   color: var(--model-pink);
-  font-size: clamp(34px, 3.2vw, 74px);
+  font-size: clamp(calc(34 * var(--u)), 3.2vw, calc(74 * var(--u)));
   line-height: 0.78;
   letter-spacing: -0.075em;
 }
@@ -460,7 +460,7 @@
 .model-lightbox-meta {
   margin: 0;
   color: rgba(247, 240, 228, 0.86);
-  font-size: clamp(9px, 0.74vw, 14px);
+  font-size: clamp(calc(9 * var(--u)), 0.74vw, calc(14 * var(--u)));
   line-height: 1.25;
   letter-spacing: 0.07em;
 }
@@ -508,13 +508,13 @@
 @media (max-width: 900px) {
   .model-page .model-title-wrap .mega.first {
     top: 6vh;
-    font-size: clamp(72px, 20vw, 154px);
+    font-size: clamp(calc(72 * var(--u)), 20vw, calc(154 * var(--u)));
   }
 
   .model-page .model-title-wrap .mega.last {
     left: 50%;
     bottom: 9vh;
-    font-size: clamp(34px, 10vw, 88px);
+    font-size: clamp(calc(34 * var(--u)), 10vw, calc(88 * var(--u)));
   }
 
   .model-strip {
@@ -522,7 +522,7 @@
     right: 5vw;
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr) 3px;
-    height: clamp(98px, 15vh, 148px);
+    height: clamp(calc(98 * var(--u)), 15vh, calc(148 * var(--u)));
   }
 
   .model-strip-heading {
