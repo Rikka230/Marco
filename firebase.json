@@ -6,6 +6,29 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "comment": "HTML jamais mis en cache -> chaque page reflete toujours le dernier deploiement (plus de badge/version perimee entre pages).",
+        "source": "**/*.html",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        ]
+      },
+      {
+        "comment": "Bundles hashes par Astro (_astro) : immuables, cache long.",
+        "source": "/_astro/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        ]
+      },
+      {
+        "comment": "Assets a nom fixe (images/audio/css de page) : cache court (1h) pour ne pas servir du perime.",
+        "source": "/assets/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=3600" }
+        ]
+      }
     ]
   },
   "firestore": {
