@@ -574,10 +574,15 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
   }
 }
 
-@media (min-width: 1700px) and (min-height: 900px) {
+@media (min-width: 1700px) and (max-width: 2199px) and (min-height: 900px) {
   .filmographie-title-img {
     left: 6vw;
-    width: min(84vw, 1660px);
+    /* Reduit + plafonne la HAUTEUR du titre : a 1920x1080 il debordait (h353,
+       bas y409) sur la liste/recherche et le visualiseur. Limite en hauteur pour
+       liberer la place sous le titre, quelle que soit la hauteur d'ecran. */
+    width: auto;
+    max-width: min(72vw, 1400px);
+    max-height: clamp(180px, 22vh, 250px);
   }
 
   .filmographie-person-wrap {
@@ -594,7 +599,10 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 
   .filmographie-selected {
     right: clamp(8.7rem, 8.2vw, 10.4rem);
-    top: clamp(18.4rem, 32.2vh, 22.5rem);
+    /* Remonte le visualiseur (a droite du titre) pour qu'il tienne au-dessus du
+       badge cine sur les ecrans courts (ex. fenetre 1920x950). */
+    top: clamp(15rem, 27vh, 20rem);
+    width: min(23vw, 440px);
   }
 
   .filmographie-badge {
