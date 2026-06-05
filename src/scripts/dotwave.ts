@@ -49,9 +49,7 @@ export function initDotWave() {
   function resize() {
     if (!canvas || !ctx) return;
     const dpr = window.devicePixelRatio || 1;
-    // canvas dans le .stage (taille de reference) : on se base sur sa taille de mise
-    // en page (offsetWidth = 2560) et non sur le viewport, sinon decale par le scale().
-    canvas.width = Math.floor(canvas.offsetWidth * dpr);
+    canvas.width = Math.floor(window.innerWidth * dpr);
     canvas.height = Math.floor(canvas.offsetHeight * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
@@ -68,7 +66,7 @@ export function initDotWave() {
     // Si le visualizer WebGL a pris le relais, on arrete la boucle 2D (economie CPU).
     if (document.documentElement.dataset.glViz === 'on') return;
 
-    const w = canvas.offsetWidth;
+    const w = window.innerWidth;
     const h = canvas.offsetHeight;
     const page = activePage();
     const pageName = page?.dataset.page || document.body.dataset.marcoPage || 'home';

@@ -58,9 +58,9 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-title-img {
   position: absolute;
   z-index: 1;
-  top: clamp(3rem, 5.1cqh, 5.4rem);
-  left: 5.7cqw;
-  width: min(87.4cqw, 1640px);
+  top: clamp(3rem, 5.1vh, 5.4rem);
+  left: 5.7vw;
+  width: min(87.4vw, 1640px);
   max-width: none;
   height: auto;
   opacity: 0.88;
@@ -74,8 +74,8 @@ body:has(.filmographie-rebuild) .shell::after {
   position: absolute;
   z-index: 3;
   left: 51.2%;
-  bottom: -3.8cqh;
-  width: min(28.8cqw, 540px);
+  bottom: -3.8vh;
+  width: min(28.8vw, 540px);
   max-width: none;
   transform: translateX(-50%);
   isolation: isolate;
@@ -127,16 +127,16 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-credits {
   position: absolute;
   z-index: 4;
-  left: clamp(5.2rem, 6.2cqw, 7.4rem);
-  top: clamp(15.8rem, 29cqh, 20.5rem);
-  width: min(45.6cqw, 790px);
+  left: clamp(5.2rem, 6.2vw, 7.4rem);
+  top: clamp(15.8rem, 29vh, 20.5rem);
+  width: min(45.6vw, 790px);
 }
 
 .filmographie-kicker {
   margin: 0 0 0.56rem 1.52rem;
   color: var(--film-gold);
   font-family: var(--heavy);
-  font-size: clamp(0.88rem, 1.02cqw, 1.18rem);
+  font-size: clamp(0.88rem, 1.02vw, 1.18rem);
   line-height: 1;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -174,7 +174,7 @@ body:has(.filmographie-rebuild) .shell::after {
 
 .filmographie-search input {
   width: 100%;
-  height: clamp(2.55rem, 4.1cqh, 3.2rem);
+  height: clamp(2.55rem, 4.1vh, 3.2rem);
   padding: 0 1.1rem 0 3rem;
   border: 1px solid rgba(244, 189, 104, 0.82);
   border-radius: 999px;
@@ -208,7 +208,7 @@ body:has(.filmographie-rebuild) .shell::after {
   background: rgba(8, 6, 3, 0.72);
   cursor: pointer;
   font-family: var(--ui);
-  font-size: clamp(0.7rem, 0.72cqw, 0.86rem);
+  font-size: clamp(0.7rem, 0.72vw, 0.86rem);
   font-weight: 900;
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
@@ -225,7 +225,7 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-list {
   position: relative;
   display: grid;
-  max-height: min(41cqh, 430px);
+  max-height: min(41vh, 430px);
   padding-left: 0;
   overflow: hidden auto;
   overscroll-behavior: contain;
@@ -249,8 +249,8 @@ body:has(.filmographie-rebuild) .shell::after {
   display: grid;
   grid-template-columns: 4.3rem minmax(10rem, 1.25fr) minmax(5.4rem, 0.72fr) minmax(5.2rem, 0.7fr) minmax(5.4rem, 0.68fr) auto;
   align-items: center;
-  gap: clamp(0.5rem, 0.84cqw, 1rem);
-  min-height: clamp(3.46rem, 5.6cqh, 4.36rem);
+  gap: clamp(0.5rem, 0.84vw, 1rem);
+  min-height: clamp(3.46rem, 5.6vh, 4.36rem);
   margin-left: 1.52rem;
   padding: 0.36rem 0.72rem 0.36rem 1.22rem;
   border-top: 1px solid rgba(244, 189, 104, 0.16);
@@ -295,14 +295,14 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-year {
   color: var(--film-gold);
   font-family: var(--heavy);
-  font-size: clamp(1.18rem, 1.45cqw, 1.9rem);
+  font-size: clamp(1.18rem, 1.45vw, 1.9rem);
   line-height: 1;
 }
 
 .filmographie-title-cell {
   color: var(--film-cream);
   font-family: var(--heavy);
-  font-size: clamp(1.02rem, 1.44cqw, 1.68rem);
+  font-size: clamp(1.02rem, 1.44vw, 1.68rem);
   line-height: 0.9;
   text-transform: uppercase;
 }
@@ -312,7 +312,7 @@ body:has(.filmographie-rebuild) .shell::after {
   gap: 0.2rem;
   min-width: 0;
   font-family: var(--ui);
-  font-size: clamp(0.56rem, 0.63cqw, 0.78rem);
+  font-size: clamp(0.56rem, 0.63vw, 0.78rem);
   font-weight: 800;
   line-height: 1.04;
 }
@@ -343,7 +343,7 @@ body:has(.filmographie-rebuild) .shell::after {
   color: var(--film-gold);
   background: rgba(3, 2, 1, 0.62);
   font-family: var(--heavy);
-  font-size: clamp(0.54rem, 0.58cqw, 0.68rem);
+  font-size: clamp(0.54rem, 0.58vw, 0.68rem);
   text-transform: uppercase;
 }
 
@@ -358,10 +358,10 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-selected {
   position: absolute;
   z-index: 5;
-  right: clamp(7.6rem, 9.2cqw, 11rem);
-  top: clamp(18.2rem, 35.8cqh, 25rem);
-  width: min(25.2cqw, 470px);
-  padding: clamp(1.1rem, 1.35cqw, 1.55rem);
+  right: clamp(7.6rem, 9.2vw, 11rem);
+  top: clamp(18.2rem, 35.8vh, 25rem);
+  width: min(25.2vw, 470px);
+  padding: clamp(1.1rem, 1.35vw, 1.55rem);
   border: 1px solid rgba(244, 189, 104, 0.62);
   border-radius: 8px;
   color: var(--film-cream);
@@ -376,7 +376,7 @@ body:has(.filmographie-rebuild) .shell::after {
   margin: 0 0 0.32rem;
   color: var(--film-gold);
   font-family: var(--heavy);
-  font-size: clamp(0.58rem, 0.62cqw, 0.76rem);
+  font-size: clamp(0.58rem, 0.62vw, 0.76rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -385,7 +385,7 @@ body:has(.filmographie-rebuild) .shell::after {
   margin: 0;
   color: var(--film-cream);
   font-family: var(--heavy);
-  font-size: clamp(1.18rem, 1.75cqw, 2rem);
+  font-size: clamp(1.18rem, 1.75vw, 2rem);
   line-height: 0.9;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -396,7 +396,7 @@ body:has(.filmographie-rebuild) .shell::after {
   margin: 0.4rem 0 1rem;
   color: rgba(255, 241, 194, 0.86);
   font-family: var(--heavy);
-  font-size: clamp(0.6rem, 0.68cqw, 0.8rem);
+  font-size: clamp(0.6rem, 0.68vw, 0.8rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -434,8 +434,8 @@ body:has(.filmographie-rebuild) .shell::after {
   z-index: 2;
   display: grid;
   place-items: center;
-  width: clamp(3.8rem, 4.3cqw, 5.2rem);
-  height: clamp(3.8rem, 4.3cqw, 5.2rem);
+  width: clamp(3.8rem, 4.3vw, 5.2rem);
+  height: clamp(3.8rem, 4.3vw, 5.2rem);
   border: 1px solid rgba(255, 241, 194, 0.48);
   border-radius: 999px;
   background:
@@ -461,7 +461,7 @@ body:has(.filmographie-rebuild) .shell::after {
   gap: 0.66rem;
   margin: 0.56rem 0 1.12rem;
   font-family: var(--ui);
-  font-size: clamp(0.55rem, 0.58cqw, 0.68rem);
+  font-size: clamp(0.55rem, 0.58vw, 0.68rem);
   font-weight: 900;
 }
 
@@ -513,7 +513,7 @@ body:has(.filmographie-rebuild) .shell::after {
   margin-bottom: 0.28rem;
   color: var(--film-gold);
   font-family: var(--heavy);
-  font-size: clamp(0.5rem, 0.54cqw, 0.64rem);
+  font-size: clamp(0.5rem, 0.54vw, 0.64rem);
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -521,7 +521,7 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-selected-meta dd {
   margin: 0;
   color: var(--film-cream);
-  font-size: clamp(0.58rem, 0.64cqw, 0.74rem);
+  font-size: clamp(0.58rem, 0.64vw, 0.74rem);
   font-weight: 800;
   line-height: 1.18;
 }
@@ -529,9 +529,9 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-badge {
   position: absolute;
   z-index: 4;
-  right: clamp(3.9rem, 5.2cqw, 6.4rem);
-  bottom: clamp(3.2rem, 8.1cqh, 6rem);
-  width: min(9.3cqw, 168px);
+  right: clamp(3.9rem, 5.2vw, 6.4rem);
+  bottom: clamp(3.2rem, 8.1vh, 6rem);
+  width: min(9.3vw, 168px);
   height: auto;
   filter: drop-shadow(0 0 16px rgba(244, 189, 104, 0.2));
 }
@@ -552,17 +552,17 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 
 @media (max-width: 1180px) {
   .filmographie-person-wrap {
-    width: min(39cqw, 540px);
+    width: min(39vw, 540px);
     left: 54%;
   }
 
   .filmographie-credits {
-    width: 51cqw;
+    width: 51vw;
   }
 
   .filmographie-selected {
     right: 5.2rem;
-    width: 30cqw;
+    width: 30vw;
   }
 
   .filmographie-row {
@@ -574,58 +574,65 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
   }
 }
 
-/* Ex-@media (min-width:1700px) — desormais INCONDITIONNEL : le stage (2560x1440)
-   represente le rendu de reference, donc ces reglages s'appliquent toujours et
-   sont scales par le stage (plus de palier viewport qui casse le rendu identique). */
-.filmographie-title-img {
-  left: 6cqw;
-  width: min(84cqw, 1660px);
-}
-.filmographie-person-wrap {
-  left: 51.6%;
-  bottom: -5cqh;
-  width: min(33cqw, 625px);
-}
-.filmographie-credits {
-  left: clamp(5.7rem, 5.7cqw, 7.3rem);
-  top: clamp(16.6rem, 30.6cqh, 21rem);
-  width: min(43.6cqw, 780px);
-}
-.filmographie-selected {
-  right: clamp(8.7rem, 8.2cqw, 10.4rem);
-  top: clamp(18.4rem, 32.2cqh, 22.5rem);
-}
-.filmographie-badge {
-  right: clamp(5.2rem, 5.4cqw, 7rem);
-  bottom: clamp(3.6rem, 6.7cqh, 5rem);
+@media (min-width: 1700px) and (min-height: 900px) {
+  .filmographie-title-img {
+    left: 6vw;
+    width: min(84vw, 1660px);
+  }
+
+  .filmographie-person-wrap {
+    left: 51.6%;
+    bottom: -5vh;
+    width: min(33vw, 625px);
+  }
+
+  .filmographie-credits {
+    left: clamp(5.7rem, 5.7vw, 7.3rem);
+    top: clamp(16.6rem, 30.6vh, 21rem);
+    width: min(43.6vw, 780px);
+  }
+
+  .filmographie-selected {
+    right: clamp(8.7rem, 8.2vw, 10.4rem);
+    top: clamp(18.4rem, 32.2vh, 22.5rem);
+  }
+
+  .filmographie-badge {
+    right: clamp(5.2rem, 5.4vw, 7rem);
+    bottom: clamp(3.6rem, 6.7vh, 5rem);
+  }
 }
 
-/* Ex-@media (min-width:2200px) — INCONDITIONNEL (etait actif a 2560x1440 = reference).
-   Vient apres le bloc ci-dessus, donc l'emporte la ou les deux se chevauchent. */
-.filmographie-title-img {
-  top: clamp(2.7rem, 3.6cqh, 3.7rem);
-  left: 4.7cqw;
-  width: min(88cqw, 2250px);
-}
-.filmographie-person-wrap {
-  left: 52.2%;
-  bottom: -5.8cqh;
-  width: min(34cqw, 870px);
-}
-.filmographie-credits {
-  left: clamp(6.6rem, 5.2cqw, 8.3rem);
-  top: clamp(27.5rem, 41.5cqh, 36rem);
-  width: min(34cqw, 860px);
-}
-.filmographie-selected {
-  right: clamp(9rem, 7.2cqw, 12rem);
-  top: clamp(27.6rem, 41cqh, 36rem);
-  width: min(23.5cqw, 540px);
-}
-.filmographie-badge {
-  right: clamp(6.5rem, 5cqw, 8rem);
-  bottom: clamp(4.3rem, 6cqh, 5.3rem);
-  width: min(8cqw, 190px);
+@media (min-width: 2200px) and (min-height: 1150px) {
+  .filmographie-title-img {
+    top: clamp(2.7rem, 3.6vh, 3.7rem);
+    left: 4.7vw;
+    width: min(88vw, 2250px);
+  }
+
+  .filmographie-person-wrap {
+    left: 52.2%;
+    bottom: -5.8vh;
+    width: min(34vw, 870px);
+  }
+
+  .filmographie-credits {
+    left: clamp(6.6rem, 5.2vw, 8.3rem);
+    top: clamp(27.5rem, 41.5vh, 36rem);
+    width: min(34vw, 860px);
+  }
+
+  .filmographie-selected {
+    right: clamp(9rem, 7.2vw, 12rem);
+    top: clamp(27.6rem, 41vh, 36rem);
+    width: min(23.5vw, 540px);
+  }
+
+  .filmographie-badge {
+    right: clamp(6.5rem, 5vw, 8rem);
+    bottom: clamp(4.3rem, 6vh, 5.3rem);
+    width: min(8vw, 190px);
+  }
 }
 
 @media (max-width: 820px) {
@@ -653,7 +660,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     top: auto;
     left: 50%;
     display: block;
-    width: min(108cqw, 520px);
+    width: min(108vw, 520px);
     margin: 0 0 -0.95rem;
     transform: translateX(-50%);
   }
@@ -663,7 +670,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     left: 50%;
     bottom: auto;
     display: block;
-    width: min(82cqw, 420px);
+    width: min(82vw, 420px);
     margin: 0 auto -1.6rem;
   }
 
@@ -738,7 +745,7 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
 
 @media (max-width: 480px) {
   .filmographie-title-img {
-    width: 98cqw;
+    width: 98vw;
     margin-bottom: -0.55rem;
   }
 }
