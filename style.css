@@ -25,6 +25,25 @@ html {
   font-size: calc(16 * var(--u));
 }
 
+/* === MODE PERFORMANCE (PC faible, pose par perf.ts via data-perf="low") ===
+   Coupe les effets permanents les plus couteux GPU : flou du rail (backdrop-filter),
+   animations infinies (grain / respiration du fond / flottement du perso), et le
+   visualizer (canvases caches + boucles JS stoppees ailleurs). Le "waouh" complet
+   reste actif sur un bon PC. Les transitions de navigation (WAAPI) sont conservees. */
+html[data-perf="low"] *,
+html[data-perf="low"] *::before,
+html[data-perf="low"] *::after {
+  animation: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html[data-perf="low"] .film-grain,
+html[data-perf="low"] #dotWave,
+html[data-perf="low"] #dotwave-gl,
+html[data-perf="low"] #gallery-gl {
+  display: none !important;
+}
+
 html,
 body {
   width: 100%;

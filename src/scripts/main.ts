@@ -3,6 +3,7 @@
 // `astro:page-load` (emis au chargement initial ET apres chaque navigation ClientRouter).
 // Les init* sont idempotents (listeners delegues sur document, attaches une seule fois).
 
+import { perf } from './perf';
 import { initAudio, restoreTrack } from './audio';
 import { initDotWave } from './dotwave';
 import { initNav, syncNav } from './nav';
@@ -100,13 +101,18 @@ let glTried = false;
 function tryInitVisualizer() {
   if (glTried) return;
   glTried = true;
-  const canvas = document.querySelector<HTMLCanvasElement>('#dotwave-gl');
-  if (!canvas) return;
-  const start = () => import('./webgl/audio-visualizer')
-    .then((m) => m.initVisualizer(canvas))
-    .catch((e) => console.warn('[viz] chargement WebGL echoue (fallback 2D)', e));
-  if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(start);
-  else window.setTimeout(start, 200);
+  // On attend la decision perf : sur PC faible on NE lance PAS le visualizer WebGL
+  // (le dotWave 2D est aussi stoppe par data-perf="low" dans dotwave.ts).
+  perf.whenReady(() => {
+    if (perf.low) return;
+    const canvas = document.querySelector<HTMLCanvasElement>('#dotwave-gl');
+    if (!canvas) return;
+    const start = () => import('./webgl/audio-visualizer')
+      .then((m) => m.initVisualizer(canvas))
+      .catch((e) => console.warn('[viz] chargement WebGL echoue (fallback 2D)', e));
+    if ('requestIdleCallback' in window) (window as unknown as { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(start);
+    else window.setTimeout(start, 200);
+  });
 }
 
 /* === Profondeur WebGL de la page Modele (lazy, nettoyee a la sortie) === */
@@ -123,9 +129,13 @@ function tryInitGalleryDepth() {
   if (!document.querySelector('.model-page')) return;
   const canvas = document.querySelector<HTMLCanvasElement>('#gallery-gl');
   if (!canvas) return;
-  import('./webgl/gallery-depth')
-    .then((m) => { galleryCleanup = m.initGalleryDepth(canvas); })
-    .catch((e) => console.warn('[gallery] WebGL echoue', e));
+  // Profondeur WebGL = lourde : on la saute sur PC faible.
+  perf.whenReady(() => {
+    if (perf.low || galleryCleanup || !document.querySelector('.model-page')) return;
+    import('./webgl/gallery-depth')
+      .then((m) => { galleryCleanup = m.initGalleryDepth(canvas); })
+      .catch((e) => console.warn('[gallery] WebGL echoue', e));
+  });
 }
 
 /* === Cycle de vie Astro === */

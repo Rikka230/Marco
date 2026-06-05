@@ -6,6 +6,8 @@
 // On garde ClientRouter (nav SPA + transition:persist audio) ; on anime nous-memes
 // la page entrante sur astro:after-swap + la bande sur astro:before-swap.
 
+import { perf } from './perf';
+
 const ORDER = ['home', 'music', 'parcours', 'gallery', 'filmographie', 'composition', 'scores', 'booking'];
 
 const ACCENTS: Record<string, string> = {
@@ -104,11 +106,15 @@ export function initTransitions() {
   bound = true;
 
   // Charge l'overlay shader (lazy). Si WebGL echoue, playFx reste null -> wipe seul.
+  // Sur PC faible (perf.low) on ne charge PAS le shader : le wipe WAAPI suffit.
   const fxCanvas = document.querySelector<HTMLCanvasElement>('#transition-gl');
   if (fxCanvas) {
-    import('./webgl/transition-fx')
-      .then((m) => { playFx = m.initTransitionFx(fxCanvas); })
-      .catch((e) => console.warn('[fx] chargement WebGL echoue', e));
+    perf.whenReady(() => {
+      if (perf.low) return;
+      import('./webgl/transition-fx')
+        .then((m) => { playFx = m.initTransitionFx(fxCanvas); })
+        .catch((e) => console.warn('[fx] chargement WebGL echoue', e));
+    });
   }
 
   // Sens de navigation = ordre de page (rail/molette/cover-hit sont tous "push" historique).
