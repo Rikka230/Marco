@@ -66,40 +66,40 @@
   };
   const STROKE_VARIANTS = {
     blue: [
-      "/assets/img/timeline-strokes/timeline-stroke-01-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-02-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-03-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-04-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-05-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-06-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-07-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-08-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-09-blue.png",
-      "/assets/img/timeline-strokes/timeline-stroke-10-blue.png"
+      "/assets/img/timeline-strokes/timeline-stroke-01-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-02-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-03-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-04-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-05-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-06-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-07-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-08-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-09-blue.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-10-blue.webp"
     ],
     green: [
-      "/assets/img/timeline-strokes/timeline-stroke-01-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-02-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-03-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-04-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-05-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-06-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-07-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-08-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-09-green.png",
-      "/assets/img/timeline-strokes/timeline-stroke-10-green.png"
+      "/assets/img/timeline-strokes/timeline-stroke-01-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-02-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-03-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-04-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-05-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-06-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-07-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-08-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-09-green.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-10-green.webp"
     ],
     pink: [
-      "/assets/img/timeline-strokes/timeline-stroke-01-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-02-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-03-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-04-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-05-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-06-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-07-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-08-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-09-pink.png",
-      "/assets/img/timeline-strokes/timeline-stroke-10-pink.png"
+      "/assets/img/timeline-strokes/timeline-stroke-01-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-02-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-03-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-04-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-05-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-06-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-07-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-08-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-09-pink.webp",
+      "/assets/img/timeline-strokes/timeline-stroke-10-pink.webp"
     ]
   };
 

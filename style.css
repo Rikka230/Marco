@@ -5,10 +5,24 @@
   --ink: #050807;
   --heavy: "Arial Black", "Helvetica Neue", Arial, Impact, sans-serif;
   --ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* === Adaptabilite : layout fluide ancre au viewport (PAS de stage/scale) ===
+     POSITIONS : restent en vw/vh (les elements suivent les bords -> remplissent
+     l'ecran, s'ecartent sur ecran large). TAILLES : en --u, unite "bloquee 16:9".
+     --u = 1px a la reference 2560x1440 ; ailleurs il suit l'axe le plus contraint
+     (16:9), donc le texte ne gonfle jamais (= plus de chevauchement) et reste
+     proportionnel (= plus de gel des clamps). A 16:9 quelle que soit la resolution,
+     --u scale exactement comme vw -> tailles ET positions bougent ensemble. */
+  --u: min(calc(100vw / 2560), calc(100vh / 1440));
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Les rem suivent --u (16px a la reference, scale ensuite). */
+html {
+  font-size: calc(16 * var(--u));
 }
 
 html,
@@ -86,7 +100,7 @@ button {
   position: absolute;
   inset: -4%;
   z-index: 0;
-  background-image: var(--page-bg, url("/assets/img/marco-cover-bg.png"));
+  background-image: var(--page-bg, url("/assets/img/marco-cover-bg.webp"));
   background-size: cover;
   background-position: center center;
   transform: scale(1.045);
@@ -94,14 +108,14 @@ button {
 }
 
 .page[data-bg="home"] .photo-bg {
-  --page-bg: url("/assets/img/marco-cover-bg.png");
+  --page-bg: url("/assets/img/marco-cover-bg.webp");
   background-position: center center;
 }
 
-.page[data-bg="music"] .photo-bg { --page-bg: url("/assets/img/bg-music.jpg"); }
-.page[data-bg="scores"] .photo-bg { --page-bg: url("/assets/img/bg-scores.jpg"); }
-.page[data-bg="gallery"] .photo-bg { --page-bg: url("/assets/img/bg-gallery.jpg"); }
-.page[data-bg="booking"] .photo-bg { --page-bg: url("/assets/img/bg-booking.jpg"); }
+.page[data-bg="music"] .photo-bg { --page-bg: url("/assets/img/bg-music.webp"); }
+.page[data-bg="scores"] .photo-bg { --page-bg: url("/assets/img/bg-scores.webp"); }
+.page[data-bg="gallery"] .photo-bg { --page-bg: url("/assets/img/bg-gallery.webp"); }
+.page[data-bg="booking"] .photo-bg { --page-bg: url("/assets/img/bg-booking.webp"); }
 
 .photo-bg::before {
   position: absolute;
@@ -184,7 +198,7 @@ button {
   gap: 0.42rem;
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.52vw, 11px);
+  font-size: calc(11 * var(--u));
   letter-spacing: 0.06em;
   opacity: 0.92;
 }
@@ -222,7 +236,7 @@ button {
   width: 100vw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.94);
-  font-size: clamp(170px, 24.2vw, 500px);
+  font-size: calc(500 * var(--u));
   line-height: 0.68;
   letter-spacing: -0.072em;
   opacity: 0.95;
@@ -248,7 +262,7 @@ button {
   width: 100vw;
   text-align: center;
   transform: translateX(-50%) scaleX(0.86);
-  font-size: clamp(48px, 7vw, 136px);
+  font-size: calc(136 * var(--u));
   line-height: 0.78;
   letter-spacing: -0.025em;
   opacity: 0.84;
@@ -302,7 +316,7 @@ button {
 }
 
 .cover-hit strong {
-  font-size: clamp(18px, 1.34vw, 30px);
+  font-size: calc(30 * var(--u));
   line-height: 0.88;
   letter-spacing: -0.045em;
 }
@@ -312,7 +326,7 @@ button {
   align-items: center;
   gap: 0.36rem;
   color: rgba(239, 255, 241, 0.92);
-  font-size: clamp(7px, 0.56vw, 12px);
+  font-size: calc(12 * var(--u));
   line-height: 1;
   letter-spacing: 0.02em;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.58);
@@ -351,7 +365,7 @@ button {
 
 .key-project span {
   display: block;
-  font-size: clamp(34px, 3.45vw, 76px);
+  font-size: calc(76 * var(--u));
   letter-spacing: -0.065em;
   white-space: nowrap;
 }
@@ -368,7 +382,7 @@ button {
 
 .cover-tagline span {
   display: block;
-  font-size: clamp(28px, 2.38vw, 54px);
+  font-size: calc(54 * var(--u));
   letter-spacing: -0.065em;
   white-space: nowrap;
 }
@@ -380,7 +394,7 @@ button {
   bottom: 0;
   z-index: 23;
   width: 100vw;
-  height: 88px;
+  height: calc(88 * var(--u));
   pointer-events: none;
   opacity: 0.64;
   mix-blend-mode: screen;
@@ -394,7 +408,7 @@ button {
   gap: 1rem;
   color: var(--cream);
   font-family: var(--heavy);
-  font-size: clamp(7px, 0.52vw, 10px);
+  font-size: calc(10 * var(--u));
   letter-spacing: 0.055em;
   text-transform: uppercase;
 }
@@ -1550,8 +1564,8 @@ body.is-transitioning .mini-brand {
   display: grid;
   place-items: center;
   justify-self: center;
-  width: clamp(38px, 3vw, 54px);
-  height: clamp(30px, 2.3vw, 40px);
+  width: calc(54 * var(--u));
+  height: calc(40 * var(--u));
   padding: 0;
   border: 1px solid color-mix(in srgb, currentColor 34%, transparent);
   background:
@@ -1561,7 +1575,7 @@ body.is-transitioning .mini-brand {
   cursor: pointer;
   clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%);
   font-family: var(--heavy);
-  font-size: clamp(11px, 0.86vw, 16px);
+  font-size: calc(16 * var(--u));
   line-height: 1;
   box-shadow:
     0 12px 26px rgba(0, 0, 0, 0.26),
@@ -1593,8 +1607,8 @@ body.is-transitioning .mini-brand {
   display: grid;
   justify-items: center;
   gap: 0.34rem;
-  width: clamp(38px, 3vw, 54px);
-  min-height: clamp(168px, 24vh, 260px);
+  width: calc(54 * var(--u));
+  min-height: calc(260 * var(--u));
   padding: 0.72rem 0.28rem;
   border: 1px solid color-mix(in srgb, currentColor 42%, transparent);
   background:
@@ -1611,7 +1625,7 @@ body.is-transitioning .mini-brand {
 
 .chapter-num {
   color: var(--cream);
-  font-size: clamp(16px, 1.2vw, 24px);
+  font-size: calc(24 * var(--u));
   line-height: 0.8;
   letter-spacing: -0.08em;
   transform: skewY(-7deg);
@@ -1621,7 +1635,7 @@ body.is-transitioning .mini-brand {
   writing-mode: vertical-rl;
   max-height: 8rem;
   color: currentColor;
-  font-size: clamp(8px, 0.64vw, 12px);
+  font-size: calc(12 * var(--u));
   line-height: 0.95;
   letter-spacing: 0.08em;
   transform: rotate(180deg);
@@ -1650,7 +1664,7 @@ body.is-transitioning .mini-brand {
 .chapter-index-label {
   writing-mode: vertical-rl;
   color: var(--cream);
-  font-size: clamp(7px, 0.52vw, 10px);
+  font-size: calc(10 * var(--u));
   letter-spacing: 0.11em;
   transform: rotate(180deg);
   opacity: 0.82;
@@ -1727,13 +1741,13 @@ body.is-transitioning .mini-brand {
 
 .chapter-link span {
   color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(11px, 0.84vw, 16px);
+  font-size: calc(16 * var(--u));
   line-height: 0.9;
   letter-spacing: -0.035em;
 }
 
 .chapter-link strong {
-  font-size: clamp(20px, 2vw, 42px);
+  font-size: calc(42 * var(--u));
   line-height: 0.78;
   letter-spacing: -0.075em;
 }
@@ -1965,13 +1979,13 @@ body.is-transitioning .mini-brand {
 /* Page backgrounds */
 .page[data-page="composition"] .photo-bg,
 .composition-page .photo-bg {
-  --page-bg: url("/assets/img/bg-music.png");
+  --page-bg: url("/assets/img/bg-music.webp");
 }
 
 .page[data-page="music"] .photo-bg,
 .page[data-bg="music"] .photo-bg,
 .music-page .photo-bg {
-  --page-bg: url("/assets/img/bg-violon.png");
+  --page-bg: url("/assets/img/bg-violon.webp");
 }
 
 /* Remove only failed global music panel experiments. */
@@ -2944,7 +2958,7 @@ body.marco-page-wheel-locked .chapter-dots i.is-active {
   margin-right: 0.55rem;
   color: var(--marco-nav-accent);
   font-family: var(--heavy);
-  font-size: clamp(6px, 0.48vw, 8px);
+  font-size: calc(8 * var(--u));
   letter-spacing: 0.18em;
   text-transform: uppercase;
   opacity: 0;
@@ -3154,8 +3168,8 @@ body.marco-page-wheel-locked .chapter-nav::after {
   mix-blend-mode: soft-light;
   opacity: 0.86;
   filter: blur(0.12px) saturate(1.08);
-  -webkit-mask-image: url("/assets/img/marco-comp.png");
-  mask-image: url("/assets/img/marco-comp.png");
+  -webkit-mask-image: url("/assets/img/marco-comp.webp");
+  mask-image: url("/assets/img/marco-comp.webp");
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;

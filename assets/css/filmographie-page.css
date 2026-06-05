@@ -39,7 +39,7 @@ body:has(.filmographie-rebuild) .shell::after {
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.12) 44%, rgba(0, 0, 0, 0.58) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 28%, rgba(0, 0, 0, 0.62) 100%),
-    url("/assets/img/filmographie/filmographie-bg.png") center / cover no-repeat;
+    url("/assets/img/filmographie/filmographie-bg.webp") center / cover no-repeat;
   filter: brightness(1.06) saturate(1.08) contrast(1.06);
 }
 
@@ -88,8 +88,8 @@ body:has(.filmographie-rebuild) .shell::after {
   inset: 0;
   z-index: 2;
   content: "";
-  -webkit-mask: url("/assets/img/filmographie/marco-filmographie-tight.png?v=20260603-tight1") center / 100% auto no-repeat;
-  mask: url("/assets/img/filmographie/marco-filmographie-tight.png?v=20260603-tight1") center / 100% auto no-repeat;
+  -webkit-mask: url("/assets/img/filmographie/marco-filmographie-tight.webp?v=20260603-tight1") center / 100% auto no-repeat;
+  mask: url("/assets/img/filmographie/marco-filmographie-tight.webp?v=20260603-tight1") center / 100% auto no-repeat;
   pointer-events: none;
 }
 
@@ -275,7 +275,7 @@ body:has(.filmographie-rebuild) .shell::after {
   bottom: 0;
   width: 1.36rem;
   content: "";
-  background: url("/assets/img/filmographie/film-strip-vertical.png") center / 100% 100% no-repeat;
+  background: url("/assets/img/filmographie/film-strip-vertical.webp") center / 100% 100% no-repeat;
   opacity: 0.86;
   filter: drop-shadow(0 0 10px rgba(244, 189, 104, 0.12));
   pointer-events: none;

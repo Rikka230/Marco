@@ -81,7 +81,7 @@
   ];
 
   const FILTERS = ["Tous", "Court-metrage", "Long-metrage", "Serie", "Clip", "Publicite"];
-  const IMAGE_PLACEHOLDER = "/assets/img/filmographie/filmographie-extrait-placeholder.jpg";
+  const IMAGE_PLACEHOLDER = "/assets/img/filmographie/filmographie-extrait-placeholder.webp";
   let activeFilter = "Tous";
   let activeId = "dernier-signal";
 

@@ -29,7 +29,7 @@
 }
 
 .parcours-rebuild .photo-bg {
-  background-image: url("/assets/img/parcours-bg.png") !important;
+  background-image: url("/assets/img/parcours-bg.webp") !important;
   background-size: cover !important;
   background-position: 50% 50% !important;
   filter: saturate(1.04) contrast(1.06) brightness(0.96);
@@ -98,7 +98,7 @@
   aspect-ratio: 2033 / 434;
   overflow: visible;
   color: transparent;
-  background: url("/assets/img/parcours-title.png") center / contain no-repeat;
+  background: url("/assets/img/parcours-title.webp") center / contain no-repeat;
   font-size: 0;
   line-height: 1;
   letter-spacing: 0;
@@ -122,7 +122,7 @@
   aspect-ratio: 2488 / 443;
   overflow: visible;
   color: transparent;
-  background: url("/assets/img/trajectoire-title.png") center / contain no-repeat;
+  background: url("/assets/img/trajectoire-title.webp") center / contain no-repeat;
   font-size: 0;
   line-height: 1;
   letter-spacing: 0;
@@ -165,7 +165,7 @@
   height: auto;
   margin-top: 1.05rem;
   content: "";
-  background: url("/assets/img/parcours-pink-stroke.png") center / contain no-repeat;
+  background: url("/assets/img/parcours-pink-stroke.webp") center / contain no-repeat;
   filter: drop-shadow(0 0 12px rgba(255,58,169,0.48));
   transform: rotate(-5deg);
 }
@@ -471,7 +471,7 @@
 
 .parcours-timeline-point {
   --timeline-color: var(--parcours-blue);
-  --timeline-stroke-image: url("/assets/img/timeline-strokes/timeline-stroke-01-blue.png");
+  --timeline-stroke-image: url("/assets/img/timeline-strokes/timeline-stroke-01-blue.webp");
   position: relative;
   display: grid;
   justify-items: start;
@@ -896,7 +896,7 @@
     top: clamp(56px, 7.8dvh, 74px);
     height: clamp(126px, 32vw, 214px);
     overflow: hidden;
-    background: url("/assets/img/parcours-title.png") 50% top / contain no-repeat;
+    background: url("/assets/img/parcours-title.webp") 50% top / contain no-repeat;
     filter:
       drop-shadow(0 0 30px rgba(7,143,255,0.26))
       drop-shadow(0 18px 34px rgba(0,0,0,0.68));
@@ -950,7 +950,7 @@
     aspect-ratio: 607 / 66;
     margin-top: 0.52rem;
     content: "";
-    background: url("/assets/img/parcours-pink-stroke.png") left center / contain no-repeat;
+    background: url("/assets/img/parcours-pink-stroke.webp") left center / contain no-repeat;
     filter: drop-shadow(0 0 12px rgba(255,58,169,0.56));
     transform: rotate(-2deg);
   }

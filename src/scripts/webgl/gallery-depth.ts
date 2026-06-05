@@ -6,8 +6,8 @@
 import { Renderer, Camera, Transform, Program, Mesh, Plane, Texture } from 'ogl';
 
 const IMAGES = [
-  '/assets/img/cover-1.jpg', '/assets/img/cover-2.jpg', '/assets/img/cover-3.jpg',
-  '/assets/img/cover-4.jpg', '/assets/img/cover-5.jpg', '/assets/img/cover-6.jpg',
+  '/assets/img/cover-1.webp', '/assets/img/cover-2.webp', '/assets/img/cover-3.webp',
+  '/assets/img/cover-4.webp', '/assets/img/cover-5.webp', '/assets/img/cover-6.webp',
 ];
 
 // Disposition (x, y, z, echelle) — z negatif = plus loin.

@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 6.3';
+const BUILD = 'MARCO 6.8';
 ---
 
 <!doctype html>
@@ -52,7 +52,7 @@ const BUILD = 'MARCO 6.3';
       /* Canvas du visualizer WebGL : superpose a l'identique #dotWave. */
       #dotwave-gl {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 23;
-        width: 100vw; height: 88px; pointer-events: none;
+        width: 100vw; height: calc(88 * var(--u)); pointer-events: none;
         opacity: 0.78; mix-blend-mode: screen; display: none;
       }
       /* Quand le visualizer WebGL tourne : on l'affiche et on masque le dotWave 2D. */
