@@ -602,14 +602,18 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     max-height: min(32vh, 340px);
   }
 
-  /* VISUALISEUR (a droite, zone vide du titre) : position haute d'origine, juste
-     un peu reduit ; et BADGE cine descendu, pour qu'il degage le badge meme en
-     fenetre courte (1920x950 ~ navigateur maximise). */
+  /* VISUALISEUR : descendu SOUS le titre et COMPACTE (plus petit) pour tenir entre
+     le titre et le badge, sans toucher au titre. */
   .filmographie-selected {
     right: clamp(8.7rem, 8.2vw, 10.4rem);
-    top: clamp(18.4rem, 32.2vh, 22.5rem);
-    width: min(22vw, 420px);
+    top: 26rem;
+    width: min(18vw, 340px);
+    padding: 0.75rem;
   }
+  .filmographie-selected h2 { font-size: 1.2rem; }
+  .filmographie-selected > strong { margin: 0.25rem 0 0.5rem; }
+  .filmographie-player-ui { margin: 0.4rem 0 0.6rem; }
+  .filmographie-selected-meta { gap: 0.45rem 0.8rem; padding-top: 0.55rem; }
 
   .filmographie-badge {
     right: clamp(5.2rem, 5.4vw, 7rem);
