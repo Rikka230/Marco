@@ -25,6 +25,22 @@ html {
   font-size: calc(16 * var(--u));
 }
 
+/* === MOBILE : on rend --u = 1px sous le seuil mobile de chaque page.
+   Effet : rem repasse a 16px et tous les calc(N*--u) / clamp(calc(A*--u)...) reprennent
+   leur VALEUR D'ORIGINE -> les media-queries mobiles VALIDEES (reflow) refonctionnent a
+   l'identique, au lieu de reduire l'affiche desktop. Sans ca, sur telephone --u~0.15 et
+   tout le texte en rem devenait microscopique. Seuils alignes sur les @media de chaque page
+   (la plupart 900px ; parcours 980 ; filmographie 1180). */
+@media (max-width: 900px) {
+  :root { --u: 1px; }
+}
+@media (max-width: 980px) {
+  html:has([data-marco-page="parcours"]) { --u: 1px; }
+}
+@media (max-width: 1180px) {
+  html:has([data-marco-page="filmographie"]) { --u: 1px; }
+}
+
 /* === MODE PERFORMANCE (PC faible, pose par perf.ts via data-perf="low") ===
    Coupe les effets permanents les plus couteux GPU : flou du rail (backdrop-filter),
    animations infinies (grain / respiration du fond / flottement du perso), et le
