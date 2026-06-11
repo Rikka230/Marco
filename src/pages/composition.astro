@@ -27,7 +27,7 @@ const tracks = [
 ];
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Composition" description="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." page="composition" pageStyles={['/assets/css/composition-page.css']}>
+<BaseLayout title="Marco Charlas-Hou - Composition" description="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." page="composition" pageStyles={['/assets/css/composition-page.css']} preloadImages={['/assets/img/bg-scores.webp']}>
   <section class="page poster-page inner composition-page" data-page="composition" data-bg="scores" data-theme="composition" data-transition-label="COMPOSITION">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="film-sweep" aria-hidden="true"></div>
@@ -37,7 +37,7 @@ const tracks = [
       <h2 class="mega last">ORIGINAL MUSIC</h2>
     </div>
 
-    <img class="hero-person page-person composition-person music-person" src="/assets/img/marco-comp.webp" alt="Portrait detoure de Marco pour la page Composition" />
+    <img decoding="async" class="hero-person page-person composition-person music-person" src="/assets/img/marco-comp.webp" alt="Portrait detoure de Marco pour la page Composition" />
     <span class="marco-person-shader" aria-hidden="true"></span>
 
     <a class="key-project" href="/composition" aria-label="Catalogue des compositions"><span>TRACKS CATALOG</span><span>COMPOSED WORKS</span></a>

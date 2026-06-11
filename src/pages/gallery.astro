@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </style>
 
 
-<BaseLayout title="Marco Charlas-Hou - Modèle" description="Portfolio modèle, portraits, campagnes, éditorial et visuels de casting de Marco Charlas-Hou." page="gallery">
+<BaseLayout title="Marco Charlas-Hou - Modèle" description="Portfolio modèle, portraits, campagnes, éditorial et visuels de casting de Marco Charlas-Hou." page="gallery" preloadImages={['/assets/img/bg-gallery.webp']}>
   <section class="page poster-page inner gallery model-page" data-page="gallery" data-bg="gallery" data-theme="gallery" data-transition-label="MODELE" aria-labelledby="model-title">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="model-atmosphere" aria-hidden="true"></div>
@@ -28,12 +28,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="model-strip-track" data-speed="72" tabindex="0" aria-label="Défiler les portraits éditoriaux">
           <div class="model-strip-row">
-            <button class="model-frame" type="button" data-photo-id="editorial-01" data-src="/assets/img/cover-1.webp" data-title="Editorial portrait" data-meta="PORTRAIT / LOW KEY / MODEL TEST"><img src="/assets/img/cover-1.webp" alt="Portrait éditorial modèle placeholder" /><span>Portrait</span></button>
-            <button class="model-frame" type="button" data-photo-id="editorial-02" data-src="/assets/img/cover-2.webp" data-title="Casting profile" data-meta="CASTING / PROFILE / NATURAL"><img src="/assets/img/cover-2.webp" alt="Profil casting modèle placeholder" /><span>Casting</span></button>
-            <button class="model-frame is-featured" type="button" data-photo-id="editorial-03" data-src="/assets/img/cover-3.webp" data-title="Campaign face" data-meta="EDITORIAL / CLOSE-UP / CAMPAIGN"><img src="/assets/img/cover-3.webp" alt="Portrait campagne modèle placeholder" /><span>Campaign face</span></button>
-            <button class="model-frame" type="button" data-photo-id="editorial-04" data-src="/assets/img/cover-4.webp" data-title="Commercial gaze" data-meta="COMMERCIAL / SOFT LOOK / PRESS"><img src="/assets/img/cover-4.webp" alt="Regard commercial modèle placeholder" /><span>Commercial</span></button>
-            <button class="model-frame" type="button" data-photo-id="editorial-05" data-src="/assets/img/cover-5.webp" data-title="Visual identity" data-meta="IDENTITY / PORTRAIT / BRAND"><img src="/assets/img/cover-5.webp" alt="Identité visuelle modèle placeholder" /><span>Identity</span></button>
-            <button class="model-frame" type="button" data-photo-id="editorial-06" data-src="/assets/img/cover-6.webp" data-title="Press visual" data-meta="PRESS / LOOK BOOK / MODEL"><img src="/assets/img/cover-6.webp" alt="Visuel presse modèle placeholder" /><span>Press</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-01" data-src="/assets/img/cover-1.webp" data-title="Editorial portrait" data-meta="PORTRAIT / LOW KEY / MODEL TEST"><img loading="lazy" decoding="async" src="/assets/img/cover-1.webp" alt="Portrait éditorial modèle placeholder" /><span>Portrait</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-02" data-src="/assets/img/cover-2.webp" data-title="Casting profile" data-meta="CASTING / PROFILE / NATURAL"><img loading="lazy" decoding="async" src="/assets/img/cover-2.webp" alt="Profil casting modèle placeholder" /><span>Casting</span></button>
+            <button class="model-frame is-featured" type="button" data-photo-id="editorial-03" data-src="/assets/img/cover-3.webp" data-title="Campaign face" data-meta="EDITORIAL / CLOSE-UP / CAMPAIGN"><img loading="lazy" decoding="async" src="/assets/img/cover-3.webp" alt="Portrait campagne modèle placeholder" /><span>Campaign face</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-04" data-src="/assets/img/cover-4.webp" data-title="Commercial gaze" data-meta="COMMERCIAL / SOFT LOOK / PRESS"><img loading="lazy" decoding="async" src="/assets/img/cover-4.webp" alt="Regard commercial modèle placeholder" /><span>Commercial</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-05" data-src="/assets/img/cover-5.webp" data-title="Visual identity" data-meta="IDENTITY / PORTRAIT / BRAND"><img loading="lazy" decoding="async" src="/assets/img/cover-5.webp" alt="Identité visuelle modèle placeholder" /><span>Identity</span></button>
+            <button class="model-frame" type="button" data-photo-id="editorial-06" data-src="/assets/img/cover-6.webp" data-title="Press visual" data-meta="PRESS / LOOK BOOK / MODEL"><img loading="lazy" decoding="async" src="/assets/img/cover-6.webp" alt="Visuel presse modèle placeholder" /><span>Press</span></button>
           </div>
         </div>
         <div class="model-strip-progress" aria-hidden="true"><span></span></div>
@@ -47,12 +47,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="model-strip-track" data-speed="-58" tabindex="0" aria-label="Défiler les images de campagne">
           <div class="model-strip-row">
-            <button class="model-frame is-wide" type="button" data-photo-id="campaign-01" data-src="/assets/img/cover-4.webp" data-title="Brand frame" data-meta="CAMPAIGN / WARDROBE / BLACK SUIT"><img src="/assets/img/cover-4.webp" alt="Campagne publicitaire placeholder" /><span>Brand frame</span></button>
-            <button class="model-frame" type="button" data-photo-id="campaign-02" data-src="/assets/img/cover-6.webp" data-title="Lookbook cut" data-meta="LOOKBOOK / FASHION / ATTITUDE"><img src="/assets/img/cover-6.webp" alt="Lookbook modèle placeholder" /><span>Lookbook</span></button>
-            <button class="model-frame" type="button" data-photo-id="campaign-03" data-src="/assets/img/cover-2.webp" data-title="Advertising pose" data-meta="ADVERTISING / POSE / CINEMATIC"><img src="/assets/img/cover-2.webp" alt="Pose publicitaire placeholder" /><span>Advertising</span></button>
-            <button class="model-frame is-featured" type="button" data-photo-id="campaign-04" data-src="/assets/img/cover-1.webp" data-title="Luxury mood" data-meta="LUXURY / EDITORIAL / MOODY"><img src="/assets/img/cover-1.webp" alt="Mood luxe placeholder" /><span>Luxury mood</span></button>
-            <button class="model-frame" type="button" data-photo-id="campaign-05" data-src="/assets/img/cover-5.webp" data-title="Poster visual" data-meta="POSTER / CAMPAIGN / FACE"><img src="/assets/img/cover-5.webp" alt="Affiche campagne placeholder" /><span>Poster</span></button>
-            <button class="model-frame" type="button" data-photo-id="campaign-06" data-src="/assets/img/cover-3.webp" data-title="Commercial portrait" data-meta="COMMERCIAL / PORTRAIT / BRAND"><img src="/assets/img/cover-3.webp" alt="Portrait commercial placeholder" /><span>Portrait</span></button>
+            <button class="model-frame is-wide" type="button" data-photo-id="campaign-01" data-src="/assets/img/cover-4.webp" data-title="Brand frame" data-meta="CAMPAIGN / WARDROBE / BLACK SUIT"><img loading="lazy" decoding="async" src="/assets/img/cover-4.webp" alt="Campagne publicitaire placeholder" /><span>Brand frame</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-02" data-src="/assets/img/cover-6.webp" data-title="Lookbook cut" data-meta="LOOKBOOK / FASHION / ATTITUDE"><img loading="lazy" decoding="async" src="/assets/img/cover-6.webp" alt="Lookbook modèle placeholder" /><span>Lookbook</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-03" data-src="/assets/img/cover-2.webp" data-title="Advertising pose" data-meta="ADVERTISING / POSE / CINEMATIC"><img loading="lazy" decoding="async" src="/assets/img/cover-2.webp" alt="Pose publicitaire placeholder" /><span>Advertising</span></button>
+            <button class="model-frame is-featured" type="button" data-photo-id="campaign-04" data-src="/assets/img/cover-1.webp" data-title="Luxury mood" data-meta="LUXURY / EDITORIAL / MOODY"><img loading="lazy" decoding="async" src="/assets/img/cover-1.webp" alt="Mood luxe placeholder" /><span>Luxury mood</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-05" data-src="/assets/img/cover-5.webp" data-title="Poster visual" data-meta="POSTER / CAMPAIGN / FACE"><img loading="lazy" decoding="async" src="/assets/img/cover-5.webp" alt="Affiche campagne placeholder" /><span>Poster</span></button>
+            <button class="model-frame" type="button" data-photo-id="campaign-06" data-src="/assets/img/cover-3.webp" data-title="Commercial portrait" data-meta="COMMERCIAL / PORTRAIT / BRAND"><img loading="lazy" decoding="async" src="/assets/img/cover-3.webp" alt="Portrait commercial placeholder" /><span>Portrait</span></button>
           </div>
         </div>
         <div class="model-strip-progress" aria-hidden="true"><span></span></div>
@@ -66,12 +66,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="model-strip-track" data-speed="48" tabindex="0" aria-label="Défiler les visuels presse">
           <div class="model-strip-row">
-            <button class="model-frame" type="button" data-photo-id="press-01" data-src="/assets/img/cover-5.webp" data-title="Face range 01" data-meta="PRESS / FACE RANGE / FRONT"><img src="/assets/img/cover-5.webp" alt="Face range frontal placeholder" /><span>Front</span></button>
-            <button class="model-frame" type="button" data-photo-id="press-02" data-src="/assets/img/cover-3.webp" data-title="Face range 02" data-meta="PRESS / SIDE PROFILE / MOOD"><img src="/assets/img/cover-3.webp" alt="Profil visage placeholder" /><span>Profile</span></button>
-            <button class="model-frame" type="button" data-photo-id="press-03" data-src="/assets/img/cover-1.webp" data-title="Expression test" data-meta="CASTING / EXPRESSION / STILL"><img src="/assets/img/cover-1.webp" alt="Test expression placeholder" /><span>Expression</span></button>
-            <button class="model-frame" type="button" data-photo-id="press-04" data-src="/assets/img/cover-2.webp" data-title="Agency visual" data-meta="AGENCY / BOOK / SELECTION"><img src="/assets/img/cover-2.webp" alt="Visuel agence placeholder" /><span>Agency</span></button>
-            <button class="model-frame" type="button" data-photo-id="press-05" data-src="/assets/img/cover-6.webp" data-title="Mood archive" data-meta="ARCHIVE / BLACK / CINEMA"><img src="/assets/img/cover-6.webp" alt="Archive mood placeholder" /><span>Archive</span></button>
-            <button class="model-frame" type="button" data-photo-id="press-06" data-src="/assets/img/cover-4.webp" data-title="Book update" data-meta="BOOK / UPDATE / MODEL"><img src="/assets/img/cover-4.webp" alt="Book update placeholder" /><span>Book</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-01" data-src="/assets/img/cover-5.webp" data-title="Face range 01" data-meta="PRESS / FACE RANGE / FRONT"><img loading="lazy" decoding="async" src="/assets/img/cover-5.webp" alt="Face range frontal placeholder" /><span>Front</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-02" data-src="/assets/img/cover-3.webp" data-title="Face range 02" data-meta="PRESS / SIDE PROFILE / MOOD"><img loading="lazy" decoding="async" src="/assets/img/cover-3.webp" alt="Profil visage placeholder" /><span>Profile</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-03" data-src="/assets/img/cover-1.webp" data-title="Expression test" data-meta="CASTING / EXPRESSION / STILL"><img loading="lazy" decoding="async" src="/assets/img/cover-1.webp" alt="Test expression placeholder" /><span>Expression</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-04" data-src="/assets/img/cover-2.webp" data-title="Agency visual" data-meta="AGENCY / BOOK / SELECTION"><img loading="lazy" decoding="async" src="/assets/img/cover-2.webp" alt="Visuel agence placeholder" /><span>Agency</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-05" data-src="/assets/img/cover-6.webp" data-title="Mood archive" data-meta="ARCHIVE / BLACK / CINEMA"><img loading="lazy" decoding="async" src="/assets/img/cover-6.webp" alt="Archive mood placeholder" /><span>Archive</span></button>
+            <button class="model-frame" type="button" data-photo-id="press-06" data-src="/assets/img/cover-4.webp" data-title="Book update" data-meta="BOOK / UPDATE / MODEL"><img loading="lazy" decoding="async" src="/assets/img/cover-4.webp" alt="Book update placeholder" /><span>Book</span></button>
           </div>
         </div>
         <div class="model-strip-progress" aria-hidden="true"><span></span></div>
@@ -99,7 +99,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <span>Click any frame to open lightbox</span>
     </div>
 
-    <img class="hero-person page-person gallery-person model-person" src="/assets/img/marco-gallery.webp" alt="Portrait détouré de Marco pour la page modèle" />
+    <img decoding="async" class="hero-person page-person gallery-person model-person" src="/assets/img/marco-gallery.webp" alt="Portrait détouré de Marco pour la page modèle" />
 
     <div class="model-booking-note" aria-hidden="true">
       <span>MODEL BOOK</span>

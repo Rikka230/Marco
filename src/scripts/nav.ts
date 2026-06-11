@@ -99,6 +99,26 @@ export function initNav() {
   if (bound) return;
   bound = true;
 
+  // Ouverture du panneau au SURVOL (intention) + delai de fermeture quand on quitte,
+  // pour laisser le temps de lire la liste. Le rail est persiste (transition:persist),
+  // donc on attache les listeners une seule fois sur le noeud conserve.
+  let hoverCloseTimer = 0;
+  const openNav = () => {
+    const nav = getNav();
+    if (!nav) return;
+    window.clearTimeout(hoverCloseTimer);
+    nav.classList.add('is-open');
+    nav.querySelector('.chapter-toggle')?.setAttribute('aria-expanded', 'true');
+  };
+  const navEl = getNav();
+  if (navEl) {
+    navEl.addEventListener('mouseenter', openNav);
+    navEl.addEventListener('mouseleave', () => {
+      window.clearTimeout(hoverCloseTimer);
+      hoverCloseTimer = window.setTimeout(closeNav, 850);
+    });
+  }
+
   // Rail : toggle ouverture, prev/next (avec wrap), clic exterieur, Escape. (Delegue sur document.)
   document.addEventListener('click', (event) => {
     const target = event.target as Element;
@@ -106,11 +126,9 @@ export function initNav() {
     const toggle = target.closest('[data-chapter-nav] .chapter-toggle');
     if (toggle) {
       event.stopPropagation();
-      const nav = getNav();
-      if (nav) {
-        const isOpen = nav.classList.toggle('is-open');
-        nav.querySelector('.chapter-toggle')?.setAttribute('aria-expanded', String(isOpen));
-      }
+      // Ouvre (le survol gere l'ouverture sur desktop ; le clic/tap couvre le tactile).
+      // Fermeture : en quittant le rail (desktop) ou par un clic exterieur (existant ci-dessous).
+      openNav();
       return;
     }
 
@@ -133,6 +151,8 @@ export function initNav() {
   document.addEventListener('wheel', (event) => {
     if (event.defaultPrevented) return;
     if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    // Panneau ouvert : on laisse lire/parcourir la liste sans naviguer (sinon il se referme aussitot).
+    if (getNav()?.classList.contains('is-open')) return;
     const target = event.target;
     const onRail = target instanceof Element && Boolean(target.closest('[data-chapter-nav]'));
     if (!onRail && isInsideInternalScroller(target)) return;

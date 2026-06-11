@@ -4,7 +4,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Violoniste Compositeur" page="home">
+<BaseLayout title="Marco Charlas-Hou - Violoniste Compositeur" page="home" preloadImages={['/assets/img/marco-cover-bg.webp']}>
   <section
     class="page poster-page home"
     data-page="home"
@@ -21,6 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2 class="mega last cover-signature" aria-hidden="true">CHARLAS-HOU</h2>
 
     <img
+      decoding="async"
       class="hero-person"
       src="/assets/img/marco-home.webp"
       alt="Portrait detoure placeholder de Marco avec violon"

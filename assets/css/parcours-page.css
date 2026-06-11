@@ -20,7 +20,7 @@
 }
 
 .shell:has(.parcours-rebuild)::after {
-  content: "MARCO v0.5.8" !important;
+  content: var(--marco-build, "MARCO") !important;
   color: color-mix(in srgb, var(--parcours-blue) 82%, #fff 18%) !important;
   border-color: color-mix(in srgb, var(--parcours-blue) 72%, rgba(255,255,255,0.26)) !important;
   box-shadow:
@@ -769,7 +769,7 @@
   }
 
   .shell:has(.parcours-rebuild)::after {
-    content: "MARCO v5.8" !important;
+    content: var(--marco-build, "MARCO") !important;
     top: max(13px, env(safe-area-inset-top));
     right: clamp(18px, 5.2vw, 46px);
     min-width: 92px;

@@ -1910,11 +1910,11 @@ body.is-transitioning .mini-brand {
   color: rgba(255, 255, 255, 0.96);
   border-color: rgba(255, 255, 255, 0.18);
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08) 11%, rgba(0, 0, 0, 0.90) 11.1%, rgba(0, 0, 0, 0.76)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08) 11%, rgba(0, 0, 0, 0.96) 11.1%, rgba(0, 0, 0, 0.9)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
   box-shadow:
-    -8px 8px 0 rgba(0, 0, 0, 0.46),
-    0 16px 34px rgba(0, 0, 0, 0.46);
+    -8px 8px 0 rgba(0, 0, 0, 0.5),
+    0 16px 34px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px);
 }
 
@@ -1936,14 +1936,18 @@ body.is-transitioning .mini-brand {
   color: #ffffff;
   border-color: color-mix(in srgb, var(--accent, currentColor) 72%, white 28%);
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--accent, currentColor) 92%, white 8%), color-mix(in srgb, var(--accent, currentColor) 62%, white 10%) 28%, rgba(0, 0, 0, 0.92) 28.1%),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent, currentColor) 92%, white 8%), color-mix(in srgb, var(--accent, currentColor) 70%, white 10%) 15%, rgba(0, 0, 0, 0.94) 15.1%, rgba(0, 0, 0, 0.86)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
   box-shadow:
     -8px 8px 0 rgba(0, 0, 0, 0.54),
     0 16px 38px rgba(0, 0, 0, 0.54);
 }
 
-.chapter-link.is-active span,
+/* Numero (a gauche, sur le bloc accent clair) en encre foncee = lisible ; libelle blanc sur le sombre. */
+.chapter-link.is-active span {
+  color: #06100b;
+  text-shadow: none;
+}
 .chapter-link.is-active strong {
   color: #ffffff;
 }
@@ -3037,7 +3041,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .shell:has(.page:not(.is-leaving)[data-page="booking"]) { --marco-page-accent: #d8c3ff; --marco-v045-edge: rgba(216, 195, 255, 0.16); }
 
 .shell:has(.page:not(.is-leaving).inner:not([data-page="home"]))::after {
-  content: "MARCO v0.4.9";
+  content: var(--marco-build, "MARCO");
   position: fixed;
   top: clamp(14px, 2vh, 24px);
   right: clamp(86px, 7vw, 142px);

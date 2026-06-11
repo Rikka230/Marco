@@ -3,7 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Contact" description="Booking, collaborations, press kit et contact professionnel de Marco Charlas-Hou." page="booking">
+<BaseLayout title="Marco Charlas-Hou - Contact" description="Booking, collaborations, press kit et contact professionnel de Marco Charlas-Hou." page="booking" preloadImages={['/assets/img/bg-booking.webp']}>
   <section class="page poster-page inner booking" data-page="booking" data-bg="booking" data-theme="contact" data-transition-label="BOOKING">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="press-lines" aria-hidden="true"></div>
@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2 class="mega last">CONTACT PRO</h2>
     </div>
 
-    <img class="hero-person page-person contact-person" src="/assets/img/marco-contact.webp" alt="Portrait detoure placeholder de Marco avec violon" />
+    <img decoding="async" class="hero-person page-person contact-person" src="/assets/img/marco-contact.webp" alt="Portrait detoure placeholder de Marco avec violon" />
 
     <a class="cover-hit nav-home" href="/">
       <strong>HOME</strong>

@@ -5,7 +5,19 @@
 
 import { Renderer, Geometry, Program, Mesh } from 'ogl';
 
-const DURATION = 820; // ms, ~ duree du wipe
+const DURATION = 1550; // ms, ~ duree du wipe (alignee sur la bande)
+
+// Remap du temps lineaire -> progression avec PALIER au centre (stop smooth puis repart),
+// cale sur les memes paliers que la bande (0.34 / 0.58).
+const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
+const easeIn = (x: number) => x * x * x;
+function holdProgress(t: number): number {
+  const A = 0.34;
+  const B = 0.48;
+  if (t <= A) return 0.5 * easeOut(t / A);
+  if (t >= B) return 0.5 + 0.5 * easeIn((t - B) / (1 - B));
+  return 0.5; // palier au centre
+}
 
 const vertex = /* glsl */ `
   attribute vec2 position;
@@ -85,7 +97,8 @@ export function initTransitionFx(canvas: HTMLCanvasElement): PlayFn | null {
   }
 
   function frame(now: number) {
-    const p = Math.min(1, (now - start) / DURATION);
+    const t = Math.min(1, (now - start) / DURATION);
+    const p = holdProgress(t);
     program.uniforms.uProgress.value = p;
     program.uniforms.uTime.value = now * 0.001;
     renderer.render({ scene: mesh });

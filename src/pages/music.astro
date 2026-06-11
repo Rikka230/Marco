@@ -3,7 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Violin" description="Violon, performances live, enregistrements et sessions de Marco Charlas-Hou." page="music">
+<BaseLayout title="Marco Charlas-Hou - Violin" description="Violon, performances live, enregistrements et sessions de Marco Charlas-Hou." page="music" preloadImages={['/assets/img/bg-music.webp']}>
   <section class="page poster-page inner music" data-page="music" data-bg="music" data-theme="music" data-transition-label="VIOLIN">
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="string-lines" aria-hidden="true"></div>
@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2 class="mega last">LIVE STRINGS</h2>
     </div>
 
-    <img class="hero-person page-person music-person" src="/assets/img/marco-music.webp" alt="Portrait detoure placeholder de Marco avec violon" />
+    <img decoding="async" class="hero-person page-person music-person" src="/assets/img/marco-music.webp" alt="Portrait detoure placeholder de Marco avec violon" />
 
     <a class="cover-hit nav-home" href="/">
       <strong>HOME</strong>

@@ -19,9 +19,6 @@ const LABELS: Record<string, string> = {
   filmographie: 'FILMOGRAPHIE', composition: 'COMPOSITION', scores: 'SCORES', booking: 'BOOKING',
 };
 
-const EASE_IN = 'cubic-bezier(0.33, 1, 0.45, 1)';
-const EASE_OUT = 'cubic-bezier(0.5, 0, 0.2, 1)';
-
 function hexToRgb(hex: string): [number, number, number] {
   const h = hex.replace('#', '');
   return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255];
@@ -52,13 +49,16 @@ function runBand(id: string) {
   const span = band.querySelector('span');
   if (span) span.textContent = LABELS[id] || '';
   // WAAPI uniquement (pas de classe .is-active : on evite la double-animation CSS).
+  // Mouvement en 3 temps : entre en decelerant -> PALIER au centre (stop smooth, on lit le label)
+  // -> repart en accelerant. Les easings par-keyframe creent le "stop puis repart".
   band.animate(
     [
-      { transform: 'translate3d(120%, 0, 0)' },
-      { transform: 'translate3d(0, 0, 0)', offset: 0.42 },
+      { transform: 'translate3d(120%, 0, 0)', easing: 'cubic-bezier(0.16, 0.84, 0.24, 1)' }, // arrive, decelere
+      { transform: 'translate3d(0, 0, 0)', offset: 0.34, easing: 'linear' },                  // centre
+      { transform: 'translate3d(0, 0, 0)', offset: 0.48, easing: 'cubic-bezier(0.76, 0, 0.3, 1)' }, // PALIER court puis repart (plus tot)
       { transform: 'translate3d(-120%, 0, 0)' },
     ],
-    { duration: 760, easing: EASE_OUT, fill: 'both' },
+    { duration: 1550, fill: 'both' },
   );
 }
 
@@ -67,13 +67,14 @@ function animatePageIn() {
   if (!page) return;
   const fromClip = forward ? 'inset(0 0 0 24%)' : 'inset(0 24% 0 0)';
   const fromX = forward ? '14%' : '-14%';
+  // Glisse CONTINU (pas de palier) : seuls la bande + le shader marquent le stop.
   page.animate(
     [
       { transform: `translate3d(${fromX}, 0, 0) scale(0.985)`, opacity: 0.01, clipPath: fromClip },
       { opacity: 1, offset: 0.6 },
       { transform: 'translate3d(0, 0, 0) scale(1)', opacity: 1, clipPath: 'inset(0 0 0 0)' },
     ],
-    { duration: 920, easing: EASE_IN, fill: 'both' },
+    { duration: 1720, easing: 'cubic-bezier(0.33, 1, 0.45, 1)', fill: 'both' },
   );
 
   // Reveal differe du gros titre (clip bas) + portrait — via translate (compose avec transform).
@@ -84,7 +85,7 @@ function animatePageIn() {
         { translate: '6vw 0', opacity: 0, clipPath: 'inset(0 0 100% 0)' },
         { translate: '0 0', opacity: 0.92, clipPath: 'inset(0 0 0 0)' },
       ],
-      { duration: 740, delay: 60, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' },
+      { duration: 1360, delay: 120, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' },
     );
   }
   const person = page.querySelector<HTMLElement>('.hero-person');
@@ -94,7 +95,7 @@ function animatePageIn() {
         { translate: '5vw 0', opacity: 0.52 },
         { translate: '0 0', opacity: 1 },
       ],
-      { duration: 780, delay: 140, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' },
+      { duration: 1440, delay: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' },
     );
   }
 }

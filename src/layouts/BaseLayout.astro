@@ -17,6 +17,8 @@ interface Props {
   page: string;
   /** Feuilles CSS specifiques a la page, servies depuis /assets (link reel, compatible ClientRouter). */
   pageStyles?: string[];
+  /** Image(s) de fond LCP de la page : prechargees (rel=preload) pour accelerer le 1er rendu. */
+  preloadImages?: string[];
 }
 
 const {
@@ -24,10 +26,11 @@ const {
   description = 'Prototype cover interactive pour Marco Charlas-Hou, violoniste, compositeur, acteur et modele.',
   page,
   pageStyles = [],
+  preloadImages = [],
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 7.8';
+const BUILD = 'MARCO 8.3';
 ---
 
 <!doctype html>
@@ -37,6 +40,8 @@ const BUILD = 'MARCO 7.8';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {/* Preload du fond LCP : decouvert tot (sinon background-image CSS = decouvert tard => LCP lent). */}
+    {preloadImages.map((href) => <link rel="preload" as="image" href={href} />)}
     {/* ?v=BUILD : cache-bust du CSS de page (nom fixe, sinon le navigateur peut servir
         une ancienne version desync du style.css bundle -> width invalides -> visuel "explose"). */}
     {pageStyles.map((href) => <link rel="stylesheet" href={`${href}?v=${encodeURIComponent(BUILD)}`} />)}
@@ -83,7 +88,7 @@ const BUILD = 'MARCO 7.8';
       <div class="mini-player" transition:persist="mini-player">
         <button id="playBtn" type="button" aria-label="Lancer la boucle audio">PLAY</button>
         <span class="track-label"><b>92 BPM</b><b>LIVE STRINGS</b><b>VIOLIN - SCORE - IMAGE</b></span>
-        <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="auto" loop></audio>
+        <audio id="audioLoop" src="/assets/audio/soft-loop.wav" preload="none" loop></audio>
       </div>
 
       <ChapterNav active={page} />
