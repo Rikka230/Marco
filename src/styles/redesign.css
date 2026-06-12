@@ -331,9 +331,13 @@ html[data-perf="low"] .cine-light { display: none; }
 
 /* === 5. PAGES — REGLAGES CIBLES ========================================= */
 
-/* Home : la tagline droite debordait de sa boite (texte coupe au bord du
-   viewport, bug pre-existant) — on force la boite a la largeur du texte. */
-.cover-tagline { width: max-content; }
+/* Home : la tagline droite passait derriere le rail de navigation (fin de
+   VIOLINIST COMPOSER / ACTOR MODEL masquee, bug pre-existant) — on la
+   decale a gauche du rail et on fige la boite a la largeur du texte. */
+.cover-tagline {
+  width: max-content;
+  right: 5.8vw;
+}
 
 /* Scores : le stack editorial passait derriere la tete du portrait. */
 .projects-stack { right: 14vw; }
