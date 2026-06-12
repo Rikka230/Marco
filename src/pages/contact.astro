@@ -1,97 +1,94 @@
 ---
-// Page Contact / Booking — portage fidele de contact.html (formulaire front-only).
+// Page Booking / Contact — refonte selon mockup (booking_mockup.png).
+// Figure centrale = marco-booking.webp (detouree). Formulaire front-only conserve.
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const offers = [
+  { k: 'LIVE PERFORMANCE', meta: 'SOLO / ENSEMBLE', stat: 'SUR DEVIS' },
+  { k: 'FILM SCORE', meta: 'COMPOSITION / SESSION', stat: 'PROJET' },
+  { k: 'BRAND / IMAGE', meta: 'ACTING / MODEL', stat: 'CASTING' },
+];
+
+const requestTypes = ['Booking', 'Collaboration', 'Score / Composition', 'Image / Model', 'Acteur'];
 ---
 
-<BaseLayout title="Marco Charlas-Hou - Contact" description="Booking, collaborations, press kit et contact professionnel de Marco Charlas-Hou." page="booking" preloadImages={['/assets/img/bg-booking.webp']}>
-  <section class="page poster-page inner booking" data-page="booking" data-bg="booking" data-theme="contact" data-transition-label="BOOKING">
-    <div class="photo-bg" aria-hidden="true"></div>
-    <div class="press-lines" aria-hidden="true"></div>
+<BaseLayout title="Marco Charlas-Hou - Booking" description="Booking, collaborations, press kit et contact professionnel de Marco Charlas-Hou : violon, score, image, acting." page="booking" pageStyles={['/assets/css/booking-page.css']} preloadImages={['/assets/img/marco-booking.webp']}>
+  <section class="page booking-page booking-rebuild" data-page="booking" data-theme="contact" data-transition-label="BOOKING" aria-labelledby="booking-title">
+    <div class="booking-bg" aria-hidden="true"></div>
 
-    <div class="title-wrap" aria-hidden="true">
-      <h1 class="mega first">BOOKING</h1>
-      <h2 class="mega last">CONTACT PRO</h2>
+    <h1 class="booking-mega" id="booking-title" aria-label="Booking">BOOKING</h1>
+
+    <div class="booking-person-wrap" aria-hidden="true">
+      <img decoding="async" class="booking-person" src="/assets/img/marco-booking.webp" alt="Portrait detoure de Marco Charlas-Hou en costume" />
     </div>
 
-    <img decoding="async" class="hero-person page-person contact-person" src="/assets/img/marco-contact.webp" alt="Portrait detoure placeholder de Marco avec violon" />
-
-    <a class="cover-hit nav-home" href="/">
-      <strong>HOME</strong>
-      <span>COVER <i></i> IDENTITY</span>
-    </a>
-    <a class="cover-hit nav-music" href="/music">
-      <strong>VIOLIN</strong>
-      <span>LIVE <i></i> RECORDINGS</span>
-    </a>
-    <a class="cover-hit nav-projects" href="/projects">
-      <strong>SCORES</strong>
-      <span>FILM <i></i> STAGE</span>
-    </a>
-    <a class="cover-hit nav-gallery" href="/gallery">
-      <strong>MODELE</strong>
-      <span>PHOTO <i></i> CASTING</span>
-    </a>
-
-    <a class="key-project" href="/contact" aria-label="Contact professionnel">
-      <span>BOOKING</span>
-      <span>COLLABORATIONS</span>
-    </a>
-
-    <div class="cover-tagline" aria-hidden="true">
-      <span>VIOLIN / SCORE / IMAGE</span>
-      <span>CONTACT PRO</span>
+    <!-- Colonne gauche : pitch + offres -->
+    <div class="booking-intro" aria-label="Booking et collaborations">
+      <p class="booking-kicker">BOOKING</p>
+      <h2>Collaborations</h2>
+      <ul class="booking-roles">
+        <li>Violinist</li>
+        <li>Composer</li>
+        <li>Actor</li>
+        <li>Model</li>
+      </ul>
+      <p class="booking-lede">
+        Pour toute demande professionnelle — performance live, composition de score, image
+        de marque ou casting — un seul point de contact. Reponse rapide et adaptee a chaque projet.
+      </p>
     </div>
 
-    <form class="contact-form" data-contact-form>
-      <div class="contact-field">
-        <label for="contact-name">Nom</label>
-        <input id="contact-name" name="name" type="text" autocomplete="name" required />
-      </div>
+    <ul class="booking-offers" aria-label="Types de prestations">
+      {offers.map((o) => (
+        <li class="booking-offer">
+          <strong>{o.k}</strong>
+          <span>{o.meta}</span>
+          <em>{o.stat}</em>
+        </li>
+      ))}
+    </ul>
 
-      <div class="contact-field">
-        <label for="contact-email">Email</label>
-        <input id="contact-email" name="email" type="email" autocomplete="email" required />
-      </div>
+    <!-- Colonne droite : formulaire -->
+    <div class="booking-panel">
+      <p class="booking-panel-kicker">VIOLIN / SCORE / IMAGE / CONTACT PRO</p>
 
-      <fieldset class="request-type">
-        <legend>Type de demande</legend>
-        <label>
-          <input type="radio" name="request_type" value="Booking" checked />
-          <span>Booking</span>
-        </label>
-        <label>
-          <input type="radio" name="request_type" value="Collaboration" />
-          <span>Collaboration</span>
-        </label>
-        <label>
-          <input type="radio" name="request_type" value="Score / Composition" />
-          <span>Score / Composition</span>
-        </label>
-        <label>
-          <input type="radio" name="request_type" value="Image / Acting / Model" />
-          <span>Image / Acting / Model</span>
-        </label>
-      </fieldset>
+      <form class="booking-form" data-contact-form>
+        <div class="booking-row">
+          <div class="contact-field">
+            <label for="contact-name">Nom</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Votre nom" required />
+          </div>
+          <div class="contact-field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required />
+          </div>
+        </div>
 
-      <div class="contact-field contact-field-wide">
-        <label for="contact-subject">Sujet</label>
-        <input id="contact-subject" name="subject" type="text" required />
-      </div>
+        <fieldset class="request-type">
+          <legend>Type de demande</legend>
+          <div class="request-chips">
+            {requestTypes.map((t, i) => (
+              <label class="request-chip">
+                <input type="radio" name="request_type" value={t} checked={i === 0} />
+                <span>{t}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
 
-      <div class="contact-field contact-field-wide">
-        <label for="contact-message">Message</label>
-        <textarea id="contact-message" name="message" rows="3" required></textarea>
-      </div>
+        <div class="contact-field contact-field-wide">
+          <label for="contact-subject">Sujet</label>
+          <input id="contact-subject" name="subject" type="text" placeholder="Objet de la demande" required />
+        </div>
 
-      <button class="contact-submit" type="submit">SEND REQUEST</button>
-      <p class="contact-status" data-form-status aria-live="polite"></p>
-    </form>
+        <div class="contact-field contact-field-wide">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="3" placeholder="Decrivez votre projet..." required></textarea>
+        </div>
 
-    <div class="editorial-stack contact-stack" aria-hidden="true">
-      <span>VIOLINIST</span>
-      <span>COMPOSER</span>
-      <span>ACTOR</span>
-      <span>MODEL</span>
+        <button class="contact-submit" type="submit">SEND REQUEST</button>
+        <p class="contact-status" data-form-status aria-live="polite"></p>
+      </form>
     </div>
   </section>
 </BaseLayout>
