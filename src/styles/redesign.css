@@ -26,18 +26,19 @@ body {
 }
 
 /* Recalibrage mesure au navigateur (Archivo 125% rend ~5.7% plus large
-   qu'Arial Black) : MARCO plein bleed ~100vw a chaque palier. */
+   qu'Arial Black) : MARCO a ~96vw a chaque palier — plein bleed visuel
+   AVEC marge, pour que le O ne soit jamais coupe (arrondis, zoom, scrollbar). */
 .home .mega.first {
   letter-spacing: -0.075em;
-  font-size: clamp(160px, 22.9vw, 472px);
+  font-size: clamp(155px, 22.2vw, 458px);
 }
 
 @media (max-width: 1100px) {
-  .home .mega.first { font-size: clamp(121px, 23.6vw, 293px); }
+  .home .mega.first { font-size: clamp(118px, 21.8vw, 285px); }
 }
 
 @media (max-width: 850px) {
-  .home .mega.first { font-size: clamp(74px, 28.4vw, 198px); }
+  .home .mega.first { font-size: clamp(74px, 22vw, 190px); }
 }
 
 .inner .mega.first { letter-spacing: -0.062em; }
@@ -46,7 +47,7 @@ body {
    pre-existant entre .inner .mega.first et la feuille de page). On fixe la
    taille ici, avec une specificite superieure aux deux. */
 .composition-page .title-wrap .mega.first {
-  font-size: clamp(40px, 13.2vw, 300px);
+  font-size: clamp(40px, 12vw, 274px);
   letter-spacing: -0.08em;
 }
 
@@ -389,4 +390,10 @@ html[data-perf="low"] .cine-light { display: none; }
   .booking-mega { font-size: 16.6vw; }
   .booking-person-wrap { width: min(56vw, 280px); margin-top: -4vh; }
   .booking-intro { margin-top: 1vh; }
+}
+
+/* Cas extreme basse hauteur (laptop zoome 125%) : la note decorative
+   MODEL BOOK touchait la 3e bande photo. */
+@media (max-height: 600px) and (min-width: 901px) {
+  .model-booking-note { display: none; }
 }

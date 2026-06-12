@@ -385,7 +385,9 @@
 }
 
 .parcours-timeline-zone {
-  left: 30.6vw;
+  /* Cale apres la colonne gauche (Formation 6.85vw + min(26vw,450px)) :
+     supprime le chevauchement structurel avec Profil sur ecrans bas. */
+  left: calc(6.85vw + min(26vw, 450px) + 1.2vw);
   right: 29vw;
   top: 65.8vh;
   z-index: 52;
@@ -549,7 +551,8 @@
 
 .parcours-skills {
   left: 6.85vw;
-  bottom: 8.6vh;
+  /* max() : reste au-dessus du mini-player quand 8.6vh < hauteur du player. */
+  bottom: max(8.6vh, 96px);
   width: min(26vw, 450px);
   font-family: var(--display-font);
 }
@@ -1650,4 +1653,31 @@
     width: 44px;
     height: 44px;
   }
+}
+
+/* === LAPTOPS BASSE HAUTEUR (1366x768, 1024x768, zoom 125%...) ===
+   Evite que Formation/Etudes ne morde sur la timeline centrale, et que les
+   blocs bas ne touchent le mini-player. Scope min-width 901px : ne touche
+   pas le flux mobile dedie. */
+@media (max-height: 800px) and (min-width: 901px) {
+  .parcours-studies { top: max(30vh, 205px); width: min(22vw, 420px); }
+  .parcours-study-list { gap: clamp(0.7rem, 1.8vh, 1.2rem); }
+  .parcours-skills { bottom: max(7vh, 88px); }
+  .parcours-skill-list { gap: 0.32rem; }
+  .parcours-skills h2 { margin-bottom: 0.6rem; font-size: 1.35rem; }
+}
+
+/* Cas extreme (laptop 1366 zoome a 125% -> ~526px de haut) : pas la place
+   pour 3 blocs empiles a gauche, le Profil (redondant avec le flux mobile)
+   est masque. */
+@media (max-height: 580px) and (min-width: 901px) {
+  .parcours-timeline-zone { top: 62vh; }
+  .parcours-skills { display: none; }
+  /* Le plancher 4.2rem des cartes Formation depasse 8.6vh a cette hauteur ;
+     largeur remontee a 26vw (limite timeline) pour limiter les retours
+     a la ligne, donc la hauteur des cartes. */
+  .parcours-studies { top: max(30vh, 200px); width: min(26vw, 420px); }
+  .parcours-zone header { margin-bottom: 0.4rem; }
+  .parcours-study-card { min-height: clamp(2.6rem, 8.6vh, 5.7rem); }
+  .parcours-study-list { gap: 0.45rem; }
 }

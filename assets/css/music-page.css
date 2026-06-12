@@ -1,4 +1,4 @@
-/* === MARCO VIOLIN PAGE — refonte premium selon Violin_mockup.png === */
+﻿/* === MARCO VIOLIN PAGE â€” refonte premium selon Violin_mockup.png === */
 
 .violin-page {
   --vl-gold: #f4bd68;
@@ -470,4 +470,29 @@ body[data-marco-page="music"] .shell::after { display: none !important; }
   }
   .violin-band { grid-template-columns: 1fr; gap: 2vh; margin-bottom: 14vh; }
   .violin-band-col + .violin-band-col::before { display: none; }
+}
+
+/* === LAPTOPS BASSE HAUTEUR (1366x768, 1280x720, zoom 125%...) ===
+   Compresse sessions + featured pour que rien ne touche le bandeau bas.
+   Scope min-width 901px : ne touche pas la mise en page mobile. */
+@media (max-height: 780px) and (min-width: 901px) {
+  .violin-sessions { top: 26vh; }
+  .violin-sessions ul { gap: 0.45rem; }
+  .violin-session { padding: 0.4rem 0.7rem; gap: 0.5rem; }
+  .violin-session-thumb { width: 38px; height: 38px; }
+  .violin-featured { top: 22vh; }
+  .violin-featured-thumb { height: clamp(72px, 8.4vw, 120px); }
+  .violin-featured-desc { display: none; }
+  .violin-band { bottom: clamp(92px, 11vh, 134px); }
+}
+
+/* Cas extreme (laptop 1366 zoome a 125% -> ~526px de haut). */
+@media (max-height: 580px) and (min-width: 901px) {
+  .violin-sessions { top: 22vh; }
+  .violin-sessions ul { gap: 0.3rem; }
+  .violin-session { padding: 0.3rem 0.6rem; }
+  .violin-session-wave { display: none; }
+  .violin-featured { top: 20vh; }
+  .violin-featured-wave { display: none; }
+  .violin-band { bottom: clamp(84px, 10vh, 120px); }
 }

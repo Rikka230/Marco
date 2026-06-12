@@ -225,7 +225,9 @@ body:has(.filmographie-rebuild) .shell::after {
 .filmographie-list {
   position: relative;
   display: grid;
-  max-height: min(41vh, 430px);
+  /* 3e borne : sur laptops bas (<=768px de haut), la liste s'arrete
+     au-dessus du mini-player au lieu de passer dessous. */
+  max-height: min(41vh, 430px, calc(71vh - 252px));
   padding-left: 0;
   overflow: hidden auto;
   overscroll-behavior: contain;
@@ -361,6 +363,9 @@ body:has(.filmographie-rebuild) .shell::after {
   right: clamp(7.6rem, 9.2vw, 11rem);
   top: clamp(18.2rem, 35.8vh, 25rem);
   width: min(25.2vw, 470px);
+  /* Jamais sous le bord bas : scroll interne quand la hauteur manque. */
+  max-height: calc(100vh - clamp(18.2rem, 35.8vh, 25rem) - 64px);
+  overflow-y: auto;
   padding: clamp(1.1rem, 1.35vw, 1.55rem);
   border: 1px solid rgba(244, 189, 104, 0.62);
   border-radius: 8px;
@@ -653,6 +658,37 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
   }
 }
 
+/* Laptops bas (900px de haut et moins) : panneau extrait compacte (meme
+   recette que le palier 1700-2199 valide) + badge reduit, et la liste part
+   moins bas (le clamp min 15.8rem la poussait sous le player a 526px). */
+@media (max-height: 980px) and (min-width: 1181px) {
+  .filmographie-selected {
+    width: min(22vw, 380px);
+    padding: 0.85rem;
+  }
+  .filmographie-selected h2 { font-size: 1.25rem; }
+  .filmographie-selected > strong { margin: 0.25rem 0 0.5rem; }
+  .filmographie-player-ui { margin: 0.4rem 0 0.6rem; }
+  .filmographie-selected-meta { gap: 0.45rem 0.8rem; padding-top: 0.55rem; }
+}
+
+@media (max-height: 880px) and (min-width: 821px) {
+  .filmographie-credits { top: max(26vh, 198px); }
+  .filmographie-badge {
+    width: min(7vw, 118px);
+    bottom: clamp(0.9rem, 2.4vh, 2rem);
+  }
+}
+
+@media (max-height: 720px) and (min-width: 821px) {
+  .filmographie-badge { display: none; }
+}
+
+/* Ultrawide (21:9 / 32:9) : le badge effleurait le panneau extrait. */
+@media (min-aspect-ratio: 21/9) {
+  .filmographie-badge { bottom: 2rem; }
+}
+
 @media (max-width: 820px) {
   .filmographie-rebuild {
     height: 100dvh;
@@ -745,6 +781,8 @@ body:has(.filmographie-rebuild) .mini-player #playBtn {
     margin-top: 1.2rem;
     padding: 1rem;
     scroll-margin-top: 1rem;
+    max-height: none;
+    overflow-y: visible;
   }
 
   .filmographie-selected-meta {

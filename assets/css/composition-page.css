@@ -55,7 +55,9 @@
 .composition-page .key-project { top: 38vh; left: 5.2vw; max-width: 39vw; color: #ff304f; }
 .composition-page .key-project span { font-size: clamp(30px, 3.45vw, 72px); transform: skewX(-7deg); }
 .composition-intro {
-  position: absolute; left: 5.3vw; top: 51vh; z-index: 36; display: grid; gap: .36rem;
+  /* max() : reste sous le key-project (2 lignes en vw) meme quand la hauteur
+     d'ecran est faible par rapport a la largeur (laptops 16:9 bas). */
+  position: absolute; left: 5.3vw; top: max(51vh, calc(38vh + 10vw)); z-index: 36; display: grid; gap: .36rem;
   max-width: min(32vw, 520px); color: #f9f1dc; font-family: var(--heavy); text-transform: uppercase;
   text-shadow: 0 8px 24px rgba(0,0,0,.72);
 }
@@ -120,6 +122,11 @@
   letter-spacing: -0.035em; text-align: right; text-transform: uppercase; transform: skewX(-8deg);
   text-shadow: 0 8px 22px rgba(0,0,0,.72); pointer-events: none;
 }
+/* Basse hauteur : la note decorative Scroll/Diagonal touchait la tracklist. */
+@media (max-height: 740px) and (min-width: 901px) {
+  .composition-side-note { display: none; }
+}
+
 @media (max-width: 900px) {
   /* 12.5vw : COMPOSITION (11 glyphes) tient en plein bleed sur 390px sans coupe. */
   .composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
