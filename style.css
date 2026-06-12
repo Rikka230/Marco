@@ -3,8 +3,11 @@
   --mint-soft: rgba(134, 248, 167, 0.78);
   --cream: #effff1;
   --ink: #050807;
-  --heavy: "Arial Black", "Helvetica Neue", Arial, Impact, sans-serif;
-  --ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Display poster : Archivo variable (axe largeur 62-125%) auto-hebergee, fallback Arial Black. */
+  --heavy: "Archivo Variable", "Arial Black", "Helvetica Neue", Arial, Impact, sans-serif;
+  /* Accent editorial magazine : serif italique pour sous-titres et ledes. */
+  --serif: "Cormorant Variable", "Cormorant Garamond", Georgia, serif;
+  --ui: "Space Grotesk Variable", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {

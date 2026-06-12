@@ -1,0 +1,388 @@
+/* ============================================================================
+   MARCO — REDESIGN PRO PREVIEW (branche redesign-pro-preview)
+   Calque de direction artistique au-dessus de style.css :
+   1. Typographie (Archivo expanded / Cormorant italique / Space Grotesk)
+   2. Etalonnage cinema global (.cine-light : vignette + halo accentue)
+   3. Entrees de page (reveal discret des heros / titres / liens)
+   4. Micro-interactions (hovers, focus, selection, scrollbars)
+   5. Corrections responsive (titres mobiles, chevauchements)
+   Charge en dernier dans BaseLayout => surcharge propre, zero !important.
+   ========================================================================== */
+
+/* === 1. TYPOGRAPHIE ===================================================== */
+
+/* Caractere "poster" global : Archivo legerement elargie partout. */
+body {
+  font-stretch: 112%;
+}
+
+/* Megas et compositions typographiques : pleine extension (125%), tracking recale
+   (Archivo expanded est moins large qu'Arial Black => on detend le tracking negatif). */
+.mega,
+.violin-mega,
+.booking-mega {
+  font-stretch: 125%;
+  font-feature-settings: "ss01" on;
+}
+
+/* Recalibrage mesure au navigateur (Archivo 125% rend ~5.7% plus large
+   qu'Arial Black) : MARCO plein bleed ~100vw a chaque palier. */
+.home .mega.first {
+  letter-spacing: -0.075em;
+  font-size: clamp(160px, 22.9vw, 472px);
+}
+
+@media (max-width: 1100px) {
+  .home .mega.first { font-size: clamp(121px, 23.6vw, 293px); }
+}
+
+@media (max-width: 850px) {
+  .home .mega.first { font-size: clamp(74px, 28.4vw, 198px); }
+}
+
+.inner .mega.first { letter-spacing: -0.062em; }
+
+/* Composition : le mega COMPOSITION debordait de 60% (conflit de cascade
+   pre-existant entre .inner .mega.first et la feuille de page). On fixe la
+   taille ici, avec une specificite superieure aux deux. */
+.composition-page .title-wrap .mega.first {
+  font-size: clamp(40px, 13.2vw, 300px);
+  letter-spacing: -0.08em;
+}
+
+/* Sous-titres des pages internes : bascule editoriale — serif italique bas de casse
+   ("original music", "trajectoire", "photo book"…) sous le mega heavy. */
+.inner .mega.last {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 460;
+  font-stretch: 100%;
+  text-transform: lowercase;
+  letter-spacing: 0.012em;
+  transform: translateX(-50%);
+  font-size: clamp(54px, 7.2vw, 140px);
+  line-height: 0.9;
+  opacity: 0.94;
+}
+
+/* Signature home : le nom en serif italique, geste magazine sous le mega MARCO. */
+.home .cover-signature {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 440;
+  font-stretch: 100%;
+  letter-spacing: 0.02em;
+  transform: translateX(-50%);
+  font-size: clamp(54px, 7.8vw, 150px);
+  opacity: 0.96;
+}
+
+/* Ledes et descriptions : la meme voix serif, en italique lisible. */
+.booking-lede,
+.violin-featured-desc {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(15px, 1.05vw, 19px);
+  line-height: 1.5;
+}
+
+/* Stack editorial de la page Scores : alternance heavy / italique. */
+.projects-stack span:nth-child(2) {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 470;
+  font-stretch: 100%;
+  text-transform: lowercase;
+  letter-spacing: 0.015em;
+}
+
+/* Encre degradee sur les megas (sauf composition : garde son echo rouge offset,
+   et filmographie : titre image). Le text-shadow herite est coupe car il
+   transparaitrait sous les glyphes evides. */
+.poster-page:not(.composition-page) .mega.first {
+  background: linear-gradient(
+    178deg,
+    color-mix(in srgb, var(--accent, var(--mint)) 62%, #ffffff) 4%,
+    var(--accent, var(--mint)) 46%,
+    color-mix(in srgb, var(--accent, var(--mint)) 72%, #000000) 96%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.42));
+}
+
+/* === 2. ETALONNAGE CINEMA GLOBAL ======================================== */
+
+/* Couche persistante au-dessus du contenu de page (sous dotWave/nav/player) :
+   vignette d'objectif + sheen haut + halo de couleur par page. */
+.cine-light {
+  position: fixed;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 124% 96% at 50% 44%, transparent 0 58%, rgba(0, 0, 0, 0.22) 86%, rgba(0, 0, 0, 0.42) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), transparent 18%, transparent 80%, rgba(0, 0, 0, 0.18));
+}
+
+/* Halo accentue : respire tres lentement, couleur pilotee par la page courante. */
+.cine-light::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(ellipse 46% 38% at 18% 8%, color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 13%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 34% at 86% 92%, color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 9%, transparent), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  animation: rdAurora 14s ease-in-out infinite alternate;
+  transition: background 0.8s ease;
+}
+
+@keyframes rdAurora {
+  from { transform: translate3d(-1.2%, -0.8%, 0) scale(1); opacity: 0.68; }
+  to { transform: translate3d(1.2%, 1%, 0) scale(1.05); opacity: 0.95; }
+}
+
+html[data-perf="low"] .cine-light { display: none; }
+
+/* === 3. ENTREES DE PAGE ================================================= */
+
+/* Titres : montent et se revelent a l'arrivee sur la page. */
+.page .title-wrap,
+.violin-mega,
+.booking-mega,
+.filmographie-title-img {
+  animation: rdTitleIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rdTitleIn {
+  from { opacity: 0; transform: translateY(2.2vh); }
+}
+
+/* La signature home et les sous-titres suivent avec un leger retard. */
+.cover-signature,
+.inner .mega.last {
+  animation: rdSoftIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+/* rdSoftIn n'anime que l'opacite : compatible avec les transforms poses par
+   style.css / les pages (translateX(-50%), skew…). */
+@keyframes rdSoftIn {
+  from { opacity: 0; }
+}
+
+/* Heros detoures : fondu (le flottement personFloat est conserve en 2e animation). */
+.poster-page .hero-person {
+  animation:
+    rdSoftIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both,
+    personFloat 7.5s ease-in-out 1s infinite alternate;
+}
+
+.violin-person-wrap,
+.booking-person-wrap,
+.filmographie-person-wrap {
+  animation: rdSoftIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+/* Liens de pochette / blocs cles : cascade rapide. */
+.cover-hit,
+.key-project,
+.cover-tagline,
+.composition-intro,
+.booking-intro,
+.booking-offers,
+.booking-panel,
+.violin-sessions,
+.violin-featured,
+.violin-band,
+.filmographie-credits,
+.filmographie-selected {
+  animation: rdRiseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rdRiseIn {
+  from { opacity: 0; translate: 0 1.6vh; }
+}
+
+.cover-hit.left-a, .violin-sessions, .booking-intro, .filmographie-credits { animation-delay: 0.22s; }
+.cover-hit.right-a, .violin-featured, .booking-panel, .filmographie-selected { animation-delay: 0.3s; }
+.cover-hit.left-b, .booking-offers { animation-delay: 0.38s; }
+.cover-hit.right-b, .violin-band { animation-delay: 0.46s; }
+.key-project, .composition-intro { animation-delay: 0.34s; }
+.cover-tagline { animation-delay: 0.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cine-light::before { animation: none; }
+  .page .title-wrap,
+  .violin-mega,
+  .booking-mega,
+  .filmographie-title-img,
+  .cover-signature,
+  .inner .mega.last,
+  .poster-page .hero-person,
+  .violin-person-wrap,
+  .booking-person-wrap,
+  .filmographie-person-wrap,
+  .cover-hit,
+  .key-project,
+  .cover-tagline,
+  .composition-intro,
+  .booking-intro,
+  .booking-offers,
+  .booking-panel,
+  .violin-sessions,
+  .violin-featured,
+  .violin-band,
+  .filmographie-credits,
+  .filmographie-selected {
+    animation: none;
+  }
+}
+
+/* === 4. MICRO-INTERACTIONS ============================================== */
+
+::selection {
+  background: color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 36%, #0a0a0a);
+  color: #f4fff6;
+}
+
+/* Liens de pochette : soulignement accentue qui se deploie au survol. */
+.cover-hit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.42em;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cover-hit.right-a::after,
+.cover-hit.right-b::after {
+  transform-origin: right center;
+}
+
+.cover-hit:hover::after,
+.cover-hit:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Boutons play / submit : reponse tactile homogene. */
+.track-play,
+.violin-play,
+.violin-featured-play,
+.booking-form .contact-submit {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), filter 0.22s ease, box-shadow 0.22s ease;
+}
+
+.track-play:hover,
+.violin-play:hover,
+.violin-featured-play:hover {
+  transform: scale(1.1);
+  filter: brightness(1.12);
+}
+
+.track-play:active,
+.violin-play:active,
+.violin-featured-play:active,
+.booking-form .contact-submit:active {
+  transform: scale(0.96);
+}
+
+/* Chips et services : leve discrete. */
+.request-chip span,
+.violin-tag,
+.violin-service,
+.booking-offer {
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.24s ease, background 0.24s ease, color 0.24s ease;
+}
+
+.violin-service:hover,
+.booking-offer:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 46%, transparent);
+}
+
+.request-chip:hover span,
+.violin-tag:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 52%, transparent);
+}
+
+/* Focus clavier : anneau accentue coherent sur tout le site. */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 78%, #fff);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Scrollbars internes : fines, accentuees. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--marco-nav-accent, #86f5a8) 55%, rgba(255, 255, 255, 0.1)) rgba(255, 255, 255, 0.05);
+}
+
+/* === 5. PAGES — REGLAGES CIBLES ========================================= */
+
+/* Home : la tagline droite debordait de sa boite (texte coupe au bord du
+   viewport, bug pre-existant) — on force la boite a la largeur du texte. */
+.cover-tagline { width: max-content; }
+
+/* Scores : le stack editorial passait derriere la tete du portrait. */
+.projects-stack { right: 14vw; }
+
+/* Scores : fond assombri et recadre (la page la plus faible en contraste). */
+.scores .photo-bg {
+  filter: saturate(0.78) contrast(1.14) brightness(0.66);
+}
+
+.scores .cover-tagline,
+.scores .editorial-stack,
+.scores .key-project {
+  text-shadow:
+    0 0 5px color-mix(in srgb, var(--accent, #74b8ff) 30%, transparent),
+    0 6px 18px rgba(0, 0, 0, 0.72),
+    0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* === 6. RESPONSIVE ====================================================== */
+
+@media (max-width: 560px) {
+  /* Home : MARCO tenait pas dans 390px (titre coupe) — recale plein bleed. */
+  .home .mega.first {
+    font-size: 21.5vw;
+    letter-spacing: -0.05em;
+  }
+
+  .home .cover-signature {
+    font-size: 10.4vw;
+    bottom: 7.5vh;
+  }
+}
+
+@media (max-width: 900px) {
+  .inner .mega.last {
+    font-size: clamp(34px, 9vw, 88px);
+  }
+
+  /* Scores : SCORES debordait de ~20% sur petit ecran. */
+  .scores .title-wrap .mega.first { font-size: 18.5vw; }
+
+  /* Modele : degage la collision copy / premiere bande. */
+  .model-copy-left { top: 17.5vh; }
+  .model-strip-a { top: 28.5vh; }
+}
+
+@media (max-width: 820px) {
+  /* Booking mobile : titre plein bleed sans coupe + moins de vide avant le contenu. */
+  .booking-mega { font-size: 16.6vw; }
+  .booking-person-wrap { width: min(56vw, 280px); margin-top: -4vh; }
+  .booking-intro { margin-top: 1vh; }
+}

@@ -5,10 +5,15 @@
 // - data-marco-page rendu cote serveur => accent/theme sans latence (CSS pur).
 import { ClientRouter } from 'astro:transitions';
 import ChapterNav from '../components/ChapterNav.astro';
+// Fontes auto-hebergees (Fontsource, bundlees par Vite) : display expanded + serif editorial + UI.
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/cormorant/wght-italic.css';
+import '@fontsource-variable/space-grotesk';
 import '../../style.css';
 import '../../assets/css/model-page.css';
 import '../../assets/css/marco-bg-veil.css';
 import '../styles/transitions.css';
+import '../styles/redesign.css';
 
 interface Props {
   title: string;
@@ -30,7 +35,7 @@ const {
 } = Astro.props;
 
 // Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'MARCO 8.4';
+const BUILD = 'REDESIGN 1';
 ---
 
 <!doctype html>
@@ -82,6 +87,9 @@ const BUILD = 'MARCO 8.4';
       <main id="app">
         <slot />
       </main>
+
+      {/* Etalonnage cinema global : vignette + halo accentue par page (voir redesign.css). */}
+      <div class="cine-light" aria-hidden="true" transition:persist="cine-light"></div>
 
       <canvas id="dotWave" aria-hidden="true" transition:persist="dotwave"></canvas>
       <canvas id="dotwave-gl" aria-hidden="true" transition:persist="dotwave-gl"></canvas>

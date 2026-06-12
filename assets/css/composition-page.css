@@ -121,7 +121,8 @@
   text-shadow: 0 8px 22px rgba(0,0,0,.72); pointer-events: none;
 }
 @media (max-width: 900px) {
-  .composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(54px, 17vw, 148px); }
+  /* 12.5vw : COMPOSITION (11 glyphes) tient en plein bleed sur 390px sans coupe. */
+  .composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
   .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
   .composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
   .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }

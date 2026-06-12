@@ -10,6 +10,9 @@
     "check": "astro check"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "^5.2.8",
+    "@fontsource-variable/cormorant": "^5.2.8",
+    "@fontsource-variable/space-grotesk": "^5.2.10",
     "astro": "^6.4.4",
     "ogl": "^1.0.11"
   }
