@@ -70,12 +70,19 @@ export interface BookingRequest {
 
 // --- Medias (collection Firestore "media" + Storage) ---
 
+export type MediaKind = 'image' | 'audio' | 'video';
+
 export interface MediaAsset {
   id?: string;
+  kind: MediaKind;
   name: string;
-  path: string;          // chemin Storage
-  url: string;           // download URL
-  type: string;          // mime
-  size: number;
+  url: string;           // download URL (fichiers) ou URL source (video)
+  path?: string;         // chemin Storage (fichiers uniquement)
+  type?: string;         // mime (fichiers)
+  size?: number;
   uploadedAt: number;
+  // Champs video (embed auto) :
+  provider?: 'youtube' | 'vimeo' | 'file'; // source de la video
+  embedUrl?: string;     // URL d'integration <iframe>
+  thumbnail?: string;    // vignette
 }
