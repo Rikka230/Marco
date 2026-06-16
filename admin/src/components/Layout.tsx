@@ -5,6 +5,11 @@ import { db, IS_EMULATOR } from '../firebase';
 import { useAuth } from '../auth';
 import ChangePassword from './ChangePassword';
 import ThemeToggle from './ThemeToggle';
+import {
+  IconInbox, IconMusic, IconList, IconBriefcase, IconImage, IconUpload, IconExternalLink,
+} from './icons';
+
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://marco-site-2f9aa.web.app';
 
 // Compteur temps reel des demandes non lues (badge sidebar).
 function useUnreadCount() {
@@ -17,12 +22,12 @@ function useUnreadCount() {
 }
 
 const LINKS = [
-  { to: '/bookings', label: 'Demandes', icon: '📥' },
-  { to: '/music', label: 'Violon', icon: '🎻' },
-  { to: '/composition', label: 'Composition', icon: '♪' },
-  { to: '/booking-content', label: 'Booking', icon: '✦' },
-  { to: '/media', label: 'Médias', icon: '🖼' },
-  { to: '/publish', label: 'Publier', icon: '🚀' },
+  { to: '/bookings', label: 'Demandes', Icon: IconInbox },
+  { to: '/music', label: 'Violon', Icon: IconMusic },
+  { to: '/composition', label: 'Composition', Icon: IconList },
+  { to: '/booking-content', label: 'Booking', Icon: IconBriefcase },
+  { to: '/media', label: 'Médias', Icon: IconImage },
+  { to: '/publish', label: 'Publier', Icon: IconUpload },
 ];
 
 export default function Layout() {
@@ -36,11 +41,15 @@ export default function Layout() {
         <nav className="nav">
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} className={({ isActive }) => (isActive ? 'active' : '')}>
-              <span aria-hidden>{l.icon}</span>{l.label}
+              <l.Icon size={17} />{l.label}
               {l.to === '/bookings' && unread > 0 && <span className="badge">{unread}</span>}
             </NavLink>
           ))}
         </nav>
+        <a className="btn btn-sm view-site" href={SITE_URL} target="_blank" rel="noreferrer">
+          <IconExternalLink size={15} />Voir le site
+        </a>
+
         <div className="sidebar-foot">
           {IS_EMULATOR && <div className="banner warn" style={{ margin: 0 }}>Mode émulateur local</div>}
           <div className="who">{user?.email}</div>

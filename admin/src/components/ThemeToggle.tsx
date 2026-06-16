@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { IconSun, IconMoon } from './icons';
 
 type Theme = 'dark' | 'light';
 const KEY = 'marco-admin-theme';
@@ -17,7 +18,8 @@ export default function ThemeToggle() {
 
   return (
     <button className="btn btn-ghost btn-sm" onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}>
-      {theme === 'dark' ? '☀ Mode clair' : '🌙 Mode sombre'}
+      {theme === 'dark' ? <IconSun size={15} /> : <IconMoon size={15} />}
+      {theme === 'dark' ? 'Mode clair' : 'Mode sombre'}
     </button>
   );
 }

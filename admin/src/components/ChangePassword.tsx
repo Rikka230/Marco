@@ -25,7 +25,7 @@ export default function ChangePassword() {
     setBusy(true);
     try {
       await updatePassword(auth.currentUser, pwd);
-      setOk(true); setMsg('Mot de passe mis à jour ✓');
+      setOk(true); setMsg('Mot de passe mis à jour.');
       setPwd(''); setPwd2('');
       setTimeout(() => { setOpen(false); setMsg(''); setOk(false); }, 1600);
     } catch (e) {

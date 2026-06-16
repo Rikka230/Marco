@@ -1,5 +1,6 @@
 // Briques reutilisables pour les editeurs de contenu.
 import { useState, type ReactNode } from 'react';
+import { IconChevronUp, IconChevronDown, IconX } from './icons';
 
 export function SaveBar({ title, dirty, saving, onSave }: {
   title: string; dirty: boolean; saving: boolean; onSave: () => void;
@@ -44,7 +45,7 @@ export function ChipsEditor({ values, onChange }: {
         {values.map((v, i) => (
           <span key={i} className="chip">
             {v}
-            <button type="button" onClick={() => onChange(values.filter((_, j) => j !== i))}>×</button>
+            <button type="button" aria-label="Retirer" onClick={() => onChange(values.filter((_, j) => j !== i))}><IconX size={13} /></button>
           </span>
         ))}
         {values.length === 0 && <span style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>Aucun élément</span>}
@@ -68,8 +69,8 @@ export function RowHead({ idx, onUp, onDown, onRemove, children }: {
       <span className="idx">{idx}</span>
       {children}
       <span className="spacer" />
-      {onUp && <button className="btn btn-ghost btn-sm" onClick={onUp} title="Monter">↑</button>}
-      {onDown && <button className="btn btn-ghost btn-sm" onClick={onDown} title="Descendre">↓</button>}
+      {onUp && <button className="btn btn-ghost btn-sm" onClick={onUp} title="Monter" aria-label="Monter"><IconChevronUp size={15} /></button>}
+      {onDown && <button className="btn btn-ghost btn-sm" onClick={onDown} title="Descendre" aria-label="Descendre"><IconChevronDown size={15} /></button>}
       <button className="btn btn-ghost btn-sm btn-danger" onClick={onRemove} title="Supprimer">Suppr</button>
     </div>
   );

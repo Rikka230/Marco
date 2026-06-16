@@ -4,6 +4,7 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import { db, storage } from '../firebase';
 import type { MediaAsset, MediaKind } from '../types';
 import { parseVideoUrl } from '../video';
+import { IconAudioLines, IconPlay } from '../components/icons';
 
 const TABS: { key: MediaKind; label: string; accept: string }[] = [
   { key: 'image', label: 'Photos', accept: 'image/*' },
@@ -127,7 +128,9 @@ export default function Media() {
                 )}
                 {tab === 'audio' && (
                   <div style={{ marginBottom: '0.5rem' }}>
-                    <div style={{ height: 70, display: 'grid', placeItems: 'center', background: 'var(--bg-elev)', borderRadius: 8, marginBottom: '0.4rem', fontSize: '1.4rem' }}>♪</div>
+                    <div style={{ height: 70, display: 'grid', placeItems: 'center', background: 'var(--bg-elev)', borderRadius: 8, marginBottom: '0.4rem', color: 'var(--accent)' }}>
+                      <IconAudioLines size={26} />
+                    </div>
                     <audio controls src={m.url} style={{ width: '100%', height: 32 }} />
                   </div>
                 )}
@@ -135,10 +138,10 @@ export default function Media() {
                   <div style={{ position: 'relative', marginBottom: '0.5rem' }}>
                     {m.thumbnail
                       ? <img src={m.thumbnail} alt={m.name} style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8 }} />
-                      : <div style={{ height: 120, display: 'grid', placeItems: 'center', background: 'var(--bg-elev)', borderRadius: 8, fontSize: '1.6rem' }}>▶</div>}
+                      : <div style={{ height: 120, display: 'grid', placeItems: 'center', background: 'var(--bg-elev)', borderRadius: 8, color: 'var(--text-dim)' }}><IconPlay size={28} /></div>}
                     <a href={m.url} target="_blank" rel="noreferrer"
                       style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }} aria-label="Ouvrir la vidéo">
-                      <span style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(0,0,0,0.55)', color: '#fff', display: 'grid', placeItems: 'center' }}>▶</span>
+                      <span style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(0,0,0,0.55)', color: '#fff', display: 'grid', placeItems: 'center', paddingLeft: 3 }}><IconPlay size={18} /></span>
                     </a>
                   </div>
                 )}

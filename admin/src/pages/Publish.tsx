@@ -44,7 +44,7 @@ export default function Publish() {
 
           {ENDPOINT ? (
             <button className="btn btn-primary" disabled={state === 'sending'} onClick={publish}>
-              {state === 'sending' ? 'Lancement…' : '🚀 Publier maintenant'}
+              {state === 'sending' ? 'Lancement…' : 'Publier maintenant'}
             </button>
           ) : (
             <div className="banner warn">

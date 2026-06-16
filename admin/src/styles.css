@@ -70,6 +70,14 @@ input, textarea, select { font-family: inherit; }
 }
 .nav a:hover { background: var(--bg-elev); color: var(--text); }
 .nav a.active { background: var(--accent-dim); color: var(--accent); }
+.nav a svg { flex: none; }
+
+/* Bouton "Voir le site" (sous la navigation). */
+.view-site {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.9rem;
+}
 .nav .badge {
   margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px;
   display: grid; place-items: center;
