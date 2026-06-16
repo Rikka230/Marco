@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db, IS_EMULATOR } from '../firebase';
 import { useAuth } from '../auth';
+import ChangePassword from './ChangePassword';
+import ThemeToggle from './ThemeToggle';
 
 // Compteur temps reel des demandes non lues (badge sidebar).
 function useUnreadCount() {
@@ -42,6 +44,8 @@ export default function Layout() {
         <div className="sidebar-foot">
           {IS_EMULATOR && <div className="banner warn" style={{ margin: 0 }}>Mode émulateur local</div>}
           <div className="who">{user?.email}</div>
+          <ThemeToggle />
+          <ChangePassword />
           <button className="btn btn-ghost btn-sm" onClick={() => logout()}>Se déconnecter</button>
         </div>
       </aside>

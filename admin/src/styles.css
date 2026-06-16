@@ -1,4 +1,5 @@
-/* Back-office Marco — theme sombre premium, accent menthe (coherent avec le site). */
+/* Back-office Marco — theme sombre premium (defaut) + theme clair.
+   Le choix est pose sur <html data-theme="light|dark"> et memorise. */
 :root {
   --bg: #07090a;
   --bg-panel: #0e1213;
@@ -8,11 +9,28 @@
   --text: #e9f1ec;
   --text-dim: #8c9a93;
   --accent: #86f8a7;
+  --accent-ink: #06210f;       /* texte pose SUR une surface accent */
   --accent-dim: rgba(134, 248, 167, 0.16);
   --warn: #f4bd68;
   --danger: #ff5d6c;
   --radius: 12px;
   --ui: 'Space Grotesk', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* === THEME CLAIR === */
+:root[data-theme='light'] {
+  --bg: #eef1ef;
+  --bg-panel: #ffffff;
+  --bg-elev: #f2f5f3;
+  --line: rgba(12, 22, 18, 0.10);
+  --line-strong: rgba(12, 22, 18, 0.18);
+  --text: #0f1714;
+  --text-dim: #5e6c66;
+  --accent: #15a44e;           /* vert plus profond, lisible sur fond clair */
+  --accent-ink: #ffffff;       /* texte blanc sur les surfaces accent */
+  --accent-dim: rgba(21, 164, 78, 0.12);
+  --warn: #b45309;
+  --danger: #dc2626;
 }
 
 * { box-sizing: border-box; }
@@ -55,7 +73,7 @@ input, textarea, select { font-family: inherit; }
 .nav .badge {
   margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px;
   display: grid; place-items: center;
-  border-radius: 999px; background: var(--accent); color: #06210f;
+  border-radius: 999px; background: var(--accent); color: var(--accent-ink);
   font-size: 0.7rem; font-weight: 700;
 }
 .sidebar-foot { margin-top: auto; padding-top: 1rem; display: grid; gap: 0.5rem; }
@@ -84,7 +102,7 @@ input, textarea, select { font-family: inherit; }
 }
 .btn:hover { border-color: var(--accent); }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--accent); color: #06210f; border-color: var(--accent); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .btn-primary:hover { filter: brightness(1.06); }
 .btn-ghost { background: transparent; border-color: transparent; color: var(--text-dim); }
 .btn-ghost:hover { color: var(--text); border-color: var(--line); }
