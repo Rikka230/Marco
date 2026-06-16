@@ -1,9 +1,45 @@
 rules_version = '2';
 
-// Verrouillage par defaut : le site est front-only, Firestore n'est pas encore
-// consomme. On ouvrira des regles ciblees quand une feature l'utilisera.
+// Marco — regles Firestore.
+// - bookings  : creation publique VALIDEE (formulaire du site) ; lecture/gestion admin only.
+// - content/* : brouillons de contenu, admin only (le build lit via Admin SDK = bypass).
+// - media     : metadonnees medias, admin only.
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Compte unique admin. Tu peux durcir en remplacant par :
+    //   request.auth != null && request.auth.token.email == 'TON_EMAIL'
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Demande de booking valide envoyee par le formulaire public.
+    function validBooking() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['name','email','requestType','subject','message','status','createdAt','source'])
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 120
+        && d.email is string && d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && d.requestType is string && d.requestType.size() <= 60
+        && d.subject is string && d.subject.size() > 0 && d.subject.size() <= 160
+        && d.message is string && d.message.size() > 0 && d.message.size() <= 4000
+        && d.status == 'nouveau'
+        && d.createdAt is number;
+    }
+
+    match /bookings/{id} {
+      allow create: if validBooking();          // formulaire public, payload contraint
+      allow read, update, delete: if isAdmin();  // gestion reservee a l'admin
+    }
+
+    match /content/{section} {
+      allow read, write: if isAdmin();
+    }
+
+    match /media/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Tout le reste reste verrouille.
     match /{document=**} {
       allow read, write: if false;
     }

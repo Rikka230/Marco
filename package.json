@@ -14,6 +14,10 @@
     "@fontsource-variable/cormorant": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.2.10",
     "astro": "^6.4.4",
+    "firebase": "^12.14.0",
     "ogl": "^1.0.11"
+  },
+  "devDependencies": {
+    "firebase-admin": "^14.0.0"
   }
 }

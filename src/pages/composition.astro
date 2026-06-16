@@ -2,29 +2,10 @@
 // Page Composition (v0.4.6) — portage de composition.html, CSS inline externalise.
 // Les clics .track-play sont geres par l'AudioManager (src/scripts/audio.ts).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCompositionContent } from '../lib/content';
 
-const tracks = [
-  { n: '01', title: 'Cinematic Strings', meta: ['Score', '2026', '02:48', 'Featured'], active: true },
-  { n: '02', title: 'Night Motif', meta: ['Demo', '2026', '01:36', 'Piano / Strings'] },
-  { n: '03', title: 'Excursion Theme', meta: ['Campaign', '2026', '02:12', 'Visual'] },
-  { n: '04', title: 'Bow Texture', meta: ['Violin + Score', '2025', '03:10', 'Atmosphere'] },
-  { n: '05', title: 'Red Cut', meta: ['Original', '2025', '02:04', 'Pulse'] },
-  { n: '06', title: 'Stage Lines', meta: ['Stage', '2025', '02:52', 'Scene'] },
-  { n: '07', title: 'Glass Motif', meta: ['Placeholder', '2026', '01:44', 'Texture'] },
-  { n: '08', title: 'Low Room', meta: ['Placeholder', '2026', '02:26', 'Ambient'] },
-  { n: '09', title: 'First Cut', meta: ['Placeholder', '2026', '01:58', 'Draft'] },
-  { n: '10', title: 'End Theme', meta: ['Placeholder', '2026', '03:04', 'Finale'] },
-  { n: '11', title: 'Ash Corridor', meta: ['Template', '2026', '02:11', 'Drama'] },
-  { n: '12', title: 'Glass Pulse', meta: ['Template', '2026', '01:47', 'Rhythm'] },
-  { n: '13', title: 'Velvet Tension', meta: ['Template', '2026', '02:38', 'Suspense'] },
-  { n: '14', title: 'Piano Residue', meta: ['Template', '2026', '01:32', 'Minimal'] },
-  { n: '15', title: 'Dark Waltz', meta: ['Template', '2026', '02:54', 'Motion'] },
-  { n: '16', title: 'Mute Signals', meta: ['Template', '2026', '01:59', 'Texture'] },
-  { n: '17', title: 'Red Passage', meta: ['Template', '2026', '02:23', 'Score'] },
-  { n: '18', title: 'Nocturne Frame', meta: ['Template', '2026', '03:12', 'Theme'] },
-  { n: '19', title: 'Last Cue', meta: ['Template', '2026', '01:41', 'Cue'] },
-  { n: '20', title: 'Final Room', meta: ['Template', '2026', '02:35', 'Finale'] },
-];
+// Donnees lues depuis Firestore au build (fallback = contenu historique).
+const { tracks } = await getCompositionContent();
 ---
 
 <BaseLayout title="Marco Charlas-Hou - Composition" description="Catalogue des musiques composées par Marco Charlas-Hou : scores, démos, morceaux originaux et projets liés." page="composition" pageStyles={['/assets/css/composition-page.css']} preloadImages={['/assets/img/bg-scores.webp']}>

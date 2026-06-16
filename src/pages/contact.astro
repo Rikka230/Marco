@@ -2,14 +2,10 @@
 // Page Booking / Contact — refonte selon mockup (booking_mockup.png).
 // Figure centrale = marco-booking.webp (detouree). Formulaire front-only conserve.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getBookingContent } from '../lib/content';
 
-const offers = [
-  { k: 'LIVE PERFORMANCE', meta: 'SOLO / ENSEMBLE', stat: 'SUR DEVIS' },
-  { k: 'FILM SCORE', meta: 'COMPOSITION / SESSION', stat: 'PROJET' },
-  { k: 'BRAND / IMAGE', meta: 'ACTING / MODEL', stat: 'CASTING' },
-];
-
-const requestTypes = ['Booking', 'Collaboration', 'Score / Composition', 'Image / Model', 'Acteur'];
+// Offres / types de demande lus depuis Firestore au build (fallback = historique).
+const { offers, requestTypes } = await getBookingContent();
 ---
 
 <BaseLayout title="Marco Charlas-Hou - Booking" description="Booking, collaborations, press kit et contact professionnel de Marco Charlas-Hou : violon, score, image, acting." page="booking" pageStyles={['/assets/css/booking-page.css']} preloadImages={['/assets/img/marco-booking.webp']}>

@@ -59,19 +59,45 @@ function initForms() {
   if (formsBound) return;
   formsBound = true;
 
-  document.addEventListener('submit', (e) => {
+  // Phase CAPTURE (3e arg = true) : on intercepte la soumission AVANT le routeur
+  // ClientRouter d'Astro, qui sinon transforme le submit en navigation client.
+  document.addEventListener('submit', async (e) => {
     const form = (e.target as Element).closest<HTMLFormElement>('[data-contact-form]');
     if (!form) return;
     e.preventDefault();
     const status = form.querySelector('[data-form-status]');
-    const submit = form.querySelector('.contact-submit');
-    form.classList.add('is-ready');
-    if (status) status.textContent = 'MESSAGE READY - CONNECT BACKEND';
-    if (submit) {
-      submit.textContent = 'REQUEST READY';
-      window.setTimeout(() => { if (submit.isConnected) submit.textContent = 'SEND REQUEST'; }, 1800);
+    const submit = form.querySelector<HTMLButtonElement>('.contact-submit');
+    const setStatus = (t: string) => { if (status) status.textContent = t; };
+
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get('name') ?? '').trim(),
+      email: String(fd.get('email') ?? '').trim(),
+      requestType: String(fd.get('request_type') ?? '').trim(),
+      subject: String(fd.get('subject') ?? '').trim(),
+      message: String(fd.get('message') ?? '').trim(),
+      source: location.pathname,
+    };
+
+    if (submit) submit.disabled = true;
+    setStatus('Envoi…');
+    try {
+      const { submitBooking, bookingConfigured } = await import('./booking-submit');
+      if (!bookingConfigured()) {
+        // Backend pas encore configure : le formulaire reste inerte proprement.
+        form.classList.add('is-ready');
+        setStatus('MESSAGE READY - CONNECT BACKEND');
+        return;
+      }
+      await submitBooking(payload);
+      form.reset();
+      setStatus('Demande envoyée — merci, réponse rapide.');
+    } catch {
+      setStatus("Échec de l'envoi. Réessaie ou écris directement par email.");
+    } finally {
+      if (submit) submit.disabled = false;
     }
-  });
+  }, true);
 
   const clearReady = (e: Event) => {
     const form = (e.target as Element).closest('[data-contact-form]');

@@ -8,6 +8,10 @@ dist/
 build/
 .firebase/
 .cache/
+# Secrets / service accounts (ne JAMAIS committer)
+*serviceAccount*.json
+*service-account*.json
+firebase-adminsdk*.json
 # Astro
 .astro/
 # Jonction dev vers le dossier assets/ historique (servi tel quel pendant la migration)

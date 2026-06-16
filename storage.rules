@@ -1,9 +1,17 @@
 rules_version = '2';
 
-// Verrouillage par defaut : aucun upload/download public tant qu'aucune
-// feature ne l'exige. A ouvrir de maniere ciblee le moment venu.
+// Marco — regles Storage.
+// - media/* : lecture publique (images/audio affiches sur le site), ecriture admin only,
+//   plafonnee a 25 Mo et limitee aux images/audio.
 service firebase.storage {
   match /b/{bucket}/o {
+    match /media/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.size < 25 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*')
+            || request.resource.contentType.matches('audio/.*'));
+    }
     match /{allPaths=**} {
       allow read, write: if false;
     }
