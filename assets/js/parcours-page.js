@@ -320,6 +320,14 @@
   }
 
   function getData() {
+    // Donnees editables injectees par Astro (lues a chaque rendu, robuste ClientRouter).
+    const el = document.querySelector("[data-parcours-json]");
+    if (el) {
+      try {
+        const parsed = JSON.parse(el.textContent || "");
+        if (parsed && typeof parsed === "object") return parsed;
+      } catch (e) { /* JSON invalide -> fallback */ }
+    }
     return window.MARCO_PARCOURS_DATA || DEFAULT_DATA;
   }
 

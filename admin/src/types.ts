@@ -50,7 +50,26 @@ export interface BookingContent {
   requestTypes: string[];
 }
 
-export type ContentSection = 'music' | 'composition' | 'booking';
+// Page Modele (gallery) : bandes photo.
+export interface GalleryFrame { id: string; src: string; title: string; meta: string; label: string; featured?: boolean; wide?: boolean; }
+export interface GalleryStrip { key: 'a' | 'b' | 'c'; num: string; headingId: string; heading: string; sub: string; speed: number; frames: GalleryFrame[]; }
+export interface GalleryContent { strips: GalleryStrip[]; }
+
+// Page Parcours.
+export interface ParcoursStudy { title: string; detail: string; period: string; }
+export interface ParcoursExperience { icon: string; title: string; detail: string; }
+export interface ParcoursTimelineItem { title: string; subtitle: string; period: string; type: string; strokeColor: string; }
+export interface ParcoursContent {
+  studies: ParcoursStudy[];
+  experiences: ParcoursExperience[];
+  skills: string[];
+  timeline: ParcoursTimelineItem[];
+  // Conserves tels quels (flux mobile), non edites dans l'UI simple :
+  mobileChips?: unknown[];
+  mobileTimeline?: unknown[];
+}
+
+export type ContentSection = 'music' | 'composition' | 'booking' | 'gallery' | 'parcours';
 
 // --- Demandes entrantes (collection Firestore "bookings") ---
 

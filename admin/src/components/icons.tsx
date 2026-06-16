@@ -43,6 +43,21 @@ export const IconBriefcase = (p: IconProps) => (
   </svg>
 );
 
+export const IconCamera = (p: IconProps) => (
+  <svg {...svg(p.size)} className={p.className}>
+    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+    <circle cx="12" cy="13" r="3" />
+  </svg>
+);
+
+export const IconRoute = (p: IconProps) => (
+  <svg {...svg(p.size)} className={p.className}>
+    <circle cx="6" cy="19" r="3" />
+    <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" />
+    <circle cx="18" cy="5" r="3" />
+  </svg>
+);
+
 export const IconImage = (p: IconProps) => (
   <svg {...svg(p.size)} className={p.className}>
     <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />

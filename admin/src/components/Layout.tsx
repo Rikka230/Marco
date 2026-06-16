@@ -7,6 +7,7 @@ import ChangePassword from './ChangePassword';
 import ThemeToggle from './ThemeToggle';
 import {
   IconInbox, IconMusic, IconList, IconBriefcase, IconImage, IconUpload, IconExternalLink,
+  IconCamera, IconRoute,
 } from './icons';
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://marco-site-2f9aa.web.app';
@@ -25,6 +26,8 @@ const LINKS = [
   { to: '/bookings', label: 'Demandes', Icon: IconInbox },
   { to: '/music', label: 'Violon', Icon: IconMusic },
   { to: '/composition', label: 'Composition', Icon: IconList },
+  { to: '/model', label: 'Modèle', Icon: IconCamera },
+  { to: '/parcours', label: 'Parcours', Icon: IconRoute },
   { to: '/booking-content', label: 'Booking', Icon: IconBriefcase },
   { to: '/media', label: 'Médias', Icon: IconImage },
   { to: '/publish', label: 'Publier', Icon: IconUpload },

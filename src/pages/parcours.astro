@@ -1,11 +1,17 @@
 ---
-// Page Parcours — portage fidele de parcours.html (desktop + flux mobile).
+// Page Parcours — desktop + flux mobile.
 // Contenu rendu par assets/js/parcours-page.js (via le shim de cycle de vie).
+// Les donnees editables sont injectees en JSON et lues par getData() du JS ;
+// si absentes, le JS retombe sur son DEFAULT_DATA interne (= contenu historique).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getParcoursContent } from '../lib/content';
+
+const parcours = await getParcoursContent();
 ---
 
 <BaseLayout title="Marco Charlas-Hou - Parcours" description="Parcours, études, expériences professionnelles et compétences artistiques de Marco Charlas-Hou." page="parcours" pageStyles={['/assets/css/parcours-page.css']} preloadImages={['/assets/img/parcours-bg.webp']}>
   <section class="page poster-page inner parcours-page parcours-rebuild" data-page="parcours" data-bg="scores" data-theme="parcours" data-transition-label="PARCOURS" aria-labelledby="parcours-title">
+    {parcours && <script type="application/json" data-parcours-json is:inline set:html={JSON.stringify(parcours)}></script>}
     <div class="photo-bg" aria-hidden="true"></div>
     <div class="parcours-atmosphere" aria-hidden="true"></div>
 

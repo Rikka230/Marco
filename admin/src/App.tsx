@@ -5,6 +5,8 @@ import Login from './components/Login';
 import Bookings from './pages/Bookings';
 import Music from './pages/Music';
 import Composition from './pages/Composition';
+import GalleryEditor from './pages/GalleryEditor';
+import ParcoursEditor from './pages/ParcoursEditor';
 import BookingContent from './pages/BookingContent';
 import Media from './pages/Media';
 import Publish from './pages/Publish';
@@ -20,6 +22,8 @@ function Gate() {
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/music" element={<Music />} />
         <Route path="/composition" element={<Composition />} />
+        <Route path="/model" element={<GalleryEditor />} />
+        <Route path="/parcours" element={<ParcoursEditor />} />
         <Route path="/booking-content" element={<BookingContent />} />
         <Route path="/media" element={<Media />} />
         <Route path="/publish" element={<Publish />} />

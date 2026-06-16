@@ -105,3 +105,60 @@ export async function getBookingContent(): Promise<BookingContent> {
   const all = await loadAll();
   return nonEmpty(all.booking, DEFAULT_BOOKING);
 }
+
+// --- Page Modele (gallery) : 3 bandes photo ---
+export interface GalleryFrame { id: string; src: string; title: string; meta: string; label: string; featured?: boolean; wide?: boolean; }
+export interface GalleryStrip { key: 'a' | 'b' | 'c'; num: string; headingId: string; heading: string; sub: string; speed: number; frames: GalleryFrame[]; }
+export interface GalleryContent { strips: GalleryStrip[]; }
+
+const cov = (n: number) => `/assets/img/cover-${n}.webp`;
+const DEFAULT_GALLERY: GalleryContent = {
+  strips: [
+    {
+      key: 'a', num: '01', headingId: 'strip-editorial', heading: 'Editorial portraits', sub: 'tests / attitude / presence', speed: 72,
+      frames: [
+        { id: 'editorial-01', src: cov(1), title: 'Editorial portrait', meta: 'PORTRAIT / LOW KEY / MODEL TEST', label: 'Portrait' },
+        { id: 'editorial-02', src: cov(2), title: 'Casting profile', meta: 'CASTING / PROFILE / NATURAL', label: 'Casting' },
+        { id: 'editorial-03', src: cov(3), title: 'Campaign face', meta: 'EDITORIAL / CLOSE-UP / CAMPAIGN', label: 'Campaign face', featured: true },
+        { id: 'editorial-04', src: cov(4), title: 'Commercial gaze', meta: 'COMMERCIAL / SOFT LOOK / PRESS', label: 'Commercial' },
+        { id: 'editorial-05', src: cov(5), title: 'Visual identity', meta: 'IDENTITY / PORTRAIT / BRAND', label: 'Identity' },
+        { id: 'editorial-06', src: cov(6), title: 'Press visual', meta: 'PRESS / LOOK BOOK / MODEL', label: 'Press' },
+      ],
+    },
+    {
+      key: 'b', num: '02', headingId: 'strip-campaign', heading: 'Campaign looks', sub: 'brand / pub / fashion frame', speed: -58,
+      frames: [
+        { id: 'campaign-01', src: cov(4), title: 'Brand frame', meta: 'CAMPAIGN / WARDROBE / BLACK SUIT', label: 'Brand frame', wide: true },
+        { id: 'campaign-02', src: cov(6), title: 'Lookbook cut', meta: 'LOOKBOOK / FASHION / ATTITUDE', label: 'Lookbook' },
+        { id: 'campaign-03', src: cov(2), title: 'Advertising pose', meta: 'ADVERTISING / POSE / CINEMATIC', label: 'Advertising' },
+        { id: 'campaign-04', src: cov(1), title: 'Luxury mood', meta: 'LUXURY / EDITORIAL / MOODY', label: 'Luxury mood', featured: true },
+        { id: 'campaign-05', src: cov(5), title: 'Poster visual', meta: 'POSTER / CAMPAIGN / FACE', label: 'Poster' },
+        { id: 'campaign-06', src: cov(3), title: 'Commercial portrait', meta: 'COMMERCIAL / PORTRAIT / BRAND', label: 'Portrait' },
+      ],
+    },
+    {
+      key: 'c', num: '03', headingId: 'strip-press', heading: 'Press visuals', sub: 'face range / archive / agency', speed: 48,
+      frames: [
+        { id: 'press-01', src: cov(5), title: 'Face range 01', meta: 'PRESS / FACE RANGE / FRONT', label: 'Front' },
+        { id: 'press-02', src: cov(3), title: 'Face range 02', meta: 'PRESS / SIDE PROFILE / MOOD', label: 'Profile' },
+        { id: 'press-03', src: cov(1), title: 'Expression test', meta: 'CASTING / EXPRESSION / STILL', label: 'Expression' },
+        { id: 'press-04', src: cov(2), title: 'Agency visual', meta: 'AGENCY / BOOK / SELECTION', label: 'Agency' },
+        { id: 'press-05', src: cov(6), title: 'Mood archive', meta: 'ARCHIVE / BLACK / CINEMA', label: 'Archive' },
+        { id: 'press-06', src: cov(4), title: 'Book update', meta: 'BOOK / UPDATE / MODEL', label: 'Book' },
+      ],
+    },
+  ],
+};
+
+export async function getGalleryContent(): Promise<GalleryContent> {
+  const all = await loadAll();
+  const g = all.gallery as GalleryContent | undefined;
+  return g && Array.isArray(g.strips) && g.strips.length ? g : DEFAULT_GALLERY;
+}
+
+// --- Page Parcours : objet complet ou null (le JS a son propre fallback) ---
+export async function getParcoursContent(): Promise<Record<string, unknown> | null> {
+  const all = await loadAll();
+  const pc = all.parcours as Record<string, unknown> | undefined;
+  return pc && Object.keys(pc).length ? pc : null;
+}
