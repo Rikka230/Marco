@@ -31,10 +31,6 @@ jobs:
       - name: Prepare public/assets
         run: mkdir -p public && cp -r assets public/assets
 
-      # Écrit le service account dans un fichier (build + déploiement).
-      - name: Service account
-        run: printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$RUNNER_TEMP/sa.json"
-
       - name: Build (lecture Firestore)
         run: npm run build
         env:
@@ -44,7 +40,12 @@ jobs:
           PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.PUBLIC_FIREBASE_PROJECT_ID }}
           PUBLIC_FIREBASE_APP_ID: ${{ secrets.PUBLIC_FIREBASE_APP_ID }}
 
-      - name: Deploy hosting:site
-        run: npx --yes firebase-tools@latest deploy --only hosting:site --project marco-site --non-interactive
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+      # Action officielle Firebase : gère l'auth via le service account.
+      - name: Deploy hosting:site (live)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: marco-site
+          target: site
+          channelId: live
