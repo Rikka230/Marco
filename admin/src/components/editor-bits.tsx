@@ -1,6 +1,27 @@
 // Briques reutilisables pour les editeurs de contenu.
 import { useState, type ReactNode } from 'react';
-import { IconChevronUp, IconChevronDown, IconX } from './icons';
+import { IconChevronUp, IconChevronDown, IconX, IconImage } from './icons';
+import MediaPicker from './MediaPicker';
+import type { MediaKind } from '../types';
+
+// Champ texte + bouton "Bibliotheque" pour piocher dans les medias importes.
+export function MediaField({ label, value, onChange, kind }: {
+  label: string; value: string; onChange: (v: string) => void; kind: MediaKind;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <div style={{ display: 'flex', gap: '0.4rem' }}>
+        <input style={{ flex: 1 }} value={value} onChange={(e) => onChange(e.target.value)} />
+        <button type="button" className="btn btn-sm" onClick={() => setOpen(true)} title="Choisir dans la bibliothèque">
+          <IconImage size={14} />Bibliothèque
+        </button>
+      </div>
+      {open && <MediaPicker kind={kind} onPick={onChange} onClose={() => setOpen(false)} />}
+    </div>
+  );
+}
 
 export function SaveBar({ title, dirty, saving, onSave }: {
   title: string; dirty: boolean; saving: boolean; onSave: () => void;

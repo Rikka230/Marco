@@ -1,5 +1,5 @@
 import { useContentDoc } from '../content';
-import { SaveBar, Field, RowHead, move } from '../components/editor-bits';
+import { SaveBar, Field, MediaField, RowHead, move } from '../components/editor-bits';
 import type { GalleryFrame, GalleryStrip } from '../types';
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://marco-site-2f9aa.web.app';
@@ -44,7 +44,7 @@ export default function GalleryEditor() {
                 <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                   {f.src && <img src={resolveImg(f.src)} alt="" style={{ width: 72, height: 72, objectFit: 'cover', borderRadius: 8, flex: 'none', border: '1px solid var(--line)' }} />}
                   <div style={{ flex: 1 }}>
-                    <Field label="Image (URL ou /assets/…)" value={f.src} onChange={(v) => patchFrame(si, fi, { src: v })} />
+                    <MediaField label="Image" kind="image" value={f.src} onChange={(v) => patchFrame(si, fi, { src: v })} />
                     <div className="row">
                       <Field label="Titre" value={f.title} onChange={(v) => patchFrame(si, fi, { title: v })} />
                       <Field label="Étiquette" value={f.label} onChange={(v) => patchFrame(si, fi, { label: v })} />

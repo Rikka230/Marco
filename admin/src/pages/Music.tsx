@@ -1,5 +1,5 @@
 import { useContentDoc } from '../content';
-import { SaveBar, Field, ChipsEditor, RowHead, move } from '../components/editor-bits';
+import { SaveBar, Field, MediaField, ChipsEditor, RowHead, move } from '../components/editor-bits';
 import type { Session, AvailabilityDate } from '../types';
 
 export default function Music() {
@@ -39,7 +39,7 @@ export default function Music() {
                 <Field label="Sous-titre" value={s.sub} onChange={(v) => patchSession(i, { sub: v })} />
                 <Field label="Catégorie" value={s.cat} onChange={(v) => patchSession(i, { cat: v })} />
               </div>
-              <Field label="Image (chemin /assets/… ou URL)" value={s.img} onChange={(v) => patchSession(i, { img: v })} />
+              <MediaField label="Image" kind="image" value={s.img} onChange={(v) => patchSession(i, { img: v })} />
             </div>
           ))}
           <button className="btn" onClick={() => setSessions([...data.sessions,
