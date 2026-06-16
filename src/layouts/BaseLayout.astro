@@ -101,6 +101,15 @@ const BUILD = 'REDESIGN 1';
 
       <ChapterNav active={page} />
 
+      {/* Pied de page discret. "Powered by NocxWeb" = acces admin cache. */}
+      <footer class="site-footer" transition:persist="site-footer">
+        <a href="/mentions-legales">Mentions légales</a>
+        <i aria-hidden="true">·</i>
+        <a href="https://marco-admin-2f9aa.web.app" target="_blank" rel="noopener" aria-label="Espace administration">Powered by NocxWeb</a>
+        <i aria-hidden="true">·</i>
+        <span>© 2026 Marco Charlas-Hou</span>
+      </footer>
+
       <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>
       <div class="transition-band" aria-hidden="true" transition:persist="transition-band"><span></span></div>
 
