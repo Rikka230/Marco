@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "marco-site"
+  },
+  "targets": {
+    "marco-site": {
+      "hosting": {
+        "site": ["marco-site-2f9aa"],
+        "admin": ["marco-admin-2f9aa"]
+      }
+    }
   }
 }
