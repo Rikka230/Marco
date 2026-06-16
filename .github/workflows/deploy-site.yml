@@ -1,8 +1,8 @@
-# Reconstruit le site Marco (lecture du contenu depuis Firestore) et le deploie.
-# Declencheurs :
-#  - push sur la branche de prod (deploiement code)
-#  - repository_dispatch type "publish" (bouton "Publier" du back-office, via le Worker)
-#  - manuel (bouton "Run workflow" dans l'onglet Actions)
+# Reconstruit le site Marco (contenu lu depuis Firestore) et le déploie en prod.
+# Déclencheurs :
+#  - push sur main (déploiement du code)
+#  - repository_dispatch "publish" (bouton "Publier" du back-office via la Cloud Function)
+#  - manuel (onglet Actions)
 name: Deploy site
 
 on:
@@ -25,8 +25,17 @@ jobs:
 
       - run: npm ci
 
-      # Le build lit Firestore via le service account (contenu publie le plus recent).
-      - name: Build
+      # En local public/assets est une jonction vers assets/ (ignorée par git).
+      # Sur le runner Linux on recrée ce dossier depuis assets/ (suivi) pour que
+      # le build serve images, audio et CSS de page aux mêmes URLs /assets/...
+      - name: Prepare public/assets
+        run: mkdir -p public && cp -r assets public/assets
+
+      # Écrit le service account dans un fichier (build + déploiement).
+      - name: Service account
+        run: printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$RUNNER_TEMP/sa.json"
+
+      - name: Build (lecture Firestore)
         run: npm run build
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -35,11 +44,7 @@ jobs:
           PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.PUBLIC_FIREBASE_PROJECT_ID }}
           PUBLIC_FIREBASE_APP_ID: ${{ secrets.PUBLIC_FIREBASE_APP_ID }}
 
-      - name: Deploy to Firebase Hosting (site public)
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: marco-site
-          channelId: live
-          target: site
+      - name: Deploy hosting:site
+        run: npx --yes firebase-tools@latest deploy --only hosting:site --project marco-site --non-interactive
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
