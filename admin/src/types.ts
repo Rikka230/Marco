@@ -27,6 +27,7 @@ export interface Track {
   title: string;
   meta: string[];   // ["Score", "2026", "02:48", "Featured"]
   active?: boolean;
+  audio?: string;   // URL du son joué au clic sur Play
 }
 
 // Page Booking (contact.astro) : cartes d'offres.

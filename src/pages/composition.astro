@@ -31,7 +31,7 @@ const { tracks } = await getCompositionContent();
     <div class="composition-diagonal-zone" aria-label="Liste des musiques composees">
       <div class="composition-track-scroll">
         {tracks.map((track) => (
-          <article class:list={['composition-track', { 'is-active': track.active }]} data-track-title={track.title}>
+          <article class:list={['composition-track', { 'is-active': track.active }]} data-track-title={track.title} data-track-audio={track.audio || ''}>
             <span class="track-index">{track.n}</span>
             <div class="track-main">
               <strong class="track-title">{track.title}</strong>

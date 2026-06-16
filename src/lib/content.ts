@@ -7,7 +7,7 @@
 
 interface Session { n: string; t: string; sub: string; cat: string; d: string; img: string; active?: boolean; }
 interface AvailabilityDate { day: string; t: string; loc: string; }
-interface Track { n: string; title: string; meta: string[]; active?: boolean; }
+interface Track { n: string; title: string; meta: string[]; active?: boolean; audio?: string; }
 interface BookingOffer { k: string; meta: string; stat: string; }
 
 export interface MusicContent { sessions: Session[]; moods: string[]; dates: AvailabilityDate[]; }

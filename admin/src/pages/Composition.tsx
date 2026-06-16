@@ -1,5 +1,5 @@
 import { useContentDoc } from '../content';
-import { SaveBar, Field, ChipsEditor, RowHead, move } from '../components/editor-bits';
+import { SaveBar, Field, MediaField, ChipsEditor, RowHead, move } from '../components/editor-bits';
 import type { Track } from '../types';
 
 export default function Composition() {
@@ -35,6 +35,7 @@ export default function Composition() {
                 <label>Métadonnées (genre, année, durée, tag…)</label>
                 <ChipsEditor values={t.meta} onChange={(meta) => patch(i, { meta })} />
               </div>
+              <MediaField label="Son (joué au clic sur Play)" kind="audio" value={t.audio ?? ''} onChange={(v) => patch(i, { audio: v })} />
             </div>
           ))}
           <button className="btn" onClick={() => setTracks([...data.tracks,

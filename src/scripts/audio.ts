@@ -36,9 +36,23 @@ function getTrackById(id: string): Track {
 }
 
 function getTrackFromCompositionCard(card: Element | null): Track {
+  const el = card as HTMLElement | null;
+
+  // Son defini sur la piste (gere dans l'admin) : prioritaire, on construit la
+  // piste depuis le DOM (rendu depuis Firestore) plutot que la liste codee en dur.
+  const audioUrl = el?.dataset?.trackAudio;
+  if (audioUrl) {
+    const id = String(el?.querySelector('.track-index')?.textContent?.trim() || '01').padStart(2, '0');
+    const title = el?.dataset?.trackTitle || el?.querySelector('.track-title')?.textContent?.trim() || '';
+    const meta = [...(el?.querySelectorAll('.track-meta b') || [])].map((b) => b.textContent?.trim()).filter(Boolean).join(' · ');
+    const duration = (meta.match(/\d{1,2}:\d{2}/) || [''])[0];
+    return { id, title, meta, duration, audio: audioUrl };
+  }
+
+  // Repli : ancienne correspondance par index/titre (sons placeholder integres).
   const index = card?.querySelector('.track-index')?.textContent?.trim();
   if (index) return getTrackById(index);
-  const title = (card as HTMLElement | null)?.dataset?.trackTitle || card?.querySelector('.track-title')?.textContent?.trim();
+  const title = el?.dataset?.trackTitle || card?.querySelector('.track-title')?.textContent?.trim();
   return TRACKS.find((track) => track.title.toLowerCase() === String(title || '').toLowerCase()) || TRACKS[0];
 }
 
