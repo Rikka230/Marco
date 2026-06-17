@@ -184,6 +184,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Cadres en paysage : pour une photo PORTRAIT, cover centre rognait fort le haut
+     -> tete de Marco coupee. On biaise le cadrage vers le haut (la tete reste
+     visible, c'est le bas/les jambes qui sont rognes) et on ancre le zoom en haut
+     pour que le scale (base + hover) ne repousse jamais la tete hors du cadre. */
+  object-position: 50% 22%;
+  transform-origin: 50% 0;
   filter: grayscale(0.18) saturate(0.86) contrast(1.08) brightness(0.78);
   transform: scale(1.035);
   transition: transform 0.36s ease, filter 0.24s ease;
