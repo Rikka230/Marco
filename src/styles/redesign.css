@@ -47,7 +47,7 @@ body {
 /* Composition : le mega COMPOSITION debordait de 60% (conflit de cascade
    pre-existant entre .inner .mega.first et la feuille de page). On fixe la
    taille ici, avec une specificite superieure aux deux. */
-.composition-page .title-wrap .mega.first {
+.inner.composition-page .title-wrap .mega.first {
   font-size: clamp(40px, 12vw, 274px);
   letter-spacing: -0.08em;
 }

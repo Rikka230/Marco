@@ -31,12 +31,15 @@
     linear-gradient(110deg, transparent 0 61%, rgba(255, 48, 79, 0.58) 61.1% 61.36%, transparent 61.7%);
   mix-blend-mode: screen; opacity: 0.62;
 }
-.composition-page .mega.first {
+/* .inner.composition-page (0,0,3,0) pour battre .inner .mega.first/.last de style.css
+   (0,0,2,0 : scaleX sans skew, left 50%). A specificite egale le gagnant dependait de
+   l'ordre des feuilles -> titre droit/plus large + mal place au F5, correct en nav SPA. */
+.inner.composition-page .mega.first {
   color: #f9f1dc; left: 45%; top: 2.8vh; font-size: clamp(82px, 16vw, 310px);
   transform: translateX(-50%) scaleX(0.86) skewX(-7deg); letter-spacing: -0.095em;
   text-shadow: -0.055em 0 #ff304f, 0 18px 42px rgba(0, 0, 0, 0.58);
 }
-.composition-page .mega.last {
+.inner.composition-page .mega.last {
   color: #ff304f; left: 38%; bottom: 5.2vh;
   transform: translateX(-50%) scaleX(0.78) skewX(-8deg);
   font-size: clamp(38px, 6.6vw, 128px); opacity: 0.9;
@@ -132,8 +135,8 @@
 
 @media (max-width: 900px) {
   /* 12.5vw : COMPOSITION (11 glyphes) tient en plein bleed sur 390px sans coupe. */
-  .composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
-  .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
+  .inner.composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
+  .inner.composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
   .inner.composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
   .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }
   .composition-diagonal-zone { right: auto; left: 3vw; top: 42vh; width: 94vw; height: 42vh; max-height: none; transform: rotate(-4.5deg); }
