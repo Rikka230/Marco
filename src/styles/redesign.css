@@ -150,11 +150,10 @@ body {
   to { transform: translate3d(1.2%, 1%, 0) scale(1.05); opacity: 0.95; }
 }
 
-/* Mode perf : on GARDE la vignette de base (.cine-light = degrade fixe, cout quasi
-   nul) pour que l'etalonnage/saturation reste IDENTIQUE entre F5 (perf) et nav SPA.
-   On ne coupe que le halo anime (::before : mix-blend-mode screen + rdAurora), seul
-   element reellement couteux. */
-html[data-perf="low"] .cine-light::before { display: none; }
+/* Mode perf : on GARDE toute la vignette ET le halo colore (.cine-light + ::before).
+   Seule l'animation rdAurora du halo coute, et elle est deja coupee par la regle
+   universelle (animation: none). Le halo statif (mix-blend screen, composite une
+   fois) = cout quasi nul -> etalonnage/saturation IDENTIQUE entre F5 (perf) et nav. */
 
 /* === 3. ENTREES DE PAGE ================================================= */
 

@@ -38,9 +38,11 @@ html[data-perf="low"] *::after {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-/* Mode perf : on coupe le grain + la version WebGL lourde, mais on GARDE le
-   spectre 2D (#dotWave, leger) comme repli visible. */
-html[data-perf="low"] .film-grain,
+/* Mode perf : on coupe SEULEMENT la version WebGL lourde du visualizer (le spectre
+   2D #dotWave reste comme repli). Le grain (.film-grain) reste VISIBLE mais STATIQUE
+   (son animation est coupee par la regle universelle ci-dessus) : c'est un overlay
+   soft-light a cout quasi nul, et le garder rend l'etalonnage IDENTIQUE entre F5
+   (perf) et navigation SPA -> plus de "saturation differente" au rechargement. */
 html[data-perf="low"] #dotwave-gl,
 html[data-perf="low"] #gallery-gl {
   display: none !important;
