@@ -3079,7 +3079,7 @@ body.marco-page-wheel-locked .chapter-nav::after {
 .composition-page .composition-diagonal-zone {
   right: clamp(122px, 7vw, 174px) !important;
   top: clamp(248px, 26vh, 324px) !important;
-  width: min(37vw, 680px) !important;
+  width: min(42vw, 768px) !important;
   height: clamp(360px, 47vh, 610px) !important;
   max-height: calc(100vh - clamp(360px, 36vh, 430px)) !important;
   overflow: visible !important;
@@ -3094,9 +3094,11 @@ body.marco-page-wheel-locked .chapter-nav::after {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, 0.55vw, 14px) !important;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%) !important;
+  /* bloc elargi + padding rebalance (gauche+ / droite-) : les cartes se decalent a
+     droite, leurs coins gauches penches + ombre -8px ne sont plus rognes. */
+  padding: clamp(22px, 2.4vh, 34px) clamp(50px, 3.4vw, 78px) clamp(86px, 9vh, 128px) clamp(34px, 2.5vw, 50px) !important;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 2%, #000 98%, transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 2%, #000 98%, transparent 100%) !important;
   scrollbar-width: thin !important;
   scrollbar-color: rgba(255, 48, 79, 0.82) rgba(255,255,255,0.045) !important;
   scrollbar-gutter: stable !important;
