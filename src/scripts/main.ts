@@ -114,13 +114,8 @@ function initForms() {
 function applyListEntrance() {
   const page = document.querySelector<HTMLElement>('#app .page:not(.is-leaving)') || document.querySelector<HTMLElement>('#app .page');
   if (!page) return;
-  // NB: .composition-track EXCLU volontairement. L'animation marcoEnterList anime
-  // `transform` (translateY/scale) sans le skewX(-9deg) des cartes et le fige (both)
-  // -> apres la reveal les cartes perdaient leur skew (rectangles) et "morphaient".
-  // (Visible en nav SPA ; masque au F5 ou perf=low coupe l'animation.) Les cartes
-  // s'affichent donc directement dans leur forme correcte, sans reveal.
   const items = page.querySelectorAll<HTMLElement>(
-    '.filmographie-row, .parcours-timeline-point, .parcours-mobile-timeline-card, .model-frame:not([data-clone="true"])'
+    '.composition-track, .filmographie-row, .parcours-timeline-point, .parcours-mobile-timeline-card, .model-frame:not([data-clone="true"])'
   );
   items.forEach((el, i) => {
     el.style.setProperty('--enter-i', String(Math.min(i, 16)));
