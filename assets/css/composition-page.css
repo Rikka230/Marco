@@ -74,12 +74,15 @@
 .composition-intro span { font-size: clamp(8px, .64vw, 12px); line-height: 1.2; letter-spacing: .075em; color: rgba(249,241,220,.86); }
 .composition-diagonal-zone {
   position: absolute; right: clamp(122px, 7vw, 174px); top: clamp(248px, 26vh, 324px); z-index: 42;
-  width: min(37vw, 680px); height: clamp(360px, 47vh, 610px); max-height: calc(100vh - clamp(360px, 36vh, 430px)); overflow: visible;
+  width: min(42vw, 768px); height: clamp(360px, 47vh, 610px); max-height: calc(100vh - clamp(360px, 36vh, 430px)); overflow: visible;
   transform: rotate(-7.25deg); transform-origin: 50% 50%; pointer-events: auto;
 }
 .composition-track-scroll {
   height: 100%; max-height: none; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
-  padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, .55vw, 14px);
+  /* padding gauche augmente + droit reduit : les cartes se decalent vers la droite
+     (dans le vide qui y trainait) pour que leurs coins gauches penches + l'ombre -8px
+     ne soient plus rognes par le bord gauche du bloc. */
+  padding: clamp(22px, 2.4vh, 34px) clamp(50px, 3.4vw, 78px) clamp(86px, 9vh, 128px) clamp(34px, 2.5vw, 50px);
   scrollbar-width: thin; scrollbar-color: rgba(255, 48, 79, .82) rgba(255,255,255,.045); scrollbar-gutter: stable;
   /* Fondu reduit (2% / 98%) : avant (8% / 86%) il mangeait toute la 1re et la
      derniere carte (01 et 06) alors que les 6 tiennent sans scroll. Fade minimal =
