@@ -280,7 +280,11 @@
 
 .parcours-study-list {
   gap: clamp(1rem, 2.3vh, 1.55rem);
-  padding-left: 2.12rem;
+  /* On etend la zone de scroll vers la gauche (margin negatif compense par le
+     padding) pour que les pastilles bleues + leur halo, places au bord gauche,
+     ne soient PAS rognes par l'overflow. Position visuelle inchangee. */
+  margin-left: -1.5rem;
+  padding-left: 3.62rem;
 }
 
 .parcours-study-list::before,
@@ -295,7 +299,7 @@
 }
 
 .parcours-study-list::before {
-  left: 0.46rem;
+  left: 1.96rem;
 }
 
 .parcours-study-card,
