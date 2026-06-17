@@ -306,7 +306,9 @@
 
 .parcours-study-card {
   display: block;
-  min-height: clamp(4.2rem, 8.6vh, 5.7rem);
+  /* Hauteur reduite : les 3 formations par defaut tiennent dans la liste sans
+     etre coupees ; au-dela, la liste scrolle (fondu). */
+  min-height: clamp(3.4rem, 6.5vh, 4.6rem);
 }
 
 .parcours-study-card::before {

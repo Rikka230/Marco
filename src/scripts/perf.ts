@@ -37,18 +37,22 @@ function probe(t: number) {
   if (t0 === 0) t0 = t;
   frames++;
   const dt = t - t0;
-  if (dt < 1100) {
+  if (dt < 1000) {
     requestAnimationFrame(probe);
     return;
   }
   const fps = frames / (dt / 1000);
-  if (fps < 48) setLow();
+  // Seuil prudent : seuls les GPU reellement lents (FPS bas en regime stable)
+  // basculent en mode perf. Evite les faux positifs sur machines capables.
+  if (fps < 38) setLow();
   console.info(`[perf] ~${Math.round(fps)} fps -> ${low ? 'MODE PERF (effets alleges)' : 'OK (effets complets)'}`);
   markReady();
 }
-requestAnimationFrame(probe);
-// Filet : si l'onglet demarre en arriere-plan (rAF gele), on debloque a 3s.
-setTimeout(markReady, 3000);
+// On laisse la page se stabiliser (~800ms) AVANT de mesurer : mesurer pendant le
+// chargement a froid (decode image, init WebGL) donnait des FPS bas trompeurs.
+setTimeout(() => requestAnimationFrame(probe), 800);
+// Filet : si l'onglet demarre en arriere-plan (rAF gele), on debloque a 3.5s.
+setTimeout(markReady, 3500);
 
 export const perf = {
   get low() {

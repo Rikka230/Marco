@@ -38,8 +38,9 @@ html[data-perf="low"] *::after {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+/* Mode perf : on coupe le grain + la version WebGL lourde, mais on GARDE le
+   spectre 2D (#dotWave, leger) comme repli visible. */
 html[data-perf="low"] .film-grain,
-html[data-perf="low"] #dotWave,
 html[data-perf="low"] #dotwave-gl,
 html[data-perf="low"] #gallery-gl {
   display: none !important;

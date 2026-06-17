@@ -53,8 +53,9 @@ body {
 }
 
 /* Sous-titres des pages internes : bascule editoriale — serif italique bas de casse
-   ("original music", "trajectoire", "photo book"…) sous le mega heavy. */
-.inner .mega.last {
+   ("original music", "photo book"…) sous le mega heavy. Parcours exclu : son
+   sous-titre TRAJECTOIRE est une image (garde son style propre). */
+.inner:not(.parcours-page) .mega.last {
   font-family: var(--serif);
   font-style: italic;
   font-weight: 460;
@@ -99,10 +100,10 @@ body {
   letter-spacing: 0.015em;
 }
 
-/* Encre degradee sur les megas (sauf composition : garde son echo rouge offset,
-   et filmographie : titre image). Le text-shadow herite est coupe car il
-   transparaitrait sous les glyphes evides. */
-.poster-page:not(.composition-page) .mega.first {
+/* Encre degradee sur les megas (sauf composition : echo rouge offset, et
+   parcours/filmographie : titres IMAGE -> ne pas remplacer leur background par
+   le degrade, sinon le titre disparait selon l'ordre de chargement CSS). */
+.poster-page:not(.composition-page):not(.parcours-page) .mega.first {
   background: linear-gradient(
     178deg,
     color-mix(in srgb, var(--accent, var(--mint)) 62%, #ffffff) 4%,

@@ -56,8 +56,9 @@ export function initDotWave() {
 
   function startWave() {
     if (waveFrame !== null || !canvas || !ctx) return;
-    // PC faible : on ne lance pas la boucle 2D (economie GPU/CPU permanente).
-    if (document.documentElement.dataset.perf === 'low') return;
+    // Le spectre 2D est leger : il reste actif meme en mode perf (c'est justement
+    // le repli quand la version WebGL est coupee). On ne stoppe la 2D que lorsque
+    // le visualizer WebGL prend le relais (gere dans draw()).
     waveFrame = requestAnimationFrame(draw);
   }
 
@@ -67,8 +68,6 @@ export function initDotWave() {
 
     // Si le visualizer WebGL a pris le relais, on arrete la boucle 2D (economie CPU).
     if (document.documentElement.dataset.glViz === 'on') return;
-    // PC faible : stop (la sonde FPS a pu basculer en mode perf apres le demarrage).
-    if (document.documentElement.dataset.perf === 'low') return;
 
     const w = window.innerWidth;
     const h = canvas.offsetHeight;
