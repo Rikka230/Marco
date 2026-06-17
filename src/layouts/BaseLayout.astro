@@ -1,4 +1,4 @@
----
+﻿---
 // Coquille persistante du site Marco (ex-`.shell` de index.html).
 // - <ClientRouter /> : View Transitions natives (remplacent le routeur PJAX maison).
 // - mini-player / dotWave / rail : transition:persist => audio continu + pas de re-init.
@@ -34,8 +34,8 @@ const {
   preloadImages = [],
 } = Astro.props;
 
-// Badge de build TEMPORAIRE (migration) — bumpe a chaque iteration, retire en Phase E.
-const BUILD = 'REDESIGN 4';
+// Badge de build TEMPORAIRE (migration) â€” bumpe a chaque iteration, retire en Phase E.
+const BUILD = 'REDESIGN 5';
 ---
 
 <!doctype html>
@@ -112,11 +112,11 @@ const BUILD = 'REDESIGN 4';
 
       {/* Pied de page discret. "Powered by NocxWeb" = acces admin cache. */}
       <footer class="site-footer" transition:persist="site-footer">
-        <a href="/mentions-legales">Mentions légales</a>
-        <i aria-hidden="true">·</i>
+        <a href="/mentions-legales">Mentions lÃ©gales</a>
+        <i aria-hidden="true">Â·</i>
         <a href="https://marco-admin-2f9aa.web.app" target="_blank" rel="noopener" aria-label="Espace administration">Powered by NocxWeb</a>
-        <i aria-hidden="true">·</i>
-        <span>© 2026 Marco Charlas-Hou</span>
+        <i aria-hidden="true">Â·</i>
+        <span>Â© 2026 Marco Charlas-Hou</span>
       </footer>
 
       <canvas id="transition-gl" aria-hidden="true" transition:persist="transition-gl"></canvas>

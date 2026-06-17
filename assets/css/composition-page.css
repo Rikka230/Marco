@@ -109,6 +109,21 @@
     linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.02));
 }
 .composition-track > * { transform: skewX(9deg); }
+
+/* L'animation d'apparition generique marcoEnterList anime transform (translateY/scale)
+   SANS le skewX(-9deg) -> pendant toute la reveal les cartes etaient DROITES
+   (rectangles), puis basculaient en penche a la fin : changement d'angle visible +
+   cartes coupees pendant l'etat droit. On remplace par une variante qui CONSERVE le
+   skew a chaque etape -> les cartes restent des parallelogrammes du debut a la fin. */
+.composition-track.marco-enter-list {
+  animation-name: marcoEnterListSkew;
+}
+@keyframes marcoEnterListSkew {
+  0% { opacity: 0; transform: skewX(-9deg) translateY(30px) scale(0.985); }
+  58% { opacity: 1; }
+  82% { transform: skewX(-9deg) translateY(-4px) scale(1.003); }
+  100% { transform: skewX(-9deg) translateY(0) scale(1); }
+}
 .track-index {
   color: #070006; font-family: var(--heavy); font-size: clamp(25px, 2.2vw, 42px);
   line-height: .84; letter-spacing: -0.095em; text-shadow: none;
