@@ -30,7 +30,8 @@ body {
    AVEC marge, pour que le O ne soit jamais coupe (arrondis, zoom, scrollbar). */
 .home .mega.first {
   letter-spacing: -0.075em;
-  font-size: clamp(155px, 22.2vw, 458px);
+  /* ~90vw : marge de securite pour que le O ne soit jamais coupe (1920, zoom...). */
+  font-size: clamp(150px, 20.5vw, 424px);
 }
 
 @media (max-width: 1100px) {
