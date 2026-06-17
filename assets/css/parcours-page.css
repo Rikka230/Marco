@@ -28,7 +28,10 @@
     0 12px 30px rgba(0, 0, 0, 0.42) !important;
 }
 
-.parcours-rebuild .photo-bg {
+/* .inner.parcours-rebuild (0,0,3,0) pour battre .inner .photo-bg de style.css
+   (0,0,2,0, brightness 1.04 = fond trop clair). A specificite egale, le gagnant
+   dependait de l'ordre des feuilles -> fond clair au F5, correct en nav SPA. */
+.inner.parcours-rebuild .photo-bg {
   background-image: url("/assets/img/parcours-bg.webp") !important;
   background-size: cover !important;
   background-position: 50% 50% !important;
@@ -36,7 +39,7 @@
   transform: scale(1.006);
 }
 
-.parcours-rebuild .photo-bg::before {
+.inner.parcours-rebuild .photo-bg::before {
   background:
     radial-gradient(ellipse at 50% 45%, transparent 0 26%, rgba(0, 0, 0, 0.13) 62%, rgba(0, 0, 0, 0.42) 100%),
     linear-gradient(90deg, rgba(0, 0, 0, 0.36), transparent 45%, rgba(0, 0, 0, 0.26)),
@@ -44,7 +47,7 @@
   opacity: 0.72;
 }
 
-.parcours-rebuild .photo-bg::after {
+.inner.parcours-rebuild .photo-bg::after {
   background:
     repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0 1px, transparent 1px 4px),
     radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(0,0,0,0.18) 100%);
@@ -66,8 +69,13 @@
 }
 
 .parcours-atmosphere::before,
-.parcours-atmosphere::after,
-.parcours-rebuild::before {
+.parcours-atmosphere::after {
+  content: none;
+}
+
+/* 0,0,3,1 : assure que ce ::before reste neutralise au F5 aussi (sinon une regle
+   generique le recreait selon l'ordre des feuilles). */
+.inner.parcours-rebuild::before {
   content: none;
 }
 
@@ -850,14 +858,14 @@
     background: #00050c;
   }
 
-  .parcours-rebuild .photo-bg {
+  .inner.parcours-rebuild .photo-bg {
     inset: 0;
     background-position: 50% 0 !important;
     filter: saturate(1.08) contrast(1.08) brightness(0.8);
     transform: none;
   }
 
-  .parcours-rebuild .photo-bg::before {
+  .inner.parcours-rebuild .photo-bg::before {
     background:
       linear-gradient(180deg, rgba(0,2,6,0.24), rgba(0,5,12,0.38) 36%, rgba(0,0,0,0.86) 100%),
       radial-gradient(ellipse at 50% 14%, rgba(7,143,255,0.13), transparent 47%),

@@ -12,8 +12,11 @@
 .shell:has(.page[data-theme="composition"]) .mini-player { color: #ff304f; }
 .shell:has(.page[data-theme="composition"]) .mini-brand span,
 .shell:has(.page[data-theme="composition"]) .mini-player button { background: currentColor; }
-.composition-page .photo-bg { filter: saturate(0.95) contrast(1.18) brightness(0.72); transform: scale(1.065); }
-.composition-page .photo-bg::before {
+/* .inner.composition-page (0,0,3,0) pour battre .inner .photo-bg / .inner .hero-person
+   de style.css (0,0,2,0). A specificite egale le gagnant dependait de l'ordre des
+   feuilles -> fond/perso corrects en nav SPA mais clairs/mal calibres au F5. */
+.inner.composition-page .photo-bg { filter: saturate(0.95) contrast(1.18) brightness(0.72); transform: scale(1.065); }
+.inner.composition-page .photo-bg::before {
   background:
     radial-gradient(circle at 18% 16%, rgba(255, 48, 79, 0.32), transparent 28%),
     radial-gradient(circle at 72% 44%, rgba(255, 255, 255, 0.08), transparent 32%),
@@ -38,7 +41,7 @@
   transform: translateX(-50%) scaleX(0.78) skewX(-8deg);
   font-size: clamp(38px, 6.6vw, 128px); opacity: 0.9;
 }
-.composition-page .hero-person {
+.inner.composition-page .hero-person {
   left: 50%; bottom: -10vh; height: 112vh; opacity: 1;
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter: brightness(0.94) contrast(1.08) saturate(1) drop-shadow(0 28px 42px rgba(0,0,0,.64));
@@ -131,7 +134,7 @@
   /* 12.5vw : COMPOSITION (11 glyphes) tient en plein bleed sur 390px sans coupe. */
   .composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
   .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
-  .composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
+  .inner.composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
   .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }
   .composition-diagonal-zone { right: auto; left: 3vw; top: 42vh; width: 94vw; height: 42vh; max-height: none; transform: rotate(-4.5deg); }
   .composition-track-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 4vh 8vw 10vh 2vw; }
