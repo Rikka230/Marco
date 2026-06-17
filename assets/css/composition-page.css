@@ -1,4 +1,4 @@
-/* Composition — CSS externalise depuis le <style> inline de composition.html (v0.4.6). */
+﻿/* Composition â€” CSS externalise depuis le <style> inline de composition.html (v0.4.6). */
 .page[data-theme="composition"] {
   --accent: #ff304f;
   --accent-soft: rgba(255, 48, 79, 0.64);
@@ -52,17 +52,17 @@
   transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0);
   filter: brightness(0.94) contrast(1.08) saturate(1) drop-shadow(0 28px 42px rgba(0,0,0,.64));
 }
-.composition-page .cover-hit,
-.composition-page .key-project,
-.composition-page .cover-tagline,
-.composition-page .editorial-stack {
+.inner.composition-page .cover-hit,
+.inner.composition-page .key-project,
+.inner.composition-page .cover-tagline,
+.inner.composition-page .editorial-stack {
   color: #f9f1dc; text-shadow: -2px 0 #ff304f, 0 8px 22px rgba(0,0,0,.8);
 }
-.composition-page .nav-music { left: 5.8vw; top: 18vh; bottom: auto; }
-.composition-page .nav-gallery { right: 5.4vw; top: 16vh; }
-.composition-page .nav-contact { right: 6vw; bottom: 17vh; }
-.composition-page .key-project { top: 38vh; left: 5.2vw; max-width: 39vw; color: #ff304f; }
-.composition-page .key-project span { font-size: clamp(30px, 3.45vw, 72px); transform: skewX(-7deg); }
+.inner.composition-page .nav-music { left: 5.8vw; top: 18vh; bottom: auto; }
+.inner.composition-page .nav-gallery { right: 5.4vw; top: 16vh; }
+.inner.composition-page .nav-contact { right: 6vw; bottom: 17vh; }
+.inner.composition-page .key-project { top: 38vh; left: 5.2vw; max-width: 39vw; color: #ff304f; }
+.inner.composition-page .key-project span { font-size: clamp(30px, 3.45vw, 72px); transform: skewX(-7deg); }
 .composition-intro {
   /* max() : reste sous le key-project (2 lignes en vw) meme quand la hauteur
      d'ecran est faible par rapport a la largeur (laptops 16:9 bas). */
@@ -148,5 +148,5 @@
   .composition-track { grid-template-columns: auto minmax(0, 1fr) auto; width: calc(100% - 2vw); min-height: 66px; margin-bottom: .7rem; }
   .track-title { font-size: clamp(20px, 6vw, 36px); }
   .composition-side-note { display: none; }
-  .composition-page .cover-tagline, .composition-page .editorial-stack { display: none; }
+  .inner.composition-page .cover-tagline, .inner.composition-page .editorial-stack { display: none; }
 }
