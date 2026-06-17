@@ -150,7 +150,11 @@ body {
   to { transform: translate3d(1.2%, 1%, 0) scale(1.05); opacity: 0.95; }
 }
 
-html[data-perf="low"] .cine-light { display: none; }
+/* Mode perf : on GARDE la vignette de base (.cine-light = degrade fixe, cout quasi
+   nul) pour que l'etalonnage/saturation reste IDENTIQUE entre F5 (perf) et nav SPA.
+   On ne coupe que le halo anime (::before : mix-blend-mode screen + rdAurora), seul
+   element reellement couteux. */
+html[data-perf="low"] .cine-light::before { display: none; }
 
 /* === 3. ENTREES DE PAGE ================================================= */
 

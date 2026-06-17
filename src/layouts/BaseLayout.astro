@@ -43,6 +43,15 @@ const BUILD = 'REDESIGN 1';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* Decision perf deja prise dans la session (F5) : on l'applique AVANT le 1er
+        rendu pour eviter le scintillement "effets pleins -> coupes a 1.8s". perf.ts
+        affine ensuite si besoin. */}
+    <script is:inline>
+      try {
+        if (sessionStorage.getItem('marco-perf') === 'low')
+          document.documentElement.dataset.perf = 'low';
+      } catch (e) {}
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     {/* Preload du fond LCP : decouvert tot (sinon background-image CSS = decouvert tard => LCP lent). */}
