@@ -132,7 +132,12 @@
   filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.54));
 }
 
-.parcours-rebuild .parcours-person {
+/* .inner.parcours-rebuild (au lieu de .parcours-rebuild seul) : specificite 0,0,3,0
+   pour battre la regle generique .inner .hero-person de style.css (0,0,2,0, meme
+   hauteur/transform/filtre). Sinon, a specificite egale, le gagnant depend de l'ordre
+   des feuilles -> DIFFERENT entre F5 (bundle en dernier) et nav SPA (page CSS en
+   dernier), ce qui decalait/retaillait le perso et changeait son filtre au F5. */
+.inner.parcours-rebuild .parcours-person {
   z-index: 35;
   left: 50%;
   bottom: -10.5vh;
@@ -649,7 +654,7 @@
     font-size: clamp(3.2rem, 10vh, 7rem);
   }
 
-  .parcours-rebuild .parcours-person {
+  .inner.parcours-rebuild .parcours-person {
     height: 86vh;
     bottom: -7vh;
     opacity: 0.68;
