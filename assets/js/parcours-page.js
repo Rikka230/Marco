@@ -600,6 +600,36 @@
     target.dataset.scrollReady = "true";
   }
 
+  // Etat de scroll VERTICAL (listes Formation / Experiences) -> fondu dynamique
+  // identique a la timeline horizontale. "none" si tout tient (aucun fondu).
+  function updateVScrollState(target) {
+    const maxScroll = Math.max(0, target.scrollHeight - target.clientHeight);
+    const top = Math.max(0, target.scrollTop);
+    const state = maxScroll <= 2
+      ? "none"
+      : top <= 2
+        ? "start"
+        : top >= maxScroll - 2
+          ? "end"
+          : "middle";
+    target.dataset.scrollState = state;
+  }
+
+  function enableVScroll() {
+    document.querySelectorAll(".parcours-study-list, .parcours-experience-list").forEach((target) => {
+      if (target.dataset.vscrollReady === "true") { updateVScrollState(target); return; }
+      let ticking = false;
+      target.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => { updateVScrollState(target); ticking = false; });
+      });
+      window.addEventListener("resize", () => updateVScrollState(target), pageSignal ? { signal: pageSignal } : undefined);
+      updateVScrollState(target);
+      target.dataset.vscrollReady = "true";
+    });
+  }
+
   function renderSkills(data) {
     const target = document.querySelector("[data-parcours-skills]");
     if (!target) return;
@@ -638,6 +668,7 @@
     renderMobileExperiences(data);
     renderMobileSkills(data);
     enableTimelineScroll();
+    enableVScroll();
     enableMobileChips();
     enableMobilePlayer();
     enableMobileScrollState();
