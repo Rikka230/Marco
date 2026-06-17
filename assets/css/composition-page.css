@@ -39,7 +39,10 @@
   transform: translateX(-50%) scaleX(0.86) skewX(-7deg); letter-spacing: -0.095em;
   text-shadow: -0.055em 0 #ff304f, 0 18px 42px rgba(0, 0, 0, 0.58);
 }
-.inner.composition-page .mega.last {
+/* mega.last NON bumpe volontairement : redesign.css `.inner:not(.parcours-page)
+   .mega.last` (0,0,4,0) impose le serif italique editorial voulu et doit rester
+   gagnant. Le bumper creerait une egalite 0,0,4,0 -> incoherence F5/SPA. */
+.composition-page .mega.last {
   color: #ff304f; left: 38%; bottom: 5.2vh;
   transform: translateX(-50%) scaleX(0.78) skewX(-8deg);
   font-size: clamp(38px, 6.6vw, 128px); opacity: 0.9;
@@ -136,7 +139,7 @@
 @media (max-width: 900px) {
   /* 12.5vw : COMPOSITION (11 glyphes) tient en plein bleed sur 390px sans coupe. */
   .inner.composition-page .mega.first { top: 6vh; left: 50%; font-size: clamp(40px, 12.5vw, 148px); }
-  .inner.composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
+  .composition-page .mega.last { left: 50%; bottom: 8vh; font-size: clamp(28px, 9vw, 80px); }
   .inner.composition-page .hero-person { left: 50%; height: 86vh; bottom: -8vh; opacity: .92; transform: translateX(-50%) translate3d(var(--person-x, 0), var(--person-y, 0), 0); }
   .composition-intro { left: 6vw; top: 28vh; max-width: 78vw; }
   .composition-diagonal-zone { right: auto; left: 3vw; top: 42vh; width: 94vw; height: 42vh; max-height: none; transform: rotate(-4.5deg); }
