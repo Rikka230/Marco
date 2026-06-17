@@ -81,8 +81,11 @@
   height: 100%; max-height: none; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
   padding: clamp(22px, 2.4vh, 34px) clamp(86px, 5.4vw, 124px) clamp(86px, 9vh, 128px) clamp(8px, .55vw, 14px);
   scrollbar-width: thin; scrollbar-color: rgba(255, 48, 79, .82) rgba(255,255,255,.045); scrollbar-gutter: stable;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 86%, transparent 100%);
+  /* Fondu reduit (2% / 98%) : avant (8% / 86%) il mangeait toute la 1re et la
+     derniere carte (01 et 06) alors que les 6 tiennent sans scroll. Fade minimal =
+     indicateur de bord discret sans couper les blocs. */
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 2%, #000 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 2%, #000 98%, transparent 100%);
 }
 .composition-track-scroll::-webkit-scrollbar { width: 7px; }
 .composition-track-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,.045); border-radius: 999px; }
